@@ -1286,6 +1286,8 @@ class Reports extends CI_Controller {
                         'date'=>$dateexcess
                     );
                 }
+            } else {
+                 $arr_exc[]=0;
             }
 
             $sumrec=array_sum($arr_rec);
