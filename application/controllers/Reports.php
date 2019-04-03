@@ -772,10 +772,10 @@ class Reports extends CI_Controller {
     public function pr_report_restock(){
         $id=$this->uri->segment(3);
         $prno=$this->uri->segment(4);
-        if(empty($prno)){
-            $data['head']=array();
-        }
-        $counter = $this->super_model->count_custom_where("restock_head","pr_no = '$prno'");
+      
+  
+        $counter = $this->super_model->count_custom_where("restock_head","pr_no = '$prno' AND excess = 0");
+        //echo $counter;
          if($counter!=0){
             foreach($this->super_model->select_row_where("restock_head", "pr_no",$prno) AS $head){
               //  foreach($this->super_model->select_row_where("issuance_", "receive_id",$det1->receive_id) AS $head)
@@ -927,7 +927,7 @@ class Reports extends CI_Controller {
         }
 
         $query=substr($sql,0,-3);
-        $count=$this->super_model->custom_query("SELECT rh.* FROM restock_head rh INNER JOIN restock_details rd ON rh.rhead_id = rd.rhead_id INNER JOIN items i ON rd.item_id = i.item_id WHERE rh.saved='1' AND ".$query);
+        $count=$this->super_model->custom_query("SELECT rh.* FROM restock_head rh INNER JOIN restock_details rd ON rh.rhead_id = rd.rhead_id INNER JOIN items i ON rd.item_id = i.item_id WHERE rh.saved='1' AND rh.excess='0' AND ".$query);
         if($count!=0){
          
             foreach($this->super_model->custom_query("SELECT rh.*,i.item_id, sr.supplier_id, rd.rdetails_id FROM restock_head rh INNER JOIN restock_details rd ON rh.rhead_id = rd.rhead_id INNER JOIN items i ON rd.item_id = i.item_id INNER JOIN supplier sr ON sr.supplier_id = rd.supplier_id WHERE rh.saved='1' AND ".$query."ORDER BY rh.restock_date DESC") AS $itm){
@@ -1187,6 +1187,7 @@ class Reports extends CI_Controller {
                         'receive_qty'=>$rec->received_qty,
                         'issueqty'=>0,
                         'restockqty'=>0,
+                        'excessqty'=>0,
                         'date'=>$date
                     );
                 }
@@ -1216,54 +1217,26 @@ class Reports extends CI_Controller {
                         'receive_qty'=>0,
                         'issueqty'=>$issue->quantity,
                         'restockqty'=>0,
+                        'excessqty'=>0,
                         'date'=>$dateissue
                     );
                 }
             }
 
-          /*   $counter_restock = $this->super_model->count_custom_where("restock","item_id = '$id' AND supplier_id = '$sup' AND catalog_no = '$cat' AND brand_id = '$brand'");
-*/
-             $counter_restock2 = $this->super_model->count_custom_where("restock_details","item_id = '$id' AND supplier_id = '$sup' AND catalog_no = '$cat' AND brand_id = '$brand'");
-            //echo $id . " - " . $sup . " - " . $cat . " - " . $brand;
+   
+             $counter_restock2 = $this->super_model->select_count_join_inner("restock_head","restock_details","item_id = '$id' AND supplier_id = '$sup' AND catalog_no = '$cat' AND brand_id = '$brand' AND excess='0'", "rhead_id");
              if($counter_restock2!=0){
-               
-              /*  foreach($this->super_model->select_custom_where("restock","item_id = '$id' AND supplier_id = '$sup' AND catalog_no = '$cat' AND brand_id = '$brand'") AS $restock){
-                    $restockdate=$this->super_model->select_column_where("restock", "restock_date", "restock_id", $restock->restock_id);
-                    
-                  
-                    $rdid=$this->super_model->select_column_where("receive_details", "rd_id", "pr_no", $restock->pr_no);
+    
 
-                    $cost=$this->super_model->select_column_custom_where("receive_items", "item_cost", "rd_id = '$rdid' AND item_id = '$id' AND supplier_id = '$sup' AND catalog_no = '$cat' AND brand_id = '$brand'");
-
-                    $datest[]=$restockdate;
-                    $datestock = max($datest);
-                 
-                    $arr_rs[]=$restock->quantity;
-                    $data['rec_itm'][] = array(
-                        'supplier'=>$supplier,
-                        'catalog_no'=>$cat,
-                        'brand'=>$brandname,
-                        'item_cost'=>$cost,
-                        'receive_qty'=>0,
-                        'issueqty'=>0,
-                        'restockqty'=>$restock->quantity,
-                        'date'=>$datestock
-                    );
-                }*/
-
-
-                foreach($this->super_model->select_custom_where("restock_details","item_id = '$id' AND supplier_id = '$sup' AND catalog_no = '$cat' AND brand_id = '$brand'") AS $restock2){
+                foreach($this->super_model->custom_query("SELECT rh.rhead_id, rd.quantity, rh.restock_date FROM restock_head rh INNER JOIN restock_details rd ON rh.rhead_id = rd.rhead_id WHERE item_id = '$id' AND supplier_id = '$sup' AND catalog_no = '$cat' AND brand_id = '$brand' AND excess='0'") AS $restock2){
                     $restockdate=$this->super_model->select_column_where("restock_head", "restock_date", "rhead_id", $restock2->rhead_id);
-                    //echo $rec->receive_id;
                     $pr=$this->super_model->select_column_where("restock_head", "pr_no", "rhead_id", $restock2->rhead_id);
                     $rdid=$this->super_model->select_column_where("receive_details", "rd_id", "pr_no", $pr);
 
                     $cost=$this->super_model->select_column_custom_where("receive_items", "item_cost", "rd_id = '$rdid' AND item_id = '$id' AND supplier_id = '$sup' AND catalog_no = '$cat' AND brand_id = '$brand'");
                     $datest[]=$restockdate;
                     $datestock = max($datest);
-                   /* $prno = $this->super_model->select_column_where("issuance_details", "pr_no", "issuance_id", $issue->issuance_id);*/
-                  
-                    //$issue_qty = $this->super_model->select_column_custom_where("issuance_details","quantity","item_id='$id' AND supplier_id = '$sup' AND brand_id = '$brand' AND catalog_no = '$cat'");
+                 
                     $arr_rs[]=$restock2->quantity;
                     $data['rec_itm'][] = array(
                         'supplier'=>$supplier,
@@ -1273,7 +1246,36 @@ class Reports extends CI_Controller {
                         'receive_qty'=>0,
                         'issueqty'=>0,
                         'restockqty'=>$restock2->quantity,
+                        'excessqty'=>0,
                         'date'=>$datestock
+                    );
+                }
+            }
+
+            $counter_excess = $this->super_model->select_count_join_inner("restock_head","restock_details","item_id = '$id' AND supplier_id = '$sup' AND catalog_no = '$cat' AND brand_id = '$brand' AND excess='1'", "rhead_id");
+             if($counter_excess!=0){
+    
+
+                foreach($this->super_model->custom_query("SELECT rh.rhead_id, rd.quantity, rh.restock_date FROM restock_head rh INNER JOIN restock_details rd ON rh.rhead_id = rd.rhead_id WHERE item_id = '$id' AND supplier_id = '$sup' AND catalog_no = '$cat' AND brand_id = '$brand' AND excess='1'") AS $excess){
+                    /*$restockdate=$this->super_model->select_column_where("restock_head", "restock_date", "rhead_id", $restock2->rhead_id);*/
+                    $pr=$this->super_model->select_column_where("restock_head", "pr_no", "rhead_id", $excess->rhead_id);
+                    $rdid=$this->super_model->select_column_where("receive_details", "rd_id", "pr_no", $pr);
+
+                    $cost=$this->super_model->select_column_custom_where("receive_items", "item_cost", "rd_id = '$rdid' AND item_id = '$id' AND supplier_id = '$sup' AND catalog_no = '$cat' AND brand_id = '$brand'");
+                    $dateex[]=$excess->restock_date;
+                    $dateexcess = max($dateex);
+                 
+                    $arr_exc[]=$excess->quantity;
+                    $data['rec_itm'][] = array(
+                        'supplier'=>$supplier,
+                        'catalog_no'=>$cat,
+                        'brand'=>$brandname,
+                        'item_cost'=>$cost,
+                        'receive_qty'=>0,
+                        'issueqty'=>0,
+                        'restockqty'=>0,
+                        'excessqty'=>$excess->quantity,
+                        'date'=>$dateexcess
                     );
                 }
             }
@@ -1281,7 +1283,8 @@ class Reports extends CI_Controller {
             $sumrec=array_sum($arr_rec);
             $sumiss=array_sum($arr_iss);
             $sumst=array_sum($arr_rs);
-            $total=($begbal+$sumrec+$sumst)-$sumiss;
+            $sumex=array_sum($arr_exc);
+            $total=($begbal+$sumrec+$sumst+$sumex)-$sumiss;
             $data['total']=$total;
        // } 
         $this->load->view('template/header');
@@ -1560,7 +1563,7 @@ class Reports extends CI_Controller {
             /*$issueqty=$this->super_model->custom_query_single("qty","SELECT SUM(quantity) AS qty FROM issuance_head ih INNER JOIN issuance_details id WHERE item_id= '$id' AND pr_no='$head->pr_no' GROUP BY pr_no");*/
           //  $qty=$this->super_model->select_sum_join_group("received_qty","receive_items","receive_details", "receive_details.receive_id = '$head->receive_id'", "rd_id","pr_no");
                 $issueqty= $this->super_model->select_sum_join("quantity","issuance_details","issuance_head", "item_id='$id' AND pr_no='$head->pr_no'","issuance_id");
-                $restockqty= $this->super_model->select_sum_join("quantity","restock_details","restock_head", "item_id='$id' AND pr_no='$head->pr_no'","rhead_id");
+                $restockqty= $this->super_model->select_sum_join("quantity","restock_details","restock_head", "item_id='$id' AND pr_no='$head->pr_no' AND excess = '0'","rhead_id");
                 $total=$head->qty-$issueqty;
                 $data['list'][] = array(
                     "prno"=>$head->pr_no,
@@ -1585,7 +1588,7 @@ class Reports extends CI_Controller {
         foreach($this->super_model->custom_query("SELECT item_id, SUM(received_qty) AS qty FROM receive_items ri INNER JOIN receive_details rd ON ri.rd_id = rd.rd_id WHERE rd.pr_no = '$pr' GROUP BY  ri.item_id") AS $head){
          
                 $issueqty= $this->super_model->select_sum_join("quantity","issuance_details","issuance_head", "item_id='$head->item_id' AND pr_no='$pr'","issuance_id");
-                $restockqty= $this->super_model->select_sum_join("quantity","restock_details","restock_head", "item_id='$head->item_id' AND pr_no='$pr'","rhead_id");
+                $restockqty= $this->super_model->select_sum_join("quantity","restock_details","restock_head", "item_id='$head->item_id' AND pr_no='$pr' AND excess='0'","rhead_id");
                 $total=$head->qty-$issueqty;
                 $data['list'][] = array(
                     "item"=>$this->super_model->select_column_where("items", "item_name", "item_id", $head->item_id),
@@ -1678,7 +1681,11 @@ class Reports extends CI_Controller {
             $this->super_model->insert_into("restock_details", $excess_items);
         }
 
-        echo "<script>alert('Successfully tagged as excess.'); window.location='".base_url()."index.php/reports/all_pr_report/".$pr."'";
+        ?>
+        <script>alert('Successfully tagged as excess.'); 
+        window.location='<?php echo base_url(); ?>index.php/reports/all_pr_report/<?php echo $pr; ?>'
+        </script>
+        <?php
     }
 
 

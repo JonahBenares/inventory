@@ -40,7 +40,9 @@
 				</div>
 			</div>
 		</div>
-	<?php if(!empty($head)){ ?>
+	<?php 
+	//print_r($head);
+	if(!empty($head)){ ?>
 	<div class="row">
 		<div class="col-md-12">
 			<div class="panel panel-default shadow">
