@@ -657,6 +657,11 @@
 									<span class="fa fa-arrow-right">&nbsp;</span> Restock
 								</a>
 							</li>
+							<li>
+								<a style="padding-left:60px" href="<?php echo base_url(); ?>index.php/reports/excess_report">
+									<span class="fa fa-arrow-right">&nbsp;</span> Excess
+								</a>
+							</li>
 						</ul>
 					</li>			
 					<li>

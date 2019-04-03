@@ -893,6 +893,14 @@ class Reports extends CI_Controller {
         $this->load->view('template/footer');
     }
 
+    public function excess_report(){
+        $this->load->view('template/header');
+        $this->load->view('template/sidebar',$this->dropdown);
+        $data['printed']=$this->super_model->select_column_where('users', 'fullname', 'user_id', $_SESSION['user_id']);
+        $this->load->view('reports/excess_report',$data);
+        $this->load->view('template/footer');
+    }
+
     public function restock_report(){
         $from=$this->uri->segment(3);
         $to=$this->uri->segment(4);

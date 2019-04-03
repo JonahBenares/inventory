@@ -1285,9 +1285,15 @@ if (isset($this->session->userdata['logged_in'])) {
 	.btn-rounded{
 		border-radius: 50%!important;
 	}
+	#prntby{
+		display: none;
+	}
 	@media print {
-		#printReport, #aging_table_length, #aging_table2_length, #aging_table_filter, #aging_table2_filter{
+		#printReport, #aging_table_length, #aging_table2_length, #aging_table_filter, #aging_table2_filter, .dataTables_length, .dataTables_filter{
 			display: none;
+		}
+		#prntby{
+			display: block;
 		}
 	}
 </style>

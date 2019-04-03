@@ -76,9 +76,9 @@
 							<br>
 							<?php if(!empty($restock)){ ?>
 							<a href = "<?php echo base_url(); ?>index.php/reports/export_restock/<?php echo $from;?>/<?php echo $to;?>/<?php echo $catt1;?>/<?php echo $subcat2;?>/<?php echo $item1;?>" class = "btn btn-primary pull-right">Export to Excel</a>
-							<button id="printReport" class="btn btn-info pull-right " onclick="printDiv('printableArea')">
+							<!-- <button id="printReport" class="btn btn-info pull-right " onclick="printDiv('printableArea')">
 									<span  class="fa fa-print"></span>
-							</button>
+							</button> -->
 							<br>
 							<div id="printableArea">
 								<p class="pname"><?php echo $c; ?> - <small class="main_cat"><?php echo $s; ?></small></p>
