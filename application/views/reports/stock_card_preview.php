@@ -1,0 +1,168 @@
+    <!DOCTYPE html>
+<head>
+    <script src="<?php echo base_url(); ?>assets/js/jquery.js"></script>
+    <script src="<?php echo base_url(); ?>assets/js/receive.js"></script>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Print Stock Card</title>
+        </head>
+<style type="text/css">
+    .nomarg{
+        margin:0px;
+    }
+    tr>td.dashed, 
+    tr>th.dashed {
+        border-right: 2px dashed #000!important;
+    }
+    body{
+        font-size: 12px!important;
+    }
+    .text-red{
+        color: red;
+        -webkit-print-color-adjust: exact;
+    }
+    .text-blue{
+        color: blue;
+        -webkit-print-color-adjust: exact;
+    }
+    @media print{
+        .text-red{
+            color: #fff;
+            -webkit-print-color-adjust: exact;
+        }
+        #print-btn, #print-btn1{
+            display: none;
+        }
+        .table-bordered>tbody>tr>td, 
+        .table-bordered>tbody>tr>th, 
+        .table-bordered>tfoot>tr>td, 
+        .table-bordered>tfoot>tr>th, 
+        .table-bordered>thead>tr>td, 
+        .table-bordered>thead>tr>th {
+            border: 1px solid #fff!important;
+        }
+        .ptext-white{
+            color: #fff!important;
+        }
+    }
+    p{
+        color: #000
+    }
+</style>
+<body style="padding-top:0px">    
+    <div>
+        <table class="table-bordsered" width="100%" >
+            <tr class="hidden-tr">
+                <td width="5%"></td>
+                <td width="5%"></td>
+                <td width="5%"></td>
+                <td width="5%"></td>
+                <td width="5%"></td>
+                <td width="5%"></td>
+                <td width="5%"></td>
+                <td width="5%"></td>                
+                <td width="5%"></td>
+                <td width="5%"></td>
+                <td width="5%"></td>
+                <td width="5%"></td>
+                <td width="5%"></td>
+                <td width="5%"></td>
+                <td width="5%"></td>
+                <td width="5%"></td>
+                <td width="5%"></td>
+                <td width="5%"></td>
+                <td width="5%"></td>
+                <td width="5%"></td>
+            </tr>
+            <tr>                
+                <td colspan="10" align="center" style="padding-right: 65px">
+                    <table class="table-bordered" width="100%" style="border:2px solid #fff;">
+                        <tr>
+                            <td width="9%"></td>
+                            <td width="9%"></td>
+                            <td width="9%"></td>
+                            <td width="9%"></td>
+                            <td width="9%"></td>
+                            <td width="9%"></td>
+                            <td width="9%"></td>
+                            <td width="9%"></td>                
+                            <td width="9%"></td>
+                            <td width="9%"></td>
+                            <td width="9%"></td>
+                        </tr>
+                        <tr>                            
+                            <td  colspan="3" align="center"><h2 class="nomarg text-blue"><b class=" ptext-white">PROGEN</b></h2></td>
+                            <td  colspan="8"><h3 class="nomarg ptext-white">STOCK CARD (BIN CARD)</h3></td>
+                        </tr>
+                        <?php foreach($item AS $i){ ?>
+                        <tr>
+                            <td colspan="2" align="right"><p class="nomarg ptext-white" style="height: 70px">Item:</p></td>
+                            <td colspan="5" class="text-red"><p class="nomarg" style="height: 70px"><?php echo $i['item'];?></p></td>
+                            <!-- Sorbent Boom, Economical SPC, 8" x 10" ENV810 (Economy Boom w/Blue Sleeve, Lint Free, 4/Bale, Absorbency Capacity: 65ga) -->
+                            <td ><p class="nomarg ptext-white" style="height: 70px">Part No.:</p></td>
+                            <td colspan="3" class="text-red"><p class="nomarg" style="height: 70px"><?php echo $i['pn'];?></p></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" align="right" class="ptext-white">Group:</td>
+                            <td colspan="5" class="text-red"><?php echo $i['group'];?></td>
+                            <td class="ptext-white">Location:</td>
+                            <td colspan="3" class="text-red"><?php echo $i['location'];?></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" align="right" class="ptext-white">NKK PN:</td>
+                            <td colspan="5" class="text-red"><?php echo $i['nkk'];?></td>
+                            <td class="ptext-white">Bin No:</td>
+                            <td colspan="3" class="text-red"><?php echo $i['bin'];?></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" align="right" class="ptext-white">SEMT PN:</td>
+                            <td colspan="8" class="text-red"><?php echo $i['semt'];?></td>
+                        </tr>
+                        <?php } ?>
+                        <tr>
+                            <td align="center" colspan="3" class="ptext-white">Received</td>
+                            <td align="center" colspan="3" class="ptext-white">Issued</td>
+                            <td align="center" colspan="3" class="ptext-white">Restock</td>
+                            <td align="center" rowspan="2" class="ptext-white">Total</td>
+                            <td align="center" colspan="1" rowspan="2" class="ptext-white"> Remarks</td>
+                        </tr>
+                        <tr>
+                            <td align="center" colspan="2" class="ptext-white">Date</td>
+                            <td align="center" class="ptext-white">Qty</td>
+                            <td align="center" colspan="2" class="ptext-white">Date</td>
+                            <td align="center" class="ptext-white">Qty</td>
+                            <td align="center" colspan="2" class="ptext-white">Date</td>
+                            <td align="center" class="ptext-white">Qty</td>
+                        </tr>   
+                        <?php 
+                            foreach($rec_itm AS $r){
+                                $rec_qty = $r['receive_qty'];
+                                $iss_qty = $r['issueqty'];
+                                $res_qty = $r['restockqty'];
+                                $total = ($begbal+$rec_qty+$res_qty)-$iss_qty;
+                        ?>                     
+                        <tr>
+                            <td align="center" colspan="2"><?php echo $r['date'];?></td>
+                            <td align="center"><?php echo $r['receive_qty'];?></td>
+                            <td align="center" colspan="2"><?php echo $r['date']?></td>
+                            <td align="center"><?php echo $r['issueqty'];?></td>
+                            <td align="center" colspan="2"><?php echo $r['date']?></td>
+                            <td align="center"><?php echo $r['restockqty'];?></td>
+                            <td align="center"><?php echo $total;?></td>
+                            <td align="center"></td> 
+                        </tr>               
+                        <?php } ?>
+                                              
+                    </table>
+                </td>
+                <td colspan="10" align="center">
+                    <div class="btn-group" style="position: fixed;top:10px" id="print-btn">
+                    <button class="btn btn-primary" onclick="window.print()">Print <u><b>Stock Card</b></u></button>
+                    <a class="btn btn-warning" target="_blank" id="print-btn1" href = "<?php echo base_url(); ?>index.php/reports/sc_prev_blank"> Print <u><b>Blank</b></u> Stock Card</a>
+                </div>
+                </td>
+            </tr>
+        </table>
+
+</body>
+</html>
