@@ -152,7 +152,7 @@ class Restock extends CI_Controller {
                 'purpose'=>$purpose,
                 'enduse'=>$enduse,
                 'saved'=>$res->saved,
-                'excess'=>$res->excess
+                
             );
         }
         foreach($this->super_model->select_row_where("restock_details", "rhead_id", $id) AS $det){
@@ -502,7 +502,6 @@ class Restock extends CI_Controller {
            'enduse_id'=> $this->input->post('enduse'),
            'department_id'=> $this->input->post('department'),
            'noted_by'=> $this->input->post('noted_by'),
-           'excess'=> $this->input->post('excess'),
            'mrwf_no'=>$mrwfno
         );
 

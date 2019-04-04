@@ -63,11 +63,7 @@
 								<td> <h5 class="nomarg"><?php echo $res['purpose'];?></h5></td>
 								<td width="5%"></td>
 							</tr>
-							<tr>
-								<td><p class="nomarg"><strong>Excess:</strong></p></td>
-								<td> <h5 class="nomarg"><?php echo (($res['excess'] == '1') ? 'Yes' :'No');?></h5></td>
-								<td width="5%"></td>
-							</tr>
+							
 							<?php if($res['saved']==0){ ?>
 							<tr>								
 								<td colspan="2">
