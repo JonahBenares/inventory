@@ -502,7 +502,6 @@ class Restock extends CI_Controller {
            'enduse_id'=> $this->input->post('enduse'),
            'department_id'=> $this->input->post('department'),
            'noted_by'=> $this->input->post('noted_by'),
-           'excess'=> $this->input->post('excess'),
            'mrwf_no'=>$mrwfno
         );
 

@@ -201,7 +201,7 @@ function saveRestock1(){
             success: function(output){
                 //alert(output);
                 if(output==output){
-                    alert('Restock Successfully!');
+                  
                     window.location = loc+'index.php/restock/add_restock_first/'+output;
                 }
             }

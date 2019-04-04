@@ -312,10 +312,7 @@
 									<?php } ?>
 								</select></td>					
 							</tr>
-							<tr>
-								<td><label>Excess:</label></td>		
-								<td><input type='checkbox' name='excess' id='excess' value='1'></td>					
-							</tr>
+							
 						</table>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
