@@ -78,7 +78,7 @@
 							<a href = "<?php echo base_url(); ?>index.php/reports/export_excess/<?php echo $from;?>/<?php echo $to;?>/<?php echo $catt1;?>/<?php echo $subcat2;?>/<?php echo $item1;?>" class = "btn btn-primary pull-right">Export to Excel</a>
 							<br>
 							<div id="printableArea">
-								<p class="pname"> <?php echo $item; ?>- <small class="main_cat"><?php echo $s; ?></small></p>
+								<p class="pname"> <?php echo $items; ?>- <small class="main_cat"><?php echo $s; ?></small></p>
 								<div style="overflow-x: scroll;padding-bottom: 20px ">
 									<table class="table-bordered table-hover table" id="received" style="font-size: 12px;width: 150%">
 										<thead>

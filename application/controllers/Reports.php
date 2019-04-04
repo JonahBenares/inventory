@@ -912,7 +912,7 @@ class Reports extends CI_Controller {
         $data['category'] = $this->super_model->select_all_order_by('item_categories', 'cat_name', 'ASC');
         $data['c'] = $this->super_model->select_column_where("item_categories", "cat_name", "cat_id", $cat);
         $data['s'] = $this->super_model->select_column_where("item_subcat", "subcat_name", "subcat_id", $subcat);
-        $data['item'] = $this->super_model->select_column_where("items", "item_name", "item_id", $item);
+        $data['items'] = $this->super_model->select_column_where("items", "item_name", "item_id", $item);
         $sql="";
         if($from!='null' && $to!='null'){
            $sql.= " rh.restock_date BETWEEN '$from' AND '$to' AND";
