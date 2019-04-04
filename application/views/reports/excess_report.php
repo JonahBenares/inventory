@@ -27,7 +27,7 @@
 				<div class="panel-body">
 					<div class="canvas-wrapper">
 						<div class="col-lg-12">
-							<form method="POST">
+							<form method="POST" action = "<?php echo base_url(); ?>index.php/reports/generateExcess">
 								<table width="100%" style="font-size: 12px">
 									<tr>
 										<td width="10%">Search Item:</td>
@@ -43,7 +43,9 @@
 											<br>
 											<select name="item" class="form-control" >
 												<option value="" selected="">-Item-</option>
-													<option value=""></option>
+												<?php foreach($item AS $it){ ?>
+													<option value="<?php echo $it->item_id; ?>"><?php echo $it->item_name; ?></option>
+												<?php } ?>
 											</select>
 										</td>										
 									</tr>
@@ -53,7 +55,9 @@
 											<br>
 											<select name="category" class="form-control" id="category" onChange="chooseCategory();">
 												<option value="" selected="">-Category-</option>
-													<option value="<?php echo $cat->cat_id; ?>"></option>
+												<?php foreach($category AS $cat){ ?>
+													<option value="<?php echo $cat->cat_id; ?>"><?php echo $cat->cat_name; ?></option>
+												<?php } ?>
 											</select>
 										</td>
 										<td width="">
@@ -70,13 +74,11 @@
 								</table>
 							</form>
 							<br>
-							<a href = "" class = "btn btn-primary pull-right">Export to Excel</a>
-							<!-- <button id="printReport" class="btn btn-info pull-right " onclick="printDiv('printableArea')">
-									<span  class="fa fa-print"></span>
-							</button> -->
+							<?php if(!empty($excess)){ ?>
+							<a href = "<?php echo base_url(); ?>index.php/reports/export_excess/<?php echo $from;?>/<?php echo $to;?>/<?php echo $catt1;?>/<?php echo $subcat2;?>/<?php echo $item1;?>" class = "btn btn-primary pull-right">Export to Excel</a>
 							<br>
 							<div id="printableArea">
-								<p class="pname"> Item name- <small class="main_cat">Category</small></p>
+								<p class="pname"> <?php echo $items; ?>- <small class="main_cat"><?php echo $c; ?></small></p>
 								<div style="overflow-x: scroll;padding-bottom: 20px ">
 									<table class="table-bordered table-hover table" id="received" style="font-size: 12px;width: 150%">
 										<thead>
@@ -99,22 +101,24 @@
 											</tr>
 										</thead>
 										<tbody>
+											<?php foreach($excess as $e){ ?>
 											<tr>
-												<td align="center"></td>
-												<td align="center"></td>
-												<td align="center"></td>
-												<td align="center"></td>
-												<td align="center"></td>
-												<td align="center"></td>
-												<td align="center"></td>
-												<td align="center"></td>
-												<td align="center"></td>
-												<td align="center"></td>
-												<td align="center"></td>
-												<td align="center"></td>
-												<td align="center"></td>
-												<td align="center"></td>
+												<td align="center"><?php echo date('d-M-Y',strtotime($e['res_date']));?></td>
+												<td align="center"><?php echo $e['pr']?></td>
+												<td align="center"><?php echo $e['pn']?></td>
+												<td align="center"><?php echo $e['item']?></td>
+												<td align="center"><?php echo $e['unit']?></td>
+												<td align="center"><?php echo $e['qty']?></td>
+												<td align="center"><?php echo $e['supplier']?></td>
+												<td align="center"><?php echo $e['department']?></td>
+												<td align="center"><?php echo $e['enduse']?></td>
+												<td align="center"><?php echo $e['purpose']?></td>
+												<td align="center"><?php echo $e['acknowledge']?></td>
+												<td align="center"><?php echo $e['noted_by']?></td>
+												<td align="center"><?php echo $e['returned_by']?></td>
+												<td align="center"><?php echo $e['received_by']?></td>
 											</tr>
+											<?php } ?>
 										</tbody>
 									</table>
 									<table width="100%" id="prntby">
@@ -124,6 +128,7 @@
 						            </table> 
 								</div>
 							</div>
+							<?php } ?>
 						</div>
 					</div>
 				</div>

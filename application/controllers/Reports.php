@@ -897,6 +897,77 @@ class Reports extends CI_Controller {
         $this->load->view('template/header');
         $this->load->view('template/sidebar',$this->dropdown);
         $data['printed']=$this->super_model->select_column_where('users', 'fullname', 'user_id', $_SESSION['user_id']);
+        $from=$this->uri->segment(3);
+        $to=$this->uri->segment(4);
+        $cat=$this->uri->segment(5);
+        $subcat=$this->uri->segment(6);
+        $item=$this->uri->segment(7);
+        $data['from']=$this->uri->segment(3);
+        $data['to']=$this->uri->segment(4);
+        $data['catt1']=$this->uri->segment(5);
+        $data['subcat2']=$this->uri->segment(6);
+        $data['item1']=$this->uri->segment(7);
+        $data['item'] = $this->super_model->select_all_order_by('items', 'item_name', 'ASC');
+        $data['subcat'] = $this->super_model->select_all_order_by('item_subcat', 'subcat_name', 'ASC');
+        $data['category'] = $this->super_model->select_all_order_by('item_categories', 'cat_name', 'ASC');
+        $data['c'] = $this->super_model->select_column_where("item_categories", "cat_name", "cat_id", $cat);
+        $data['s'] = $this->super_model->select_column_where("item_subcat", "subcat_name", "subcat_id", $subcat);
+        $data['items'] = $this->super_model->select_column_where("items", "item_name", "item_id", $item);
+        $sql="";
+        if($from!='null' && $to!='null'){
+           $sql.= " rh.restock_date BETWEEN '$from' AND '$to' AND";
+        }
+
+        if($cat!='null'){
+            $sql.= " i.category_id = '$cat' AND";
+        }
+
+        if($subcat!='null'){
+            $sql.= " i.subcat_id = '$subcat' AND";
+        }
+
+        if($item!='null'){
+            $sql.= " i.item_id = '$item' AND";
+        }
+
+        $query=substr($sql,0,-3);
+        $count=$this->super_model->custom_query("SELECT rh.* FROM restock_head rh INNER JOIN restock_details rd ON rh.rhead_id = rd.rhead_id INNER JOIN items i ON rd.item_id = i.item_id WHERE rh.saved='1' AND rh.excess='1' AND ".$query);
+        if($count!=0){
+            foreach($this->super_model->custom_query("SELECT rh.*,i.item_id, sr.supplier_id, rd.rdetails_id FROM restock_head rh INNER JOIN restock_details rd ON rh.rhead_id = rd.rhead_id INNER JOIN items i ON rd.item_id = i.item_id INNER JOIN supplier sr ON sr.supplier_id = rd.supplier_id WHERE rh.saved='1' AND rh.excess='1' AND ".$query."ORDER BY rh.restock_date DESC") AS $itm){
+                $supplier = $this->super_model->select_column_where('supplier', 'supplier_name', 'supplier_id', $itm->supplier_id);
+                $qty = $this->super_model->select_column_where('restock_details', 'quantity', 'rhead_id', $itm->rhead_id); 
+                $pn = $this->super_model->select_column_where('items', 'original_pn', 'item_id', $itm->item_id);
+                $pr = $this->super_model->select_column_where('restock_head', 'from_pr', 'rhead_id', $itm->rhead_id);
+                $item = $this->super_model->select_column_where('items', 'item_name', 'item_id', $itm->item_id);
+                $department = $this->super_model->select_column_where('department', 'department_name', 'department_id', $itm->department_id);
+                $purpose = $this->super_model->select_column_where('purpose', 'purpose_desc', 'purpose_id', $itm->purpose_id);
+                $enduse = $this->super_model->select_column_where('enduse', 'enduse_name', 'enduse_id', $itm->enduse_id);  
+                $restock_date = $this->super_model->select_column_where('restock_head', 'restock_date', 'rhead_id', $itm->rhead_id);
+                $received = $this->super_model->select_column_where("employees", "employee_name", "employee_id", $itm->received_by);
+                $returned = $this->super_model->select_column_where("employees", "employee_name", "employee_id", $itm->returned_by);
+                $acknowledge = $this->super_model->select_column_where("employees", "employee_name", "employee_id", $itm->acknowledge_by);
+                $noted_by = $this->super_model->select_column_where('employees', 'employee_name', 'employee_id', $itm->noted_by);
+                foreach($this->super_model->select_custom_where("items", "item_id = '$itm->item_id'") AS $itema){
+                    $unit = $this->super_model->select_column_where('uom', 'unit_name', 'unit_id', $itema->unit_id);
+                }             
+                $data['excess'][] = array( 
+                    'pr'=>$pr, 
+                    'unit'=>$unit,
+                    'res_date'=>$restock_date,       
+                    'supplier'=>$supplier,
+                    'item'=>$item,
+                    'department'=>$department,
+                    'purpose'=>$purpose,
+                    'enduse'=>$enduse,
+                    'pn'=>$pn,
+                    'qty'=>$qty,
+                    'acknowledge'=>$acknowledge,
+                    'noted_by'=>$noted_by,
+                    'returned_by'=>$returned,
+                    'received_by'=>$received
+                );
+            }
+        }
         $this->load->view('reports/excess_report',$data);
         $this->load->view('template/footer');
     }
@@ -1388,6 +1459,41 @@ class Reports extends CI_Controller {
            ?>
            <script>
             window.location.href ='<?php echo base_url(); ?>index.php/reports/restock_report/<?php echo $from; ?>/<?php echo $to; ?>/<?php echo $cat; ?>/<?php echo $subcat; ?>/<?php echo $item; ?>'</script> <?php
+    }
+
+    public function generateExcess(){
+           if(!empty($this->input->post('from'))){
+                $from = $this->input->post('from');
+           } else {
+                $from = "null";
+           }
+
+           if(!empty($this->input->post('to'))){
+                $to = $this->input->post('to');
+           } else {
+                $to = "null";
+           }
+
+           if(!empty($this->input->post('category'))){
+                $cat = $this->input->post('category');
+           } else {
+                $cat = "null";
+           }
+
+           if(!empty($this->input->post('subcat'))){
+                $subcat = $this->input->post('subcat');
+           } else {
+                $subcat = "null";
+           } 
+
+            if(!empty($this->input->post('item'))){
+                $item = $this->input->post('item');
+           } else {
+                $item = "null";
+           } 
+           ?>
+           <script>
+            window.location.href ='<?php echo base_url(); ?>index.php/reports/excess_report/<?php echo $from; ?>/<?php echo $to; ?>/<?php echo $cat; ?>/<?php echo $subcat; ?>/<?php echo $item; ?>'</script> <?php
     }
 
     public function generateReceived(){
@@ -2494,6 +2600,237 @@ class Reports extends CI_Controller {
         ob_end_clean();
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         header('Content-Disposition: attachment; filename="Restock Report.xlsx"');
+        readfile($exportfilename);
+        //echo "<script>window.location = 'import_items';</script>";
+    }
+
+    public function export_excess(){
+        $from=$this->uri->segment(3);
+        $to=$this->uri->segment(4);
+        $cat=$this->uri->segment(5);
+        $subcat=$this->uri->segment(6);
+        $item=$this->uri->segment(7);
+
+         $sql="";
+        if($from!='null' && $to!='null'){
+           $sql.= " rh.restock_date BETWEEN '$from' AND '$to' AND";
+        }
+
+        if($cat!='null'){
+            $sql.= " i.category_id = '$cat' AND";
+        }
+
+        if($subcat!='null'){
+            $sql.= " i.subcat_id = '$subcat' AND";
+        }
+
+        if($item!='null'){
+            $sql.= " i.item_id = '$item' AND";
+        }
+
+        $query=substr($sql,0,-3);
+
+        require_once(APPPATH.'../assets/js/phpexcel/Classes/PHPExcel/IOFactory.php');
+        $objPHPExcel = new PHPExcel();
+        $exportfilename="Excess Report.xlsx";
+
+        $gdImage = imagecreatefrompng('assets/default/logo_cenpri.png');
+        // Add a drawing to the worksheetecho date('H:i:s') . " Add a drawing to the worksheet\n";
+        $objDrawing = new PHPExcel_Worksheet_MemoryDrawing();
+        $objDrawing->setName('Sample image');
+        $objDrawing->setDescription('Sample image');
+        $objDrawing->setImageResource($gdImage);
+        $objDrawing->setRenderingFunction(PHPExcel_Worksheet_MemoryDrawing::RENDERING_JPEG);
+        $objDrawing->setMimeType(PHPExcel_Worksheet_MemoryDrawing::MIMETYPE_DEFAULT);
+        $objDrawing->setHeight(35);
+        $objDrawing->setCoordinates('A2');
+        $objDrawing->setWorksheet($objPHPExcel->getActiveSheet());
+        $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+        $objWriter->save(str_replace('.php', '.xlsx', __FILE__));
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A5', "Period Covered:");
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A7', "Warehouse");
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A8', "Main Category");
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A10', "No.");
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B10', "Restock Date");
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('D10', "PR No.");
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('F10', "Item Part No.");
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('H10', "Item Description");
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('L10', "UoM");
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('M10', "Total Qty Restock");
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('O10', "Supplier");
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('R10', "Department");
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('U10', "Purpose");
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('X10', "End Use");
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('AA10', "Reason");
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C1', "CENTRAL NEGROS POWER RELIABILITY, INC.");
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C2', "Purok San Jose, Brgy. Calumangan, Bago City");
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C3', "Tel. No. 476 - 7382");
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C5', "TO");
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('G5', "FROM");
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('N2', "SUMMARY OF RESTOCK MATERIALS");
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('F8', "Sub-Category");
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('L8', "Item Name");
+        $num=11;
+       $itemname=$this->super_model->select_column_where("items", "item_name", "item_id", $item);
+        $catname=$this->super_model->select_column_where("item_categories", "cat_name", "cat_id", $cat);
+        $subcatname=$this->super_model->select_column_where("item_subcat", "subcat_name", "subcat_id", $subcat);
+        foreach($this->super_model->select_custom_where("receive_head","receive_date BETWEEN '$from' AND '$to'") AS $head){
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('D5', $from);
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('H5', $to);
+        } 
+       
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C8', $catname);
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('H8', $subcatname);
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('M8', $itemname);
+        
+        
+        $x = 1;
+       
+            foreach($this->super_model->custom_query("SELECT rh.*,i.item_id, sr.supplier_id, rd.rdetails_id FROM restock_head rh INNER JOIN restock_details rd ON rh.rhead_id = rd.rhead_id INNER JOIN items i ON rd.item_id = i.item_id INNER JOIN supplier sr ON sr.supplier_id = rd.supplier_id WHERE rh.saved='1' AND rh.excess='1' AND ".$query."ORDER BY rh.restock_date DESC") AS $itm){
+                $supplier = $this->super_model->select_column_where('supplier', 'supplier_name', 'supplier_id', $itm->supplier_id);
+                $qty = $this->super_model->select_column_where('restock_details', 'quantity', 'rhead_id', $itm->rhead_id); 
+                $pn = $this->super_model->select_column_where('items', 'original_pn', 'item_id', $itm->item_id);
+                $pr = $this->super_model->select_column_where('restock_head', 'pr_no', 'rhead_id', $itm->rhead_id);
+                $item = $this->super_model->select_column_where('items', 'item_name', 'item_id', $itm->item_id);
+                $department = $this->super_model->select_column_where('department', 'department_name', 'department_id', $itm->department_id);
+                $purpose = $this->super_model->select_column_where('purpose', 'purpose_desc', 'purpose_id', $itm->purpose_id);
+                $enduse = $this->super_model->select_column_where('enduse', 'enduse_name', 'enduse_id', $itm->enduse_id);  
+                $restock_date = $this->super_model->select_column_where('restock_head', 'restock_date', 'rhead_id', $itm->rhead_id);
+                $received = $this->super_model->select_column_where("employees", "employee_name", "employee_id", $itm->received_by);
+                $returned = $this->super_model->select_column_where("employees", "employee_name", "employee_id", $itm->returned_by);
+                $acknowledge = $this->super_model->select_column_where("employees", "employee_name", "employee_id", $itm->acknowledge_by);
+                $noted_by = $this->super_model->select_column_where('employees', 'employee_name', 'employee_id', $itm->noted_by);
+                foreach($this->super_model->select_custom_where("items", "item_id = '$itm->item_id'") AS $itema){
+                    $unit = $this->super_model->select_column_where('uom', 'unit_name', 'unit_id', $itema->unit_id);
+                }  
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A'.$num, $x);
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B'.$num, $restock_date);
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('D'.$num, $pr);
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('F'.$num, $pn);
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('H'.$num, $item); 
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('L'.$num, $unit); 
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('M'.$num, $qty); 
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('O'.$num, $supplier); 
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('R'.$num, $department); 
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('U'.$num, $purpose);
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('X'.$num, $enduse);
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('AA'.$num, $itm->reason);
+
+                $objPHPExcel->getActiveSheet()->getProtection()->setSheet(true);    
+                $objPHPExcel->getActiveSheet()->protectCells('A'.$num.":AC".$num,'admin');
+
+                $num++;
+                $x++;
+                $objPHPExcel->getActiveSheet()->mergeCells('B'.$num.":C".$num);
+                $objPHPExcel->getActiveSheet()->mergeCells('D11:E11');
+                $objPHPExcel->getActiveSheet()->mergeCells('D'.$num.":E".$num);
+                $objPHPExcel->getActiveSheet()->mergeCells('F11:G11');
+                $objPHPExcel->getActiveSheet()->mergeCells('F'.$num.":G".$num);
+                $objPHPExcel->getActiveSheet()->mergeCells('H11:K11');
+                $objPHPExcel->getActiveSheet()->mergeCells('H'.$num.":K".$num);
+                $objPHPExcel->getActiveSheet()->mergeCells('M11:N11');
+                $objPHPExcel->getActiveSheet()->mergeCells('M'.$num.":N".$num);
+                $objPHPExcel->getActiveSheet()->mergeCells('O11:Q11');
+                $objPHPExcel->getActiveSheet()->mergeCells('O'.$num.":Q".$num);
+                $objPHPExcel->getActiveSheet()->mergeCells('R'.$num.":T".$num);
+                $objPHPExcel->getActiveSheet()->mergeCells('R11:T11');
+                $objPHPExcel->getActiveSheet()->mergeCells('R'.$num.":T".$num);
+                $objPHPExcel->getActiveSheet()->mergeCells('U11:W11');
+                $objPHPExcel->getActiveSheet()->mergeCells('U'.$num.":W".$num);
+                $objPHPExcel->getActiveSheet()->mergeCells('X11:Z11');
+                $objPHPExcel->getActiveSheet()->mergeCells('X'.$num.":Z".$num);
+                $objPHPExcel->getActiveSheet()->mergeCells('AA11:AC11');
+                $objPHPExcel->getActiveSheet()->mergeCells('AA'.$num.":AC".$num);
+                $objPHPExcel->getActiveSheet()->getStyle('L11:N11')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                $objPHPExcel->getActiveSheet()->getStyle('L'.$num.":M".$num)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+            }
+            $a = $num+2;
+            $b = $num+5;
+            $c = $num+4;
+            $objPHPExcel->getActiveSheet()->setCellValue('A'.$a, "Prepared By: ");
+            $objPHPExcel->getActiveSheet()->setCellValue('A'.$b, "Warehouse Personnel ");
+            $objPHPExcel->getActiveSheet()->setCellValue('D'.$a, "Checked By: ");
+            $objPHPExcel->getActiveSheet()->setCellValue('D'.$b, "Warehouse Supervisor ");
+            $objPHPExcel->getActiveSheet()->setCellValue('G'.$a, "Approved By: ");
+            $objPHPExcel->getActiveSheet()->setCellValue('G'.$b, "Plant Director/Plant Manager ");
+            $objPHPExcel->getActiveSheet()->protectCells('A'.$a.":AC".$a,'admin');
+            $objPHPExcel->getActiveSheet()->protectCells('A'.$c.":AC".$c,'admin');  
+        
+      
+      
+    
+         $styleArray = array(
+          'borders' => array(
+            'allborders' => array(
+              'style' => PHPExcel_Style_Border::BORDER_THIN
+            )
+          )
+        );
+        $num--;
+        /*$objPHPExcel->getActiveSheet()->mergeCells('H1:K1');*/
+        $objPHPExcel->getActiveSheet()->mergeCells('N2:T2');
+        $objPHPExcel->getActiveSheet()->mergeCells('B10:C10');
+        $objPHPExcel->getActiveSheet()->mergeCells('D10:E10');
+        $objPHPExcel->getActiveSheet()->mergeCells('F10:G10');
+        $objPHPExcel->getActiveSheet()->mergeCells('H10:K10');
+        $objPHPExcel->getActiveSheet()->mergeCells('M10:N10');
+        $objPHPExcel->getActiveSheet()->mergeCells('O10:Q10');
+        $objPHPExcel->getActiveSheet()->mergeCells('R10:T10');
+        $objPHPExcel->getActiveSheet()->mergeCells('U10:W10');
+        $objPHPExcel->getActiveSheet()->mergeCells('X10:Z10');
+        $objPHPExcel->getActiveSheet()->mergeCells('AA10:AC10');
+        $objPHPExcel->getActiveSheet()->mergeCells('B11:C11');
+    
+        $objPHPExcel->getActiveSheet()->getStyle('A10:AC10')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+    
+        $objPHPExcel->getActiveSheet()->getStyle('A10:AC'.$num)->applyFromArray($styleArray);
+        $objPHPExcel->getActiveSheet()->getStyle('A3:AC3')->getBorders()->getBottom()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+        $objPHPExcel->getActiveSheet()->getStyle('A1:AC1')->getBorders()->getTop()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+        $objPHPExcel->getActiveSheet()->getStyle('A1:AC1')->getBorders()->getLeft()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+        $objPHPExcel->getActiveSheet()->getStyle('A2:AC2')->getBorders()->getLeft()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+        $objPHPExcel->getActiveSheet()->getStyle('A3:AC3')->getBorders()->getLeft()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+        $objPHPExcel->getActiveSheet()->getStyle('A1:AC1')->getBorders()->getRight()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+        $objPHPExcel->getActiveSheet()->getStyle('A2:AC2')->getBorders()->getRight()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+        $objPHPExcel->getActiveSheet()->getStyle('A3:AC3')->getBorders()->getRight()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+        $objPHPExcel->getActiveSheet()->getStyle('D5:E5')->getBorders()->getBottom()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+        $objPHPExcel->getActiveSheet()->getStyle('H5:I5')->getBorders()->getBottom()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+        $objPHPExcel->getActiveSheet()->getStyle('H8:J8')->getBorders()->getBottom()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+        $objPHPExcel->getActiveSheet()->getStyle('M8:O8')->getBorders()->getBottom()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+        $objPHPExcel->getActiveSheet()->getStyle('C8:E8')->getBorders()->getBottom()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+        $objPHPExcel->getActiveSheet()->getStyle('C1')->getBorders()->getLeft()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+        $objPHPExcel->getActiveSheet()->getStyle('C2')->getBorders()->getLeft()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+        $objPHPExcel->getActiveSheet()->getStyle('C3')->getBorders()->getLeft()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+        $objPHPExcel->getActiveSheet()->getStyle('H1')->getBorders()->getLeft()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+        $objPHPExcel->getActiveSheet()->getStyle('H2')->getBorders()->getLeft()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+        $objPHPExcel->getActiveSheet()->getStyle('H3')->getBorders()->getLeft()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+        $objPHPExcel->getActiveSheet()->getStyle('AC1')->getBorders()->getRight()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+        $objPHPExcel->getActiveSheet()->getStyle('AC2')->getBorders()->getRight()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+        $objPHPExcel->getActiveSheet()->getStyle('AC3')->getBorders()->getRight()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+        $objPHPExcel->getActiveSheet()->getStyle('A1:D1')->getFont()->setBold(true);
+        $objPHPExcel->getActiveSheet()->getStyle('H1')->getFont()->setBold(true);
+        $objPHPExcel->getActiveSheet()->getStyle('C5')->getFont()->setBold(true);
+        $objPHPExcel->getActiveSheet()->getStyle('G5')->getFont()->setBold(true);
+        $objPHPExcel->getActiveSheet()->getStyle('H2')->getFont()->setBold(true);
+       /* $objPHPExcel->getActiveSheet()->getStyle('J2')->getFont()->setBold(true);*/
+        $objPHPExcel->getActiveSheet()->getStyle("N2")->getFont()->setBold(true)->setName('Arial Black');
+        $objPHPExcel->getActiveSheet()->getStyle('N2:T2')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+        //$objPHPExcel->getActiveSheet()->getStyle('I1')->getFont()->setBold(true);
+       /* $objPHPExcel->getActiveSheet()->getSecurity()->setLockWindows(true);
+        $objPHPExcel->getActiveSheet()->getSecurity()->setLockStructure(true);*/
+        /*$objPHPExcel->getActiveSheet()
+            ->getStyle('A1:F1')
+            ->getProtection()->setLocked(
+                PHPExcel_Style_Protection::PROTECTION_UNPROTECTED
+            );*/
+        $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+        if (file_exists($exportfilename))
+        unlink($exportfilename);
+        $objWriter->save($exportfilename);
+        unset($objPHPExcel);
+        unset($objWriter);   
+        ob_end_clean();
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment; filename="Excess Report.xlsx"');
         readfile($exportfilename);
         //echo "<script>window.location = 'import_items';</script>";
     }
