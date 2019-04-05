@@ -29,6 +29,9 @@
         color: blue;
         -webkit-print-color-adjust: exact;
     }
+    .font8{
+            font-size: 8px;
+        }
     @media print{
         .text-red{
             color: red;
@@ -41,8 +44,8 @@
         #print-btn{
             display: none;
         }
-        td{
-            font-size: 9px!important;
+        .font8{
+            font-size: 8px!important;
         }
         .table-bordered>tbody>tr>td, 
         .table-bordered>tbody>tr>th, 
@@ -131,71 +134,37 @@
                             <td colspan="8" class="padr5" align="right"><br></td>                    
                         </tr> 
                         <tr>
-                            <td rowspan="3" align="center" class="text-white">Date</td>
-                        </tr>
-                        <tr>
-                            <td colspan="2" align="center" class="text-white">Received</td>                        
-                            <td colspan="2" align="center" class="text-white">Issued</td>                        
-                            <td colspan="2" align="center" class="text-white">Restock</td>                        
-                            <td colspan="1" align="center" class="text-white">Balance</td>                        
+                            <td colspan="1" align="center" class="text-white">Date</td>
+                            <td colspan="3" align="center" class="text-white">Ref</td>
+                            <td align="center" class="text-white">Received</td>                        
+                            <td align="center" class="text-white">Issued</td>                        
+                            <td align="center" class="text-white">Restock</td>                        
+                            <td align="center" class="text-white">Balance</td>                        
                         </tr> 
                         <tr>
-                            <td align="center" class="text-white">Qty</td>                        
-                            <td align="center" class="text-white">MRFNo.</td>                        
-                            <td align="center" class="text-white">Qty</td>                        
-                            <td align="center" class="text-white">MIFNO.</td>     
-                            <td align="center" class="text-white">Qty</td>                        
-                            <td align="center" class="text-white">MRWFNO.</td>   
-                            <td align="center" class="text-white">Qty</td>                  
-                        </tr>
-                        <tr>
-                            <td align="center"><p style="height: 26px">2019-12-31</p></td>                        
-                            <td align="center"><p style="height: 26px">999</p></td>                        
-                            <td align="center"><p style="height: 26px">MreqF-2019-03-0071</p></td>                        
-                            <td align="center"><p style="height: 26px">999</p></td>                        
-                            <td align="center"><p style="height: 26px">MreqF-2019-03-0071</p></td>     
-                            <td align="center"><p style="height: 26px">999</p></td>                        
-                            <td align="center"><p style="height: 26px">MreqF-2019-03-0071</p></td>   
-                            <td align="center"><p style="height: 26px">999</p></td>                  
-                        </tr>  
-                        <tr>
-                            <td align="center"><p style="height: 26px">2019-12-31</p></td>                        
-                            <td align="center"><p style="height: 26px">999</p></td>                        
-                            <td align="center"><p style="height: 26px">MreqF-2019-03-0071</p></td>                        
-                            <td align="center"><p style="height: 26px">999</p></td>                        
-                            <td align="center"><p style="height: 26px">MreqF-2019-03-0071</p></td>     
-                            <td align="center"><p style="height: 26px">999</p></td>                        
-                            <td align="center"><p style="height: 26px">MreqF-2019-03-0071</p></td>   
-                            <td align="center"><p style="height: 26px">999</p></td>                  
+                            <td class="font8" colspan="1" align="center">2019-09-19</td>
+                            <td class="font8" colspan="3" align="center">MreqF-2019-03-0071</td>
+                            <td class="font8" align="center">99</td>                        
+                            <td class="font8" align="center">99</td>                        
+                            <td class="font8" align="center">999</td>                        
+                            <td class="font8" align="center">999</td>                        
                         </tr> 
                         <tr>
-                            <td align="center"><p style="height: 26px">2019-12-31</p></td>                        
-                            <td align="center"><p style="height: 26px">999</p></td>                        
-                            <td align="center"><p style="height: 26px">MreqF-2019-03-0071</p></td>                        
-                            <td align="center"><p style="height: 26px">999</p></td>                        
-                            <td align="center"><p style="height: 26px">MreqF-2019-03-0071</p></td>     
-                            <td align="center"><p style="height: 26px">999</p></td>                        
-                            <td align="center"><p style="height: 26px">MreqF-2019-03-0071</p></td>   
-                            <td align="center"><p style="height: 26px">999</p></td>                  
-                        </tr> 
-                        <tr>
-                            <td align="center"><p style="height: 26px">2019-12-31</p></td>                        
-                            <td align="center"><p style="height: 26px">999</p></td>                        
-                            <td align="center"><p style="height: 26px">MreqF-2019-03-0071</p></td>                        
-                            <td align="center"><p style="height: 26px">999</p></td>                        
-                            <td align="center"><p style="height: 26px">MreqF-2019-03-0071</p></td>     
-                            <td align="center"><p style="height: 26px">999</p></td>                        
-                            <td align="center"><p style="height: 26px">MreqF-2019-03-0071</p></td>   
-                            <td align="center"><p style="height: 26px">999</p></td>                  
+                            <td class="font8" colspan="1" align="center">2019-09-19</td>
+                            <td class="font8" colspan="3" align="center">MreqF-2019-03-0071</td>
+                            <td class="font8" align="center">99</td>                        
+                            <td class="font8" align="center">99</td>                        
+                            <td class="font8" align="center">999</td>                        
+                            <td class="font8" align="center">999</td>                        
                         </tr> 
                     </table>
                 </td>
                 
-                <!-- <td colspan="2" align="center">
+                <td colspan="2" align="center">
                     <div class="btn-group" style="position: fixed;top:10px" id="print-btn">
                     <button class="btn btn-primary" onclick="window.print()">Print <u><b>Stock Card</b></u></button>
                     <a class="btn btn-warning" target="_blank" id="print-btn1" href = "<?php echo base_url(); ?>index.php/reports/sc_prev_blank"> Print <u><b>Blank</b></u> Stock Card</a>
-                </td> -->
+                </td>
             </tr>
         </table>
 

@@ -69,7 +69,8 @@
 									<button title="Print This Page" id="printReport" class="btn btn-primary btn-sm pull-right " onclick="printDiv('printableArea')" style="margin-top: 7px!important;margin-right: 5px!important">
 										<span  class="fa fa-print"></span>
 									</button>
-									<a href="<?php echo base_url(); ?>index.php/reports/stock_card_preview" target="_blank" class="btn btn-primary btn-sm pull-right" style="margin-top: 7px!important;margin-right: 5px!important">Print Stock Card</a>
+									<a href="<?php echo base_url(); ?>index.php/reports/stock_card_preview" target="_blank" class="btn btn-primary btn-sm pull-right" style="margin-top: 7px!important;margin-right: 5px!important">Print Stock Card (A4)</a>
+									<a href="<?php echo base_url(); ?>index.php/reports/stock_card_preview_long" target="_blank" class="btn btn-primary btn-sm pull-right" style="margin-top: 7px!important;margin-right: 5px!important">Print Stock Card (Long)</a>
 								</p>
 								<table class="table table-hover table-bordered">
 									<thead>

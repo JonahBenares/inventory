@@ -25,6 +25,9 @@
         color: blue;
         -webkit-print-color-adjust: exact;
     }
+    .font8{
+        font-size: 8px;
+    }
     @media print{
         .text-red{
             color: red;
@@ -37,8 +40,8 @@
         #print-btn{
             display: none;
         }
-        td{
-            font-size: 9px!important;
+        .font8{
+            font-size: 8px!important;
         }
     }
     p{
@@ -116,196 +119,413 @@
                             <td colspan="8" class="padr5" align="right"><br></td>                    
                         </tr> 
                         <tr>
-                            <td rowspan="3" align="center">Date</td>
-                        </tr>
-                        <tr>
-                            <td colspan="2" align="center">Received</td>                        
-                            <td colspan="2" align="center">Issued</td>                        
-                            <td colspan="2" align="center">Restock</td>                        
-                            <td colspan="1" align="center">Balance</td>                        
+                            <td colspan="1" align="center">Date</td>
+                            <td colspan="3" align="center">Ref</td>
+                            <td align="center">Received</td>                        
+                            <td align="center">Issued</td>                        
+                            <td align="center">Restock</td>                        
+                            <td align="center">Balance</td>                        
                         </tr> 
                         <tr>
-                            <td align="center">Qty</td>                        
-                            <td align="center">MRFNo.</td>                        
-                            <td align="center">Qty</td>                        
-                            <td align="center">MIFNO.</td>     
-                            <td align="center">Qty</td>                        
-                            <td align="center">MRWFNO.</td>   
-                            <td align="center">Qty</td>                  
-                        </tr>
+                            <td class="font8" colspan="1" align="center"><br></td>
+                            <td class="font8" colspan="3" align="center"></td>
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                        </tr> 
                         <tr>
-                            <td align="center"><p style="height: 26px"></p></td>                        
-                            <td align="center"><p style="height: 26px"></p></td>                        
-                            <td align="center"><p style="height: 26px"></p></td>                        
-                            <td align="center"><p style="height: 26px"></p></td>                        
-                            <td align="center"><p style="height: 26px"></p></td>     
-                            <td align="center"><p style="height: 26px"></p></td>                        
-                            <td align="center"><p style="height: 26px"></p></td>   
-                            <td align="center"><p style="height: 26px"></p></td>                  
-                        </tr>   
+                            <td class="font8" colspan="1" align="center"><br></td>
+                            <td class="font8" colspan="3" align="center"></td>
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                        </tr> 
                         <tr>
-                            <td align="center"><p style="height: 26px"></p></td>                        
-                            <td align="center"><p style="height: 26px"></p></td>                        
-                            <td align="center"><p style="height: 26px"></p></td>                        
-                            <td align="center"><p style="height: 26px"></p></td>                        
-                            <td align="center"><p style="height: 26px"></p></td>     
-                            <td align="center"><p style="height: 26px"></p></td>                        
-                            <td align="center"><p style="height: 26px"></p></td>   
-                            <td align="center"><p style="height: 26px"></p></td>                  
-                        </tr>
+                            <td class="font8" colspan="1" align="center"><br></td>
+                            <td class="font8" colspan="3" align="center"></td>
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                        </tr> 
                         <tr>
-                            <td align="center"><p style="height: 26px"></p></td>                        
-                            <td align="center"><p style="height: 26px"></p></td>                        
-                            <td align="center"><p style="height: 26px"></p></td>                        
-                            <td align="center"><p style="height: 26px"></p></td>                        
-                            <td align="center"><p style="height: 26px"></p></td>     
-                            <td align="center"><p style="height: 26px"></p></td>                        
-                            <td align="center"><p style="height: 26px"></p></td>   
-                            <td align="center"><p style="height: 26px"></p></td>                  
-                        </tr>
+                            <td class="font8" colspan="1" align="center"><br></td>
+                            <td class="font8" colspan="3" align="center"></td>
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                        </tr> 
                         <tr>
-                            <td align="center"><p style="height: 26px"></p></td>                        
-                            <td align="center"><p style="height: 26px"></p></td>                        
-                            <td align="center"><p style="height: 26px"></p></td>                        
-                            <td align="center"><p style="height: 26px"></p></td>                        
-                            <td align="center"><p style="height: 26px"></p></td>     
-                            <td align="center"><p style="height: 26px"></p></td>                        
-                            <td align="center"><p style="height: 26px"></p></td>   
-                            <td align="center"><p style="height: 26px"></p></td>                  
-                        </tr>
+                            <td class="font8" colspan="1" align="center"><br></td>
+                            <td class="font8" colspan="3" align="center"></td>
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                        </tr> 
                         <tr>
-                            <td align="center"><p style="height: 26px"></p></td>                        
-                            <td align="center"><p style="height: 26px"></p></td>                        
-                            <td align="center"><p style="height: 26px"></p></td>                        
-                            <td align="center"><p style="height: 26px"></p></td>                        
-                            <td align="center"><p style="height: 26px"></p></td>     
-                            <td align="center"><p style="height: 26px"></p></td>                        
-                            <td align="center"><p style="height: 26px"></p></td>   
-                            <td align="center"><p style="height: 26px"></p></td>                  
-                        </tr>   
+                            <td class="font8" colspan="1" align="center"><br></td>
+                            <td class="font8" colspan="3" align="center"></td>
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                        </tr> 
                         <tr>
-                            <td align="center"><p style="height: 26px"></p></td>                        
-                            <td align="center"><p style="height: 26px"></p></td>                        
-                            <td align="center"><p style="height: 26px"></p></td>                        
-                            <td align="center"><p style="height: 26px"></p></td>                        
-                            <td align="center"><p style="height: 26px"></p></td>     
-                            <td align="center"><p style="height: 26px"></p></td>                        
-                            <td align="center"><p style="height: 26px"></p></td>   
-                            <td align="center"><p style="height: 26px"></p></td>                  
-                        </tr>
+                            <td class="font8" colspan="1" align="center"><br></td>
+                            <td class="font8" colspan="3" align="center"></td>
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                        </tr> 
                         <tr>
-                            <td align="center"><p style="height: 26px"></p></td>                        
-                            <td align="center"><p style="height: 26px"></p></td>                        
-                            <td align="center"><p style="height: 26px"></p></td>                        
-                            <td align="center"><p style="height: 26px"></p></td>                        
-                            <td align="center"><p style="height: 26px"></p></td>     
-                            <td align="center"><p style="height: 26px"></p></td>                        
-                            <td align="center"><p style="height: 26px"></p></td>   
-                            <td align="center"><p style="height: 26px"></p></td>                  
-                        </tr>
+                            <td class="font8" colspan="1" align="center"><br></td>
+                            <td class="font8" colspan="3" align="center"></td>
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                        </tr> 
                         <tr>
-                            <td align="center"><p style="height: 26px"></p></td>                        
-                            <td align="center"><p style="height: 26px"></p></td>                        
-                            <td align="center"><p style="height: 26px"></p></td>                        
-                            <td align="center"><p style="height: 26px"></p></td>                        
-                            <td align="center"><p style="height: 26px"></p></td>     
-                            <td align="center"><p style="height: 26px"></p></td>                        
-                            <td align="center"><p style="height: 26px"></p></td>   
-                            <td align="center"><p style="height: 26px"></p></td>                  
-                        </tr>
+                            <td class="font8" colspan="1" align="center"><br></td>
+                            <td class="font8" colspan="3" align="center"></td>
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                        </tr> 
                         <tr>
-                            <td align="center"><p style="height: 26px"></p></td>                        
-                            <td align="center"><p style="height: 26px"></p></td>                        
-                            <td align="center"><p style="height: 26px"></p></td>                        
-                            <td align="center"><p style="height: 26px"></p></td>                        
-                            <td align="center"><p style="height: 26px"></p></td>     
-                            <td align="center"><p style="height: 26px"></p></td>                        
-                            <td align="center"><p style="height: 26px"></p></td>   
-                            <td align="center"><p style="height: 26px"></p></td>                  
-                        </tr>   
+                            <td class="font8" colspan="1" align="center"><br></td>
+                            <td class="font8" colspan="3" align="center"></td>
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                        </tr> 
                         <tr>
-                            <td align="center"><p style="height: 26px"></p></td>                        
-                            <td align="center"><p style="height: 26px"></p></td>                        
-                            <td align="center"><p style="height: 26px"></p></td>                        
-                            <td align="center"><p style="height: 26px"></p></td>                        
-                            <td align="center"><p style="height: 26px"></p></td>     
-                            <td align="center"><p style="height: 26px"></p></td>                        
-                            <td align="center"><p style="height: 26px"></p></td>   
-                            <td align="center"><p style="height: 26px"></p></td>                  
-                        </tr>
+                            <td class="font8" colspan="1" align="center"><br></td>
+                            <td class="font8" colspan="3" align="center"></td>
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                        </tr> 
                         <tr>
-                            <td align="center"><p style="height: 26px"></p></td>                        
-                            <td align="center"><p style="height: 26px"></p></td>                        
-                            <td align="center"><p style="height: 26px"></p></td>                        
-                            <td align="center"><p style="height: 26px"></p></td>                        
-                            <td align="center"><p style="height: 26px"></p></td>     
-                            <td align="center"><p style="height: 26px"></p></td>                        
-                            <td align="center"><p style="height: 26px"></p></td>   
-                            <td align="center"><p style="height: 26px"></p></td>                  
-                        </tr>
+                            <td class="font8" colspan="1" align="center"><br></td>
+                            <td class="font8" colspan="3" align="center"></td>
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                        </tr> 
                         <tr>
-                            <td align="center"><p style="height: 26px"></p></td>                        
-                            <td align="center"><p style="height: 26px"></p></td>                        
-                            <td align="center"><p style="height: 26px"></p></td>                        
-                            <td align="center"><p style="height: 26px"></p></td>                        
-                            <td align="center"><p style="height: 26px"></p></td>     
-                            <td align="center"><p style="height: 26px"></p></td>                        
-                            <td align="center"><p style="height: 26px"></p></td>   
-                            <td align="center"><p style="height: 26px"></p></td>                  
-                        </tr>
+                            <td class="font8" colspan="1" align="center"><br></td>
+                            <td class="font8" colspan="3" align="center"></td>
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                        </tr> 
                         <tr>
-                            <td align="center"><p style="height: 26px"></p></td>                        
-                            <td align="center"><p style="height: 26px"></p></td>                        
-                            <td align="center"><p style="height: 26px"></p></td>                        
-                            <td align="center"><p style="height: 26px"></p></td>                        
-                            <td align="center"><p style="height: 26px"></p></td>     
-                            <td align="center"><p style="height: 26px"></p></td>                        
-                            <td align="center"><p style="height: 26px"></p></td>   
-                            <td align="center"><p style="height: 26px"></p></td>                  
-                        </tr>   
+                            <td class="font8" colspan="1" align="center"><br></td>
+                            <td class="font8" colspan="3" align="center"></td>
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                        </tr> 
                         <tr>
-                            <td align="center"><p style="height: 26px"></p></td>                        
-                            <td align="center"><p style="height: 26px"></p></td>                        
-                            <td align="center"><p style="height: 26px"></p></td>                        
-                            <td align="center"><p style="height: 26px"></p></td>                        
-                            <td align="center"><p style="height: 26px"></p></td>     
-                            <td align="center"><p style="height: 26px"></p></td>                        
-                            <td align="center"><p style="height: 26px"></p></td>   
-                            <td align="center"><p style="height: 26px"></p></td>                  
-                        </tr>
+                            <td class="font8" colspan="1" align="center"><br></td>
+                            <td class="font8" colspan="3" align="center"></td>
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                        </tr> 
                         <tr>
-                            <td align="center"><p style="height: 26px"></p></td>                        
-                            <td align="center"><p style="height: 26px"></p></td>                        
-                            <td align="center"><p style="height: 26px"></p></td>                        
-                            <td align="center"><p style="height: 26px"></p></td>                        
-                            <td align="center"><p style="height: 26px"></p></td>     
-                            <td align="center"><p style="height: 26px"></p></td>                        
-                            <td align="center"><p style="height: 26px"></p></td>   
-                            <td align="center"><p style="height: 26px"></p></td>                  
-                        </tr>
-                        <!-- <tr>
-                            <td align="center"></td>                        
-                            <td align="center"></td>                        
-                            <td align="center">MreqF-2019-03-0071</td>                        
-                            <td align="center"></td>                        
-                            <td align="center">MIF-2019-03-0059</td>     
-                            <td align="center"></td>                        
-                            <td align="center">MRWF-2019-03-0002</td>   
-                            <td align="center"></td>                  
-                        </tr>  -->                       
+                            <td class="font8" colspan="1" align="center"><br></td>
+                            <td class="font8" colspan="3" align="center"></td>
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                        </tr> 
+                        <tr>
+                            <td class="font8" colspan="1" align="center"><br></td>
+                            <td class="font8" colspan="3" align="center"></td>
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                        </tr> 
+                        <tr>
+                            <td class="font8" colspan="1" align="center"><br></td>
+                            <td class="font8" colspan="3" align="center"></td>
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                        </tr> 
+                        <tr>
+                            <td class="font8" colspan="1" align="center"><br></td>
+                            <td class="font8" colspan="3" align="center"></td>
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                        </tr> 
+                        <tr>
+                            <td class="font8" colspan="1" align="center"><br></td>
+                            <td class="font8" colspan="3" align="center"></td>
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                        </tr> 
+                        <tr>
+                            <td class="font8" colspan="1" align="center"><br></td>
+                            <td class="font8" colspan="3" align="center"></td>
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                        </tr> 
+                        <tr>
+                            <td class="font8" colspan="1" align="center"><br></td>
+                            <td class="font8" colspan="3" align="center"></td>
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                        </tr> 
+                        <tr>
+                            <td class="font8" colspan="1" align="center"><br></td>
+                            <td class="font8" colspan="3" align="center"></td>
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                        </tr> 
+                        <tr>
+                            <td class="font8" colspan="1" align="center"><br></td>
+                            <td class="font8" colspan="3" align="center"></td>
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                        </tr> 
+                        <tr>
+                            <td class="font8" colspan="1" align="center"><br></td>
+                            <td class="font8" colspan="3" align="center"></td>
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                        </tr> 
+                        <tr>
+                            <td class="font8" colspan="1" align="center"><br></td>
+                            <td class="font8" colspan="3" align="center"></td>
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                        </tr> 
+                        <tr>
+                            <td class="font8" colspan="1" align="center"><br></td>
+                            <td class="font8" colspan="3" align="center"></td>
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                        </tr> 
+                        <tr>
+                            <td class="font8" colspan="1" align="center"><br></td>
+                            <td class="font8" colspan="3" align="center"></td>
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                        </tr> 
+                        <tr>
+                            <td class="font8" colspan="1" align="center"><br></td>
+                            <td class="font8" colspan="3" align="center"></td>
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                        </tr> 
+                        <tr>
+                            <td class="font8" colspan="1" align="center"><br></td>
+                            <td class="font8" colspan="3" align="center"></td>
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                        </tr> 
+                        <tr>
+                            <td class="font8" colspan="1" align="center"><br></td>
+                            <td class="font8" colspan="3" align="center"></td>
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                        </tr> 
+                        <tr>
+                            <td class="font8" colspan="1" align="center"><br></td>
+                            <td class="font8" colspan="3" align="center"></td>
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                        </tr> 
+                        <tr>
+                            <td class="font8" colspan="1" align="center"><br></td>
+                            <td class="font8" colspan="3" align="center"></td>
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                        </tr> 
+                        <tr>
+                            <td class="font8" colspan="1" align="center"><br></td>
+                            <td class="font8" colspan="3" align="center"></td>
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                        </tr> 
+                        <tr>
+                            <td class="font8" colspan="1" align="center"><br></td>
+                            <td class="font8" colspan="3" align="center"></td>
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                        </tr> 
+                        <tr>
+                            <td class="font8" colspan="1" align="center"><br></td>
+                            <td class="font8" colspan="3" align="center"></td>
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                        </tr> 
+                        <tr>
+                            <td class="font8" colspan="1" align="center"><br></td>
+                            <td class="font8" colspan="3" align="center"></td>
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                        </tr> 
+                        <tr>
+                            <td class="font8" colspan="1" align="center"><br></td>
+                            <td class="font8" colspan="3" align="center"></td>
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                        </tr> 
+                        <tr>
+                            <td class="font8" colspan="1" align="center"><br></td>
+                            <td class="font8" colspan="3" align="center"></td>
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                        </tr> 
+                        <tr>
+                            <td class="font8" colspan="1" align="center"><br></td>
+                            <td class="font8" colspan="3" align="center"></td>
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                        </tr> 
+                        <tr>
+                            <td class="font8" colspan="1" align="center"><br></td>
+                            <td class="font8" colspan="3" align="center"></td>
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                        </tr> 
+                        <tr>
+                            <td class="font8" colspan="1" align="center"><br></td>
+                            <td class="font8" colspan="3" align="center"></td>
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                        </tr> 
+                        <tr>
+                            <td class="font8" colspan="1" align="center"><br></td>
+                            <td class="font8" colspan="3" align="center"></td>
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                        </tr> 
+                        <tr>
+                            <td class="font8" colspan="1" align="center"><br></td>
+                            <td class="font8" colspan="3" align="center"></td>
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                        </tr> 
+                        <tr>
+                            <td class="font8" colspan="1" align="center"><br></td>
+                            <td class="font8" colspan="3" align="center"></td>
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                        </tr> 
+                        <tr>
+                            <td class="font8" colspan="1" align="center"><br></td>
+                            <td class="font8" colspan="3" align="center"></td>
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                        </tr> 
+                        <tr>
+                            <td class="font8" colspan="1" align="center"><br></td>
+                            <td class="font8" colspan="3" align="center"></td>
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                        </tr> 
+                        <tr>
+                            <td class="font8" colspan="1" align="center"><br></td>
+                            <td class="font8" colspan="3" align="center"></td>
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                        </tr> 
+                        <tr>
+                            <td class="font8" colspan="1" align="center"><br></td>
+                            <td class="font8" colspan="3" align="center"></td>
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                            <td class="font8" align="center"></td>                        
+                        </tr>                      
                     </table>
-                </td>
-
-
-
-
-                
-                <!-- <td colspan="2" align="center">
+                </td>                
+                <td colspan="2" align="center">
                     <div class="btn-group"  id="print-btn" style="position: fixed;top:10px">
                         <button  class="btn btn-primary" onclick="window.print()">Print <u><b>Stock Card</b></u></button>
                         <a href=""></a>
                     </div>
-                </td> -->
+                </td>
             </tr>
         </table>
 

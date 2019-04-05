@@ -1386,6 +1386,16 @@ class Reports extends CI_Controller {
         $this->load->view('reports/sc_prev_blank');
     }
 
+    public function stock_card_preview_long(){
+        $this->load->view('template/header');
+        $this->load->view('reports/stock_card_preview_long');
+    }
+
+    public function sc_prev_blank_long(){ 
+        $this->load->view('template/header');
+        $this->load->view('reports/sc_prev_blank_long'); 
+    }
+
     public function generateReport(){
            $id= $this->input->post('item_id'); 
            ?>
