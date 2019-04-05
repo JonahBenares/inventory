@@ -97,39 +97,41 @@
                                     <small id="psrntby">printed by: admin admin admin | 2019-01-10 | 20:20am</small>
                                 </center>
                             </td>
-                        </tr>  
+                        </tr> 
+                        <?php foreach($item AS $i){ ?>
                         <tr>
                             <td colspan="1" class="padr5 " align="right"><p class="text-white" style="height: 40px">Item Desc:</p></td>
-                            <td colspan="7" class="padl5"><p style="height: 40px">Sorbent Boom, Economical SPC, 8" x 10" ENV810 (Economy Boom w/Blue Sleeve, Lint Free, 4/Bale, Absorbency Capacity: 65ga)</p></td>
+                            <td colspan="7" class="padl5"><p style="height: 40px"><?php echo $i['item'];?></p></td>
                         </tr>  
                         <tr>
                             <td colspan="1" class="padr5 text-white" align="right">Location:</td>
-                            <td colspan="2" class="padl5">WH - Extn B</td>
+                            <td colspan="2" class="padl5"><?php echo $i['location'];?></td>
                             <td colspan="1" class="padr5 text-white" align="right">Rack:</td>
-                            <td colspan="2" class="padl5">Rack - A1</td>
-                            <td colspan="1" class="padr5 text-white" align="right">Ord Qty:</td>
-                            <td colspan="1" class="padl5">9999</td>                            
+                            <td colspan="2" class="padl5"><?php echo $i['rack'];?></td>
+                            <td colspan="1" class="padr5 text-white" align="right">ReOrd Qty:</td>
+                            <td colspan="1" class="padl5"><?php echo $i['min_qty'];?></td>                            
                         </tr> 
                         <tr>
                             <td colspan="1" class="padr5 text-white" align="right">Brand:</td>     
-                            <td colspan="7" class="padl5">Tranfindo Transformer</td>                            
+                            <td colspan="7" class="padl5"><?php echo $i['brand'];?></td>                            
                         </tr> 
                         <tr>
                             <td colspan="1" class="padr5 text-white" align="right">Orig PN:</td>
-                            <td colspan="2" class="padl5">CON-CHE_1005</td>
+                            <td colspan="2" class="padl5"><?php echo $i['pn'];?></td>
                             <td colspan="1" class="padr5 text-white" align="right">Cost:</td>
-                            <td colspan="2" class="padl5">99999</td>      
+                            <td colspan="2" class="padl5"><?php echo $i['cost'];?></td>      
                             <td colspan="1" class="padr5 text-white" align="right">U/M:</td>
-                            <td colspan="1" class="padl5">kg</td>                      
+                            <td colspan="1" class="padl5"><?php echo $i['unit'];?></td>                      
                         </tr> 
                         <tr>
                             <td colspan="1" class="padr5 text-white" align="right">Cat PN:</td>
-                            <td colspan="2" class="padl5">213123</td>
+                            <td colspan="2" class="padl5"><?php echo $i['cat_no'];?></td>
                             <td colspan="1" class="padr5 text-white" align="right">BarCode:</td>
-                            <td colspan="2" class="padl5"></td>    
+                            <td colspan="2" class="padl5"><?php echo $i['barcode'];?></td>    
                             <td colspan="1" class="padr5 text-white" align="right">Model:</td>
                             <td colspan="1" class="padl5"></td>                         
                         </tr> 
+                        <?php } ?>
                         <tr>
                             <td colspan="8" class="padr5" align="right"><br></td>                    
                         </tr> 
@@ -141,22 +143,26 @@
                             <td align="center" class="text-white">Restock</td>                        
                             <td align="center" class="text-white">Balance</td>                        
                         </tr> 
+                        <?php 
+                            foreach($rec_itm AS $r){
+                        ?>
                         <tr>
+                            <td class="font8" colspan="1" align="center"><?php echo $r['date'];?></td>
+                            <td class="font8" colspan="3" align="center"><?php echo $r['ref'];?></td>
+                            <td class="font8" align="center"><?php echo $r['receive_qty']; ?></td>                        
+                            <td class="font8" align="center"><?php echo $r['issueqty']; ?></td>                        
+                            <td class="font8" align="center"><?php echo $r['restockqty'];?></td>                        
+                            <td class="font8" align="center"><?php echo $r['balance'];?></td>                        
+                        </tr>
+                        <?php } ?> 
+                        <!-- <tr>
                             <td class="font8" colspan="1" align="center">2019-09-19</td>
                             <td class="font8" colspan="3" align="center">MreqF-2019-03-0071</td>
                             <td class="font8" align="center">99</td>                        
                             <td class="font8" align="center">99</td>                        
                             <td class="font8" align="center">999</td>                        
                             <td class="font8" align="center">999</td>                        
-                        </tr> 
-                        <tr>
-                            <td class="font8" colspan="1" align="center">2019-09-19</td>
-                            <td class="font8" colspan="3" align="center">MreqF-2019-03-0071</td>
-                            <td class="font8" align="center">99</td>                        
-                            <td class="font8" align="center">99</td>                        
-                            <td class="font8" align="center">999</td>                        
-                            <td class="font8" align="center">999</td>                        
-                        </tr> 
+                        </tr>  -->
                     </table>
                 </td>
                 
