@@ -94,7 +94,7 @@
 										?>
 										<tr>										
 											<td align="center"><?php echo $rec['supplier'];?></td>
-											<td align="center"><?php echo $rec['catalog_no'];?></td>
+											<td align="center"><?php if($rec['catalog_no']!='null'){ echo $rec['catalog_no']; } else { echo ''; }?></td>
 											<td align="center"><?php echo $rec['brand'];?></td>
 											<td align="center"><?php echo $rec['item_cost'];?></td>
 											<td align="center"><?php echo $rec['receive_qty'];?></td>							
