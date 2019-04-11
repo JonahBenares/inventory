@@ -494,7 +494,7 @@ class Restock extends CI_Controller {
         }
         $data = array(
            'restock_date'=>$date,
-           'pr_no'=> $this->input->post('prno'),
+           'from_pr'=> $this->input->post('prno'),
            'returned_by'=> $this->input->post('returned'),
            'received_by'=> $this->input->post('received'),
            'acknowledge_by'=> $this->input->post('acknowledge'),

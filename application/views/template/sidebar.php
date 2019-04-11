@@ -235,7 +235,7 @@
 								</td>	
 							</tr> -->
 							<tr>
-								<td width="26%"><label>PR No. :</label></td>		
+								<td width="26%"><label>From PR. :</label></td>		
 								<td>
 									<input type = "text" name = "prno" id="prres" class = "form-control" style="margin:4px" autocomplete="off">
 									<span id="suggestion-pr1"></span>

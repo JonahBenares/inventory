@@ -129,7 +129,7 @@
 															
 															<td>
 																<?php if($it['quantity']!=0){ ?>
-																<input type='text' onkeypress="return isNumberKey(event)" name='quantity[]' class='iss_qty' data-id='<?php echo $it['quantity']; ?>' value="<?php echo $it['quantity']; ?>"style='width:50px' max="<?php echo $it['quantity']; ?>">
+																<input type='text' onkeypress="return isNumberKey(event)" name='quantity[]' class='iss_qty' data-id='<?php echo $it['rem_quantity']; ?>' value="<?php echo $it['rem_quantity']; ?>"style='width:50px' max="<?php echo $it['rem_quantity']; ?>">
 																
 																<?php } ?>
 															</td>

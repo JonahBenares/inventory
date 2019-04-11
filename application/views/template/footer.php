@@ -123,9 +123,12 @@
 	        $('.type').change(function(){
 	            if($('.type option:selected').val() ==  'JO / PR' ){
 	                $('.t').show();
+	                //$('#prno').removeAttr('disabled');
 	            }
 	            else{
 	                $('.t').slideUp();
+	              // $('#prno').attr('disabled','disabled');
+	              document.getElementById('prno').value = '';
 	            }
 	        });
 	    });

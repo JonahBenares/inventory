@@ -24,8 +24,9 @@ $(document).ready(function(){
 	 });
 
     $(".iss_qty").change(function(){
-        var iss= $(this).val();
-        var rem_qty = $(this).attr('data-id'); 
+        var iss= parseInt($(this).val());
+        var rem_qty = parseInt($(this).attr('data-id')); 
+       
         if(iss>rem_qty){
             alert('Error: Issued quantity is greater than remaining quantity of item.');
              $('input[type="button"]').attr('disabled','disabled');
