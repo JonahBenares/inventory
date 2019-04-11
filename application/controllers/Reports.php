@@ -1911,7 +1911,7 @@ class Reports extends CI_Controller {
           //  $qty=$this->super_model->select_sum_join_group("received_qty","receive_items","receive_details", "receive_details.receive_id = '$head->receive_id'", "rd_id","pr_no");
                 $issueqty= $this->super_model->select_sum_join("quantity","issuance_details","issuance_head", "item_id='$id' AND pr_no='$head->pr_no'","issuance_id");
                 $restockqty= $this->super_model->select_sum_join("quantity","restock_details","restock_head", "item_id='$id' AND pr_no='$head->pr_no' AND excess = '0'","rhead_id");
-                $total=$head->qty-$issueqty;
+                $total=($head->qty+$restockqty)-$issueqty;
                 $data['list'][] = array(
                     "prno"=>$head->pr_no,
                     "recqty"=>$head->qty,
