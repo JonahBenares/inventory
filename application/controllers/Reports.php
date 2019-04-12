@@ -1299,7 +1299,7 @@ class Reports extends CI_Controller {
                         'receive_qty'=>$rec->received_qty,
                         'issueqty'=>0,
                         'restockqty'=>0,
-                        'excessqty'=>0,
+                       // 'excessqty'=>0,
                         'date'=>$date
                     );
                 }
@@ -1329,14 +1329,14 @@ class Reports extends CI_Controller {
                         'receive_qty'=>0,
                         'issueqty'=>$issue->quantity,
                         'restockqty'=>0,
-                        'excessqty'=>0,
+                       // 'excessqty'=>0,
                         'date'=>$dateissue
                     );
                 }
             }
 
    
-             $counter_restock2 = $this->super_model->select_count_join_inner("restock_head","restock_details","$query AND excess='0'", "rhead_id");
+             $counter_restock2 = $this->super_model->select_count_join_inner("restock_head","restock_details","$query", "rhead_id");
              if($counter_restock2!=0){
     
 
@@ -1358,18 +1358,18 @@ class Reports extends CI_Controller {
                         'receive_qty'=>0,
                         'issueqty'=>0,
                         'restockqty'=>$restock2->quantity,
-                        'excessqty'=>0,
+                       // 'excessqty'=>0,
                         'date'=>$datestock
                     );
                 }
             }
 
-            $counter_excess = $this->super_model->select_count_join_inner("restock_head","restock_details","$query AND excess='1'", "rhead_id");
+          /*  $counter_excess = $this->super_model->select_count_join_inner("restock_head","restock_details","$query AND excess='1'", "rhead_id");
              if($counter_excess!=0){
     
 
                 foreach($this->super_model->custom_query("SELECT rh.rhead_id, rd.quantity, rh.restock_date FROM restock_head rh INNER JOIN restock_details rd ON rh.rhead_id = rd.rhead_id WHERE $query AND excess='1'") AS $excess){
-                    /*$restockdate=$this->super_model->select_column_where("restock_head", "restock_date", "rhead_id", $restock2->rhead_id);*/
+                  
                     $pr=$this->super_model->select_column_where("restock_head", "pr_no", "rhead_id", $excess->rhead_id);
                     $rdid=$this->super_model->select_column_where("receive_details", "rd_id", "pr_no", $pr);
 
@@ -1393,12 +1393,12 @@ class Reports extends CI_Controller {
             } else {
                  $arr_exc[]=0;
             }
-
+*/
             $sumrec=array_sum($arr_rec);
             $sumiss=array_sum($arr_iss);
             $sumst=array_sum($arr_rs);
-            $sumex=array_sum($arr_exc);
-            $total=($begbal+$sumrec+$sumst+$sumex)-$sumiss;
+          //  $sumex=array_sum($arr_exc);
+            $total=($begbal+$sumrec+$sumst)-$sumiss;
             $data['total']=$total;
        // } 
         $this->load->view('template/header');

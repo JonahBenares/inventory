@@ -172,7 +172,7 @@
             <table width="100%">
                 <tr>
                     <td width="10%"><strong><h6 class="nomarg">JO / PR #</h6></strong></td>
-                    <td width="40%"   style="border-bottom: 1px solid #999"> <label class="nomarg">:<?php echo $r['prno'];?></label></td>
+                    <td width="40%"   style="border-bottom: 1px solid #999"> <label class="nomarg">:<?php echo (!empty($r['prno']) ? $r['prno'] : ' Warehouse Stocks') ;?></label></td>
                     <td width="7%"></td>
                     <td width="10%"><strong><h6 class="nomarg pull-right">MReqF No. &nbsp</h6></strong></td>
                     <td colspan="3" style="border-bottom: 1px solid #999"> <label class="nomarg">: <?php echo $r['mreqf'];?></label></td>

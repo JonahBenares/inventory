@@ -49,7 +49,7 @@
 								<thead>
 									<tr>
 										<td width="" align="center"><strong>Restock Date</strong></td>
-										<td width="" align="center"><strong>PR#.</strong></td>
+										<td width="" align="center"><strong>From PR</strong></td>
 										<td width="" align="center"><strong>Department</strong></td>
 										<td width="30%" align="center"><strong>End-Use</strong></td>
 										<td width="" align="center"><strong>Purpose</strong></td>
@@ -65,7 +65,7 @@
 									<?php foreach($restock AS $res){ ?>
 									<tr>
 										<td align="center"><?php echo $res['date'];?></td>
-										<td align="center"><?php echo $res['prno'];?></td>
+										<td align="center"><?php echo $res['from_pr'];?></td>
 										<td align="center"><?php echo $res['department'];?></td>
 										<td align="center"><?php echo $res['enduse'];?></td>
 										<td align="center"><?php echo $res['purpose'];?></td>

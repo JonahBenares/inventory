@@ -63,7 +63,7 @@ class Restock extends CI_Controller {
                 $data['restock'][] = array(
                     'rhead_id'=>$res->rhead_id,
                     'date'=>$res->restock_date,
-                    'prno'=>$res->pr_no,
+                    'from_pr'=>$res->from_pr,
                     'department'=>$department,
                     'enduse'=>$enduse,
                     'purpose'=>$purpose,
@@ -195,7 +195,7 @@ class Restock extends CI_Controller {
             $data['restock'][] = array(
                 'rhead_id'=>$res->rhead_id,
                 'date'=>$res->restock_date,
-                'pr_no'=>$res->pr_no,
+                'from_pr'=>$res->from_pr,
                 'department'=>$department,
                 'purpose'=>$purpose,
                 'enduse'=>$enduse,

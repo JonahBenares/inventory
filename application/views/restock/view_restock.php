@@ -44,8 +44,8 @@
 								<!-- <td><a onclick="" class="btn btn-info btn-sm"><span class="fa fa-pencil"></span></a></td> -->
 							</tr>
 							<tr>
-								<td><p class="nomarg"><strong>PR #:</strong></p></td>
-								<td><h5 class="nomarg"><?php echo $res['pr_no'];?></h5></td>
+								<td><p class="nomarg"><strong>From PR:</strong></p></td>
+								<td><h5 class="nomarg"><?php echo $res['from_pr'];?></h5></td>
 								<td width="5%"></td>
 							</tr>
 							<tr>
