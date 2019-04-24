@@ -148,6 +148,7 @@ $(document).ready(function(){
      });
 
      $("#prno").keyup(function(){
+
         var loc= document.getElementById("baseurl").value;
         var redirect=loc+'/index.php/receive/prnolist';
           $.ajax({
@@ -200,7 +201,7 @@ function selectSerial(id, val) {
     $("#suggestion-purpose").hide();
 }*/
 
-function selectPRNO(valu,dept,enduse,purposeid,purpose1) {
+function selectPRNO(valu,dept,enduse,purposeid) {
  
  
     $("#prno").val(valu);

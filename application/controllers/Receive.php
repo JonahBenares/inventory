@@ -482,7 +482,7 @@ class Receive extends CI_Controller {
             foreach($this->super_model->custom_query("SELECT pr_no, department_id, enduse_id, purpose_id FROM receive_details rd INNER JOIN receive_head rh ON rd.receive_id = rh.receive_id WHERE rd.pr_no LIKE '%$prno%' AND rh.saved='1' AND rd.closed='0' GROUP BY rd.pr_no") AS $pr){ 
                     $purpose = $this->super_model->select_column_where("purpose", "purpose_desc", "purpose_id",$pr->purpose_id);
                     ?>
-                   <li onClick="selectPRNO('<?php echo $pr->pr_no; ?>','<?php echo $pr->department_id; ?>','<?php echo $pr->enduse_id; ?>','<?php echo $pr->purpose_id; ?>','<?php echo $purpose; ?>')"><?php echo $pr->pr_no; ?></li>
+                   <li onClick="selectPRNO('<?php echo $pr->pr_no; ?>','<?php echo $pr->department_id; ?>','<?php echo $pr->enduse_id; ?>','<?php echo $pr->purpose_id; ?>')"><?php echo $pr->pr_no; ?></li>
                 <?php 
             }
            
