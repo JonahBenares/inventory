@@ -40,6 +40,32 @@
 						</a>
 					</div> -->
 				</div>
+				<div class="modal fade" id="updatePR" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="exampleModalLongTitle">Update Purpose & Enduse
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</h5>															
+							</div>
+							<div class="modal-body">
+								<div class="form-group">
+									<p style="margin: 0px">Enduse</p>
+									<textarea rows="3" name="" class="form-control"></textarea>
+								</div>
+								<div class="form-group">
+									<p style="margin: 0px">Purpose</p>
+									<textarea rows="3" name="" class="form-control"></textarea>
+								</div>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-primary btn-block">Save changes</button>
+							</div>
+						</div>
+					</div>
+				</div>
 				
 				<div class="panel-body">
 					<div class="canvas-wrapper">
@@ -72,6 +98,9 @@
 									<td align="center"><?php echo $list['purpose'];?></td>
 									<td align="center"><?php echo $list['enduse'];?></td>
 									<td align="center">
+										<!-- <button type="button" class="btn btn-info btn-xs" data-toggle="modal" data-target="#updatePR" title="Update Purpose & Enduse">
+											<span class="fa fa-pencil"></span>
+										</button>	 -->									
 										<a href="<?php echo base_url();?>index.php/issue/mif/<?php echo $list['issuance_id'];?>"  class="btn btn-warning btn-xs" target="_blank" title="VIEW" alt='VIEW'><span class="fa fa-eye"></span></a>
 									</td>
 								</tr>

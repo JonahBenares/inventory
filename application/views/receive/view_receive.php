@@ -75,6 +75,36 @@
 									<form method = "POST">
 									<div class="col-lg-2">
 										<div class="pull-right">
+											<button type="button" class="btn btn-info" data-toggle="modal" data-target="#updatePR" title="Update Purpose & Enduse">
+											<span class="fa fa-pencil"></span>
+											</button>
+
+											<div class="modal fade" id="updatePR" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+												<div class="modal-dialog" role="document">
+													<div class="modal-content">
+														<div class="modal-header">
+															<h5 class="modal-title" id="exampleModalLongTitle">Update Purpose & Enduse
+																<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+																	<span aria-hidden="true">&times;</span>
+																</button>
+															</h5>															
+														</div>
+														<div class="modal-body">
+															<div class="form-group">
+																<p style="margin: 0px">Enduse</p>
+																<textarea rows="3" name="" class="form-control"></textarea>
+															</div>
+															<div class="form-group">
+																<p style="margin: 0px">Purpose</p>
+																<textarea rows="3" name="" class="form-control"></textarea>
+															</div>
+														</div>
+														<div class="modal-footer">
+															<button type="button" class="btn btn-primary btn-block">Save changes</button>
+														</div>
+													</div>
+												</div>
+											</div>
 											<?php if($d['closed'] == '0'){ ?>
 											<a onclick="confirmClose('<?php echo $d['prno'];?>', '<?php echo base_url(); ?>','<?php echo $id; ?>');" class="btn btn-gold" title="close PR"><span class="fa fa-unlock-alt"></span></a>
 											<?php } else { ?>
@@ -146,7 +176,7 @@
 											<td><center><?php echo $it['recqty']; ?></center></td>
 											<td><center><?php echo $it['unit']; ?></center></td>
 											<td><?php echo $it['remarks']; ?></td>
-											<td><a onclick="update_prcmrk('<?php echo $it['riid'];?>','<?php echo base_url();?>')" title="Update Price & Remarks" class="btn btn-info"><span class="fa fa-pencil"></span></a></td>
+											<td><a onclick="update_prcmrk('<?php echo $it['riid'];?>','<?php echo base_url();?>')" title="Update Price & Remarks" class="btn btn-info "><span class="fa fa-pencil"></span></a></td>
 										</tr>
 										<?php
 											$itemno++;
