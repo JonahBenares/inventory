@@ -75,10 +75,12 @@
 									<form method = "POST">
 									<div class="col-lg-2">
 										<div class="pull-right">
-											<a class="btn btn-info" data-toggle="modal" data-target="#updatePR" id = 'getEP' data-id="<?php echo $d['rdid']; ?>" title="Update Purpose & Enduse">
-											<span class="fa fa-pencil"></span>
-											</a>
-											<input type='hidden' name='rec' id='rec' value="<?php echo $id; ?>">
+											<?php if($_SESSION['user_id'] == '5'){ ?>
+												<a class="btn btn-info" data-toggle="modal" data-target="#updatePR" id = 'getEP' data-id="<?php echo $d['rdid']; ?>" title="Update Purpose & Enduse">
+												<span class="fa fa-pencil"></span>
+												</a>
+												<input type='hidden' name='rec' id='rec' value="<?php echo $id; ?>">
+											<?php } ?>
 											<?php if($d['closed'] == '0'){ ?>
 											<a onclick="confirmClose('<?php echo $d['prno'];?>', '<?php echo base_url(); ?>','<?php echo $id; ?>');" class="btn btn-gold" title="close PR"><span class="fa fa-unlock-alt"></span></a>
 											<?php } else { ?>

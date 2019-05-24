@@ -93,9 +93,11 @@
 									<td align="center"><?php echo $list['purpose'];?></td>
 									<td align="center"><?php echo $list['enduse'];?></td>
 									<td align="center">
+										<?php if($_SESSION['user_id'] == '5'){ ?>
 										<a class="btn btn-info btn-xs" data-toggle="modal" data-target="#updatePR" id = 'getEP' data-id="<?php echo $list['issuance_id']; ?>" title="Update Purpose & Enduse">
 											<span class="fa fa-pencil"></span>
-										</a>										
+										</a>	
+										<?php } ?>									
 										<a href="<?php echo base_url();?>index.php/issue/mif/<?php echo $list['issuance_id'];?>"  class="btn btn-warning btn-xs" target="_blank" title="VIEW" alt='VIEW'><span class="fa fa-eye"></span></a>
 									</td>
 								</tr>
