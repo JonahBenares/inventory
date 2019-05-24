@@ -17,6 +17,25 @@ function updateReceivePR(baseurl, id, rdid) {
 }
 
 
+$(document).on('click', '#getEP', function(e){
+    e.preventDefault();
+    var uid = $(this).data('id');    
+    var loc= document.getElementById("baseurl").value;
+    var rec_id= document.getElementById("rec").value;
+    var redirect1=loc+'/index.php/receive/edit_endpurp';
+    $.ajax({
+          url: redirect1,
+          type: 'POST',
+          data: 'id='+uid+'&recid='+rec_id,
+        beforeSend:function(){
+            $("#ep").html('Please wait ..');
+        },
+        success:function(data){
+           $("#ep").html(data);
+        },
+    })
+});
+
 $(document).ready(function(){
     var loc= document.getElementById("baseurl").value;
     var redirect=loc+'/index.php/receive/itemlist';

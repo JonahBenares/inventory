@@ -64,6 +64,8 @@ class Receive extends CI_Controller {
                 'prno'=>$det->pr_no,
                 'enduse'=>$enduse,
                 'purpose'=>$purpose,
+                'purpose_id'=>$det->purpose_id,
+                'enduse_id'=>$det->enduse_id,
                 'department'=>$deparment,
                 'closed'=>$det->closed
             );
@@ -103,7 +105,38 @@ class Receive extends CI_Controller {
         $this->load->view('template/sidebar',$this->dropdown);
         $this->load->view('receive/view_receive',$data);
         $this->load->view('template/footer');
-    } 
+    }
+
+    public function edit_endpurp(){  
+        $this->load->view('template/header');
+        $data['id']=$this->input->post('id');
+        $id=$this->input->post('id');
+        $data['rec_id']=$this->input->post('recid');
+        $rec_id=$this->input->post('recid');
+        $data['end'] = $this->super_model->select_all_order_by('enduse', 'enduse_id', 'ASC');
+        $data['purp'] = $this->super_model->select_all_order_by('purpose', 'purpose_id', 'ASC');
+        $this->load->model('super_model');
+        foreach($this->super_model->select_row_where('receive_details', 'rd_id', $id) AS $det){
+            $data['details'][] = array(
+                'purpose_id'=>$det->purpose_id,
+                'enduse_id'=>$det->enduse_id,
+            );
+        }
+        $this->load->view('receive/edit_endpurp',$data);
+    }
+
+    public function update_purend(){
+        $data = array(
+            'purpose_id'=>$this->input->post('purpose'),
+            'enduse_id'=>$this->input->post('enduse'),
+        );
+        $rd_id = $this->input->post('rd_id');
+        $rec_id = $this->input->post('rec_id');
+        if($this->super_model->update_where('receive_details', $data, 'rd_id', $rd_id)){
+            echo "<script>alert('Successfully Updated!'); 
+                window.location ='".base_url()."index.php/receive/view_receive/$rec_id'; </script>";
+        }
+    }
 
      public function mrf(){
         $data['id']=$this->uri->segment(3);

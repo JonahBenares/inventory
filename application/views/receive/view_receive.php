@@ -75,36 +75,10 @@
 									<form method = "POST">
 									<div class="col-lg-2">
 										<div class="pull-right">
-											<button type="button" class="btn btn-info" data-toggle="modal" data-target="#updatePR" title="Update Purpose & Enduse">
+											<a class="btn btn-info" data-toggle="modal" data-target="#updatePR" id = 'getEP' data-id="<?php echo $d['rdid']; ?>" title="Update Purpose & Enduse">
 											<span class="fa fa-pencil"></span>
-											</button>
-
-											<div class="modal fade" id="updatePR" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-												<div class="modal-dialog" role="document">
-													<div class="modal-content">
-														<div class="modal-header">
-															<h5 class="modal-title" id="exampleModalLongTitle">Update Purpose & Enduse
-																<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-																	<span aria-hidden="true">&times;</span>
-																</button>
-															</h5>															
-														</div>
-														<div class="modal-body">
-															<div class="form-group">
-																<p style="margin: 0px">Enduse</p>
-																<textarea rows="3" name="" class="form-control"></textarea>
-															</div>
-															<div class="form-group">
-																<p style="margin: 0px">Purpose</p>
-																<textarea rows="3" name="" class="form-control"></textarea>
-															</div>
-														</div>
-														<div class="modal-footer">
-															<button type="button" class="btn btn-primary btn-block">Save changes</button>
-														</div>
-													</div>
-												</div>
-											</div>
+											</a>
+											<input type='hidden' name='rec' id='rec' value="<?php echo $id; ?>">
 											<?php if($d['closed'] == '0'){ ?>
 											<a onclick="confirmClose('<?php echo $d['prno'];?>', '<?php echo base_url(); ?>','<?php echo $id; ?>');" class="btn btn-gold" title="close PR"><span class="fa fa-unlock-alt"></span></a>
 											<?php } else { ?>
@@ -113,7 +87,30 @@
 										</div>
 									</div>
 									</form>		
-									
+
+									<div class="modal fade" id="updatePR" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+										<div class="modal-dialog" role="document">
+											<div class="modal-content">
+												<div class="modal-header">
+													<h5 class="modal-title" id="exampleModalLongTitle">Update Purpose & Enduse
+														<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+															<span aria-hidden="true">&times;</span>
+														</button>
+													</h5>															
+												</div>
+												<form method="POST" action = "<?php echo base_url(); ?>/index.php/receive/update_purend">
+													<div class="modal-body">
+														<div id = 'ep'></div>
+													</div>
+													<input type='hidden' name='rec_id' id='rec_id' value="<?php echo $id; ?>">
+													<input type="hidden" name="baseurl" id="baseurl" value="<?php echo base_url(); ?>">
+													<div class="modal-footer">
+														<button type="submit" class="btn btn-primary btn-block">Save changes</button>
+													</div>
+												</form>
+											</div>
+										</div>
+									</div>
 									<table width="100%" class="table table-bordered " >
 										<tr >
 											<th class="tr-bottom" width="5%"><center>Item No.</center></th>
@@ -186,7 +183,7 @@
 									</table>
 								</div>
 							</div>
-							<?php }
+							<?php  } 
 							} ?>
 							<hr>
 						</div>
