@@ -308,6 +308,33 @@ class Issue extends CI_Controller {
         $this->load->view('template/footer');
     }
 
+    public function edit_endpurp(){  
+        $this->load->view('template/header');
+        $data['id']=$this->input->post('id');
+        $id=$this->input->post('id');
+        $data['end'] = $this->super_model->select_all_order_by('enduse', 'enduse_id', 'ASC');
+        $data['purp'] = $this->super_model->select_all_order_by('purpose', 'purpose_id', 'ASC');
+        foreach($this->super_model->select_row_where('issuance_head', 'issuance_id', $id) AS $i){
+            $data['issue_list'][]=array(
+                'purpose_id'=>$i->purpose_id,
+                'enduse_id'=>$i->enduse_id,
+            );
+        }
+        $this->load->view('issue/edit_endpurp',$data);
+    }
+
+    public function update_purend(){
+        $data = array(
+            'purpose_id'=>$this->input->post('purpose'),
+            'enduse_id'=>$this->input->post('enduse'),
+        );
+        $issuance_id = $this->input->post('issuance_id');
+        if($this->super_model->update_where('issuance_head', $data, 'issuance_id', $issuance_id)){
+            echo "<script>alert('Successfully Updated!'); 
+                window.location ='".base_url()."index.php/issue/view_issue'; </script>";
+        }
+    }
+
     public function new_inv_balance($itemid, $prno){
 
        // echo "SELECT SUM(ri.received_qty) AS rqty FROM receive_details rd INNER JOIN receive_items ri ON rd.rd_id = ri.rd_id WHERE ri.item_id = '$itemid' AND rd.pr_no = '$prno'<br>";
