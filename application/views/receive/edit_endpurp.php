@@ -1,5 +1,14 @@
 <?php foreach($details AS $d){ ?>
 <div class="form-group">
+	<p style="margin: 0px">Department</p>
+	<select class = "form-control" id = "department" name = 'department'>
+		<option value = "">--Select Department--</option>
+		<?php foreach($dept AS $dep){ ?>
+		<option value = "<?php echo $dep->department_id?>" <?php echo (($d['department_id'] == $dep->department_id) ? ' selected' : '');?>><?php echo $dep->department_name?></option>
+		<?php } ?>
+	</select>
+</div>
+<div class="form-group">
 	<input class="form-control" name = "rd_id" type = "hidden" value = "<?php echo $id;?>"/>
 	<input class="form-control" name = "rec_id" type = "hidden" value = "<?php echo $rec_id;?>"/>
 	<p style="margin: 0px">Enduse</p>

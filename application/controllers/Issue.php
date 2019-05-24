@@ -314,10 +314,12 @@ class Issue extends CI_Controller {
         $id=$this->input->post('id');
         $data['end'] = $this->super_model->select_all_order_by('enduse', 'enduse_id', 'ASC');
         $data['purp'] = $this->super_model->select_all_order_by('purpose', 'purpose_id', 'ASC');
+        $data['dept'] = $this->super_model->select_all_order_by('department', 'department_id', 'ASC');
         foreach($this->super_model->select_row_where('issuance_head', 'issuance_id', $id) AS $i){
             $data['issue_list'][]=array(
                 'purpose_id'=>$i->purpose_id,
                 'enduse_id'=>$i->enduse_id,
+                'department_id'=>$i->department_id,
             );
         }
         $this->load->view('issue/edit_endpurp',$data);
@@ -327,6 +329,7 @@ class Issue extends CI_Controller {
         $data = array(
             'purpose_id'=>$this->input->post('purpose'),
             'enduse_id'=>$this->input->post('enduse'),
+            'department_id'=>$this->input->post('department'),
         );
         $issuance_id = $this->input->post('issuance_id');
         if($this->super_model->update_where('issuance_head', $data, 'issuance_id', $issuance_id)){

@@ -115,9 +115,11 @@ class Receive extends CI_Controller {
         $rec_id=$this->input->post('recid');
         $data['end'] = $this->super_model->select_all_order_by('enduse', 'enduse_id', 'ASC');
         $data['purp'] = $this->super_model->select_all_order_by('purpose', 'purpose_id', 'ASC');
+        $data['dept'] = $this->super_model->select_all_order_by('department', 'department_id', 'ASC');
         $this->load->model('super_model');
         foreach($this->super_model->select_row_where('receive_details', 'rd_id', $id) AS $det){
             $data['details'][] = array(
+                'department_id'=>$det->department_id,
                 'purpose_id'=>$det->purpose_id,
                 'enduse_id'=>$det->enduse_id,
             );
@@ -129,6 +131,7 @@ class Receive extends CI_Controller {
         $data = array(
             'purpose_id'=>$this->input->post('purpose'),
             'enduse_id'=>$this->input->post('enduse'),
+            'department_id'=>$this->input->post('department'),
         );
         $rd_id = $this->input->post('rd_id');
         $rec_id = $this->input->post('rec_id');
