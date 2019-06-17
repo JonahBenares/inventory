@@ -367,7 +367,7 @@ class Restock extends CI_Controller {
             $noted_by = $this->super_model->select_column_where('employees', 'employee_name', 'employee_id', $stock->noted_by);
             $data['restock'][] = array(
                 'date'=>$stock->restock_date,
-                'prno'=>$stock->pr_no,
+                'prno'=>$stock->from_pr,
                 'returned'=>$returned,
                 'received'=>$received,
                 'department'=>$department,

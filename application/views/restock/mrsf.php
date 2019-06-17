@@ -163,7 +163,7 @@
             <?php foreach($restock as $res){ ?>
             <table width="100%" >
                 <tr >
-                    <td style="font-size: 12px!important" width="13%">PR No.  </td>
+                    <td style="font-size: 12px!important" width="13%">From PR  </td>
                     <td style="font-size: 12px!important" width=40%"><strong>: <?php echo $res['prno'];?></strong>  </td>
                     <td style="font-size: 12px!important" width="5%">MRWF  </td>
                     <td style="font-size: 12px!important" width="30%"><strong>: <?php echo $res['mrwf_no'];?></strong>  </td>
