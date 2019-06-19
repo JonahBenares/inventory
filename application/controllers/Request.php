@@ -151,6 +151,37 @@ class Request extends CI_Controller {
         $this->load->view('template/footer');
     }
 
+    public function edit_endpurp(){  
+        $this->load->view('template/header');
+        $data['id']=$this->input->post('id');
+        $id=$this->input->post('id');
+        $data['end'] = $this->super_model->select_all_order_by('enduse', 'enduse_id', 'ASC');
+        $data['purp'] = $this->super_model->select_all_order_by('purpose', 'purpose_id', 'ASC');
+        $data['dept'] = $this->super_model->select_all_order_by('department', 'department_id', 'ASC');
+        foreach($this->super_model->select_row_where('request_head', 'request_id', $id) AS $i){
+            $data['request_list'][]=array(
+                'purpose_id'=>$i->purpose_id,
+                'enduse_id'=>$i->enduse_id,
+                'department_id'=>$i->department_id,
+            );
+        }
+        $this->load->view('request/edit_endpurp',$data);
+    }
+
+    public function update_purend(){
+        $data = array(
+            'purpose_id'=>$this->input->post('purpose'),
+            'enduse_id'=>$this->input->post('enduse'),
+            'department_id'=>$this->input->post('department'),
+        );
+        $request_id = $this->input->post('request_id');
+        if($this->super_model->update_where('request_head', $data, 'request_id', $request_id)){
+            $this->super_model->update_where('issuance_head', $data, 'request_id', $request_id);
+            echo "<script>alert('Successfully Updated!'); 
+                window.location ='".base_url()."index.php/request/request_list'; </script>";
+        }
+    }
+
     public function view_request(){
         $data['id']=$this->uri->segment(3);
         $id=$this->uri->segment(3);
