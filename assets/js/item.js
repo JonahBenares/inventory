@@ -487,14 +487,14 @@ function readPic1(input) {
             cache: false,
             success: function(output){
                var output= output.trim();
-               //alert(output);
+               alert(output);
           
-               if(output=='ext'){
+               /*if(output=='ext'){
                 alert('Error: File extension error.')
                } else {
                 alert('Item successfully updated!');
                 window.location = '../add_item_second/'+output;
-               }
+               }*/
               
            }
         }); 

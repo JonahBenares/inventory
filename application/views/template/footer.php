@@ -118,7 +118,7 @@
 		document.getElementById('e').value = new Date().toISOString().substring(0, 10);
 		document.getElementById('d').value = new Date().toISOString().substring(0, 10);
 	</script>
-	<script type="text/javascript">
+	<!-- <script type="text/javascript">
 		$(document).ready(function(){
 	        $('.type').change(function(){
 	            if($('.type option:selected').val() ==  'JO / PR' ){
@@ -132,7 +132,7 @@
 	            }
 	        });
 	    });
-	</script>
+	</script> -->
 	<script type="text/javascript">
 		function printDiv(divName) {
 	     var printContents = document.getElementById(divName).innerHTML;
