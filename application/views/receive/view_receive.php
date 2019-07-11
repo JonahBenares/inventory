@@ -26,9 +26,11 @@
 					<div class="canvas-wrapper">
 						<?php foreach($head as $h){ ?>
 						<div class="pull-right" style="padding-bottom: 10px">
-							 <?php if($h->saved==0){ ?> 
+							<?php if($h->saved==0 && $_SESSION['user_id']==5){ ?> 
 							<a href="<?php echo base_url(); ?>index.php/receive/add_receive_first/<?php echo $h->receive_id;?>" class="btn btn-info btn-sm"><span class="fa fa-pencil"></span> Update</a>
-							 <?php } ?>
+							<?php }else { ?>
+							<a href="<?php echo base_url(); ?>index.php/receive/add_receive_first/<?php echo $h->receive_id;?>" class="btn btn-info btn-sm" style ="pointer-events: none" disabled><span class="fa fa-pencil"></span> Update</a>
+							<?php } ?>
 							<a href="<?php echo base_url(); ?>index.php/receive/mrf/<?php echo $h->receive_id;?>" class="btn btn-warning btn-sm" target = "_blank"><span class="fa fa-print"></span> Print</a>
 						</div>	
 						<table style="border-top: 1px solid #dedede" width="100%">	
@@ -40,7 +42,11 @@
 								<td width="5%"><p class="nomarg">Date:</p></td>
 								<td width="20%"><label class="labelStyle"><?php echo date('F j, Y',strtotime($h->receive_date)); ?></label></td>
 								<td width="5%"></td>
+								<?php if($_SESSION['user_id'] == '5'){ ?>
 								<td><a onclick="update_head('<?php echo $h->receive_id;?>','<?php echo base_url();?>')" class="btn btn-info btn-sm"><span class="fa fa-pencil"></span></a></td>
+								<?php }else { ?>
+								<td><a onclick="update_head('<?php echo $h->receive_id;?>','<?php echo base_url();?>')" class="btn btn-info btn-sm" style ="pointer-events: none" disabled><span class="fa fa-pencil"></span></a></td>
+								<?php } ?>
 							</tr>
 							<tr>
 								<td></td>
@@ -175,7 +181,11 @@
 											<td><center><?php echo $it['recqty']; ?></center></td>
 											<td><center><?php echo $it['unit']; ?></center></td>
 											<td><?php echo $it['remarks']; ?></td>
+											<?php if($_SESSION['user_id']==5){ ?> 
 											<td><a onclick="update_prcmrk('<?php echo $it['riid'];?>','<?php echo base_url();?>')" title="Update Price & Remarks" class="btn btn-info "><span class="fa fa-pencil"></span></a></td>
+											<?php } else { ?>
+											<td><a onclick="update_prcmrk('<?php echo $it['riid'];?>','<?php echo base_url();?>')" title="Update Price & Remarks" class="btn btn-info " style ="pointer-events: none" disabled><span class="fa fa-pencil"></span></a></td>
+											<?php }?>
 										</tr>
 										<?php
 											$itemno++;

@@ -28,7 +28,7 @@
 							foreach($restock as $res){
 						?>
 						<div class="pull-right" style="padding-bottom: 10px">
-							<?php if($res['saved']==0){ ?>
+							<?php if($res['saved']==0 && $_SESSION['user_id'] == '5'){ ?>
 							<a href="<?php echo base_url(); ?>index.php/restock/add_restock_first/<?php echo $rhead_id;?>" class="btn btn-info btn-sm"><span class="fa fa-pencil"></span> Update</a>
 							<?php } ?>
 							<a href="<?php echo base_url(); ?>index.php/restock/mrsf/<?php echo $rhead_id;?>" class="btn btn-warning btn-sm" target = "_blank"><span class="fa fa-print"></span> Print</a>
@@ -83,7 +83,7 @@
 								<div style="padding:0px 15px">
 										<!--<div style="padding-left:50% ">-->
 										<div style="padding-left:97%;padding-bottom: 4px;">
-										<?php if($saved==0){ ?>
+										<?php if($saved==0 && $_SESSION['user_id'] == '5'){ ?>
 										<a href="javascript:void(0)" onclick="updateRestock('<?php echo base_url(); ?>','<?php echo $rhead_id; ?>', '<?php echo $rdetails_id; ?>')" class="btn btn-primary btn-sm" title="Update" ><span class="fa fa-pencil"></span></a>
 										<!--<a href="javascript:void(0)" onclick="deleteReceiveDetails()" class="btn btn-danger btn-sm" title="Delete"><span class="fa fa-trash"></span></a>-->
 										<?php } ?>

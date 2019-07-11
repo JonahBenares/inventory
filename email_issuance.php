@@ -15,18 +15,18 @@ function select_column_where($table, $column, $where, $value){
 }
 
 
-       $startdate = "2018-09-12";
-       $now="2018-09-15";
+       $startdate = "2019-06-15";
+       $now="2019-06-25";
        /* $startdate = date('Y-m-d', strtotime("-7 days"));
         $now=date('Y-m-d');*/
         $startday=date('d', strtotime($startdate));
         $daynow=date('d');
         $monthnow=date('M');
         $yearnow=date('Y');
-        $to='jasonflor.cenpri@gmail.com';
+        //$to='jasonflor.cenpri@gmail.com';
         // $to='creiramirez.cenpri@gmail.com, ericjabiniar2015@yahoo.com, mba_energreen2013@yahoo.com, maylen_cenpri@yahoo.com.ph, kervic.cenpri@gmail.com, merrydioso.energreen@gmail.com';
         //$to='creiramirez.cenpri@gmail.com';
-       // $to='stephineseverino.cenpri@gmail.com';
+        $to='stephineseverino.cenpri@gmail.com';
 
         $subject="Inventory Issuance Report: ".$monthnow." ".$startday."-".$daynow." ".$yearnow;
      
@@ -115,11 +115,12 @@ function select_column_where($table, $column, $where, $value){
         $message.="</tr>";
         $message.="</table></div><br>";  
     }
-    echo $message;
-    // $headers = "MIME-Version: 1.0" . "\r\n";
-    // $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+    /*echo $message;*/
+    
+    $headers = "MIME-Version: 1.0" . "\r\n";
+    $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
 
-    // // More headers
-    // $headers .= 'From: <jonah.narazo@gmail.com>' . "\r\n";
-    // var_dump(mail($to,$subject,$message,$headers));
+    // More headers
+    $headers .= 'From: <jonah.narazo@gmail.com>' . "\r\n";
+    var_dump(mail($to,$subject,$message,$headers));
 ?>

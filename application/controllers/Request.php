@@ -155,9 +155,9 @@ class Request extends CI_Controller {
         $this->load->view('template/header');
         $data['id']=$this->input->post('id');
         $id=$this->input->post('id');
-        $data['end'] = $this->super_model->select_all_order_by('enduse', 'enduse_id', 'ASC');
-        $data['purp'] = $this->super_model->select_all_order_by('purpose', 'purpose_id', 'ASC');
-        $data['dept'] = $this->super_model->select_all_order_by('department', 'department_id', 'ASC');
+        $data['end'] = $this->super_model->select_all_order_by('enduse', 'enduse_name', 'ASC');
+        $data['purp'] = $this->super_model->select_all_order_by('purpose', 'purpose_desc', 'ASC');
+        $data['dept'] = $this->super_model->select_all_order_by('department', 'department_name', 'ASC');
         foreach($this->super_model->select_row_where('request_head', 'request_id', $id) AS $i){
             $data['request_list'][]=array(
                 'purpose_id'=>$i->purpose_id,

@@ -37,7 +37,7 @@
 								<td colspan="3"><label class="labelStyle">&nbsp<?php echo $r['mreqf'];?></label></td>
 								<td width="15%">
 									<div class="pull-right">
-										<?php if($saved=='0'){ ?>
+										<?php if($saved=='0' && $_SESSION['user_id']==5){ ?>
 										<a href="<?php echo base_url(); ?>index.php/request/add_request/<?php echo $r['requestid'];?>" class="btn btn-info btn-sm"><span class="fa fa-pencil"></span></a>
 										<?php } ?>
 										<a href="<?php echo base_url(); ?>index.php/request/mreqf/<?php echo $r['requestid'];?>" class="btn btn-warning btn-sm" target = "_blank"><span class="fa fa-print"></span> Print</a>
