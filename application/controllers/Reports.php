@@ -1910,7 +1910,8 @@ class Reports extends CI_Controller {
             /*$issueqty=$this->super_model->custom_query_single("qty","SELECT SUM(quantity) AS qty FROM issuance_head ih INNER JOIN issuance_details id WHERE item_id= '$id' AND pr_no='$head->pr_no' GROUP BY pr_no");*/
           //  $qty=$this->super_model->select_sum_join_group("received_qty","receive_items","receive_details", "receive_details.receive_id = '$head->receive_id'", "rd_id","pr_no");
                 $issueqty= $this->super_model->select_sum_join("quantity","issuance_details","issuance_head", "item_id='$id' AND pr_no='$head->pr_no'","issuance_id");
-                $restockqty= $this->super_model->select_sum_join("quantity","restock_details","restock_head", "item_id='$id' AND pr_no='$head->pr_no' AND excess = '0'","rhead_id");
+                $restockqty= $this->super_model->select_sum_join("quantity","restock_details","restock_head", "item_id='$id' AND from_pr='$head->pr_no' AND excess = '0'","rhead_id");
+                echo "item_id='$id' AND from_pr='$head->pr_no' AND excess = '0'<br>";
                 $total=($head->qty+$restockqty)-$issueqty;
                 $data['list'][] = array(
                     "prno"=>$head->pr_no,
@@ -1932,12 +1933,13 @@ class Reports extends CI_Controller {
         $pr=$this->uri->segment(3);
         $data['pr']=$pr;
 
-        foreach($this->super_model->custom_query("SELECT item_id, SUM(received_qty) AS qty FROM receive_items ri INNER JOIN receive_details rd ON ri.rd_id = rd.rd_id WHERE rd.pr_no = '$pr' GROUP BY  ri.item_id") AS $head){
-         
+        foreach($this->super_model->custom_query("SELECT item_id, SUM(received_qty) AS qty, ri.ri_id FROM receive_items ri INNER JOIN receive_details rd ON ri.rd_id = rd.rd_id WHERE rd.pr_no = '$pr' GROUP BY  ri.item_id") AS $head){
+           // echo 
                 $issueqty= $this->super_model->select_sum_join("quantity","issuance_details","issuance_head", "item_id='$head->item_id' AND pr_no='$pr'","issuance_id");
-                $restockqty= $this->super_model->select_sum_join("quantity","restock_details","restock_head", "item_id='$head->item_id' AND pr_no='$pr' AND excess='0'","rhead_id");
+                $restockqty= $this->super_model->select_sum_join("quantity","restock_details","restock_head", "item_id='$head->item_id' AND from_pr='$pr'","rhead_id");
                 $total=$head->qty-$issueqty;
                 $data['list'][] = array(
+                    "ri_id"=>$head->ri_id,
                     "item"=>$this->super_model->select_column_where("items", "item_name", "item_id", $head->item_id),
                     "item_id"=>$head->item_id,
                     "recqty"=>$head->qty,
@@ -1961,6 +1963,7 @@ class Reports extends CI_Controller {
         $now = date('Y-m-d H:i:s');
 
         $rdid = $this->super_model->select_column_where('receive_details', 'rd_id', 'pr_no', $pr);
+
         $rec_qty = $this->super_model->select_column_custom_where("receive_items", "received_qty", "rd_id = '$rdid' AND item_id = '$item_id'");
         $new_qty = $rec_qty-$exc_qty;
 
@@ -1996,8 +1999,9 @@ class Reports extends CI_Controller {
                 $maxid=$this->super_model->get_max("restock_head", "rhead_id");
                 $restock_id=$maxid+1;
             }
+           // echo $restock_id;
 
-        foreach($this->super_model->select_custom_where("receive_details", "pr_no= '$pr'") AS $head){
+        foreach($this->super_model->select_custom_where("receive_details", "rd_id= '$rdid' AND pr_no= '$pr'") AS $head){
              $excess_head = array(
                 "rhead_id"=>$restock_id,
                 "department_id"=>$head->department_id,
@@ -2029,9 +2033,9 @@ class Reports extends CI_Controller {
         }
 
         ?>
-        <script>alert('Successfully tagged as excess.'); 
+       <script>alert('Successfully tagged as excess.'); 
         window.location='<?php echo base_url(); ?>index.php/reports/all_pr_report/<?php echo $pr; ?>'
-        </script>
+        </script> 
         <?php
     }
 

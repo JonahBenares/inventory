@@ -55,6 +55,7 @@ class Receive extends CI_Controller {
         $id=$this->uri->segment(3);
         $this->load->model('super_model');
         $data['head'] = $this->super_model->select_row_where('receive_head', 'receive_id', $id);
+        $data['saved']=$this->super_model->select_column_where("receive_head",'saved','receive_id',$id);
         foreach($this->super_model->select_row_where('receive_details', 'receive_id', $id) AS $det){
             $purpose = $this->super_model->select_column_where('purpose', 'purpose_desc', 'purpose_id', $det->purpose_id);
             $enduse = $this->super_model->select_column_where('enduse', 'enduse_name', 'enduse_id', $det->enduse_id);            
@@ -113,9 +114,9 @@ class Receive extends CI_Controller {
         $id=$this->input->post('id');
         $data['rec_id']=$this->input->post('recid');
         $rec_id=$this->input->post('recid');
-        $data['end'] = $this->super_model->select_all_order_by('enduse', 'enduse_id', 'ASC');
-        $data['purp'] = $this->super_model->select_all_order_by('purpose', 'purpose_id', 'ASC');
-        $data['dept'] = $this->super_model->select_all_order_by('department', 'department_id', 'ASC');
+        $data['end'] = $this->super_model->select_all_order_by('enduse', 'enduse_name', 'ASC');
+        $data['purp'] = $this->super_model->select_all_order_by('purpose', 'purpose_desc', 'ASC');
+        $data['dept'] = $this->super_model->select_all_order_by('department', 'department_name', 'ASC');
         $this->load->model('super_model');
         foreach($this->super_model->select_row_where('receive_details', 'rd_id', $id) AS $det){
             $data['details'][] = array(
