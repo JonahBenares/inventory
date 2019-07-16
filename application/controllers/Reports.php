@@ -1937,7 +1937,8 @@ class Reports extends CI_Controller {
            // echo 
                 $issueqty= $this->super_model->select_sum_join("quantity","issuance_details","issuance_head", "item_id='$head->item_id' AND pr_no='$pr'","issuance_id");
                 $restockqty= $this->super_model->select_sum_join("quantity","restock_details","restock_head", "item_id='$head->item_id' AND from_pr='$pr'","rhead_id");
-                $total=$head->qty-$issueqty;
+                $total=$head->qty-($issueqty+$restockqty);
+                $total_iss=$head->qty-$issueqty;
                 $data['list'][] = array(
                     "ri_id"=>$head->ri_id,
                     "item"=>$this->super_model->select_column_where("items", "item_name", "item_id", $head->item_id),
@@ -1945,7 +1946,8 @@ class Reports extends CI_Controller {
                     "recqty"=>$head->qty,
                     "issueqty"=>$issueqty,
                     "restockqty"=>$restockqty,
-                    "total"=>$total
+                    "total"=>$total,
+                    "total_iss"=>$total_iss
                 );
             
         }
@@ -1967,11 +1969,11 @@ class Reports extends CI_Controller {
         $rec_qty = $this->super_model->select_column_custom_where("receive_items", "received_qty", "rd_id = '$rdid' AND item_id = '$item_id'");
         $new_qty = $rec_qty-$exc_qty;
 
-        $data = array(
+      /*  $data = array(
             "expected_qty"=>$new_qty,
             "received_qty"=>$new_qty
         );
-        $update_receive = $this->super_model->update_custom_where("receive_items", $data, "rd_id = '$rdid' AND item_id = '$item_id'");
+        $update_receive = $this->super_model->update_custom_where("receive_items", $data, "rd_id = '$rdid' AND item_id = '$item_id'");*/
 
         $year=date('Y-m');
         $rows=$this->super_model->count_custom_where("restock_head","restock_date LIKE '$year%'");

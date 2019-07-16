@@ -67,9 +67,9 @@
 											<td align="center"><strong><?php echo $li['recqty']; ?></strong></td>	
 											<td align="center"><strong><?php echo $li['issueqty']; ?></strong></td>		
 											<td align="center"><strong><?php echo $li['restockqty']; ?></strong></td>		
-											<td align="center"><strong><?php echo $li['total']; ?></strong></td>			
+											<td align="center"><strong><?php echo abs($li['total']); ?></strong></td>			
 											<td align="center">
-											<?php if($li['total']!=0){ ?>
+											<?php if($li['total_iss']!=0 && $li['total']!=0){ ?>
 												<a href="<?php echo base_url(); ?>index.php/reports/tagexcess/<?php echo $pr; ?>/<?php echo $li['item_id']; ?>/<?php echo $li['total']; ?>" class="btn btn-md btn-danger" onclick="return confirm('Are you sure you want to tag as excess?')">Tag as Excess</a>
 											<?php } ?></td>
 											
