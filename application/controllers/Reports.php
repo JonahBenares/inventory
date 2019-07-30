@@ -1948,7 +1948,7 @@ class Reports extends CI_Controller {
                 if(($restockqty==0 && $excessqty==0) && $issueqty ==0){
                     $final_balance = $head->qty;
                 } else if($issueqty!=0 && $restockqty==0 && $excessqty==0){
-                    $final_balance = $head->qty-$issued_qty;
+                    $final_balance = $head->qty-$issueqty;
                 } else if($issueqty!=0 && $restockqty!=0 && $excessqty==0){
                     $final_balance =  $in_balance + $restockqty; 
                 } else if(($issueqty!=0 && $restockqty!=0 && $excessqty!=0) || ($issueqty==0 && ($restockqty!=0 || $excessqty!=0))){
