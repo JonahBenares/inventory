@@ -1935,10 +1935,27 @@ class Reports extends CI_Controller {
 
         foreach($this->super_model->custom_query("SELECT item_id, SUM(received_qty) AS qty, ri.ri_id FROM receive_items ri INNER JOIN receive_details rd ON ri.rd_id = rd.rd_id WHERE rd.pr_no = '$pr' GROUP BY  ri.item_id") AS $head){
            // echo 
+
+                $excess_flag = $this->super_model->custom_query_single("excess","SELECT rh.excess FROM restock_head rh INNER JOIN restock_details rd ON rh.rhead_id = rd.rhead_id WHERE rh.from_pr = '$pr' AND rd.item_id = '$head->item_id'");
+
                 $issueqty= $this->super_model->select_sum_join("quantity","issuance_details","issuance_head", "item_id='$head->item_id' AND pr_no='$pr'","issuance_id");
-                $restockqty= $this->super_model->select_sum_join("quantity","restock_details","restock_head", "item_id='$head->item_id' AND from_pr='$pr'","rhead_id");
-                $total=$head->qty-($issueqty+$restockqty);
-                $total_iss=$head->qty-$issueqty;
+                $restockqty= $this->super_model->select_sum_join("quantity","restock_details","restock_head", "item_id='$head->item_id' AND from_pr='$pr' AND excess='0'","rhead_id");
+                $excessqty= $this->super_model->select_sum_join("quantity","restock_details","restock_head", "item_id='$head->item_id' AND from_pr='$pr' AND excess='1'","rhead_id");
+
+             
+                $in_balance = $head->qty - $issueqty;
+
+                if(($restockqty==0 && $excessqty==0) && $issueqty ==0){
+                    $final_balance = $head->qty;
+                } else if($issueqty!=0 && $restockqty==0 && $excessqty==0){
+                    $final_balance = $head->qty-$issued_qty;
+                } else if($issueqty!=0 && $restockqty!=0 && $excessqty==0){
+                    $final_balance =  $in_balance + $restockqty; 
+                } else if(($issueqty!=0 && $restockqty!=0 && $excessqty!=0) || ($issueqty==0 && ($restockqty!=0 || $excessqty!=0))){
+                    $final_balance =  $excessqty + $restockqty; 
+                }
+                
+              
                 $data['list'][] = array(
                     "ri_id"=>$head->ri_id,
                     "item"=>$this->super_model->select_column_where("items", "item_name", "item_id", $head->item_id),
@@ -1946,8 +1963,10 @@ class Reports extends CI_Controller {
                     "recqty"=>$head->qty,
                     "issueqty"=>$issueqty,
                     "restockqty"=>$restockqty,
-                    "total"=>$total,
-                    "total_iss"=>$total_iss
+                    "excessqty"=>$excessqty,
+                    "in_balance"=>$in_balance,
+                    "excess"=>$excess_flag,
+                    "final_balance"=>$final_balance
                 );
             
         }
@@ -1963,8 +1982,8 @@ class Reports extends CI_Controller {
         $item_id=$this->uri->segment(4);
         $exc_qty=$this->uri->segment(5);
         $now = date('Y-m-d H:i:s');
-
-        $rdid = $this->super_model->select_column_where('receive_details', 'rd_id', 'pr_no', $pr);
+      //  echo "SELECT rd.rd_id FROM receive_details rd INNER JOIN receive_items ri ON rd.rd_id = ri.rd_id WHERE rd.pr_no = '$pr' AND ri.item_id = '$item_id'";
+        $rdid = $this->super_model->custom_query_single("rd_id","SELECT rd.rd_id FROM receive_details rd INNER JOIN receive_items ri ON rd.rd_id = ri.rd_id WHERE rd.pr_no = '$pr' AND ri.item_id = '$item_id'");
 
         $rec_qty = $this->super_model->select_column_custom_where("receive_items", "received_qty", "rd_id = '$rdid' AND item_id = '$item_id'");
         $new_qty = $rec_qty-$exc_qty;
@@ -2019,7 +2038,7 @@ class Reports extends CI_Controller {
 
             $this->super_model->insert_into("restock_head", $excess_head);
         }
-
+        //echo "rd_id= '$rdid' AND item_id ='$item_id'";
         foreach($this->super_model->select_custom_where("receive_items", "rd_id= '$rdid' AND item_id ='$item_id'") AS $items){
              $excess_items = array(
                "rhead_id"=>$restock_id,
@@ -2030,7 +2049,7 @@ class Reports extends CI_Controller {
                "catalog_no"=>$items->catalog_no,
                "quantity"=>$exc_qty
             );
-
+            // print_r($excess_items);
             $this->super_model->insert_into("restock_details", $excess_items);
         }
 

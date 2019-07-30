@@ -53,8 +53,10 @@
 											<td align="center"><strong>Item</strong></td>
 											<td align="center"><strong>Received Qty</strong></td>
 											<td align="center"><strong>Issued Qty</strong></td>
+											<td align="center"><strong>Initial Balance</strong></td>
 											<td align="center"><strong>Restock Qty</strong></td>
-											<td align="center"><strong>Balance</strong></td>
+											<td align="center"><strong>Excess Qty</strong></td>
+											<td align="center"><strong>Final Balance</strong></td>
 											<td align="center"><strong>Action</strong></td>
 										</tr>
 									</thead>
@@ -65,12 +67,14 @@
 										<tr>
 											<td align="center"><strong><?php echo $li['item']; ?></strong></td>
 											<td align="center"><strong><?php echo $li['recqty']; ?></strong></td>	
-											<td align="center"><strong><?php echo $li['issueqty']; ?></strong></td>		
-											<td align="center"><strong><?php echo $li['restockqty']; ?></strong></td>		
-											<td align="center"><strong><?php echo abs($li['total']); ?></strong></td>			
+											<td align="center"><strong><?php echo $li['issueqty']; ?></strong></td>	
+											<td align="center"><strong><?php echo abs($li['in_balance']); ?></strong></td>		
+											<td align="center"><strong><?php echo $li['restockqty']; ?></strong></td>
+											<td align="center"><strong><?php echo $li['excessqty']; ?></strong></td>		
+											<td align="center"><strong><?php echo $li['final_balance']; ?></strong></td>			
 											<td align="center">
-											<?php if($li['total_iss']!=0 && $li['total']!=0){ ?>
-												<a href="<?php echo base_url(); ?>index.php/reports/tagexcess/<?php echo $pr; ?>/<?php echo $li['item_id']; ?>/<?php echo $li['total']; ?>" class="btn btn-md btn-danger" onclick="return confirm('Are you sure you want to tag as excess?')">Tag as Excess</a>
+											<?php if($li['excessqty']==0){ ?>
+												<a href="<?php echo base_url(); ?>index.php/reports/tagexcess/<?php echo $pr; ?>/<?php echo $li['item_id']; ?>/<?php echo $li['in_balance']; ?>" class="btn btn-md btn-danger" onclick="return confirm('Are you sure you want to tag as excess?')">Tag as Excess</a>
 											<?php } ?></td>
 											
 										</tr>
