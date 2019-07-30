@@ -774,16 +774,17 @@ class Reports extends CI_Controller {
         $prno=$this->uri->segment(4);
       
   
-        $counter = $this->super_model->count_custom_where("restock_head","pr_no = '$prno' AND excess = 0");
+        $counter = $this->super_model->count_custom_where("restock_head","from_pr = '$prno' AND excess = 0");
         //echo $counter;
          if($counter!=0){
-            foreach($this->super_model->select_row_where("restock_head", "pr_no",$prno) AS $head){
+            foreach($this->super_model->select_row_where("restock_head", "from_pr",$prno) AS $head){
               //  foreach($this->super_model->select_row_where("issuance_", "receive_id",$det1->receive_id) AS $head)
                 $department = $this->super_model->select_column_where("department", "department_name", "department_id", $head->department_id);
                 $enduse = $this->super_model->select_column_where("enduse", "enduse_name", "enduse_id", $head->enduse_id);
                 $purpose = $this->super_model->select_column_where("purpose", "purpose_desc", "purpose_id", $head->purpose_id);
                 $returned_by = $this->super_model->select_column_where("employees", "employee_name", "employee_id", $head->returned_by);
                 $data['head'][]=array(
+                    'rhead_id'=>$head->rhead_id,
                     "restock_date"=>$head->restock_date,
                     "mrwf_no"=>$head->mrwf_no,
                     "prno"=>$head->pr_no,
@@ -799,6 +800,7 @@ class Reports extends CI_Controller {
                     $brand = $this->super_model->select_column_where('brand', 'brand_name', 'brand_id', $det->brand_id);
                     $serial = $this->super_model->select_column_where('serial_number', 'serial_no', 'serial_id', $det->serial_id);
                     $data['details'][]=array(
+                        'rhead_id'=>$det->rhead_id,
                         'item'=>$item,
                         'supplier'=>$supplier,
                         'brand'=>$brand,
