@@ -50,9 +50,9 @@ class Restock extends CI_Controller {
     }
 
     public function restock_list(){
-        $rows= $this->super_model->count_rows_where("restock_head","excess","0");
+        $rows= $this->super_model->count_rows("restock_head");
         if($rows!=0){
-            foreach($this->super_model->select_row_where('restock_head',"excess","0") AS $res){
+            foreach($this->super_model->select_all('restock_head') AS $res){
                 $department = $this->super_model->select_column_where("department", "department_name", "department_id", $res->department_id);
                 $enduse = $this->super_model->select_column_where("enduse", "enduse_name", "enduse_id", $res->enduse_id);
                 $purpose = $this->super_model->select_column_where("purpose", "purpose_desc", "purpose_id", $res->purpose_id);
@@ -70,6 +70,7 @@ class Restock extends CI_Controller {
                     'acknowledge'=>$acknowledge_by,
                     'noted'=>$noted_by,
                     'returned'=>$returned_by,
+                    'excess'=>$res->excess,
                     'received'=>$received_by
                 );
             }

@@ -1366,7 +1366,7 @@ class Reports extends CI_Controller {
                 }
             }
 
-          /*  $counter_excess = $this->super_model->select_count_join_inner("restock_head","restock_details","$query AND excess='1'", "rhead_id");
+            $counter_excess = $this->super_model->select_count_join_inner("restock_head","restock_details","$query AND excess='1'", "rhead_id");
              if($counter_excess!=0){
     
 
@@ -1395,11 +1395,11 @@ class Reports extends CI_Controller {
             } else {
                  $arr_exc[]=0;
             }
-*/
+
             $sumrec=array_sum($arr_rec);
             $sumiss=array_sum($arr_iss);
             $sumst=array_sum($arr_rs);
-          //  $sumex=array_sum($arr_exc);
+            $sumex=array_sum($arr_exc);
             $total=($begbal+$sumrec+$sumst)-$sumiss;
             $data['total']=$total;
        // } 
