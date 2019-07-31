@@ -1301,7 +1301,7 @@ class Reports extends CI_Controller {
                         'receive_qty'=>$rec->received_qty,
                         'issueqty'=>0,
                         'restockqty'=>0,
-                       // 'excessqty'=>0,
+                        'excessqty'=>0,
                         'date'=>$date
                     );
                 }
@@ -1331,7 +1331,7 @@ class Reports extends CI_Controller {
                         'receive_qty'=>0,
                         'issueqty'=>$issue->quantity,
                         'restockqty'=>0,
-                       // 'excessqty'=>0,
+                        'excessqty'=>0,
                         'date'=>$dateissue
                     );
                 }
@@ -1360,7 +1360,7 @@ class Reports extends CI_Controller {
                         'receive_qty'=>0,
                         'issueqty'=>0,
                         'restockqty'=>$restock2->quantity,
-                       // 'excessqty'=>0,
+                        'excessqty'=>0,
                         'date'=>$datestock
                     );
                 }
@@ -1909,18 +1909,39 @@ class Reports extends CI_Controller {
         $data['itemdesc']=$this->super_model->select_column_where("items", "item_name", "item_id", $id);
 
         foreach($this->super_model->custom_query("SELECT pr_no, SUM(received_qty) AS qty FROM receive_items ri INNER JOIN receive_details rd ON ri.rd_id = rd.rd_id WHERE ri.item_id = '$id' GROUP BY rd.pr_no") AS $head){
-            /*$issueqty=$this->super_model->custom_query_single("qty","SELECT SUM(quantity) AS qty FROM issuance_head ih INNER JOIN issuance_details id WHERE item_id= '$id' AND pr_no='$head->pr_no' GROUP BY pr_no");*/
-          //  $qty=$this->super_model->select_sum_join_group("received_qty","receive_items","receive_details", "receive_details.receive_id = '$head->receive_id'", "rd_id","pr_no");
+
+                $excess_flag = $this->super_model->custom_query_single("excess","SELECT rh.excess FROM restock_head rh INNER JOIN restock_details rd ON rh.rhead_id = rd.rhead_id WHERE rh.from_pr = '$head->pr_no' AND rd.item_id = '$id'");
+
                 $issueqty= $this->super_model->select_sum_join("quantity","issuance_details","issuance_head", "item_id='$id' AND pr_no='$head->pr_no'","issuance_id");
-                $restockqty= $this->super_model->select_sum_join("quantity","restock_details","restock_head", "item_id='$id' AND from_pr='$head->pr_no' AND excess = '0'","rhead_id");
-                echo "item_id='$id' AND from_pr='$head->pr_no' AND excess = '0'<br>";
-                $total=($head->qty+$restockqty)-$issueqty;
+                $restockqty= $this->super_model->select_sum_join("quantity","restock_details","restock_head", "item_id='$id' AND from_pr='$head->pr_no' AND excess='0'","rhead_id");
+                $excessqty= $this->super_model->select_sum_join("quantity","restock_details","restock_head", "item_id='$id' AND from_pr='$head->pr_no' AND excess='1'","rhead_id");
+
+                $in_balance = $head->qty - $issueqty;
+
+                if(($restockqty==0 && $excessqty==0) && $issueqty ==0){
+                    $final_balance = $head->qty;
+                } else if($issueqty!=0 && $restockqty==0 && $excessqty==0){
+                    $final_balance = $head->qty-$issueqty;
+                } else if($issueqty!=0 && $restockqty!=0 && $excessqty==0){
+                    $final_balance =  $in_balance + $restockqty; 
+                } else if(($issueqty!=0 && $restockqty!=0 && $excessqty!=0) || ($issueqty==0 && ($restockqty!=0 || $excessqty!=0)) || ($issueqty!=0 && $restockqty==0 && $excessqty!=0)){
+                    $final_balance =  $excessqty + $restockqty; 
+                }
+
+                /*$issueqty= $this->super_model->select_sum_join("quantity","issuance_details","issuance_head", "item_id='$id' AND pr_no='$head->pr_no'","issuance_id");
+                $restockqty= $this->super_model->select_sum_join("quantity","restock_details","restock_head", "item_id='$id' AND from_pr='$head->pr_no' AND excess = '0'","rhead_id");*/
+                //$total=($head->qty+$restockqty)-$issueqty;
                 $data['list'][] = array(
                     "prno"=>$head->pr_no,
                     "recqty"=>$head->qty,
                     "issueqty"=>$issueqty,
                     "restockqty"=>$restockqty,
-                    "total"=>$total
+                    "excessqty"=>$excessqty,
+                    "in_balance"=>$in_balance,
+                    "excess"=>$excess_flag,
+                    "final_balance"=>$final_balance
+                    /*"restockqty"=>$restockqty,
+                    "total"=>$total*/
                 );
             
         }
@@ -1953,10 +1974,9 @@ class Reports extends CI_Controller {
                     $final_balance = $head->qty-$issueqty;
                 } else if($issueqty!=0 && $restockqty!=0 && $excessqty==0){
                     $final_balance =  $in_balance + $restockqty; 
-                } else if(($issueqty!=0 && $restockqty!=0 && $excessqty!=0) || ($issueqty==0 && ($restockqty!=0 || $excessqty!=0))){
+                } else if(($issueqty!=0 && $restockqty!=0 && $excessqty!=0) || ($issueqty==0 && ($restockqty!=0 || $excessqty!=0)) || ($issueqty!=0 && $restockqty==0 && $excessqty!=0)){
                     $final_balance =  $excessqty + $restockqty; 
                 }
-                
               
                 $data['list'][] = array(
                     "ri_id"=>$head->ri_id,
