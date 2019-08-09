@@ -228,7 +228,7 @@ class Issue extends CI_Controller {
                 $remarks = $this->super_model->select_column_where("issuance_details", "remarks", "rq_id", $it->rq_id);
                 $issueid = $this->super_model->select_column_where("issuance_details", "issuance_id", "rq_id", $it->rq_id);
                 $unit = $this->super_model->select_column_where("uom", "unit_name", "unit_id", $it->unit_id);
-                $issued_qty = $this->super_model->select_sum_join("quantity","issuance_head","issuance_details", "request_id = '$id' AND item_id ='$it->item_id'","issuance_id");
+                $issued_qty = $this->super_model->select_sum_join("quantity","issuance_head","issuance_details", "request_id = '$id' AND item_id ='$it->item_id' AND rq_id = '$it->rq_id'","issuance_id");
 
                 $rem_qty = $it->quantity - $issued_qty;
                 $data['items'][] = array(
