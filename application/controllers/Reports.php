@@ -946,7 +946,11 @@ class Reports extends CI_Controller {
                 $enduse = $this->super_model->select_column_where('enduse', 'enduse_name', 'enduse_id', $itm->enduse_id);  
                 $restock_date = $this->super_model->select_column_where('restock_head', 'restock_date', 'rhead_id', $itm->rhead_id);
                 $received = $this->super_model->select_column_where("employees", "employee_name", "employee_id", $itm->received_by);
-                $returned = $this->super_model->select_column_where("employees", "employee_name", "employee_id", $itm->returned_by);
+                if($itm->excess!=1){
+                    $returned = $this->super_model->select_column_where("employees", "employee_name", "employee_id", $itm->returned_by);
+                }else{
+                    $returned = $this->super_model->select_column_where("users", "fullname", "user_id", $itm->returned_by);
+                }
                 $acknowledge = $this->super_model->select_column_where("employees", "employee_name", "employee_id", $itm->acknowledge_by);
                 $noted_by = $this->super_model->select_column_where('employees', 'employee_name', 'employee_id', $itm->noted_by);
                 foreach($this->super_model->select_custom_where("items", "item_id = '$itm->item_id'") AS $itema){

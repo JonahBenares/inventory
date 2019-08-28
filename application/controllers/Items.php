@@ -74,11 +74,12 @@ class Items extends CI_Controller {
         $data['location'] = $this->super_model->select_all('location');
         $data['warehouse'] = $this->super_model->select_all('warehouse');
         $data['bin'] = $this->super_model->select_all('bin');
+        $data['rack'] = $this->super_model->select_all('rack');
         $row=$this->super_model->count_rows("items");
         if($row!=0){
             foreach($this->super_model->select_all('items') AS $itm){
-                $bin = $this->super_model->select_column_where('bin', 'bin_name', 
-                    'bin_id', $itm->bin_id);
+                $bin = $this->super_model->select_column_where('bin', 'bin_name', 'bin_id', $itm->bin_id);
+                $rack = $this->super_model->select_column_where('rack', 'rack_name', 'rack_id', $itm->rack_id);
                 $warehouse = $this->super_model->select_column_where('warehouse', 'warehouse_name', 
                     'warehouse_id', $itm->warehouse_id);
                 $location = $this->super_model->select_column_where('location', 'location_name', 
@@ -96,6 +97,7 @@ class Items extends CI_Controller {
                     'subcat_id', $itm->subcat_id),
                     'quantity'=>$totalqty,
                     'bin'=>$bin,
+                    'rack'=>$rack,
                     'warehouse'=>$warehouse,
                     'location'=>$location,                
                     'minimum'=>$itm->min_qty,
@@ -1058,7 +1060,9 @@ class Items extends CI_Controller {
         $data['subcat'] = $this->super_model->select_all('item_subcat');
         $data['group'] = $this->super_model->select_all('group');
         $data['location'] = $this->super_model->select_all('location');
+        $data['warehouse'] = $this->super_model->select_all('warehouse');
         $data['bin'] = $this->super_model->select_all('bin');
+        $data['rack'] = $this->super_model->select_all('rack');
 
         $sql="";
         $filter ="";
@@ -1098,8 +1102,7 @@ class Items extends CI_Controller {
 
         if(!empty($bin)){
             $sql.= " items.bin_id = '$bin' AND";
-            $filter.="Bin = " . $this->super_model->select_column_where('bin', 'bin_name', 
-                        'bin_id', $bin). ", ";
+            $filter.="Bin = " . $this->super_model->select_column_where('bin', 'bin_name', 'bin_id', $bin). ", ";
         }
 
         if(!empty($warehouse)){
@@ -1109,8 +1112,8 @@ class Items extends CI_Controller {
         }
 
         if(!empty($rack)){
-            $sql.= " items.rack = '$rack' AND";
-            $filter.="Rack = " .  $rack . ", ";
+            $sql.= " items.rack_id = '$rack' AND";
+            $filter.="Rack = " . $this->super_model->select_column_where('rack', 'rack_name', 'rack_id', $rack) . ", ";
         }
 
         if(!empty($barcode)){
@@ -1123,10 +1126,9 @@ class Items extends CI_Controller {
             $filter.="Expiration = " .  $expiration . ", ";
         }
 
-
         $query=substr($sql,0,-3);
         $filter=substr($filter,0,-2);
-      $data['access']=$this->access;
+        $data['access']=$this->access;
         $count=$this->super_model->count_join_where("items","supplier_items", $query, 'item_id');
        
         $data['filter']=$filter;
@@ -1139,22 +1141,22 @@ class Items extends CI_Controller {
                 }
                 $totalqty=$this->inventory_balance($itm->item_id);
                  $data['items'][] = array(
-                        'item_id'=>$itm->item_id,
-                        'original_pn'=>$itm->original_pn,
-                        'item_name'=>$itm->item_name,
-                        'category'=>$this->super_model->select_column_where('item_categories', 'cat_name', 
-                        'cat_id', $itm->category_id),
-                        'subcategory'=>$this->super_model->select_column_where('item_subcat', 'subcat_name', 
-                        'subcat_id', $itm->subcat_id),
-                        'quantity'=>$totalqty,
-                        'damage'=>$itm->damage,
-                        'uom'=>$unit,
-                        'location'=>$this->super_model->select_column_where('location', 'location_name', 
-                        'location_id', $itm->location_id),
-                        'bin'=>$this->super_model->select_column_where('bin', 'bin_name', 
-                        'bin_id', $itm->bin_id),
-                        'minimum'=>$itm->min_qty,
-                    );
+                    'item_id'=>$itm->item_id,
+                    'original_pn'=>$itm->original_pn,
+                    'item_name'=>$itm->item_name,
+                    'category'=>$this->super_model->select_column_where('item_categories', 'cat_name', 
+                    'cat_id', $itm->category_id),
+                    'subcategory'=>$this->super_model->select_column_where('item_subcat', 'subcat_name', 
+                    'subcat_id', $itm->subcat_id),
+                    'quantity'=>$totalqty,
+                    'damage'=>$itm->damage,
+                    'uom'=>$unit,
+                    'location'=>$this->super_model->select_column_where('location', 'location_name', 
+                    'location_id', $itm->location_id),
+                    'bin'=>$this->super_model->select_column_where('bin', 'bin_name', 'bin_id', $itm->bin_id),
+                    'rack'=>$this->super_model->select_column_where('rack', 'rack_name', 'rack_id', $itm->rack_id),
+                    'minimum'=>$itm->min_qty,
+                );
             }
         } else {
             $data['count_query'] = 0;
