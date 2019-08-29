@@ -945,12 +945,17 @@ class Reports extends CI_Controller {
                 $purpose = $this->super_model->select_column_where('purpose', 'purpose_desc', 'purpose_id', $itm->purpose_id);
                 $enduse = $this->super_model->select_column_where('enduse', 'enduse_name', 'enduse_id', $itm->enduse_id);  
                 $restock_date = $this->super_model->select_column_where('restock_head', 'restock_date', 'rhead_id', $itm->rhead_id);
-                $received = $this->super_model->select_column_where("employees", "employee_name", "employee_id", $itm->received_by);
                 if($itm->excess!=1){
+                    $received = $this->super_model->select_column_where("employees", "employee_name", "employee_id", $itm->received_by);
+                }else{
+                    $received = $this->super_model->select_column_where("users", "fullname", "user_id", $itm->received_by);
+                }
+                /*if($itm->excess!=1){
                     $returned = $this->super_model->select_column_where("employees", "employee_name", "employee_id", $itm->returned_by);
                 }else{
                     $returned = $this->super_model->select_column_where("users", "fullname", "user_id", $itm->returned_by);
-                }
+                }*/
+                $returned = $this->super_model->select_column_where("employees", "employee_name", "employee_id", $itm->returned_by);
                 $acknowledge = $this->super_model->select_column_where("employees", "employee_name", "employee_id", $itm->acknowledge_by);
                 $noted_by = $this->super_model->select_column_where('employees', 'employee_name', 'employee_id', $itm->noted_by);
                 foreach($this->super_model->select_custom_where("items", "item_id = '$itm->item_id'") AS $itema){
@@ -1959,6 +1964,8 @@ class Reports extends CI_Controller {
        public function all_pr_report(){
         $pr=$this->uri->segment(3);
         $data['pr']=$pr;
+       
+
 
         foreach($this->super_model->custom_query("SELECT item_id, SUM(received_qty) AS qty, ri.ri_id FROM receive_items ri INNER JOIN receive_details rd ON ri.rd_id = rd.rd_id WHERE rd.pr_no = '$pr' GROUP BY  ri.item_id") AS $head){
            // echo 
@@ -1993,6 +2000,7 @@ class Reports extends CI_Controller {
                     "in_balance"=>$in_balance,
                     "excess"=>$excess_flag,
                     "final_balance"=>$final_balance
+
                 );
             
         }
@@ -2008,6 +2016,7 @@ class Reports extends CI_Controller {
         $item_id=$this->uri->segment(4);
         $exc_qty=$this->uri->segment(5);
         $now = date('Y-m-d H:i:s');
+         $requested_by =$this->super_model->select_column_where("request_head", "requested_by", "pr_no", $pr);
       //  echo "SELECT rd.rd_id FROM receive_details rd INNER JOIN receive_items ri ON rd.rd_id = ri.rd_id WHERE rd.pr_no = '$pr' AND ri.item_id = '$item_id'";
         $rdid = $this->super_model->custom_query_single("rd_id","SELECT rd.rd_id FROM receive_details rd INNER JOIN receive_items ri ON rd.rd_id = ri.rd_id WHERE rd.pr_no = '$pr' AND ri.item_id = '$item_id'");
 
@@ -2054,7 +2063,10 @@ class Reports extends CI_Controller {
                 "department_id"=>$head->department_id,
                 "purpose_id"=>$head->purpose_id,
                 "enduse_id"=>$head->enduse_id,
-                "returned_by"=>$_SESSION['user_id'],
+                "returned_by"=>$requested_by,
+                "acknowledge_by"=>'10',
+                "noted_by"=>'66',
+                "received_by"=>$_SESSION['user_id'],
                 "mrwf_no"=>$mrwfno,
                 "excess"=>'1',
                 "from_pr"=>$pr,
@@ -2073,7 +2085,8 @@ class Reports extends CI_Controller {
                "supplier_id"=>$items->supplier_id,
                "brand_id"=>$items->brand_id,
                "catalog_no"=>$items->catalog_no,
-               "quantity"=>$exc_qty
+               "quantity"=>$exc_qty,
+               "reason"=>'Excess Material',
             );
             // print_r($excess_items);
             $this->super_model->insert_into("restock_details", $excess_items);

@@ -56,15 +56,19 @@ class Restock extends CI_Controller {
                 $department = $this->super_model->select_column_where("department", "department_name", "department_id", $res->department_id);
                 $enduse = $this->super_model->select_column_where("enduse", "enduse_name", "enduse_id", $res->enduse_id);
                 $purpose = $this->super_model->select_column_where("purpose", "purpose_desc", "purpose_id", $res->purpose_id);
-                if($res->excess!=1){
+                /*if($res->excess!=1){
                     $returned_by = $this->super_model->select_column_where("employees", "employee_name", "employee_id", $res->returned_by);
                 }else{
                     $returned_by = $this->super_model->select_column_where("users", "fullname", "user_id", $res->returned_by);
-                }
-                //$returned_by = $this->super_model->select_column_where("employees", "employee_name", "employee_id", $res->returned_by);
+                }*/
+                $returned_by = $this->super_model->select_column_where("employees", "employee_name", "employee_id", $res->returned_by);
                 $noted_by = $this->super_model->select_column_where("employees", "employee_name", "employee_id", $res->noted_by);
                 $acknowledge_by = $this->super_model->select_column_where("employees", "employee_name", "employee_id", $res->acknowledge_by);
-                $received_by = $this->super_model->select_column_where("employees", "employee_name", "employee_id", $res->received_by);
+                if($res->excess!=1){
+                    $received_by = $this->super_model->select_column_where("employees", "employee_name", "employee_id", $res->received_by);
+                }else{
+                    $received_by = $this->super_model->select_column_where("users", "fullname", "user_id", $res->received_by);
+                }
                 $data['restock'][] = array(
                     'rhead_id'=>$res->rhead_id,
                     'date'=>$res->restock_date,
@@ -364,13 +368,17 @@ class Restock extends CI_Controller {
         $id=$this->uri->segment(3);
         $this->load->model('super_model');
         foreach($this->super_model->select_row_where('restock_head','rhead_id', $id) AS $stock){
-            $received = $this->super_model->select_column_where("employees", "employee_name", "employee_id", $stock->received_by);
             if($stock->excess!=1){
+                $received = $this->super_model->select_column_where("employees", "employee_name", "employee_id", $stock->received_by);
+            }else {
+                $received = $this->super_model->select_column_where("users", "fullname", "user_id", $stock->received_by);
+            }
+            /*if($stock->excess!=1){
                 $returned = $this->super_model->select_column_where("employees", "employee_name", "employee_id", $stock->returned_by);
             }else{
                 $returned = $this->super_model->select_column_where("users", "fullname", "user_id", $stock->returned_by);
-            }
-            //$returned = $this->super_model->select_column_where("employees", "employee_name", "employee_id", $stock->returned_by);
+            }*/
+            $returned = $this->super_model->select_column_where("employees", "employee_name", "employee_id", $stock->returned_by);
             $acknowledge = $this->super_model->select_column_where("employees", "employee_name", "employee_id", $stock->acknowledge_by);
             $department = $this->super_model->select_column_where("department", "department_name", "department_id", $stock->department_id);
             $purpose = $this->super_model->select_column_where('purpose', 'purpose_desc', 'purpose_id', $stock->purpose_id);
