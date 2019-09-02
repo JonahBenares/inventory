@@ -341,21 +341,31 @@ class Issue extends CI_Controller {
     public function new_inv_balance($itemid, $prno){
 
        // echo "SELECT SUM(ri.received_qty) AS rqty FROM receive_details rd INNER JOIN receive_items ri ON rd.rd_id = ri.rd_id WHERE ri.item_id = '$itemid' AND rd.pr_no = '$prno'<br>";
-        foreach($this->super_model->custom_query("SELECT SUM(ri.received_qty) AS rqty FROM receive_details rd INNER JOIN receive_items ri ON rd.rd_id = ri.rd_id WHERE ri.item_id = '$itemid' AND rd.pr_no = '$prno'") AS $r){
+        if(empty($prno)){
+            $prno = "pr_no = ''";
+            $frompr = "from_pr = ''";
+        } else {
+            $prno = "pr_no = ". $prno;
+            $frompr = "from_pr = ". $prno;
+        }
+        
+        foreach($this->super_model->custom_query("SELECT SUM(ri.received_qty) AS rqty FROM receive_details rd INNER JOIN receive_items ri ON rd.rd_id = ri.rd_id WHERE ri.item_id = '$itemid' AND $prno") AS $r){
             $received = $r->rqty;
         }
 
-       foreach($this->super_model->custom_query("SELECT SUM(id.quantity) AS iqty FROM issuance_head ih INNER JOIN issuance_details id ON ih.issuance_id = id.issuance_id WHERE id.item_id = '$itemid' AND ih.pr_no = '$prno'") AS $i){
+       foreach($this->super_model->custom_query("SELECT SUM(id.quantity) AS iqty FROM issuance_head ih INNER JOIN issuance_details id ON ih.issuance_id = id.issuance_id WHERE id.item_id = '$itemid' AND $prno") AS $i){
             $issued = $i->iqty;
        }
 
-         foreach($this->super_model->custom_query("SELECT SUM(rsd.quantity) AS rsqty FROM restock_head rsh INNER JOIN restock_details rsd ON rsh.rhead_id = rsd.rhead_id WHERE rsd.item_id = '$itemid' AND rsh.pr_no = '$prno'") AS $rs){
+         foreach($this->super_model->custom_query("SELECT SUM(rsd.quantity) AS rsqty FROM restock_head rsh INNER JOIN restock_details rsd ON rsh.rhead_id = rsd.rhead_id WHERE rsd.item_id = '$itemid' AND $frompr") AS $rs){
             $restock = $rs->rsqty;
        }
 
         $wh_stocks = $this->super_model->select_sum_where("supplier_items", "quantity", "item_id ='$itemid' AND supplier_id = '0' AND catalog_no ='begbal'");
-       
-        $bal = ($received+$restock) - $issued;
+
+
+     //  echo "(".$received . " + " .  $restock . "+"  . $wh_stocks.") - ".$issued . $prno;
+        $bal = ($received+$restock+$wh_stocks) - $issued;
         return $bal;
     }
     public function mif(){
