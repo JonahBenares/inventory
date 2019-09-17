@@ -344,7 +344,8 @@ class Receive extends CI_Controller {
                 'department'=>$department,
                 'department_id'=>$d->department_id,
                 'enduse_id'=>$d->enduse_id,
-                'purpose_id'=>$d->purpose_id
+                'purpose_id'=>$d->purpose_id,
+                'inspected'=>$d->inspected_by,
             );
         }
         $data['enduse'] = $this->super_model->select_all_order_by("enduse",'enduse_name','ASC');

@@ -338,17 +338,18 @@ class Issue extends CI_Controller {
         }
     }
 
-    public function new_inv_balance($itemid, $prno){
+    public function new_inv_balance($itemid, $pr_no){
 
        // echo "SELECT SUM(ri.received_qty) AS rqty FROM receive_details rd INNER JOIN receive_items ri ON rd.rd_id = ri.rd_id WHERE ri.item_id = '$itemid' AND rd.pr_no = '$prno'<br>";
-        if(empty($prno)){
+        if(empty($pr_no)){
             $prno = "pr_no = ''";
             $frompr = "from_pr = ''";
         } else {
-            $prno = "pr_no = ". $prno;
-            $frompr = "from_pr = ". $prno;
+            $prno = "pr_no = '".$pr_no."'";
+            $frompr = "from_pr = '".$pr_no."'";
         }
         
+     
         foreach($this->super_model->custom_query("SELECT SUM(ri.received_qty) AS rqty FROM receive_details rd INNER JOIN receive_items ri ON rd.rd_id = ri.rd_id WHERE ri.item_id = '$itemid' AND $prno") AS $r){
             $received = $r->rqty;
         }
@@ -357,6 +358,7 @@ class Issue extends CI_Controller {
             $issued = $i->iqty;
        }
 
+   
          foreach($this->super_model->custom_query("SELECT SUM(rsd.quantity) AS rsqty FROM restock_head rsh INNER JOIN restock_details rsd ON rsh.rhead_id = rsd.rhead_id WHERE rsd.item_id = '$itemid' AND $frompr") AS $rs){
             $restock = $rs->rsqty;
        }

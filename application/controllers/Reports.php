@@ -2016,7 +2016,12 @@ class Reports extends CI_Controller {
         $item_id=$this->uri->segment(4);
         $exc_qty=$this->uri->segment(5);
         $now = date('Y-m-d H:i:s');
-         $requested_by =$this->super_model->select_column_where("request_head", "requested_by", "pr_no", $pr);
+        $requested = $this->super_model->select_column_where("request_head", "requested_by", "pr_no", $pr);
+        if(!empty($requested)){
+            $requested_by =$this->super_model->select_column_where("request_head", "requested_by", "pr_no", $pr);
+        }else {
+            $requested_by = '';
+        }
       //  echo "SELECT rd.rd_id FROM receive_details rd INNER JOIN receive_items ri ON rd.rd_id = ri.rd_id WHERE rd.pr_no = '$pr' AND ri.item_id = '$item_id'";
         $rdid = $this->super_model->custom_query_single("rd_id","SELECT rd.rd_id FROM receive_details rd INNER JOIN receive_items ri ON rd.rd_id = ri.rd_id WHERE rd.pr_no = '$pr' AND ri.item_id = '$item_id'");
 
