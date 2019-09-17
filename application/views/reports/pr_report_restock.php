@@ -104,7 +104,9 @@
 												</tr>
 										<?php 
 										$x=1;
-										foreach($details AS $det){ ?>
+										foreach($details AS $det){ 
+											if($h['rhead_id'] == $det['rhead_id']){
+											?>
 												<tr>
 													<td><center><?php echo $x; ?></center></td>
 													<td><?php echo $det['supplier']; ?></td>
@@ -117,6 +119,7 @@
 													<td><?php echo $det['remarks']; ?></td>
 												</tr>		
 										<?php 
+										}
 										$x++;
 										} ?>						
 										</table>					

@@ -52,8 +52,12 @@
 											<td align="center"><strong>PR No.</strong></td>
 											<td align="center"><strong>Received Qty</strong></td>
 											<td align="center"><strong>Issued Qty</strong></td>
+											<td align="center"><strong>Initial Balance</strong></td>
 											<td align="center"><strong>Restock Qty</strong></td>
-											<td align="center"><strong>Balance</strong></td>
+											<td align="center"><strong>Excess Qty</strong></td>
+											<td align="center"><strong>Final Balance</strong></td>
+											<!-- <td align="center"><strong>Restock Qty</strong></td>
+											<td align="center"><strong>Balance</strong></td> -->
 										</tr>
 									</thead>
 									<tbody>		
@@ -64,8 +68,12 @@
 											<td align="center"><strong><?php echo $li['prno']; ?></strong></td>
 											<td align="center"><strong><?php echo $li['recqty']; ?></strong></td>	
 											<td align="center"><strong><?php echo $li['issueqty']; ?></strong></td>		
-											<td align="center"><strong><?php echo $li['restockqty']; ?></strong></td>		
-											<td align="center"><strong><?php echo $li['total']; ?></strong></td>						
+											<td align="center"><strong><?php echo abs($li['in_balance']); ?></strong></td>		
+											<td align="center"><strong><?php echo $li['restockqty']; ?></strong></td>
+											<td align="center"><strong><?php echo $li['excessqty']; ?></strong></td>		
+											<td align="center"><strong><?php echo $li['final_balance']; ?></strong></td>
+											<!-- <td align="center"><strong><?php echo $li['restockqty']; ?></strong></td>		
+											<td align="center"><strong><?php echo $li['total']; ?></strong></td> -->						
 										</tr>
 									<?php 
 									} ?>

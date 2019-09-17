@@ -78,7 +78,7 @@
 									<th width="50%">Item Description</th>
 									<th width="10%">Uom</th>
 									<th width="10%">Location</th>
-									<th width="10%">Bin</th>
+									<th width="10%">Rack</th>
 									<th width="5%">Qty</th>
 									<th width="5%">Minimum Order Qty</th>
 									<th width="12%">Action</th>
@@ -95,7 +95,7 @@
 									<td><?php echo $itm['item_name']?></td>
 									<td><?php echo $itm['uom']?></td>
 									<td><?php echo $itm['location'];?></td>
-									<td><?php echo $itm['bin'];?></td>
+									<td><?php echo $itm['rack'];?></td>
 									<td align="center"><?php echo $itm['quantity']?></td>
 									<td align="center"><?php echo $itm['minimum'];?></td>
 									<td>
@@ -203,7 +203,12 @@
 							<tr>
 								<td class="td-sclass"><label for="sub">Rack:</label></td>
 								<td class="td-sclass">
-									<input class="form-control" name="rack">
+									<select class="form-control" name="rack">
+										<option value='' selected>-Choose Rack-</option>
+										<?php foreach($rack as $rack) { ?>
+										<option value='<?php echo $rack->rack_id; ?>'><?php echo $rack->rack_name; ?></option>
+										<?php } ?>
+									</select>
 								</td>
 							</tr>
 							<tr>

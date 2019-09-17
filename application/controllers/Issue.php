@@ -228,7 +228,7 @@ class Issue extends CI_Controller {
                 $remarks = $this->super_model->select_column_where("issuance_details", "remarks", "rq_id", $it->rq_id);
                 $issueid = $this->super_model->select_column_where("issuance_details", "issuance_id", "rq_id", $it->rq_id);
                 $unit = $this->super_model->select_column_where("uom", "unit_name", "unit_id", $it->unit_id);
-                $issued_qty = $this->super_model->select_sum_join("quantity","issuance_head","issuance_details", "request_id = '$id' AND item_id ='$it->item_id'","issuance_id");
+                $issued_qty = $this->super_model->select_sum_join("quantity","issuance_head","issuance_details", "request_id = '$id' AND item_id ='$it->item_id' AND rq_id = '$it->rq_id'","issuance_id");
 
                 $rem_qty = $it->quantity - $issued_qty;
                 $data['items'][] = array(
@@ -338,24 +338,36 @@ class Issue extends CI_Controller {
         }
     }
 
-    public function new_inv_balance($itemid, $prno){
+    public function new_inv_balance($itemid, $pr_no){
 
        // echo "SELECT SUM(ri.received_qty) AS rqty FROM receive_details rd INNER JOIN receive_items ri ON rd.rd_id = ri.rd_id WHERE ri.item_id = '$itemid' AND rd.pr_no = '$prno'<br>";
-        foreach($this->super_model->custom_query("SELECT SUM(ri.received_qty) AS rqty FROM receive_details rd INNER JOIN receive_items ri ON rd.rd_id = ri.rd_id WHERE ri.item_id = '$itemid' AND rd.pr_no = '$prno'") AS $r){
+        if(empty($pr_no)){
+            $prno = "pr_no = ''";
+            $frompr = "from_pr = ''";
+        } else {
+            $prno = "pr_no = '".$pr_no."'";
+            $frompr = "from_pr = '".$pr_no."'";
+        }
+        
+     
+        foreach($this->super_model->custom_query("SELECT SUM(ri.received_qty) AS rqty FROM receive_details rd INNER JOIN receive_items ri ON rd.rd_id = ri.rd_id WHERE ri.item_id = '$itemid' AND $prno") AS $r){
             $received = $r->rqty;
         }
 
-       foreach($this->super_model->custom_query("SELECT SUM(id.quantity) AS iqty FROM issuance_head ih INNER JOIN issuance_details id ON ih.issuance_id = id.issuance_id WHERE id.item_id = '$itemid' AND ih.pr_no = '$prno'") AS $i){
+       foreach($this->super_model->custom_query("SELECT SUM(id.quantity) AS iqty FROM issuance_head ih INNER JOIN issuance_details id ON ih.issuance_id = id.issuance_id WHERE id.item_id = '$itemid' AND $prno") AS $i){
             $issued = $i->iqty;
        }
 
-         foreach($this->super_model->custom_query("SELECT SUM(rsd.quantity) AS rsqty FROM restock_head rsh INNER JOIN restock_details rsd ON rsh.rhead_id = rsd.rhead_id WHERE rsd.item_id = '$itemid' AND rsh.pr_no = '$prno'") AS $rs){
+   
+         foreach($this->super_model->custom_query("SELECT SUM(rsd.quantity) AS rsqty FROM restock_head rsh INNER JOIN restock_details rsd ON rsh.rhead_id = rsd.rhead_id WHERE rsd.item_id = '$itemid' AND $frompr") AS $rs){
             $restock = $rs->rsqty;
        }
 
         $wh_stocks = $this->super_model->select_sum_where("supplier_items", "quantity", "item_id ='$itemid' AND supplier_id = '0' AND catalog_no ='begbal'");
-       
-        $bal = ($received+$restock) - $issued;
+
+
+     //  echo "(".$received . " + " .  $restock . "+"  . $wh_stocks.") - ".$issued . $prno;
+        $bal = ($received+$restock+$wh_stocks) - $issued;
         return $bal;
     }
     public function mif(){
