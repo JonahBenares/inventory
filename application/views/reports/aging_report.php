@@ -86,7 +86,7 @@
 												<td align="center">Date Received</td>									
 												<td align="center">Qty</td>									
 												<td align="center">Unit Price</td>									
-												<td align="center">1-60</td>
+												<td align="center">0-60</td>
 												<td align="center">61-120</td>
 												<td align="center">121-180</td>
 												<td align="center">181-360</td>
@@ -100,7 +100,7 @@
 												<td style="padding:0px">
 													<li class="dropdown" style="list-style:none;margin:0px;width:100%">
 														<a class="btn btn-default btn-sm " style="width:450px;text-align: left;font-size: 13px; font-weight: 700;white-space: normal!important" data-toggle="dropdown" href="#">
-															<?php echo $in['item_desc'];?>														
+															<?php echo $in['item_desc']. ", " .  $in['supplier_name'];?>														
 														</a>
 														<ul class="dropdown-menu dropdown-alerts animated fadeInDown" style="width:500px;top:35px;border:1px solid #e66614;left:0px;">
 															<span class="arrow-top2"></span>
@@ -171,7 +171,7 @@
 																if($i['qty']!=0){
 															$diff = dateDifference($now,$i['receive_date']);
 															if($in['item'] == $i['item'] && $in['supplier'] == $i['supplier'] && $in['brand'] == $i['brand'] && $in['catalog_no'] == $i['catalog_no']) { 
-																if($diff >= 1 && $diff<=60){
+																if($diff >= 0 && $diff<=60){
 														?>
 														<tr>
 															<td align="center" style="padding:3px;background:#d2ffde">

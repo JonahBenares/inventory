@@ -1554,15 +1554,15 @@ class Masterfile extends CI_Controller {
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B1', "Cat ID");
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C1', "Subcat ID");
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('D1', "Subcat Prefix");
-        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('E1', "Unit");
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('E1', "UOM ID");
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('F1', "PN No");
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('G1', "Rack ID");
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('H1', "Group ID");
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('I1', "WH ID");
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('J1', "Location ID");
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('L1', "Instructions:");
-        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('L2', "Get Cat ID, Subcat CatID and Subcat Prefix in the reference sheet");
-        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('L3', "Leave PN No. column blank if there's none, system will generate if empty");
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('L2', "Get Cat ID, Subcat ID, Subcat Prefix, UOM ID, Rack ID, Group ID, WH ID and Location ID in the reference sheet");
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('L3', "Leave PN No. column blank if there's none, system will generate pn no. if empty");
         $objPHPExcel->getActiveSheet()->getStyle('A1:J1')->getFont()->setBold(true);
         $objPHPExcel->getActiveSheet()->getStyle('L1')->getFont()->setBold(true);
 
@@ -1633,6 +1633,16 @@ class Masterfile extends CI_Controller {
             foreach($this->super_model->select_all("warehouse") AS $warehouse){
                 $objPHPExcel->setActiveSheetIndex(5)->setCellValue('A'.$num, $warehouse->warehouse_id);
                 $objPHPExcel->setActiveSheetIndex(5)->setCellValue('B'.$num, $warehouse->warehouse_name);
+                $num++;
+            }
+        $uom = $objPHPExcel->createSheet();
+        $uom->setTitle("UOM");
+            $objPHPExcel->setActiveSheetIndex(6)->setCellValue('A1', "UOM ID");
+            $objPHPExcel->setActiveSheetIndex(6)->setCellValue('B1', "UOM Name");
+            $num=2;
+            foreach($this->super_model->select_all("uom") AS $uom){
+                $objPHPExcel->setActiveSheetIndex(6)->setCellValue('A'.$num, $uom->unit_id);
+                $objPHPExcel->setActiveSheetIndex(6)->setCellValue('B'.$num, $uom->unit_name);
                 $num++;
             }
         $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');

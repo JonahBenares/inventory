@@ -178,38 +178,53 @@ class Reports extends CI_Controller {
 
            foreach($item AS $i){
                 $a=1;
+               
                 foreach($this->super_model->custom_query("SELECT DISTINCT receive_id FROM receive_items WHERE item_id = '$i[item]' AND supplier_id = '$i[supplier]' AND brand_id = '$i[brand]' AND catalog_no = '$i[catalog_no]'") AS $q){
 
                     $unit_cost = $this->super_model->select_column_custom_where("receive_items", "item_cost", "item_id = '$i[item]' AND supplier_id = '$i[supplier]' AND brand_id = '$i[brand]' AND catalog_no = '$i[catalog_no]' AND receive_id = '$q->receive_id'");
-                   // $qty = $this->super_model->select_sum_where("receive_items", "received_qty", "item_id = '$i[item]' AND supplier_id = '$i[supplier]' AND brand_id = '$i[brand]' AND catalog_no = '$i[catalog_no]' AND receive_id = '$q->receive_id'");
-                    $rec_qty = $this->super_model->custom_query_single("received_qty","SELECT ri.received_qty FROM receive_items ri INNER JOIN receive_details rd ON ri.receive_id = rd.receive_id WHERE ri.item_id = '$i[item]' AND ri.supplier_id = '$i[supplier]' AND ri.brand_id = '$i[brand]' AND ri.catalog_no = '$i[catalog_no]' GROUP BY rd.receive_id");
-                  
+                
+                 /*   $rec_qty = $this->super_model->custom_query_single("received_qty","SELECT ri.received_qty FROM receive_items ri INNER JOIN receive_head rh ON ri.receive_id = rh.receive_id WHERE ri.item_id = '$i[item]' AND ri.supplier_id = '$i[supplier]' AND ri.brand_id = '$i[brand]' AND ri.catalog_no = '$i[catalog_no]' AND rh.saved = '1' GROUP BY ri.receive_id");*/
+                  /*
                     $restock_qty = $this->qty_restocked($i['item'],$i['supplier'],$i['brand'],$i['catalog_no']);
                     $iss_qty =  $this->super_model->custom_query_single("quantity","SELECT quantity FROM issuance_details WHERE item_id = '$i[item]' AND supplier_id = '$i[supplier]' AND brand_id = '$i[brand]' AND catalog_no = '$i[catalog_no]'");
+                    */
+                    $rec_qty= $this->super_model->select_sum_join("received_qty","receive_items","receive_head", "item_id = '$i[item]' AND supplier_id = '$i[supplier]' AND brand_id = '$i[brand]' AND catalog_no = '$i[catalog_no]' AND saved = '1' AND receive_head.receive_id = '$q->receive_id'","receive_id");
+
+                    $iss_qty= $this->super_model->select_sum_join("quantity","issuance_details","issuance_head", "item_id = '$i[item]' AND supplier_id = '$i[supplier]' AND brand_id = '$i[brand]' AND catalog_no = '$i[catalog_no]' AND saved='1'","issuance_id");
+
+                     $restock_qty= $this->super_model->select_sum_join("quantity","restock_details","restock_head", "item_id = '$i[item]' AND supplier_id = '$i[supplier]' AND brand_id = '$i[brand]' AND catalog_no = '$i[catalog_no]' AND saved='1'","rhead_id");
 
                     $count_issue = $this->super_model->count_custom_where("issuance_details","item_id = '$i[item]' AND supplier_id = '$i[supplier]' AND brand_id = '$i[brand]' AND catalog_no = '$i[catalog_no]'");
 
-                    if($a<=$count_issue){
+
+                 /*   if($a<=$count_issue){
                         if($rec_qty == $iss_qty){
-                         /*   echo $a ."/" . $count_issue ."=".$i['item'] . ", ".$i['supplier'].", ".$i['brand'].", ".$i['catalog_no']."=". $rec_qty . " - " . $iss_qty . "<br>";*/
+                  
                             $issue_qty  = $iss_qty;
 
                         } else {
                             $new_iss = $rec_qty - $iss_qty;
                              $issue_qty  = $new_iss;
-                             /*echo $a ."/" . $count_issue ."=".$i['item'] . ", ".$i['supplier'].", ".$i['brand'].", ".$i['catalog_no']."=". $rec_qty . " - " . $new_iss . "<br>";*/
+                         
                         }
                     } else {
 
                             $new_iss = $rec_qty - $iss_qty;
                             $issue_qty  = $new_iss;
-                           /*  echo $a ."/" . $count_issue ."=".$i['item'] . ", ".$i['supplier'].", ".$i['brand'].", ".$i['catalog_no']."=". $rec_qty . " - " . $new_iss . "<br>";*/
+                         
                         
 
                     }
-                   
+                   */
+                   //echo $i['item'] . " = " .$rec_qty . ", " . $iss_qty . ", " . $restock_qty . "<br>";
                     
-                    $qty = ($rec_qty+$restock_qty) -  $issue_qty;
+                    if(!empty($iss_qty)){
+                        $qty = ($rec_qty+$restock_qty) -  $iss_qty;
+                    } else if(!empty($restockq_ty)){
+                        $qty = $restock_qty;
+                    } else {
+                         $qty = $rec_qty;
+                    }
                     $unit_x = $qty * $unit_cost;
                   //  echo $unit_x."<br>";
                     if($qty!=0){
@@ -217,7 +232,7 @@ class Reports extends CI_Controller {
                     
                     }
                     $receive_date = $this->super_model->select_column_where("receive_head", "receive_date", "receive_id", $q->receive_id);
-                   
+                  
                     $data['info'][]=array(
                         'receive_id'=>$q->receive_id,
                         'receive_date'=>$receive_date,
@@ -392,6 +407,7 @@ class Reports extends CI_Controller {
         }*/
 
        foreach($item AS $i){
+
             foreach($this->super_model->custom_query("SELECT DISTINCT receive_id FROM receive_items WHERE item_id = '$i[item]' AND supplier_id = '$i[supplier]' AND brand_id = '$i[brand]' AND catalog_no = '$i[catalog_no]'") AS $q){
             $unit_cost = $this->super_model->select_column_custom_where("receive_items", "item_cost", "item_id = '$i[item]' AND supplier_id = '$i[supplier]' AND brand_id = '$i[brand]' AND catalog_no = '$i[catalog_no]' AND receive_id = '$q->receive_id'");
             $qty = $this->super_model->select_sum_where("receive_items", "received_qty", "item_id = '$i[item]' AND supplier_id = '$i[supplier]' AND brand_id = '$i[brand]' AND catalog_no = '$i[catalog_no]' AND receive_id = '$q->receive_id'");
@@ -729,6 +745,7 @@ class Reports extends CI_Controller {
                 $enduse = $this->super_model->select_column_where("enduse", "enduse_name", "enduse_id", $head->enduse_id);
                 $purpose = $this->super_model->select_column_where("purpose", "purpose_desc", "purpose_id", $head->purpose_id);
                 $data['head'][]=array(
+                    "issuance_id"=>$head->issuance_id,
                     "issue_date"=>$head->issue_date,
                     "issue_time"=>$head->issue_time,
                     "mif_no"=>$head->mif_no,
@@ -746,6 +763,7 @@ class Reports extends CI_Controller {
                     $brand = $this->super_model->select_column_where('brand', 'brand_name', 'brand_id', $det->brand_id);
                     $serial = $this->super_model->select_column_where('serial_number', 'serial_no', 'serial_id', $det->serial_id);
                     $data['details'][]=array(
+                         "issuance_id"=>$det->issuance_id,
                         'item'=>$item,
                         'supplier'=>$supplier,
                         'brand'=>$brand,
