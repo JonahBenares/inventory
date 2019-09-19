@@ -58,7 +58,7 @@
 			</div>
 		</div> 
 		<?php } else { ?>
-		<div class="panel panel-default animated fadeInLeft itemSubBevel itemSubColor1" >
+		<div class="panel panel-default animated fadeInLeft itemSubBevel itemSubColor3" >
 			<div class="panel-body">
 				<center>
 					<h1 class="subFcolor"><span class="fa fa-retweet rotate"></span> </h1><h2 class="subColored" style="margin: 0px">Back Order</h2>
@@ -96,7 +96,7 @@
 			</div>
 		</div>
 		<?php } else { ?>
-		<div class="panel panel-default animated fadeInRight itemSubBevel itemSubColor2" >
+		<div class="panel panel-default animated fadeInRight itemSubBevel itemSubColor3" >
 			<div class="panel-body">
 				<center>
 					<h1 class="subFcolor"><span class="fa fa-shopping-cart animated fadeInLeft infinite"></span> </h1><h2 class="subColored" style="margin: 0px">Need to Reorder</h2>

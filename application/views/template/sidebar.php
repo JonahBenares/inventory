@@ -479,6 +479,29 @@
 			<li><a href="<?php echo base_url(); ?>index.php/items/item_list"><em class="fa fa-calendar">&nbsp;</em> Item List</a></li>
 			
 			<li class="parent ">
+				<a data-toggle="collapse" href="#sub-receiving">
+					<span class="fa fa-sign-in">&nbsp;</span> Receive 
+					<span data-toggle="collapse" href="#sub-receiving" class="icon pull-right">
+						<em class="fa fa-plus"></em>
+					</span>
+				</a>
+				<ul class="children collapse" id="sub-receiving">
+					<?php if($receive_add == 1){ ?>
+					<li>
+						<a class=""  data-toggle="modal" data-target="#receiveModal" >
+							<span class="fa fa-arrow-right">&nbsp;</span> Add New
+						</a>
+					</li>
+					<?php } ?>
+					<li>
+						<a class="" href="<?php echo base_url(); ?>index.php/receive/receive_list">
+							<span class="fa fa-arrow-right">&nbsp;</span> View List
+						</a>
+					</li>
+				</ul>
+			</li>
+			
+			<li class="parent ">
 				<a data-toggle="collapse" href="#sub-request">
 					<span class="fa fa-pencil-square-o">&nbsp;</span> Request 
 					<span data-toggle="collapse" href="#sub-request" class="icon pull-right">
@@ -500,28 +523,7 @@
 					</li>
 				</ul>
 			</li>	
-			<li class="parent ">
-				<a data-toggle="collapse" href="#sub-receiving">
-					<span class="fa fa-sign-in">&nbsp;</span> Receive 
-					<span data-toggle="collapse" href="#sub-receiving" class="icon pull-right">
-						<em class="fa fa-plus"></em>
-					</span>
-				</a>
-				<ul class="children collapse" id="sub-receiving">
-					<?php if($receive_add == 1){ ?>
-					<li>
-						<a class=""  data-toggle="modal" data-target="#receiveModal" >
-							<span class="fa fa-arrow-right">&nbsp;</span> Add New
-						</a>
-					</li>
-					<?php } ?>
-					<li>
-						<a class="" href="<?php echo base_url(); ?>index.php/receive/receive_list">
-							<span class="fa fa-arrow-right">&nbsp;</span> View List
-						</a>
-					</li>
-				</ul>
-			</li>	
+				
 			<!-- <li><a href="<?php echo base_url(); ?>index.php/issue/load_issue"><em class="fa fa-share-square-o">&nbsp;</em> Issue</a></li> -->
 			<li class="parent ">
 				<a data-toggle="collapse" href="#sub-issue">
