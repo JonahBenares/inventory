@@ -6,8 +6,8 @@
 			<li><a href="#">
 				<em class="fa fa-home"></em>
 			</a></li>
-			<li class=""><a href="<?php echo base_url(); ?>index.php/restock/restock">Receive </a></li>
-			<li class="active"> Delivery Receipt</li>
+			<li class=""><a href="<?php echo base_url(); ?>index.php/restock/restock">Restock </a></li>
+			<li class="active"> Add</li>
 		</ol>
 	</div><!--/.row-->
 	
