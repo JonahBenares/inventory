@@ -349,24 +349,25 @@ class Issue extends CI_Controller {
             $frompr = "from_pr = '".$pr_no."'";
         }
         
+     /*   return "SELECT SUM(ri.received_qty) AS rqty FROM receive_details rd INNER JOIN receive_items ri ON rd.rd_id = ri.rd_id WHERE ri.item_id = '$itemid'";*/
      
-        foreach($this->super_model->custom_query("SELECT SUM(ri.received_qty) AS rqty FROM receive_details rd INNER JOIN receive_items ri ON rd.rd_id = ri.rd_id WHERE ri.item_id = '$itemid' AND $prno") AS $r){
+        foreach($this->super_model->custom_query("SELECT SUM(ri.received_qty) AS rqty FROM receive_details rd INNER JOIN receive_items ri ON rd.rd_id = ri.rd_id WHERE ri.item_id = '$itemid'") AS $r){
             $received = $r->rqty;
         }
 
-       foreach($this->super_model->custom_query("SELECT SUM(id.quantity) AS iqty FROM issuance_head ih INNER JOIN issuance_details id ON ih.issuance_id = id.issuance_id WHERE id.item_id = '$itemid' AND $prno") AS $i){
+       foreach($this->super_model->custom_query("SELECT SUM(id.quantity) AS iqty FROM issuance_head ih INNER JOIN issuance_details id ON ih.issuance_id = id.issuance_id WHERE id.item_id = '$itemid'") AS $i){
             $issued = $i->iqty;
        }
 
    
-         foreach($this->super_model->custom_query("SELECT SUM(rsd.quantity) AS rsqty FROM restock_head rsh INNER JOIN restock_details rsd ON rsh.rhead_id = rsd.rhead_id WHERE rsd.item_id = '$itemid' AND $frompr") AS $rs){
+         foreach($this->super_model->custom_query("SELECT SUM(rsd.quantity) AS rsqty FROM restock_head rsh INNER JOIN restock_details rsd ON rsh.rhead_id = rsd.rhead_id WHERE rsd.item_id = '$itemid'") AS $rs){
             $restock = $rs->rsqty;
        }
 
         $wh_stocks = $this->super_model->select_sum_where("supplier_items", "quantity", "item_id ='$itemid' AND supplier_id = '0' AND catalog_no ='begbal'");
 
 
-     //  echo "(".$received . " + " .  $restock . "+"  . $wh_stocks.") - ".$issued . $prno;
+      // return "(".$received . " + " .  $restock . "+"  . $wh_stocks.") - ".$issued . $prno;
         $bal = ($received+$restock+$wh_stocks) - $issued;
         return $bal;
     }
