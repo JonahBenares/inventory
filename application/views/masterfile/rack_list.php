@@ -45,7 +45,7 @@
 											<a href = "<?php echo base_url(); ?>index.php/masterfile/update_rack/<?php echo $rack->rack_id;?>" class = "btn btn-primary btn-sm" title="UPDATE"><span class="fa fa-pencil-square-o"></span></a>
 											<?php } ?>
 											<?php if($access['masterfile_delete'] == 1){ ?>
-											<a  href="<?php echo base_url(); ?>index.php/masterfile/delete_rack/<?php echo $rack->rack_id;?>" class="btn btn-danger btn-sm" title="DELETE" title="DELETE" alt='DELETE'><span class="fa fa-trash-o"></span></a>
+											<a  href="<?php echo base_url(); ?>index.php/masterfile/delete_rack/<?php echo $rack->rack_id;?>" class="btn btn-danger btn-sm" onclick="confirmationDelete(this);return false;" title="DELETE" title="DELETE" alt='DELETE'><span class="fa fa-trash-o"></span></a>
 											<?php } ?>
 										</td>
 									</tr>

@@ -83,10 +83,11 @@ class Reports extends CI_Controller {
     public function prlist(){
         $pr=$this->input->post('pr');
         $rows=$this->super_model->count_custom_where("receive_details","pr_no LIKE '%$pr%'");
+        
         if($rows!=0){
              echo "<ul id='name-item'>";
             foreach($this->super_model->select_custom_where("receive_details", "pr_no LIKE '%$pr%' GROUP BY pr_no") AS $pr){ 
-                   /* $dr = $this->super_model->select_column_where('receive_head', 'dr_no', 'receive_id', $pr->receive_id);*/
+                  
                     ?>
                     <?php if($pr->closed == '0'){ ?>
                     <li onClick="selectPr('<?php echo $pr->receive_id; ?>','<?php echo $pr->pr_no; ?>')"><?php echo $pr->pr_no; ?> <span class="fa fa-unlock"></span></li>
