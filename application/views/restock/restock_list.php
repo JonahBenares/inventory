@@ -32,9 +32,9 @@
 				<div class="panel-heading">
 					RESTOCK
 					<div class="pull-right">
-						<a class=" clickable panel-toggle panel-button-tab-right shadow"  data-toggle="modal" data-target="#search">
+						<!-- <a class=" clickable panel-toggle panel-button-tab-right shadow"  data-toggle="modal" data-target="#search">
 							<span class="fa fa-search"></span>
-						</a>
+						</a> -->
 						<a class="clickable panel-toggle panel-button-tab-right shadow"   href="<?php echo base_url(); ?>index.php/restock/add_restock">
 							<span class="fa fa-plus"></span></span>
 						</a>

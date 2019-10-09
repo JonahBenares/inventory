@@ -894,9 +894,9 @@ class Reports extends CI_Controller {
         }
 
         $query=substr($sql,0,-3);
-        $count=$this->super_model->custom_query("SELECT rh.* FROM receive_head rh INNER JOIN receive_items ri ON rh.receive_id = ri.receive_id INNER JOIN items i ON ri.item_id = i.item_id WHERE rh.saved='1' AND ".$query);
+        $count=$this->super_model->custom_query("SELECT DISTINCT rh.* FROM receive_head rh INNER JOIN receive_items ri ON rh.receive_id = ri.receive_id INNER JOIN items i ON ri.item_id = i.item_id WHERE rh.saved='1' AND ".$query." GROUP BY item_name ORDER BY i.item_name ASC");
         if($count!=0){
-            foreach($this->super_model->custom_query("SELECT rh.*,i.item_id  FROM receive_head rh INNER JOIN receive_items ri ON rh.receive_id = ri.receive_id INNER JOIN items i ON ri.item_id = i.item_id WHERE rh.saved='1' AND ".$query) AS $head){
+            foreach($this->super_model->custom_query("SELECT DISTINCT rh.*,i.item_id  FROM receive_head rh INNER JOIN receive_items ri ON rh.receive_id = ri.receive_id INNER JOIN items i ON ri.item_id = i.item_id WHERE rh.saved='1' AND ".$query." GROUP BY item_name ORDER BY i.item_name ASC") AS $head){
                 $item = $this->super_model->select_column_where('items', 'item_name', 'item_id', $head->item_id);
                 $pn = $this->super_model->select_column_where('items', 'original_pn', 'item_id', $head->item_id);
                 $totalqty=$this->inventory_balance($head->item_id);
@@ -2511,6 +2511,22 @@ class Reports extends CI_Controller {
         $to=$this->uri->segment(4);
         $cat=$this->uri->segment(5);
         $subcat=$this->uri->segment(6);
+
+         $sql="";
+        if($from!='null' && $to!='null'){
+           $sql.= " rh.receive_date BETWEEN '$from' AND '$to' AND";
+        }
+
+        if($cat!='null'){
+            $sql.= " i.category_id = '$cat' AND";
+        }
+
+        if($subcat!='null'){
+            $sql.= " i.subcat_id = '$subcat' AND";
+        }
+
+        $query=substr($sql,0,-3);
+
         require_once(APPPATH.'../assets/js/phpexcel/Classes/PHPExcel/IOFactory.php');
         $objPHPExcel = new PHPExcel();
         $exportfilename="Inventory Report.xlsx";
@@ -2540,9 +2556,11 @@ class Reports extends CI_Controller {
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C2', "Purok San Jose, Brgy. Calumangan, Bago City");
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C3', "Tel. No. 476 - 7382");
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('H1', "MATERIAL INVENTORY REPORT");
-        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('I2', "TO DATE");
+        /*$objPHPExcel->setActiveSheetIndex(0)->setCellValue('I2', "TO DATE");*/
+        $to_date = date('F j, Y',strtotime($to));
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('I2', "AS OF ".$to_date);
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('F8', "Sub-Category");
-        $num=11;
+        
         foreach($this->super_model->select_custom_where("receive_head","receive_date BETWEEN '$from' AND '$to'") AS $head){
             $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C5', $from.' - '.$to);
         } 
@@ -2555,8 +2573,26 @@ class Reports extends CI_Controller {
             /*$num++;*/
         }
         $x = 1;
-        if($from != 'null' && $to != 'null' && $cat != 'null' && $subcat != 'null'){ 
-            foreach($this->super_model->custom_query("SELECT rh.*,i.item_id  FROM receive_head rh INNER JOIN receive_items ri ON rh.receive_id = ri.receive_id INNER JOIN items i ON ri.item_id = i.item_id WHERE rh.saved='1' AND i.category_id = '$cat' AND i.subcat_id = '$subcat' AND rh.receive_date BETWEEN '$from' AND '$to'") AS $head){
+        $num=11;
+        foreach($this->super_model->custom_query("SELECT rh.*,i.item_id  FROM receive_head rh INNER JOIN receive_items ri ON rh.receive_id = ri.receive_id INNER JOIN items i ON ri.item_id = i.item_id WHERE rh.saved='1' AND ".$query." GROUP BY item_name ORDER BY i.item_name ASC") AS $head){
+            $item = $this->super_model->select_column_where('items', 'item_name', 'item_id', $head->item_id);
+            $pn = $this->super_model->select_column_where('items', 'original_pn', 'item_id', $head->item_id);
+            $totalqty=$this->inventory_balance($head->item_id);
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A'.$num, $x);
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B'.$num, $pn);
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('E'.$num, $item);
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('K'.$num, $totalqty);
+            $objPHPExcel->getActiveSheet()->getProtection()->setSheet(true);    
+            $objPHPExcel->getActiveSheet()->protectCells('A'.$num.":L".$num,'admin');
+            $objPHPExcel->getActiveSheet()->mergeCells('B'.$num.":D".$num);
+            $objPHPExcel->getActiveSheet()->mergeCells('E'.$num.":J".$num);
+            $objPHPExcel->getActiveSheet()->mergeCells('K'.$num.":L".$num);
+            $objPHPExcel->getActiveSheet()->getStyle('K'.$num.":L".$num)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+            $x++;
+            $num++;
+        }
+        /*if($from != 'null' && $to != 'null' && $cat != 'null' && $subcat != 'null'){ 
+            foreach($this->super_model->custom_query("SELECT rh.*,i.item_id  FROM receive_head rh INNER JOIN receive_items ri ON rh.receive_id = ri.receive_id INNER JOIN items i ON ri.item_id = i.item_id WHERE rh.saved='1' AND i.category_id = '$cat' AND i.subcat_id = '$subcat' AND rh.receive_date BETWEEN '$from' AND '$to' GROUP BY i.item_name ORDER BY i.item_name ASC") AS $head){
                 $item = $this->super_model->select_column_where('items', 'item_name', 'item_id', $head->item_id);
                 $pn = $this->super_model->select_column_where('items', 'original_pn', 'item_id', $head->item_id);
                 $totalqty=$this->inventory_balance($head->item_id);
@@ -2573,9 +2609,26 @@ class Reports extends CI_Controller {
                 $objPHPExcel->getActiveSheet()->mergeCells('H'.$num.":K".$num);
                 $objPHPExcel->getActiveSheet()->getStyle('H'.$num.":K".$num)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
             }
-        }
-        else if($from != 'null' && $to != 'null'){
-            foreach($this->super_model->custom_query("SELECT rh.*,i.item_id  FROM receive_head rh INNER JOIN receive_items ri ON rh.receive_id = ri.receive_id INNER JOIN items i ON ri.item_id = i.item_id WHERE rh.receive_date BETWEEN '$from' AND '$to' AND rh.saved='1'") AS $head){
+        }else if($from != 'null' && $to != 'null' && $cat != 'null' && $cat == 'null'){
+            foreach($this->super_model->custom_query("SELECT rh.*,i.item_id  FROM receive_head rh INNER JOIN receive_items ri ON rh.receive_id = ri.receive_id INNER JOIN items i ON ri.item_id = i.item_id WHERE rh.saved='1' AND i.category_id = '$cat' GROUP BY i.item_name ORDER BY i.item_name ASC") AS $head){
+                $item = $this->super_model->select_column_where('items', 'item_name', 'item_id', $head->item_id);
+                $pn = $this->super_model->select_column_where('items', 'original_pn', 'item_id', $head->item_id);
+                $totalqty=$this->inventory_balance($head->item_id);
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A'.$num, $x);
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B'.$num, $pn);
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('E'.$num, $item);
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('H'.$num, $totalqty);
+                $objPHPExcel->getActiveSheet()->getProtection()->setSheet(true);    
+                $objPHPExcel->getActiveSheet()->protectCells('A'.$num.":H".$num,'admin');
+                $x++;
+                $num++;
+                $objPHPExcel->getActiveSheet()->mergeCells('B'.$num.":D".$num);
+                $objPHPExcel->getActiveSheet()->mergeCells('E'.$num.":G".$num);
+                $objPHPExcel->getActiveSheet()->mergeCells('H'.$num.":K".$num);
+                $objPHPExcel->getActiveSheet()->getStyle('H'.$num.":K".$num)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+            }
+        }else if($from != 'null' && $to != 'null'){
+            foreach($this->super_model->custom_query("SELECT rh.*,i.item_id  FROM receive_head rh INNER JOIN receive_items ri ON rh.receive_id = ri.receive_id INNER JOIN items i ON ri.item_id = i.item_id WHERE rh.receive_date BETWEEN '$from' AND '$to' AND rh.saved='1' GROUP BY i.item_name ORDER BY i.item_name ASC") AS $head){
                 $item = $this->super_model->select_column_where('items', 'item_name', 'item_id', $head->item_id);
                 $pn = $this->super_model->select_column_where('items', 'original_pn', 'item_id', $head->item_id);
                 $totalqty=$this->inventory_balance($head->item_id);
@@ -2593,7 +2646,7 @@ class Reports extends CI_Controller {
                 $objPHPExcel->getActiveSheet()->getStyle('K'.$num.":L".$num)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
             } 
         }else if($subcat != 'null' && $cat != 'null'){
-            foreach($this->super_model->custom_query("SELECT rh.*,i.item_id  FROM receive_head rh INNER JOIN receive_items ri ON rh.receive_id = ri.receive_id INNER JOIN items i ON ri.item_id = i.item_id WHERE rh.saved='1' AND i.category_id = '$cat' AND i.subcat_id = '$subcat'") AS $head){
+            foreach($this->super_model->custom_query("SELECT rh.*,i.item_id  FROM receive_head rh INNER JOIN receive_items ri ON rh.receive_id = ri.receive_id INNER JOIN items i ON ri.item_id = i.item_id WHERE rh.saved='1' AND i.category_id = '$cat' AND i.subcat_id = '$subcat' GROUP BY i.item_name ORDER BY i.item_name ASC") AS $head){
                 $item = $this->super_model->select_column_where('items', 'item_name', 'item_id', $head->item_id);
                 $pn = $this->super_model->select_column_where('items', 'original_pn', 'item_id', $head->item_id);
                 $totalqty=$this->inventory_balance($head->item_id);
@@ -2611,7 +2664,7 @@ class Reports extends CI_Controller {
                 $objPHPExcel->getActiveSheet()->getStyle('H'.$num.":K".$num)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
             }
         }else {
-            foreach($this->super_model->custom_query("SELECT rh.*,i.item_id  FROM receive_head rh INNER JOIN receive_items ri ON rh.receive_id = ri.receive_id INNER JOIN items i ON ri.item_id = i.item_id WHERE rh.saved='1'") AS $head){
+            foreach($this->super_model->custom_query("SELECT rh.*,i.item_id  FROM receive_head rh INNER JOIN receive_items ri ON rh.receive_id = ri.receive_id INNER JOIN items i ON ri.item_id = i.item_id WHERE rh.saved='1' GROUP BY i.item_name ORDER BY i.item_name ASC") AS $head){
                 $item = $this->super_model->select_column_where('items', 'item_name', 'item_id', $head->item_id);
                 $pn = $this->super_model->select_column_where('items', 'original_pn', 'item_id', $head->item_id);
                 $totalqty=$this->inventory_balance($head->item_id);
@@ -2628,7 +2681,7 @@ class Reports extends CI_Controller {
                 $objPHPExcel->getActiveSheet()->mergeCells('H'.$num.":K".$num);
                 $objPHPExcel->getActiveSheet()->getStyle('H'.$num.":K".$num)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
             }
-        }
+        }*/
          $styleArray = array(
           'borders' => array(
             'allborders' => array(
@@ -2636,7 +2689,7 @@ class Reports extends CI_Controller {
             )
           )
         );
-        $num--;
+        /*$num--;*/
         $objPHPExcel->getActiveSheet()->mergeCells('B10:D10');
         $objPHPExcel->getActiveSheet()->mergeCells('E10:J10');
         $objPHPExcel->getActiveSheet()->mergeCells('K10:L10');
