@@ -53,8 +53,10 @@ $(document).ready(function(){
      });
 
 	$("#pr").keyup(function(){
+
 	var loc= document.getElementById("baseurl").value;
     var redirect=loc+'/index.php/reports/prlist';
+   
 	      $.ajax({
 	        type: "POST",
 	        url: redirect,
