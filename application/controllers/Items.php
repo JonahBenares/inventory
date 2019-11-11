@@ -390,18 +390,28 @@ class Items extends CI_Controller {
     }*/
 
     public function inventory_balance($itemid){
-         $recqty= $this->super_model->select_sum("supplier_items", "quantity", "item_id", $itemid);
-      //   $issueqty= $this->super_model->select_sum_join("quantity","issuance_details","issuance_head", "item_id='$itemid' AND saved='1'","issuance_id");
-         $issueqty= $this->super_model->select_sum("issuance_details","quantity", "item_id",$itemid);
-         $balance=$recqty-$issueqty;
+       /*  $recqty= $this->super_model->select_sum("supplier_items", "quantity", "item_id", $itemid);
+         $issueqty= $this->super_model->select_sum("issuance_details","quantity", "item_id",$itemid);*/
+        $begbal= $this->super_model->select_sum_where("supplier_items", "quantity", "item_id='$itemid' AND catalog_no = 'begbal'");
+         $recqty= $this->super_model->select_sum_join("received_qty","receive_items","receive_head", "item_id='$itemid' AND saved='1'","receive_id");
+         //return $recqty;
+        $issueqty= $this->super_model->select_sum_join("quantity","issuance_details","issuance_head", "item_id='$itemid' AND saved='1'","issuance_id");
+        //return $issueqty;
+         $restockqty= $this->super_model->select_sum_join("quantity","restock_details","restock_head", "item_id='$itemid' AND saved='1'","rhead_id");
+          //return $restockqty;
+          $balance=($recqty+$begbal+$restockqty)-$issueqty;
          return $balance;
     }
 
     public function crossref_balance($itemid,$supplierid,$brandid,$catalogno){
-        $recqty= $this->super_model->select_sum_where("supplier_items", "quantity", "item_id = '$itemid' AND supplier_id = '$supplierid' AND brand_id = '$brandid' AND catalog_no ='$catalogno'");
+      /*  $recqty= $this->super_model->select_sum_where("supplier_items", "quantity", "item_id = '$itemid' AND supplier_id = '$supplierid' AND brand_id = '$brandid' AND catalog_no ='$catalogno'");*/
+      
+         $recqty= $this->super_model->select_sum_join("received_qty","receive_items","receive_head", "item_id='$itemid' AND supplier_id = '$supplierid' AND brand_id = '$brandid' AND catalog_no = '$catalogno' AND saved='1'","receive_id");
 
         $issueqty= $this->super_model->select_sum_join("quantity","issuance_details","issuance_head", "item_id='$itemid' AND supplier_id = '$supplierid' AND brand_id = '$brandid' AND catalog_no = '$catalogno' AND saved='1'","issuance_id");
-         $balance=$recqty-$issueqty;
+
+         $restockqty= $this->super_model->select_sum_join("quantity","restock_details","restock_head", "item_id='$itemid' AND supplier_id = '$supplierid' AND brand_id = '$brandid' AND catalog_no = '$catalogno' AND saved='1'","rhead_id");
+         $balance=($recqty-$issueqty)+$restockqty;
          return $balance;
     }
 
@@ -878,7 +888,7 @@ class Items extends CI_Controller {
         $objPHPExcel = new PHPExcel();
         $exportfilename="items.xlsx";
         $objPHPExcel = new PHPExcel();
-        $gdImage = imagecreatefrompng('assets/default/logo_cenpri.png');
+        $gdImage = imagecreatefrompng('assets/default/logo_cpgc.png');
         // Add a drawing to the worksheetecho date('H:i:s') . " Add a drawing to the worksheet\n";
         $objDrawing = new PHPExcel_Worksheet_MemoryDrawing();
         $objDrawing->setName('Sample image');
@@ -900,9 +910,9 @@ class Items extends CI_Controller {
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A6', "Date");
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A8', "Main Category");
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('G8', "Sub-Category");
-        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C2', "CENTRAL NEGROS POWER RELIABILITY, INC.");
-        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C3', "Purok San Jose, Brgy. Calumangan, Bago City");
-        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C4', "Tel. No. 476 - 7382");
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C2', "STA. ISABEL CPGC POWER CORP.");
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C3', "CDPP Building, NPC Compound, Sta. Isabel,Calapan City, Oriental Mindoro");
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C4', "Tel: (+043) 288-2026");
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('N2', "MATERIAL INVENTORY REPORT TO DATE");
 
 
@@ -1219,4 +1229,8 @@ class Items extends CI_Controller {
     }
 }
 
+
+
+
 ?>
+

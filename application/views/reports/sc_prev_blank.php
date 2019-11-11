@@ -108,7 +108,7 @@
                         <tr>
                             <td colspan="8">
                                 <center>
-                                    <h3 class="nomarg"><b>CENPRI STOCK CARD</b></h3>
+                                    <h3 class="nomarg"><b>SIPC & CPGC STOCK CARD</b></h3>
                                     <small style="color:#ffffff00!important">printed by: admin admin admin | 2019-01-10 | 20:20am</small>
                                 </center>
                             </td>

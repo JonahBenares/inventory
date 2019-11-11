@@ -539,7 +539,7 @@ class Restock extends CI_Controller {
 
     public function insertrestock(){
 
-        $date=date('Y-m-d H:i:s');
+        $date=date('Y-m-d');
         $itemid=$this->input->post('item_id');
         $supplierid=$this->input->post('supplier_id');
         $brandid=$this->input->post('brand_id');

@@ -21,10 +21,10 @@
 				<div class="col-lg-4 col-md-3 col-sm-2"></div>
 				<div class="col-lg-4 col-md-6 col-sm-8">
 					<div class="panel-login panel-default">					
-						<div class="panel-body">
-							<div class="canvas-wrapper">
+							<div class="panel-body">
+								<div class="canvas-wrapper">
 								<center>
-									<label>WAREHOUSE INVENTORY SYSTEM</label>
+									<label>SIPC INVENTORY SYSTEM</label>
 								</center>
 								<hr style="margin:0px">								
 								<form method = "POST" action="<?php echo base_url(); ?>index.php/masterfile/login_process">

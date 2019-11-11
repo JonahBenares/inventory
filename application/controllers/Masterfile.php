@@ -58,13 +58,27 @@ class Masterfile extends CI_Controller {
     }
 
 
-     public function inventory_balance($itemid){
+     /*public function inventory_balance($itemid){
          $recqty= $this->super_model->select_sum("supplier_items", "quantity", "item_id", $itemid);
          $issueqty= $this->super_model->select_sum_join("quantity","issuance_details","issuance_head", "item_id='$itemid' AND saved='1'","issuance_id");
          $balance=$recqty-$issueqty;
          return $balance;
-    }
+    }*/
 
+       public function inventory_balance($itemid){
+       /*  $recqty= $this->super_model->select_sum("supplier_items", "quantity", "item_id", $itemid);
+         $issueqty= $this->super_model->select_sum("issuance_details","quantity", "item_id",$itemid);*/
+        $begbal= $this->super_model->select_sum_where("supplier_items", "quantity", "item_id='$itemid' AND catalog_no = 'begbal'");
+         $recqty= $this->super_model->select_sum_join("received_qty","receive_items","receive_head", "item_id='$itemid' AND saved='1'","receive_id");
+         //return $recqty;
+        $issueqty= $this->super_model->select_sum_join("quantity","issuance_details","issuance_head", "item_id='$itemid' AND saved='1'","issuance_id");
+        //return $issueqty;
+         $restockqty= $this->super_model->select_sum_join("quantity","restock_details","restock_head", "item_id='$itemid' AND saved='1'","rhead_id");
+          //return $restockqty;
+          $balance=($recqty+$begbal+$restockqty)-$issueqty;
+         return $balance;
+    }
+    
     public function backorder_qty($riid){
 
         $expectedqty = $this->super_model->select_sum("receive_items", "expected_qty", "ri_id", $riid);
@@ -1479,6 +1493,7 @@ class Masterfile extends CI_Controller {
             } 
             else {
                 $filename1='item_inventory.'.$ext1;
+               /* echo $dest."\/".$filename1;*/
                 if(move_uploaded_file($_FILES["excelfile"]['tmp_name'], $dest.'/'.$filename1)){
                     $this->readExcel_inv();
                 }        
@@ -1490,6 +1505,8 @@ class Masterfile extends CI_Controller {
         require_once(APPPATH.'../assets/js/phpexcel/Classes/PHPExcel/IOFactory.php');
         $objPHPExcel = new PHPExcel();
         $inputFileName =realpath(APPPATH.'../uploads/excel/item_inventory.xlsx');
+
+       // echo $inputFileName;
         try {
             $inputFileType = PHPExcel_IOFactory::identify($inputFileName);
             $objReader = PHPExcel_IOFactory::createReader($inputFileType);
@@ -1525,9 +1542,11 @@ class Masterfile extends CI_Controller {
                     'item_name'=>$desc,
                     'category_id'=>$cat_id,
                     'subcat_id'=>$subcat_id,
-                    'unit'=>$unit,
+                    'unit_id'=>$unit,
                     'original_pn'=>$orig_pn
                 );
+
+                //print_r($data_items);
                 $this->super_model->insert_into("items", $data_items);
             } 
             else {
@@ -1535,9 +1554,10 @@ class Masterfile extends CI_Controller {
                     'item_name'=>$desc,
                     'category_id'=>$cat_id,
                     'subcat_id'=>$subcat_id,
-                    'unit'=>$unit,
+                    'unit_id'=>$unit,
                     'original_pn'=>$pn
                 );
+                //print_r($data_items);
                 $this->super_model->insert_into("items", $data_items);
             }
         }
@@ -1554,15 +1574,15 @@ class Masterfile extends CI_Controller {
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B1', "Cat ID");
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C1', "Subcat ID");
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('D1', "Subcat Prefix");
-        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('E1', "Unit");
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('E1', "UOM ID");
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('F1', "PN No");
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('G1', "Rack ID");
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('H1', "Group ID");
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('I1', "WH ID");
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('J1', "Location ID");
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('L1', "Instructions:");
-        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('L2', "Get Cat ID, Subcat CatID and Subcat Prefix in the reference sheet");
-        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('L3', "Leave PN No. column blank if there's none, system will generate if empty");
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('L2', "Get Cat ID, Subcat ID, Subcat Prefix, UOM ID, Rack ID, Group ID, WH ID and Location ID in the reference sheet");
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('L3', "Leave PN No. column blank if there's none, system will generate pn no. if empty");
         $objPHPExcel->getActiveSheet()->getStyle('A1:J1')->getFont()->setBold(true);
         $objPHPExcel->getActiveSheet()->getStyle('L1')->getFont()->setBold(true);
 
@@ -1633,6 +1653,16 @@ class Masterfile extends CI_Controller {
             foreach($this->super_model->select_all("warehouse") AS $warehouse){
                 $objPHPExcel->setActiveSheetIndex(5)->setCellValue('A'.$num, $warehouse->warehouse_id);
                 $objPHPExcel->setActiveSheetIndex(5)->setCellValue('B'.$num, $warehouse->warehouse_name);
+                $num++;
+            }
+        $uom = $objPHPExcel->createSheet();
+        $uom->setTitle("UOM");
+            $objPHPExcel->setActiveSheetIndex(6)->setCellValue('A1', "UOM ID");
+            $objPHPExcel->setActiveSheetIndex(6)->setCellValue('B1', "UOM Name");
+            $num=2;
+            foreach($this->super_model->select_all("uom") AS $uom){
+                $objPHPExcel->setActiveSheetIndex(6)->setCellValue('A'.$num, $uom->unit_id);
+                $objPHPExcel->setActiveSheetIndex(6)->setCellValue('B'.$num, $uom->unit_name);
                 $num++;
             }
         $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');

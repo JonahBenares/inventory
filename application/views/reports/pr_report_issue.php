@@ -104,7 +104,8 @@
 												</tr>
 										<?php 
 										$x=1;
-										foreach($details AS $det){ ?>
+										foreach($details AS $det){ 
+											if($h['issuance_id'] == $det['issuance_id']) { ?>
 												<tr>
 													<td><center><?php echo $x; ?></center></td>
 													<td><?php echo $det['supplier']; ?></td>
@@ -118,6 +119,7 @@
 												</tr>		
 										<?php 
 										$x++;
+											}
 										} ?>						
 										</table>
 									</div>

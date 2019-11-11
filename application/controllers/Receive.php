@@ -357,6 +357,8 @@ class Receive extends CI_Controller {
                     'empid'=>$sign->employee_id
                 );
         }
+        $count_ri = $this->super_model->count_rows_where("receive_items", "rd_id", $rdid);
+        if($count_ri!=0){
         foreach($this->super_model->select_row_where("receive_items", "rd_id", $rdid) AS $rit){
             foreach($this->super_model->select_custom_where("items", "item_id = '$rit->item_id'") AS $itema){
                 $unit = $this->super_model->select_column_where('uom', 'unit_name', 'unit_id', $itema->unit_id);
@@ -386,6 +388,9 @@ class Receive extends CI_Controller {
                     'local_mnl'=>$rit->local_mnl
                 );
         }
+    } else {
+          $data['receive_items'] = array();
+    }
         $this->load->view('template/header');
         $this->load->view('receive/add_receive_second',$data);
         $this->load->view('template/footer');

@@ -275,10 +275,11 @@
 							</tr>
 							<?php 
 							if(isset($rdid)){
-								$count= count($receive_items); ?>
+								$count= count($receive_items); 
+								?>
 								<tbody id="item_body">
 								<?php if($count==0) { ?>
-									<tr><td colspan='8'><center>No items added.</center></td></tr>
+									<tr><td colspan='14'><center>No items added.</center></td></tr>
 								<?php } else { 
 									$x=1;
 									foreach($receive_items AS $ri) { ?>

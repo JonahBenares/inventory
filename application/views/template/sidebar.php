@@ -338,7 +338,7 @@
 					<span class="icon-bar"></span>
 				</button>				
 				<ul class="nav navbar-top-links navbar-left">
-					<a class="navbar-brand" href="#"><span >Warehouse</span>Inventory System</a>
+					<a class="navbar-brand" href="#"><span >SIPC</span>Inventory System</a>
 				</ul>
 				<ul class="nav navbar-top-links navbar-right">
 					<li class="category"">
@@ -463,10 +463,11 @@
 	<!-- --SIDE NAVBAR--- -->
 	<div id="sidebar-collapse " class="col-sm-3 col-lg-2 sidebar shadow">
 		<div class="banner" >
-			<div style="position:relative;padding:5px 10px 0px 10px" >
-				<img class="shadow-two" style="border-radius: 50%" src="<?php echo base_url(); ?>assets/default/logo_cenpri.png" width="100%" height="auto">
-			</div>
-			<div class="moving-obj" >			
+			<center>
+			<div style="position:relative;" >
+				<img class=""  src="<?php echo base_url(); ?>assets/default/logo_cpgc.png" width="40%" height="40%" >
+			</div></center>
+			<div class="moving-obj" style="z-index: 999; position: relative;top:-10px">			
 				<span class="fa fa-tasks padding-obj"></span>		
 				<span class="infinite-shake fa fa-archive padding-obj"></span>			
 				<span class="fa fa-archive padding-obj"></span>
@@ -477,6 +478,29 @@
 			<li ><a href="<?php echo base_url(); ?>index.php/masterfile/home"><em class="fa fa-dashboard">&nbsp;</em> Dashboard</a></li>
 			<li ><a href="<?php echo base_url(); ?>index.php/masterfile/reminder_list"><em class="fa fa-bell">&nbsp;</em> Reminder</a></li>
 			<li><a href="<?php echo base_url(); ?>index.php/items/item_list"><em class="fa fa-calendar">&nbsp;</em> Item List</a></li>
+			
+			<li class="parent ">
+				<a data-toggle="collapse" href="#sub-receiving">
+					<span class="fa fa-sign-in">&nbsp;</span> Receive 
+					<span data-toggle="collapse" href="#sub-receiving" class="icon pull-right">
+						<em class="fa fa-plus"></em>
+					</span>
+				</a>
+				<ul class="children collapse" id="sub-receiving">
+					<?php if($receive_add == 1){ ?>
+					<li>
+						<a class=""  data-toggle="modal" data-target="#receiveModal" >
+							<span class="fa fa-arrow-right">&nbsp;</span> Add New
+						</a>
+					</li>
+					<?php } ?>
+					<li>
+						<a class="" href="<?php echo base_url(); ?>index.php/receive/receive_list">
+							<span class="fa fa-arrow-right">&nbsp;</span> View List
+						</a>
+					</li>
+				</ul>
+			</li>
 			
 			<li class="parent ">
 				<a data-toggle="collapse" href="#sub-request">
@@ -500,28 +524,7 @@
 					</li>
 				</ul>
 			</li>	
-			<li class="parent ">
-				<a data-toggle="collapse" href="#sub-receiving">
-					<span class="fa fa-sign-in">&nbsp;</span> Receive 
-					<span data-toggle="collapse" href="#sub-receiving" class="icon pull-right">
-						<em class="fa fa-plus"></em>
-					</span>
-				</a>
-				<ul class="children collapse" id="sub-receiving">
-					<?php if($receive_add == 1){ ?>
-					<li>
-						<a class=""  data-toggle="modal" data-target="#receiveModal" >
-							<span class="fa fa-arrow-right">&nbsp;</span> Add New
-						</a>
-					</li>
-					<?php } ?>
-					<li>
-						<a class="" href="<?php echo base_url(); ?>index.php/receive/receive_list">
-							<span class="fa fa-arrow-right">&nbsp;</span> View List
-						</a>
-					</li>
-				</ul>
-			</li>	
+				
 			<!-- <li><a href="<?php echo base_url(); ?>index.php/issue/load_issue"><em class="fa fa-share-square-o">&nbsp;</em> Issue</a></li> -->
 			<li class="parent ">
 				<a data-toggle="collapse" href="#sub-issue">
@@ -674,8 +677,6 @@
 				</ul>
 			</li>		
 		</ul>
-		<br>
-		<br>
 		<br>
 	</div>
 	<!-- --SIDE NAVBAR--- -->
