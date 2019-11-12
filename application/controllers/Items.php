@@ -888,7 +888,7 @@ class Items extends CI_Controller {
         $objPHPExcel = new PHPExcel();
         $exportfilename="items.xlsx";
         $objPHPExcel = new PHPExcel();
-        $gdImage = imagecreatefrompng('assets/default/logo_cpgc.png');
+        $gdImage = imagecreatefrompng('assets/default/logo_cenpri.png');
         // Add a drawing to the worksheetecho date('H:i:s') . " Add a drawing to the worksheet\n";
         $objDrawing = new PHPExcel_Worksheet_MemoryDrawing();
         $objDrawing->setName('Sample image');
@@ -910,9 +910,9 @@ class Items extends CI_Controller {
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A6', "Date");
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A8', "Main Category");
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('G8', "Sub-Category");
-        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C2', "STA. ISABEL CPGC POWER CORP.");
-        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C3', "CDPP Building, NPC Compound, Sta. Isabel,Calapan City, Oriental Mindoro");
-        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C4', "Tel: (+043) 288-2026");
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C2', "CENTRAL NEGROS POWER RELIABILITY, INC.");
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C3', "Purok San Jose, Brgy. Calumangan, Bago City");
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C4', "Tel. No. 476 - 7382");
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('N2', "MATERIAL INVENTORY REPORT TO DATE");
 
 

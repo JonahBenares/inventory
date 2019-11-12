@@ -146,13 +146,12 @@
         <table class = "table-main " style = "width:100%">
             <tr>
                 <td style="padding:10px;border-bottom: 2px solid #000" width="15%">
-                    <center><img src="<?php echo base_url(); ?>assets/default/logo_cpgc.png" width="45%" height="45%"></center>
+                    <center><img src="<?php echo base_url(); ?>assets/default/logo_cenpri.png" width="45%" height="45%"></center>
                 </td>
                 <td style="padding:10px;border-bottom: 2px solid #000;"  width="35%" >
-                    <p id="head" style="margin: 0px"> <strong>STA. ISABEL CPGC POWER CORP.</strong></p>
-                    <p id="head" style="margin: 0px">CDPP Building, NPC Compound, Sta. Isabel</p>
-                    <p id="head" style="margin: 0px">Calapan City, Oriental Mindoro</p>
-                    <p id="head" style="margin: 0px">Tel: (+043) 288-2026</p>
+                    <p id="head" style="margin: 0px"> <strong>CENTRAL NEGROS POWER RELIABILITY INC.</strong></p>
+                    <p id="head" style="margin: 0px">Purok San Jose, Brgy. Calumangan, Bago City</p>
+                    <p id="head" style="margin: 0px">Tel. No. 476-7382</p>
                 </td>
                 <td style="padding:10px;border-bottom: 2px solid #000;border-left: 2px solid #000" width="50%" align="center">
                     <h5><strong>MATERIAL RESTOCK TO WAREHOUSE FORM</strong></h5>

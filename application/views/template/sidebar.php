@@ -338,7 +338,7 @@
 					<span class="icon-bar"></span>
 				</button>				
 				<ul class="nav navbar-top-links navbar-left">
-					<a class="navbar-brand" href="#"><span >SIPC</span>Inventory System</a>
+					<a class="navbar-brand" href="#"><span >WAREHOUSE</span>Inventory System</a>
 				</ul>
 				<ul class="nav navbar-top-links navbar-right">
 					<li class="category"">
@@ -465,7 +465,7 @@
 		<div class="banner" >
 			<center>
 			<div style="position:relative;" >
-				<img class=""  src="<?php echo base_url(); ?>assets/default/logo_cpgc.png" width="40%" height="40%" >
+				<img class=""  src="<?php echo base_url(); ?>assets/default/logo_cenpri.png" width="100%" height="auto" >
 			</div></center>
 			<div class="moving-obj" style="z-index: 999; position: relative;top:-10px">			
 				<span class="fa fa-tasks padding-obj"></span>		

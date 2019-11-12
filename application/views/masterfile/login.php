@@ -24,7 +24,7 @@
 							<div class="panel-body">
 								<div class="canvas-wrapper">
 								<center>
-									<label>SIPC INVENTORY SYSTEM</label>
+									<label>WAREHOUSE INVENTORY SYSTEM</label>
 								</center>
 								<hr style="margin:0px">								
 								<form method = "POST" action="<?php echo base_url(); ?>index.php/masterfile/login_process">

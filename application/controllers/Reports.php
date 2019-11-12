@@ -2065,7 +2065,9 @@ class Reports extends CI_Controller {
       //  echo "SELECT rd.rd_id FROM receive_details rd INNER JOIN receive_items ri ON rd.rd_id = ri.rd_id WHERE rd.pr_no = '$pr' AND ri.item_id = '$item_id'";
         $rdid = $this->super_model->custom_query_single("rd_id","SELECT rd.rd_id FROM receive_details rd INNER JOIN receive_items ri ON rd.rd_id = ri.rd_id WHERE rd.pr_no = '$pr' AND ri.item_id = '$item_id'");
 
-        $rec_qty = $this->super_model->select_column_custom_where("receive_items", "received_qty", "rd_id = '$rdid' AND item_id = '$item_id'");
+        $riid = $this->super_model->custom_query_single("ri_id","SELECT ri.ri_id FROM receive_details rd INNER JOIN receive_items ri ON rd.rd_id = ri.rd_id WHERE rd.pr_no = '$pr' AND ri.item_id = '$item_id'");
+
+        $rec_qty = $this->super_model->select_column_custom_where("receive_items", "received_qty", "ri_id = '$riid' AND item_id = '$item_id'");
         $new_qty = $rec_qty-$exc_qty;
 
       /*  $data = array(
@@ -2122,7 +2124,7 @@ class Reports extends CI_Controller {
             $this->super_model->insert_into("restock_head", $excess_head);
         }
         //echo "rd_id= '$rdid' AND item_id ='$item_id'";
-        foreach($this->super_model->select_custom_where("receive_items", "rd_id= '$rdid' AND item_id ='$item_id'") AS $items){
+        foreach($this->super_model->select_custom_where("receive_items", "ri_id= '$riid' AND item_id ='$item_id'") AS $items){
              $excess_items = array(
                "rhead_id"=>$restock_id,
                "serial_id"=>$items->serial_id,
@@ -2135,6 +2137,19 @@ class Reports extends CI_Controller {
             );
             // print_r($excess_items);
             $this->super_model->insert_into("restock_details", $excess_items);
+        }
+
+        foreach($this->super_model->select_custom_where("receive_items", "ri_id= '$riid' AND item_id ='$item_id'") AS $items){
+             $supplier_items = array(
+               "serial_id"=>$items->serial_id,
+               "item_id"=>$items->item_id,
+               "supplier_id"=>$items->supplier_id,
+               "brand_id"=>$items->brand_id,
+               "catalog_no"=>$items->catalog_no,
+               "quantity"=>$exc_qty,
+            );
+            // print_r($excess_items);
+            $this->super_model->insert_into("supplier_items", $supplier_items);
         }
 
         ?>
@@ -2174,7 +2189,7 @@ class Reports extends CI_Controller {
         $objPHPExcel = new PHPExcel();
         $exportfilename="For Accounting Report.xlsx";
 
-        $gdImage = imagecreatefrompng('assets/default/logo_cpgc.png');
+        $gdImage = imagecreatefrompng('assets/default/logo_cenpri.png');
         // Add a drawing to the worksheetecho date('H:i:s') . " Add a drawing to the worksheet\n";
         $objDrawing = new PHPExcel_Worksheet_MemoryDrawing();
         $objDrawing->setName('Sample image');
@@ -2214,9 +2229,9 @@ class Reports extends CI_Controller {
         $objPHPExcel->getActiveSheet()->getStyle('AI12')->getFont()->setBold(true);
         $objPHPExcel->getActiveSheet()->getStyle('AJ12')->getFont()->setBold(true);
         
-        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C1', "STA. ISABEL CPGC POWER CORP.");
-        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C2', "CDPP Building, NPC Compound, Sta. Isabel,Calapan City, Oriental Mindoro");
-        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C3', "Tel: (+043) 288-2026");
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C1', "CENTRAL NEGROS POWER RELIABILITY, INC.");
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C2', "Purok San Jose, Brgy. Calumangan, Bago City");
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C3', "Tel. No. 476 - 7382");
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C5', "FROM");
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('G5', "TO");
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('M2', "MATERIAL INVENTORY REPORT (WEEKLY) FOR ACCOUNTING");
@@ -2546,7 +2561,7 @@ class Reports extends CI_Controller {
         $objPHPExcel = new PHPExcel();
         $exportfilename="Inventory Report.xlsx";
 
-        $gdImage = imagecreatefrompng('assets/default/logo_cpgc.png');
+        $gdImage = imagecreatefrompng('assets/default/logo_cenpri.png');
         // Add a drawing to the worksheetecho date('H:i:s') . " Add a drawing to the worksheet\n";
         $objDrawing = new PHPExcel_Worksheet_MemoryDrawing();
         $objDrawing->setName('Sample image');
@@ -2567,9 +2582,9 @@ class Reports extends CI_Controller {
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B10', "Item Part No.");
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('E10', "Item Description");
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('K10', "Avail. Qty");
-        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C1', "STA. ISABEL CPGC POWER CORP.");
-        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C2', "CDPP Building, NPC Compound, Sta. Isabel,Calapan City, Oriental Mindoro");
-        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C3', "Tel: (+043) 288-2026");
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C1', "CENTRAL NEGROS POWER RELIABILITY, INC.");
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C2', "Purok San Jose, Brgy. Calumangan, Bago City");
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C3', "Tel. No. 476 - 7382");
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('H1', "MATERIAL INVENTORY REPORT");
         /*$objPHPExcel->setActiveSheetIndex(0)->setCellValue('I2', "TO DATE");*/
         $to_date = date('F j, Y',strtotime($to));
@@ -2785,7 +2800,7 @@ class Reports extends CI_Controller {
         $objPHPExcel = new PHPExcel();
         $exportfilename="Restock Report.xlsx";
 
-        $gdImage = imagecreatefrompng('assets/default/logo_cpgc.png');
+        $gdImage = imagecreatefrompng('assets/default/logo_cenpri.png');
         // Add a drawing to the worksheetecho date('H:i:s') . " Add a drawing to the worksheet\n";
         $objDrawing = new PHPExcel_Worksheet_MemoryDrawing();
         $objDrawing->setName('Sample image');
@@ -2813,9 +2828,9 @@ class Reports extends CI_Controller {
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('U10', "Purpose");
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('X10', "End Use");
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('AA10', "Reason");
-        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C1', "STA. ISABEL CPGC POWER CORP.");
-        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C2', "CDPP Building, NPC Compound, Sta. Isabel,Calapan City, Oriental Mindoro");
-        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C3', "Tel: (+043) 288-2026");
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C1', "CENTRAL NEGROS POWER RELIABILITY, INC.");
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C2', "Purok San Jose, Brgy. Calumangan, Bago City");
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C3', "Tel. No. 476 - 7382");
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C5', "TO");
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('G5', "FROM");
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('N2', "SUMMARY OF RESTOCK MATERIALS");
@@ -3016,7 +3031,7 @@ class Reports extends CI_Controller {
         $objPHPExcel = new PHPExcel();
         $exportfilename="Excess Report.xlsx";
 
-        $gdImage = imagecreatefrompng('assets/default/logo_cpgc.png');
+        $gdImage = imagecreatefrompng('assets/default/logo_cenpri.png');
         // Add a drawing to the worksheetecho date('H:i:s') . " Add a drawing to the worksheet\n";
         $objDrawing = new PHPExcel_Worksheet_MemoryDrawing();
         $objDrawing->setName('Sample image');
@@ -3044,9 +3059,9 @@ class Reports extends CI_Controller {
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('U10', "Purpose");
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('X10', "End Use");
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('AA10', "Reason");
-        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C1', "STA. ISABEL CPGC POWER CORP.");
-        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C2', "CDPP Building, NPC Compound, Sta. Isabel,Calapan City, Oriental Mindoro");
-        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C3', "Tel: (+043) 288-2026");
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C1', "CENTRAL NEGROS POWER RELIABILITY, INC.");
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C2', "Purok San Jose, Brgy. Calumangan, Bago City");
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C3', "Tel. No. 476 - 7382");
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C5', "TO");
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('G5', "FROM");
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('N2', "SUMMARY OF RESTOCK MATERIALS");
@@ -3246,7 +3261,7 @@ class Reports extends CI_Controller {
         $objPHPExcel = new PHPExcel();
         $exportfilename="Received Report.xlsx";
 
-        $gdImage = imagecreatefrompng('assets/default/logo_cpgc.png');
+        $gdImage = imagecreatefrompng('assets/default/logo_cenpri.png');
         // Add a drawing to the worksheetecho date('H:i:s') . " Add a drawing to the worksheet\n";
         $objDrawing = new PHPExcel_Worksheet_MemoryDrawing();
         $objDrawing->setName('Sample image');
@@ -3273,9 +3288,9 @@ class Reports extends CI_Controller {
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('R10', "Department");
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('U10', "Purpose");
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('X10', "End Use");
-        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C1', "STA. ISABEL CPGC POWER CORP.");
-        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C2', "CDPP Building, NPC Compound, Sta. Isabel,Calapan City, Oriental Mindoro");
-        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C3', "Tel: (+043) 288-2026");
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C1', "CENTRAL NEGROS POWER RELIABILITY, INC.");
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C2', "Purok San Jose, Brgy. Calumangan, Bago City");
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C3', "Tel. No. 476 - 7382");
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C5', "TO");
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('G5', "FROM");
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('N2', "SUMMARY OF RECIEVED MATERIALS");
@@ -3478,7 +3493,7 @@ class Reports extends CI_Controller {
         $exportfilename="Issued Report.xlsx";
 
 
-        $gdImage = imagecreatefrompng('assets/default/logo_cpgc.png');
+        $gdImage = imagecreatefrompng('assets/default/logo_cenpri.png');
         // Add a drawing to the worksheetecho date('H:i:s') . " Add a drawing to the worksheet\n";
         $objDrawing = new PHPExcel_Worksheet_MemoryDrawing();
         $objDrawing->setName('Sample image');
@@ -3495,9 +3510,9 @@ class Reports extends CI_Controller {
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A7', "Warehouse");
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A8', "Main Category");
        
-        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C1', "STA. ISABEL CPGC POWER CORP.");
-        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C2', "CDPP Building, NPC Compound, Sta. Isabel,Calapan City, Oriental Mindoro");
-        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C3', "Tel: (+043) 288-2026");
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C1', "CENTRAL NEGROS POWER RELIABILITY, INC.");
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C2', "Purok San Jose, Brgy. Calumangan, Bago City");
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C3', "Tel. No. 476 - 7382");
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C5', "TO");
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('G5', "FROM");
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('O2', "SUMMARY OF ISSUED MATERIALS");
