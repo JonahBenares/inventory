@@ -21,8 +21,8 @@
 				<div class="col-lg-4 col-md-3 col-sm-2"></div>
 				<div class="col-lg-4 col-md-6 col-sm-8">
 					<div class="panel-login panel-default">					
-						<div class="panel-body">
-							<div class="canvas-wrapper">
+							<div class="panel-body">
+								<div class="canvas-wrapper">
 								<center>
 									<label>WAREHOUSE INVENTORY SYSTEM</label>
 								</center>

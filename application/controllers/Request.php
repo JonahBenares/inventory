@@ -379,10 +379,24 @@ class Request extends CI_Controller {
         echo $id;
     }
 
-     public function inventory_balance($itemid){
+   /*  public function inventory_balance($itemid){
          $recqty= $this->super_model->select_sum("supplier_items", "quantity", "item_id", $itemid);
          $issueqty= $this->super_model->select_sum_join("quantity","issuance_details","issuance_head", "item_id='$itemid' AND saved='1'","issuance_id");
          $balance=$recqty-$issueqty;
+         return $balance;
+    }*/
+
+       public function inventory_balance($itemid){
+       /*  $recqty= $this->super_model->select_sum("supplier_items", "quantity", "item_id", $itemid);
+         $issueqty= $this->super_model->select_sum("issuance_details","quantity", "item_id",$itemid);*/
+        $begbal= $this->super_model->select_sum_where("supplier_items", "quantity", "item_id='$itemid' AND catalog_no = 'begbal'");
+         $recqty= $this->super_model->select_sum_join("received_qty","receive_items","receive_head", "item_id='$itemid' AND saved='1'","receive_id");
+         //return $recqty;
+        $issueqty= $this->super_model->select_sum_join("quantity","issuance_details","issuance_head", "item_id='$itemid' AND saved='1'","issuance_id");
+        //return $issueqty;
+         $restockqty= $this->super_model->select_sum_join("quantity","restock_details","restock_head", "item_id='$itemid' AND saved='1'","rhead_id");
+          //return $restockqty;
+          $balance=($recqty+$begbal+$restockqty)-$issueqty;
          return $balance;
     }
 

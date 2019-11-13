@@ -331,9 +331,8 @@ function readPic1(input) {
 
     var expiration = document.getElementById('expiration').value;
     frm.append('expiration', expiration);
-
- /*   var checkBox = document.getElementById("damage");
-    var dam = 0;
+   /* var checkBox = document.getElementById("damage");
+   var dam = 0;
     if (checkBox.checked == true){
       frm.append('damage', dam + 1);
     } else {
@@ -438,8 +437,7 @@ function readPic1(input) {
 
     var expiration =document.getElementById('expiration').value;
     frm.append('expiration', expiration);
-
-    /*var checkBox = document.getElementById("damage");
+  /*  var checkBox = document.getElementById("damage");
     var dam = 0;
     if (checkBox.checked == true){
       frm.append('damage', dam + 1);

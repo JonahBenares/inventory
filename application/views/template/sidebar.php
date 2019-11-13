@@ -338,7 +338,7 @@
 					<span class="icon-bar"></span>
 				</button>				
 				<ul class="nav navbar-top-links navbar-left">
-					<a class="navbar-brand" href="#"><span >Warehouse</span>Inventory System</a>
+					<a class="navbar-brand" href="#"><span >WAREHOUSE</span>Inventory System</a>
 				</ul>
 				<ul class="nav navbar-top-links navbar-right">
 					<li class="category"">
@@ -463,10 +463,11 @@
 	<!-- --SIDE NAVBAR--- -->
 	<div id="sidebar-collapse " class="col-sm-3 col-lg-2 sidebar shadow">
 		<div class="banner" >
-			<div style="position:relative;padding:5px 10px 0px 10px" >
-				<img class="shadow-two" style="border-radius: 50%" src="<?php echo base_url(); ?>assets/default/logo_cenpri.png" width="100%" height="auto">
-			</div>
-			<div class="moving-obj" >			
+			<center>
+			<div style="position:relative;" >
+				<img class=""  src="<?php echo base_url(); ?>assets/default/logo_cenpri.png" width="100%" height="auto" >
+			</div></center>
+			<div class="moving-obj" style="z-index: 999; position: relative;top:-10px">			
 				<span class="fa fa-tasks padding-obj"></span>		
 				<span class="infinite-shake fa fa-archive padding-obj"></span>			
 				<span class="fa fa-archive padding-obj"></span>
@@ -676,8 +677,6 @@
 				</ul>
 			</li>		
 		</ul>
-		<br>
-		<br>
 		<br>
 	</div>
 	<!-- --SIDE NAVBAR--- -->
