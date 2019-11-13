@@ -1428,7 +1428,7 @@ class Reports extends CI_Controller {
             $sumiss=array_sum($arr_iss);
             $sumst=array_sum($arr_rs);
             $sumex=array_sum($arr_exc);
-            $total=($begbal+$sumrec+$sumst)-$sumiss;
+            $total=($begbal+$sumrec+$sumst+$sumex)-$sumiss;
             $data['total']=$total;
        // } 
         $this->load->view('template/header');
@@ -2051,7 +2051,9 @@ class Reports extends CI_Controller {
       //  echo "SELECT rd.rd_id FROM receive_details rd INNER JOIN receive_items ri ON rd.rd_id = ri.rd_id WHERE rd.pr_no = '$pr' AND ri.item_id = '$item_id'";
         $rdid = $this->super_model->custom_query_single("rd_id","SELECT rd.rd_id FROM receive_details rd INNER JOIN receive_items ri ON rd.rd_id = ri.rd_id WHERE rd.pr_no = '$pr' AND ri.item_id = '$item_id'");
 
-        $rec_qty = $this->super_model->select_column_custom_where("receive_items", "received_qty", "rd_id = '$rdid' AND item_id = '$item_id'");
+        $riid = $this->super_model->custom_query_single("ri_id","SELECT ri.ri_id FROM receive_details rd INNER JOIN receive_items ri ON rd.rd_id = ri.rd_id WHERE rd.pr_no = '$pr' AND ri.item_id = '$item_id'");
+
+        $rec_qty = $this->super_model->select_column_custom_where("receive_items", "received_qty", "ri_id = '$riid' AND item_id = '$item_id'");
         $new_qty = $rec_qty-$exc_qty;
 
       /*  $data = array(
@@ -2108,7 +2110,7 @@ class Reports extends CI_Controller {
             $this->super_model->insert_into("restock_head", $excess_head);
         }
         //echo "rd_id= '$rdid' AND item_id ='$item_id'";
-        foreach($this->super_model->select_custom_where("receive_items", "rd_id= '$rdid' AND item_id ='$item_id'") AS $items){
+        foreach($this->super_model->select_custom_where("receive_items", "ri_id= '$riid' AND item_id ='$item_id'") AS $items){
              $excess_items = array(
                "rhead_id"=>$restock_id,
                "serial_id"=>$items->serial_id,
@@ -2122,6 +2124,19 @@ class Reports extends CI_Controller {
             // print_r($excess_items);
             $this->super_model->insert_into("restock_details", $excess_items);
         }
+
+        /*foreach($this->super_model->select_custom_where("receive_items", "ri_id= '$riid' AND item_id ='$item_id'") AS $items){
+             $supplier_items = array(
+               "serial_id"=>$items->serial_id,
+               "item_id"=>$items->item_id,
+               "supplier_id"=>$items->supplier_id,
+               "brand_id"=>$items->brand_id,
+               "catalog_no"=>$items->catalog_no,
+               "quantity"=>$exc_qty,
+            );
+            // print_r($excess_items);
+            $this->super_model->insert_into("supplier_items", $supplier_items);
+        }*/
 
         ?>
        <script>alert('Successfully tagged as excess.'); 
