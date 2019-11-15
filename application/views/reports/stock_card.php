@@ -82,7 +82,6 @@
 											<th style="text-align: center" width="0%">Received</th>
 											<th style="text-align: center" width="6%">Issued</th>
 											<th style="text-align: center" width="6%">Restocked</th>
-											<th style="text-align: center" width="6%">Excess</th>
 											<th style="text-align: center" width="12%">Date</th>
 										</tr>
 									</thead>
@@ -100,7 +99,6 @@
 											<td align="center"><?php echo $rec['receive_qty'];?></td>							
 											<td align="center"><?php echo $rec['issueqty'];?></td>
 											<td align="center"><?php echo $rec['restockqty'];?></td>
-											<td align="center"><?php echo $rec['excessqty'];?></td>
 											<td align="center"><?php echo $rec['date'];?></td>							
 										</tr>
 										<?php } }else { ?>
