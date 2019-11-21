@@ -351,7 +351,11 @@ class Issue extends CI_Controller {
         
      /*   return "SELECT SUM(ri.received_qty) AS rqty FROM receive_details rd INNER JOIN receive_items ri ON rd.rd_id = ri.rd_id WHERE ri.item_id = '$itemid'";*/
      
-        foreach($this->super_model->custom_query("SELECT SUM(ri.received_qty) AS rqty FROM receive_details rd INNER JOIN receive_items ri ON rd.rd_id = ri.rd_id WHERE ri.item_id = '$itemid'") AS $r){
+        /*foreach($this->super_model->custom_query("SELECT SUM(ri.received_qty) AS rqty FROM receive_details rd INNER JOIN receive_items ri ON rd.rd_id = ri.rd_id WHERE ri.item_id = '$itemid'") AS $r){
+            $received = $r->rqty;
+        }*/
+
+        foreach($this->super_model->custom_query("SELECT SUM(ri.received_qty) AS rqty FROM receive_head rh INNER JOIN  receive_details rd ON rd.receive_id = rh.receive_id INNER JOIN receive_items ri ON rd.rd_id = ri.rd_id WHERE ri.item_id = '$itemid' AND saved ='1'") AS $r){
             $received = $r->rqty;
         }
 
