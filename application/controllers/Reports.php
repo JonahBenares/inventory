@@ -1442,7 +1442,7 @@ class Reports extends CI_Controller {
             $sumiss=array_sum($arr_iss);
             $sumst=array_sum($arr_rs);
             $sumex=array_sum($arr_exc);
-            $total=($begbal+$sumrec+$sumst+$sumex)-$sumiss;
+            $total=($begbal+$sumrec+$sumst)-$sumiss;
             $data['total']=$total;
        // } 
         $this->load->view('template/header');
@@ -2139,7 +2139,7 @@ class Reports extends CI_Controller {
             $this->super_model->insert_into("restock_details", $excess_items);
         }
 
-        foreach($this->super_model->select_custom_where("receive_items", "ri_id= '$riid' AND item_id ='$item_id'") AS $items){
+        /*foreach($this->super_model->select_custom_where("receive_items", "ri_id= '$riid' AND item_id ='$item_id'") AS $items){
              $supplier_items = array(
                "serial_id"=>$items->serial_id,
                "item_id"=>$items->item_id,
@@ -2150,7 +2150,7 @@ class Reports extends CI_Controller {
             );
             // print_r($excess_items);
             $this->super_model->insert_into("supplier_items", $supplier_items);
-        }
+        }*/
 
         ?>
        <script>alert('Successfully tagged as excess.'); 
