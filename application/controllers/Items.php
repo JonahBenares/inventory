@@ -405,9 +405,12 @@ class Items extends CI_Controller {
 
     public function crossref_balance($itemid,$supplierid,$brandid,$catalogno){
       /*  $recqty= $this->super_model->select_sum_where("supplier_items", "quantity", "item_id = '$itemid' AND supplier_id = '$supplierid' AND brand_id = '$brandid' AND catalog_no ='$catalogno'");*/
-        $begbal= $this->super_model->select_sum_where("supplier_items", "quantity", "item_id='$itemid' AND catalog_no = 'begbal'");
+        $begbal= $this->super_model->select_sum_where("supplier_items", "quantity", "item_id='$itemid' AND supplier_id = '$supplierid' AND brand_id = '$brandid' AND catalog_no = 'begbal'");
          $recqty= $this->super_model->select_sum_join("received_qty","receive_items","receive_head", "item_id='$itemid' AND supplier_id = '$supplierid' AND brand_id = '$brandid' AND catalog_no = '$catalogno' AND saved='1'","receive_id");
 
+         //echo "item_id='$itemid' AND supplier_id = '$supplierid' AND brand_id = '$brandid' AND catalog_no = '$catalogno' AND saved='1'<br>";
+         //echo "BEGBAL = " .$begbal . "<br>";
+        //echo "recqty = " .$recqty . "<br>";
         $issueqty= $this->super_model->select_sum_join("quantity","issuance_details","issuance_head", "item_id='$itemid' AND supplier_id = '$supplierid' AND brand_id = '$brandid' AND catalog_no = '$catalogno' AND saved='1'","issuance_id");
 
          $restockqty= $this->super_model->select_sum_join("quantity","restock_details","restock_head", "item_id='$itemid' AND supplier_id = '$supplierid' AND brand_id = '$brandid' AND catalog_no = '$catalogno' AND excess = '0' AND saved='1'","rhead_id");
@@ -447,6 +450,8 @@ class Items extends CI_Controller {
                         }
                        // print_r($daterec);
                         $balance= $this->crossref_balance($id,$sup->supplier_id,$sup->brand_id,$sup->catalog_no);
+
+                        //echo "ID = " .$id .", SUPPPLIER= " . $sup->supplier_id . ", BRAND= ". $sup->brand_id .", CATALOG= ".$sup->catalog_no . "<br>";
                       
                         foreach($this->super_model->select_row_where("serial_number", "si_id", $sup->si_id) AS $ser){
 

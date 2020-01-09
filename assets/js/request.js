@@ -72,6 +72,7 @@ function selectItem(id,val,unit,original_pn,qty) {
 
 function crossreferencing(){
     var itemid= document.getElementById("item_id").value;
+   // alert(itemid);
      var loc= document.getElementById("baseurl").value;
     var redirectcr=loc+'/index.php/request/crossreflist';
     if(itemid!=""){
