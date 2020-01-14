@@ -446,6 +446,7 @@ class Request extends CI_Controller {
         $recqty= $this->super_model->select_sum_where("supplier_items", "quantity", "item_id = '$itemid' AND supplier_id = '$supplierid' AND brand_id = '$brandid' AND catalog_no ='$catalogno'");
 
         $issueqty= $this->super_model->select_sum_join("quantity","issuance_details","issuance_head", "item_id='$itemid' AND supplier_id = '$supplierid' AND brand_id = '$brandid' AND catalog_no = '$catalogno' AND saved='1'","issuance_id");
+       // echo "item_id='$itemid' AND supplier_id = '$supplierid' AND brand_id = '$brandid' AND catalog_no = '$catalogno' AND saved='1'";
          $balance=$recqty-$issueqty;
          return $balance;
     }
@@ -459,6 +460,7 @@ class Request extends CI_Controller {
             foreach($this->super_model->select_custom_where("supplier_items","item_id = '$item' AND quantity != '0'") AS $itm){ 
                     $brand = $this->super_model->select_column_where("brand", "brand_name", "brand_id", $itm->brand_id);
                     $supplier = $this->super_model->select_column_where("supplier", "supplier_name", "supplier_id", $itm->supplier_id);
+                   // echo $itm->item_id,$itm->supplier_id, $itm->brand_id, $itm->catalog_no;
                     $balance=$this->crossref_balance($itm->item_id,$itm->supplier_id, $itm->brand_id, $itm->catalog_no);
                     /*$unit = $this->super_model->select_column_where("items", "unit_id", "item_id", $itm->item_id);*/
                     foreach($this->super_model->select_custom_where("items","item_id = '$item'") AS $it){
@@ -466,7 +468,7 @@ class Request extends CI_Controller {
                     if($balance!=0){
                     ?>
                     <option value="<?php echo $itm->si_id; ?>"><?php echo $supplier . " - " . $itm->catalog_no . " - ". $brand . " (".$balance.")" ." - ". $unit; ?></option>
-
+                   <!--  <option value="<?php echo $itm->si_id; ?>"><?php echo $itm->item_id . " - " . $itm->supplier_id . " - ".  $itm->brand_id . " (".$balance.")" ." - ". $itm->catalog_no; ?></option> -->
                 <?php } ?>
 
            <?php } } 
