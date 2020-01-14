@@ -117,7 +117,7 @@ class Reports extends CI_Controller {
 
     public function qty_received($item,$supplier,$brand,$catalog){
         $qty=$this->super_model->select_sum_where("supplier_items","quantity","item_id='$item' AND supplier_id = '$supplier' AND brand_id = '$brand' AND catalog_no = '$catalog'");
-     //   echo "item_id='".$item."' AND supplier_id = '".$supplier."' AND brand_id = '".$brand."' AND catalog_no = '$catalog'";
+        //echo "item_id='".$item."' AND supplier_id = '".$supplier."' AND brand_id = '".$brand."' AND catalog_no = '$catalog'<br>";
         return $qty;
     }
 
