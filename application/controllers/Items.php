@@ -892,7 +892,7 @@ class Items extends CI_Controller {
              $q=" WHERE " .$sql . " " . $query2;
         } else {
             $q=$sql . " " . $query2;
-        }
+        }s
         require_once(APPPATH.'../assets/js/phpexcel/Classes/PHPExcel/IOFactory.php');
         $objPHPExcel = new PHPExcel();
         $exportfilename="items.xlsx";
@@ -947,7 +947,7 @@ class Items extends CI_Controller {
             )
           )
         );
-        
+
         //echo "SELECT i.*, ri.local_mnl FROM items i INNER JOIN receive_items ri ON i.item_id = ri.item_id WHERE " .$q." ORDER BY i.item_name ASC";
         foreach($this->super_model->custom_query("SELECT i.*, ri.local_mnl FROM items i LEFT JOIN receive_items ri ON i.item_id = ri.item_id " .$q." GROUP BY i.item_id ORDER BY i.item_name ASC") AS $items){
             $unit =$this->super_model->select_column_where("uom","unit_name", "unit_id", $items->unit_id);
