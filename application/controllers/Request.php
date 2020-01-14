@@ -293,6 +293,7 @@ class Request extends CI_Controller {
         }
         $data['printed']=$this->super_model->select_column_where('users', 'fullname', 'user_id', $_SESSION['user_id']);
         $this->load->view('template/header');
+        $this->load->view('template/print_head');
         $this->load->view('request/mreqf',$data);
     }
 
@@ -394,7 +395,7 @@ class Request extends CI_Controller {
          //return $recqty;
         $issueqty= $this->super_model->select_sum_join("quantity","issuance_details","issuance_head", "item_id='$itemid' AND saved='1'","issuance_id");
         //return $issueqty;
-         $restockqty= $this->super_model->select_sum_join("quantity","restock_details","restock_head", "item_id='$itemid' AND saved='1'","rhead_id");
+         $restockqty= $this->super_model->select_sum_join("quantity","restock_details","restock_head", "item_id='$itemid' AND saved='1' AND excess = '0'","rhead_id");
           //return $restockqty;
           $balance=($recqty+$begbal+$restockqty)-$issueqty;
          return $balance;

@@ -426,6 +426,7 @@ class Restock extends CI_Controller {
             );
         }
         $this->load->view('template/header');
+        $this->load->view('template/print_head');
         $this->load->view('restock/mrsf',$data);
     }
 
