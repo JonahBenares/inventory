@@ -445,6 +445,7 @@ class Issue extends CI_Controller {
         }
         $data['printed']=$this->super_model->select_column_where('users', 'fullname', 'user_id', $_SESSION['user_id']);
         $this->load->view('template/header');
+        $this->load->view('template/print_head');
         $this->load->view('issue/mif',$data);
 
     }
@@ -547,6 +548,7 @@ class Issue extends CI_Controller {
      
         $data['printed']=$this->super_model->select_column_where('users', 'fullname', 'user_id', $_SESSION['user_id']);
         $this->load->view('template/header');
+        $this->load->view('template/print_head');        
         $this->load->view('issue/gatepass',$data);
     }
 
@@ -560,7 +562,7 @@ class Issue extends CI_Controller {
        $quantity=$this->input->post('quantity');
        $userid=$this->input->post('userid');
         $serial=$this->input->post('serial');
-     //  $count=$this->input->post('count');
+        //$count=$this->input->post('count');
        // $check=$this->input->post('check');
        // echo $count;
         $remarks = $this->input->post('remarks');

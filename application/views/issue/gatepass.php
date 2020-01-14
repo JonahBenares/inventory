@@ -118,7 +118,7 @@
            -ms-text-align-last: center;
            -moz-text-align-last: center;
             padding: 5px 0px!important;
-            width:100%;
+            width:95%;
             border:0px;
             background:none;
             text-align:center;
@@ -151,7 +151,7 @@
             box-shadow: 0px 2px 1px 1px #dadada;
         }
 </style>
-<body style="padding-top:20px">
+<!-- <body style="padding-top:20px">
     <div class="container">
         <table class = "table-main " style = "width:100%">
             <tr>
@@ -162,7 +162,7 @@
                     <p id="head" style="margin: 0px"> <strong>CENTRAL NEGROS POWER RELIABILITY INC.</strong></p>
                     <p id="head" style="margin: 0px">Purok San Jose, Brgy. Calumangan, Bago City</p>
                     <p id="head" style="margin: 0px">Tel. No. 476-7382</p>
-                </td>
+                </td> -->
                 <td style="padding:10px;border-bottom: 2px solid #000;border-left: 2px solid #000" width="50%" align="center">
                     <h5><strong>MATERIAL GATE PASS</strong></h5>
                 </td>
@@ -185,13 +185,13 @@
             <table width="100%">                
                 <tr>
                     <td width="15%"><h6 class="nomarg">Employee/Contractor</h6></td>
-                    <td width="35%" style="border-bottom: 1px solid #999"> <label class="nomarg">: 
-                     <select type="text" class="select" name="gp_employee" id='gp_employee'>
-                            <option></option>
-                            <?php foreach($employees AS $rel){ ?>
-                            <option value="<?php echo $rel['empid']; ?>"<?php echo (($rel['empid'] == $employee) ?  ' selected' : ''); ?>><?php echo $rel['empname'];?></option>
-                            <?php } ?>
-                        </select></label></td>
+                    <td width="35%" style="border-bottom: 1px solid #999; " > <span>:</span>
+                    <select type="text" class="select" name="gp_employee" id='gp_employee'>
+                        <option></option>
+                        <?php foreach($employees AS $rel){ ?>
+                        <option value="<?php echo $rel['empid']; ?>"<?php echo (($rel['empid'] == $employee) ?  ' selected' : ''); ?>><?php echo $rel['empname'];?></option>
+                        <?php } ?>
+                    </select></td>
             <?php foreach($issuance_details as $d){ ?>
                     <td width="7%"></td>
                     <td width="18%"><h6 class="nomarg pull-right">Material Gate Pass No. &nbsp</h6></td>
