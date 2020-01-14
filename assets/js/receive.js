@@ -257,6 +257,12 @@ function add_item(){
     var expqty =$('#exp_qty').val();
     var recqty =$('#rec_qty').val();
     var remarks =$('#remarks').val();
+    if ($("input:radio[name=local_mnl]:checked").val() == '1') {
+        var local_mnl = '1';
+    } 
+    else if($("input:radio[name=local_mnl]:checked").val() == '2'){
+        var local_mnl = '2';
+    }
   /*  var counter =$('#item_body tr').length;
     var ct= counter + 1;
    
