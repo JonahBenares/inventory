@@ -176,7 +176,7 @@
 													if(empty($sup['catalog_no'])){
 														$cat='null';
 													} else {
-														$cat= $sup['catalog_no'];
+														$cat= str_replace(" ", "_", $sup['catalog_no']);
 													}
 
 													if(empty($sup['brand_id'])){

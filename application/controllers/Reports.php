@@ -1246,8 +1246,8 @@ class Reports extends CI_Controller {
         $data['id']=$this->uri->segment(3);
         $sup=$this->uri->segment(4);
         $data['sup']=$this->uri->segment(4);
-        $cat=$this->uri->segment(5);
-        $data['cat']=$this->uri->segment(5);
+        $cat=str_replace("_", " ", $this->uri->segment(5));
+        $data['cat']=str_replace("_", " ", $this->uri->segment(5));
         $brand=$this->uri->segment(6);
         $data['brand']=$this->uri->segment(6);
         $supit=0;
