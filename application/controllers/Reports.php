@@ -1303,7 +1303,7 @@ class Reports extends CI_Controller {
         if($cat!='null'){
             $sql.= " catalog_no = '$cat' AND";
         }else {
-            $sql.= "";
+            $sql.= " catalog_no = '' AND";
         }
 
         if($brand!='null'){
@@ -1325,8 +1325,9 @@ class Reports extends CI_Controller {
             //echo $id ." - ". $sup . " - " . $cat . " - " . $brand;
             if($counter!=0){
                 //unset($daterec);
-                
-                foreach($this->super_model->select_custom_where("receive_items","$query") AS $rec){
+                echo $query;
+                foreach($this->super_model->select_custom_where("receive_items",$query) AS $rec){
+
                     $receivedate=$this->super_model->select_column_where("receive_head", "receive_date", "receive_id", $rec->receive_id);
                     //echo $rec->receive_id;
                     $daterec[]=$receivedate;
@@ -1349,7 +1350,7 @@ class Reports extends CI_Controller {
                 }
             }
 
-            $counter_issue = $this->super_model->count_custom_where("issuance_details","$query");
+            $counter_issue = $this->super_model->count_custom_where("issuance_details",$query);
             //echo $id . " - " . $sup . " - " . $cat . " - " . $brand;
              if($counter_issue!=0){
                
@@ -1380,7 +1381,7 @@ class Reports extends CI_Controller {
             }
 
    
-             $counter_restock2 = $this->super_model->select_count_join_inner("restock_head","restock_details","$query", "rhead_id");
+             $counter_restock2 = $this->super_model->select_count_join_inner("restock_head","restock_details",$query, "rhead_id");
              if($counter_restock2!=0){
     
 
