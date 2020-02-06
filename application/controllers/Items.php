@@ -405,17 +405,13 @@ class Items extends CI_Controller {
 
     public function crossref_balance($itemid,$supplierid,$brandid,$catalogno){
       /*  $recqty= $this->super_model->select_sum_where("supplier_items", "quantity", "item_id = '$itemid' AND supplier_id = '$supplierid' AND brand_id = '$brandid' AND catalog_no ='$catalogno'");*/
-        $recqty= $this->super_model->select_sum_where("supplier_items", "quantity", "item_id='$itemid' AND catalog_no = '$catalogno' AND supplier_id = '$supplierid' AND brand_id = '$brandid'");
-        // $recqty= $this->super_model->select_sum_join("received_qty","receive_items","receive_head", "item_id='$itemid' AND supplier_id = '$supplierid' AND brand_id = '$brandid' AND catalog_no = '$catalogno' AND saved='1'","receive_id");
+        $begbal= $this->super_model->select_sum_where("supplier_items", "quantity", "item_id='$itemid' AND catalog_no = 'begbal'");
+         $recqty= $this->super_model->select_sum_join("received_qty","receive_items","receive_head", "item_id='$itemid' AND supplier_id = '$supplierid' AND brand_id = '$brandid' AND catalog_no = '$catalogno' AND saved='1'","receive_id");
 
         $issueqty= $this->super_model->select_sum_join("quantity","issuance_details","issuance_head", "item_id='$itemid' AND supplier_id = '$supplierid' AND brand_id = '$brandid' AND catalog_no = '$catalogno' AND saved='1'","issuance_id");
 
          $restockqty= $this->super_model->select_sum_join("quantity","restock_details","restock_head", "item_id='$itemid' AND supplier_id = '$supplierid' AND brand_id = '$brandid' AND catalog_no = '$catalogno' AND excess = '0' AND saved='1'","rhead_id");
-         $balance=($recqty+$restockqty)-$issueqty;
-        // echo "item_id='$itemid' AND supplier_id = '$supplierid' AND brand_id = '$brandid' AND catalog_no = '$catalogno' AND saved='1'";
-         
-         //return "item_id='$itemid' AND supplier_id = '$supplierid' AND brand_id = '$brandid' AND catalog_no = '$catalogno' AND saved='1'". $issueqty;
-         //return "(" .$recqty . " + " . $begbal . " + " . $restockqty ." )- ". $issueqty;
+         $balance=($recqty+$begbal+$restockqty)-$issueqty;
          return $balance;
     }
 
@@ -432,7 +428,7 @@ class Items extends CI_Controller {
           
             $data['total_qty']=$this->inventory_balance($id);
 
-            foreach($this->super_model->select_row_where('supplier_items','item_id', $id) AS $sup){
+            foreach($this->super_model->select_custom_where('supplier_items',"item_id='$id' ORDER BY si_id DESC") AS $sup){
                 $count = $this->super_model->count_custom_where("supplier_items","item_id = '$id' AND supplier_id = '$sup->supplier_id' AND catalog_no = '$sup->catalog_no' AND brand_id = '$sup->brand_id'");
                
                 if($count!=0){
