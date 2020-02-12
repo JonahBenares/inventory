@@ -2003,10 +2003,10 @@ class Reports extends CI_Controller {
 
        public function all_pr_report(){
         $pr=$this->uri->segment(3);
-        $data['pr']=$pr;
+        $data['pr']=urldecode($pr);
        
 
-
+        $pr= urldecode($pr);
         foreach($this->super_model->custom_query("SELECT item_id, SUM(received_qty) AS qty, ri.ri_id FROM receive_items ri INNER JOIN receive_details rd ON ri.rd_id = rd.rd_id WHERE rd.pr_no = '$pr' GROUP BY  ri.item_id") AS $head){
            // echo 
 
