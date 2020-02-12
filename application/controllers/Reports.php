@@ -3520,7 +3520,13 @@ class Reports extends CI_Controller {
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('F8', "Sub-Category");
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('L8', "Item Name");
         $num=11;
-
+        $styleArray = array(
+            'borders' => array(
+                'allborders' => array(
+                  'style' => PHPExcel_Style_Border::BORDER_THIN
+                )
+            )
+        );
         $itemname=$this->super_model->select_column_where("items", "item_name", "item_id", $item);
         $catname=$this->super_model->select_column_where("item_categories", "cat_name", "cat_id", $cat);
         $subcatname=$this->super_model->select_column_where("item_subcat", "subcat_name", "subcat_id", $subcat);
@@ -3536,16 +3542,16 @@ class Reports extends CI_Controller {
 
          $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A10', "No.");
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B10', "Issue Date");
-        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('D10', "PR No.");
-        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('F10', "Item Part No.");
-        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('H10', "Item Description");
-        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('L10', "UoM");
-        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('M10', "Total Qty Received");
-        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('O10', "Supplier");
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('D10', "MIF No.");
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('F10', "PR No.");
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('H10', "Item Part No.");
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('J10', "Item Description");
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('N10', "Total Qty Issued");
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('Q10', "UoM");
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('R10', "Department");
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('U10', "Purpose");
-        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('X10', "End Use");
-        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('AA10', "Frequency");
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('Y10', "End Use");
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('AC10', "Frequency");
         
             foreach($this->super_model->custom_query("SELECT ih.*,i.item_id, sr.supplier_id,dt.department_id,pr.purpose_id,e.enduse_id, id.is_id FROM issuance_head ih INNER JOIN issuance_details id ON ih.issuance_id = id.issuance_id INNER JOIN items i ON id.item_id = i.item_id INNER JOIN supplier sr ON sr.supplier_id = id.supplier_id INNER JOIN department dt ON dt.department_id = ih.department_id INNER JOIN purpose pr ON pr.purpose_id = ih.purpose_id INNER JOIN enduse e ON e.enduse_id = ih.enduse_id WHERE ih.saved='1' AND ih.issuance_id = id.issuance_id AND ".$query. "ORDER BY ih.issue_date DESC") AS $itm){
                       $supplier = $this->super_model->select_column_where('supplier', 'supplier_name', 'supplier_id', $itm->supplier_id);
@@ -3560,42 +3566,45 @@ class Reports extends CI_Controller {
                     $unit = $this->super_model->select_column_where('uom', 'unit_name', 'unit_id', $itema->unit_id);
                 }
                 $issdate = $this->super_model->select_column_where('issuance_head', 'issue_date', 'issuance_id', $itm->issuance_id);
-                         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A'.$num, $x);
+                $mif = $this->super_model->select_column_where('issuance_head', 'mif_no', 'issuance_id', $itm->issuance_id);
+                        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A'.$num, $x);
                         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B'.$num, $issdate);
-                        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('D'.$num, $pr);
-                        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('F'.$num, $pn);
-                        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('H'.$num, $item); 
-                        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('L'.$num, $unit); 
-                        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('M'.$num, $issqty); 
-                        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('O'.$num, $supplier); 
+                        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('D'.$num, $mif);
+                        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('F'.$num, $pr);
+                        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('H'.$num, $pn);
+                        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('J'.$num, $item); 
+                        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('N'.$num, $issqty); 
+                        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('Q'.$num, $unit); 
                         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('R'.$num, $department); 
                         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('U'.$num, $purpose);
-                        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('X'.$num, $enduse);
-                        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('AA'.$num, '');
+                        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('Y'.$num, $enduse);
+                        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('AC'.$num, '');
                         $objPHPExcel->getActiveSheet()->getProtection()->setSheet(true);    
-                        $objPHPExcel->getActiveSheet()->protectCells('A'.$num.":AA".$num,'admin');
+                        $objPHPExcel->getActiveSheet()->getStyle('A'.$num.":AC".$num)->applyFromArray($styleArray);
+                        $objPHPExcel->getActiveSheet()->protectCells('A'.$num.":AC".$num,'admin');
                 $num++;
                 $x++;
-               $objPHPExcel->getActiveSheet()->mergeCells('B'.$num.":C".$num);
+                $objPHPExcel->getActiveSheet()->mergeCells('B11:C11');
+                $objPHPExcel->getActiveSheet()->mergeCells('B'.$num.":C".$num);
                 $objPHPExcel->getActiveSheet()->mergeCells('D11:E11');
                 $objPHPExcel->getActiveSheet()->mergeCells('D'.$num.":E".$num);
                 $objPHPExcel->getActiveSheet()->mergeCells('F11:G11');
                 $objPHPExcel->getActiveSheet()->mergeCells('F'.$num.":G".$num);
-                $objPHPExcel->getActiveSheet()->mergeCells('H11:K11');
-                $objPHPExcel->getActiveSheet()->mergeCells('H'.$num.":K".$num);
-                $objPHPExcel->getActiveSheet()->mergeCells('M11:N11');
-                $objPHPExcel->getActiveSheet()->mergeCells('M'.$num.":N".$num);
-                $objPHPExcel->getActiveSheet()->mergeCells('O11:Q11');
-                $objPHPExcel->getActiveSheet()->mergeCells('O'.$num.":Q".$num);
+                $objPHPExcel->getActiveSheet()->mergeCells('H11:I11');
+                $objPHPExcel->getActiveSheet()->mergeCells('H'.$num.":I".$num);
+                $objPHPExcel->getActiveSheet()->mergeCells('J11:M11');
+                $objPHPExcel->getActiveSheet()->mergeCells('J'.$num.":M".$num);
+                $objPHPExcel->getActiveSheet()->mergeCells('N11:P11');
+                $objPHPExcel->getActiveSheet()->mergeCells('N'.$num.":P".$num);
                 $objPHPExcel->getActiveSheet()->mergeCells('R11:T11');
                 $objPHPExcel->getActiveSheet()->mergeCells('R'.$num.":T".$num);
-                $objPHPExcel->getActiveSheet()->mergeCells('U11:W11');
-                $objPHPExcel->getActiveSheet()->mergeCells('U'.$num.":W".$num);
-                $objPHPExcel->getActiveSheet()->mergeCells('X11:Z11');
-                $objPHPExcel->getActiveSheet()->mergeCells('X'.$num.":Z".$num);
-                $objPHPExcel->getActiveSheet()->mergeCells('AA11:AB11');
-                $objPHPExcel->getActiveSheet()->mergeCells('AA'.$num.":AB".$num);
-                $objPHPExcel->getActiveSheet()->getStyle('L'.$num.":N".$num)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+
+                $objPHPExcel->getActiveSheet()->mergeCells('U11:X11');
+                $objPHPExcel->getActiveSheet()->mergeCells('U'.$num.":X".$num);
+                $objPHPExcel->getActiveSheet()->mergeCells('Y11:AB11');
+                $objPHPExcel->getActiveSheet()->mergeCells('Y'.$num.":AB".$num);
+                $objPHPExcel->getActiveSheet()->getStyle('N'.$num.":Q".$num)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                $objPHPExcel->getActiveSheet()->getStyle('B'.$num.":C".$num)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
             }
             $a = $num+2;
             $b = $num+5;
@@ -3609,26 +3618,17 @@ class Reports extends CI_Controller {
             $objPHPExcel->getActiveSheet()->protectCells('A'.$a.":AC".$a,'admin');
             $objPHPExcel->getActiveSheet()->protectCells('A'.$c.":AC".$c,'admin');
         
-         $styleArray = array(
-          'borders' => array(
-            'allborders' => array(
-              'style' => PHPExcel_Style_Border::BORDER_THIN
-            )
-          )
-        );
         $num--;
         $objPHPExcel->getActiveSheet()->mergeCells('O2:T2');
         $objPHPExcel->getActiveSheet()->mergeCells('B10:C10');
         $objPHPExcel->getActiveSheet()->mergeCells('D10:E10');
         $objPHPExcel->getActiveSheet()->mergeCells('F10:G10');
-        $objPHPExcel->getActiveSheet()->mergeCells('H10:K10');
-        $objPHPExcel->getActiveSheet()->mergeCells('M10:N10');
-        $objPHPExcel->getActiveSheet()->mergeCells('O10:Q10');
+        $objPHPExcel->getActiveSheet()->mergeCells('H10:I10');
+        $objPHPExcel->getActiveSheet()->mergeCells('J10:M10');
+        $objPHPExcel->getActiveSheet()->mergeCells('N10:P10');
         $objPHPExcel->getActiveSheet()->mergeCells('R10:T10');
-        $objPHPExcel->getActiveSheet()->mergeCells('U10:W10');
-        $objPHPExcel->getActiveSheet()->mergeCells('X10:Z10');
-        $objPHPExcel->getActiveSheet()->mergeCells('AA10:AB10');
-        $objPHPExcel->getActiveSheet()->mergeCells('B11:C11');
+        $objPHPExcel->getActiveSheet()->mergeCells('U10:X10');
+        $objPHPExcel->getActiveSheet()->mergeCells('Y10:AB10');
         /*$objPHPExcel->getActiveSheet()->mergeCells('B'.$num.":C".$num);
         $objPHPExcel->getActiveSheet()->mergeCells('D11:E11');
         $objPHPExcel->getActiveSheet()->mergeCells('D'.$num.":E".$num);
@@ -3644,16 +3644,16 @@ class Reports extends CI_Controller {
         $objPHPExcel->getActiveSheet()->mergeCells('N'.$num.":O".$num);
         $objPHPExcel->getActiveSheet()->mergeCells('P11:Q11');
         $objPHPExcel->getActiveSheet()->mergeCells('P'.$num.":Q".$num);*/
-        $objPHPExcel->getActiveSheet()->getStyle('A10:AA10')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-        $objPHPExcel->getActiveSheet()->getStyle('L11:N11')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-         $objPHPExcel->getActiveSheet()->getStyle('A10:AB'.$num)->applyFromArray($styleArray);
+        $objPHPExcel->getActiveSheet()->getStyle('A10:AC10')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+        $objPHPExcel->getActiveSheet()->getStyle('N11:Q11')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+        $objPHPExcel->getActiveSheet()->getStyle('B11:C11')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
         /*$objPHPExcel->getActiveSheet()->getStyle('F'.$num.":G11".$num)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);*/
-        $objPHPExcel->getActiveSheet()->getStyle('A10:AB'.$num)->applyFromArray($styleArray);
-        $objPHPExcel->getActiveSheet()->getStyle('A3:AB3')->getBorders()->getBottom()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
-        $objPHPExcel->getActiveSheet()->getStyle('A1:AB1')->getBorders()->getTop()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
-        $objPHPExcel->getActiveSheet()->getStyle('A1:AB1')->getBorders()->getLeft()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
-        $objPHPExcel->getActiveSheet()->getStyle('A2:AB2')->getBorders()->getLeft()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
-        $objPHPExcel->getActiveSheet()->getStyle('A3:AB3')->getBorders()->getLeft()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+        $objPHPExcel->getActiveSheet()->getStyle('A10:AC10')->applyFromArray($styleArray);
+        $objPHPExcel->getActiveSheet()->getStyle('A3:AC3')->getBorders()->getBottom()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+        $objPHPExcel->getActiveSheet()->getStyle('A1:AC1')->getBorders()->getTop()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+        $objPHPExcel->getActiveSheet()->getStyle('A1:AC1')->getBorders()->getLeft()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+        $objPHPExcel->getActiveSheet()->getStyle('A2:AC2')->getBorders()->getLeft()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+        $objPHPExcel->getActiveSheet()->getStyle('A3:AC3')->getBorders()->getLeft()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
         $objPHPExcel->getActiveSheet()->getStyle('D5:E5')->getBorders()->getBottom()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
         $objPHPExcel->getActiveSheet()->getStyle('H5:I5')->getBorders()->getBottom()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
         $objPHPExcel->getActiveSheet()->getStyle('H8:J8')->getBorders()->getBottom()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
@@ -3665,9 +3665,9 @@ class Reports extends CI_Controller {
         $objPHPExcel->getActiveSheet()->getStyle('H1')->getBorders()->getLeft()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
         $objPHPExcel->getActiveSheet()->getStyle('H2')->getBorders()->getLeft()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
         $objPHPExcel->getActiveSheet()->getStyle('H3')->getBorders()->getLeft()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
-        $objPHPExcel->getActiveSheet()->getStyle('AB1')->getBorders()->getRight()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
-        $objPHPExcel->getActiveSheet()->getStyle('AB2')->getBorders()->getRight()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
-        $objPHPExcel->getActiveSheet()->getStyle('AB3')->getBorders()->getRight()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+        $objPHPExcel->getActiveSheet()->getStyle('AC1')->getBorders()->getRight()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+        $objPHPExcel->getActiveSheet()->getStyle('AC2')->getBorders()->getRight()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+        $objPHPExcel->getActiveSheet()->getStyle('AC3')->getBorders()->getRight()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
         $objPHPExcel->getActiveSheet()->getStyle('O2:T2')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
         $objPHPExcel->getActiveSheet()->getStyle('A1:D1')->getFont()->setBold(true);
         $objPHPExcel->getActiveSheet()->getStyle('H1')->getFont()->setBold(true);
