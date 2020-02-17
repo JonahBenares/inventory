@@ -2054,6 +2054,7 @@ class Reports extends CI_Controller {
 
     public function tagexcess(){
         $pr=$this->uri->segment(3);
+        $pr = urldecode($pr);
         $item_id=$this->uri->segment(4);
         $exc_qty=$this->uri->segment(5);
         $now = date('Y-m-d H:i:s');
