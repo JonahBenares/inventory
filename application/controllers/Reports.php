@@ -1203,7 +1203,7 @@ class Reports extends CI_Controller {
         $count=$this->super_model->custom_query("SELECT ih.* FROM issuance_head ih INNER JOIN issuance_details id ON ih.issuance_id = id.issuance_id INNER JOIN items i ON id.item_id = i.item_id WHERE ih.saved='1' AND ".$query. " ORDER BY ih.issue_date DESC");
        /* echo "SELECT ih.* FROM issuance_head ih INNER JOIN issuance_details id ON ih.issuance_id = id.issuance_id INNER JOIN items i ON id.item_id = i.item_id WHERE ih.saved='1' AND ".$query;*/
         if($count!=0){
-            //echo "SELECT ih.*,i.item_id, sr.supplier_id,dt.department_id,pr.purpose_id,e.enduse_id, id.is_id FROM issuance_head ih INNER JOIN issuance_details id ON ih.issuance_id = id.issuance_id INNER JOIN items i ON id.item_id = i.item_id INNER JOIN supplier sr ON sr.supplier_id = id.supplier_id INNER JOIN department dt ON dt.department_id = ih.department_id INNER JOIN purpose pr ON pr.purpose_id = ih.purpose_id INNER JOIN enduse e ON e.enduse_id = ih.enduse_id WHERE ih.saved='1' AND ih.issuance_id = id.issuance_id AND ".$query. "ORDER BY ih.issue_date";
+            //echo "SELECT ih.*,i.item_id, id.supplier_id, dt.department_id,pr.purpose_id,e.enduse_id, id.is_id FROM issuance_head ih INNER JOIN issuance_details id ON ih.issuance_id = id.issuance_id INNER JOIN items i ON id.item_id = i.item_id INNER JOIN department dt ON dt.department_id = ih.department_id INNER JOIN purpose pr ON pr.purpose_id = ih.purpose_id INNER JOIN enduse e ON e.enduse_id = ih.enduse_id WHERE ih.saved='1' AND ih.issuance_id = id.issuance_id AND ".$query. " ORDER BY ih.issue_date DESC";
             foreach($this->super_model->custom_query("SELECT ih.*,i.item_id, id.supplier_id, dt.department_id,pr.purpose_id,e.enduse_id, id.is_id FROM issuance_head ih INNER JOIN issuance_details id ON ih.issuance_id = id.issuance_id INNER JOIN items i ON id.item_id = i.item_id INNER JOIN department dt ON dt.department_id = ih.department_id INNER JOIN purpose pr ON pr.purpose_id = ih.purpose_id INNER JOIN enduse e ON e.enduse_id = ih.enduse_id WHERE ih.saved='1' AND ih.issuance_id = id.issuance_id AND ".$query. " ORDER BY ih.issue_date DESC") AS $itm){
 
                 $supplier = $this->super_model->select_column_where('supplier', 'supplier_name', 'supplier_id', $itm->supplier_id);
@@ -1221,6 +1221,7 @@ class Reports extends CI_Controller {
                 }
                 $data['issue'][] = array(
                     'issue_date'=>$issue_date,
+                    'mif_no'=>$itm->mif_no,
                     'pr'=>$pr,
                     'unit'=>$unit,
                     'supplier'=>$supplier,
@@ -3490,13 +3491,15 @@ class Reports extends CI_Controller {
             $sql.= " i.item_id = '$item' AND";
         }
         $query=substr($sql,0,-3);
+
+        //echo "SELECT ih.*,i.item_id, sr.supplier_id,dt.department_id,pr.purpose_id,e.enduse_id, id.is_id FROM issuance_head ih INNER JOIN issuance_details id ON ih.issuance_id = id.issuance_id INNER JOIN items i ON id.item_id = i.item_id INNER JOIN supplier sr ON sr.supplier_id = id.supplier_id INNER JOIN department dt ON dt.department_id = ih.department_id INNER JOIN purpose pr ON pr.purpose_id = ih.purpose_id INNER JOIN enduse e ON e.enduse_id = ih.enduse_id WHERE ih.saved='1' AND ih.issuance_id = id.issuance_id AND ".$query. "ORDER BY ih.issue_date DESC";
+
         require_once(APPPATH.'../assets/js/phpexcel/Classes/PHPExcel/IOFactory.php');
         $objPHPExcel = new PHPExcel();
         $exportfilename="Issued Report.xlsx";
 
 
         $gdImage = imagecreatefrompng('assets/default/logo_cenpri.png');
-        // Add a drawing to the worksheetecho date('H:i:s') . " Add a drawing to the worksheet\n";
         $objDrawing = new PHPExcel_Worksheet_MemoryDrawing();
         $objDrawing->setName('Sample image');
         $objDrawing->setDescription('Sample image');
@@ -3554,8 +3557,9 @@ class Reports extends CI_Controller {
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('Y10', "End Use");
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('AC10', "Frequency");
         
-            foreach($this->super_model->custom_query("SELECT ih.*,i.item_id, sr.supplier_id,dt.department_id,pr.purpose_id,e.enduse_id, id.is_id FROM issuance_head ih INNER JOIN issuance_details id ON ih.issuance_id = id.issuance_id INNER JOIN items i ON id.item_id = i.item_id INNER JOIN supplier sr ON sr.supplier_id = id.supplier_id INNER JOIN department dt ON dt.department_id = ih.department_id INNER JOIN purpose pr ON pr.purpose_id = ih.purpose_id INNER JOIN enduse e ON e.enduse_id = ih.enduse_id WHERE ih.saved='1' AND ih.issuance_id = id.issuance_id AND ".$query. "ORDER BY ih.issue_date DESC") AS $itm){
-                      $supplier = $this->super_model->select_column_where('supplier', 'supplier_name', 'supplier_id', $itm->supplier_id);
+            foreach($this->super_model->custom_query("SELECT ih.*,i.item_id, id.supplier_id, dt.department_id,pr.purpose_id,e.enduse_id, id.is_id FROM issuance_head ih INNER JOIN issuance_details id ON ih.issuance_id = id.issuance_id INNER JOIN items i ON id.item_id = i.item_id INNER JOIN department dt ON dt.department_id = ih.department_id INNER JOIN purpose pr ON pr.purpose_id = ih.purpose_id INNER JOIN enduse e ON e.enduse_id = ih.enduse_id WHERE ih.saved='1' AND ih.issuance_id = id.issuance_id AND ".$query. "ORDER BY ih.issue_date DESC") AS $itm){
+                     // $supplier = $this->super_model->select_column_where('supplier', 'supplier_name', 'supplier_id', $itm->supplier_id);
+                 $supplier = $this->super_model->select_column_where('supplier', 'supplier_name', 'supplier_id', $itm->supplier_id);
                 $issqty = $this->super_model->select_column_where('issuance_details', 'quantity', 'is_id', $itm->is_id); 
                 $pn = $this->super_model->select_column_where('items', 'original_pn', 'item_id', $itm->item_id);
                 $item = $this->super_model->select_column_where('items', 'item_name', 'item_id', $itm->item_id);
@@ -3630,25 +3634,11 @@ class Reports extends CI_Controller {
         $objPHPExcel->getActiveSheet()->mergeCells('R10:T10');
         $objPHPExcel->getActiveSheet()->mergeCells('U10:X10');
         $objPHPExcel->getActiveSheet()->mergeCells('Y10:AB10');
-        /*$objPHPExcel->getActiveSheet()->mergeCells('B'.$num.":C".$num);
-        $objPHPExcel->getActiveSheet()->mergeCells('D11:E11');
-        $objPHPExcel->getActiveSheet()->mergeCells('D'.$num.":E".$num);
-        $objPHPExcel->getActiveSheet()->mergeCells('F11:G11');
-        $objPHPExcel->getActiveSheet()->mergeCells('F'.$num.":G".$num);
-        $objPHPExcel->getActiveSheet()->mergeCells('H11:I11');
-        $objPHPExcel->getActiveSheet()->mergeCells('H'.$num.":I".$num);
-        $objPHPExcel->getActiveSheet()->mergeCells('J11:K11');
-        $objPHPExcel->getActiveSheet()->mergeCells('J'.$num.":K".$num);
-        $objPHPExcel->getActiveSheet()->mergeCells('L11:M11');
-        $objPHPExcel->getActiveSheet()->mergeCells('L'.$num.":M".$num);
-        $objPHPExcel->getActiveSheet()->mergeCells('N11:O11');
-        $objPHPExcel->getActiveSheet()->mergeCells('N'.$num.":O".$num);
-        $objPHPExcel->getActiveSheet()->mergeCells('P11:Q11');
-        $objPHPExcel->getActiveSheet()->mergeCells('P'.$num.":Q".$num);*/
+    
         $objPHPExcel->getActiveSheet()->getStyle('A10:AC10')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
         $objPHPExcel->getActiveSheet()->getStyle('N11:Q11')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
         $objPHPExcel->getActiveSheet()->getStyle('B11:C11')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-        /*$objPHPExcel->getActiveSheet()->getStyle('F'.$num.":G11".$num)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);*/
+      
         $objPHPExcel->getActiveSheet()->getStyle('A10:AC10')->applyFromArray($styleArray);
         $objPHPExcel->getActiveSheet()->getStyle('A3:AC3')->getBorders()->getBottom()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
         $objPHPExcel->getActiveSheet()->getStyle('A1:AC1')->getBorders()->getTop()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
@@ -3675,9 +3665,9 @@ class Reports extends CI_Controller {
         $objPHPExcel->getActiveSheet()->getStyle('C5')->getFont()->setBold(true);
         $objPHPExcel->getActiveSheet()->getStyle('G5')->getFont()->setBold(true);
         $objPHPExcel->getActiveSheet()->getStyle('H2')->getFont()->setBold(true);
-       /* $objPHPExcel->getActiveSheet()->getStyle('J2')->getFont()->setBold(true);*/
+       
         $objPHPExcel->getActiveSheet()->getStyle("O2")->getFont()->setBold(true)->setName('Arial Black');
-        //$objPHPExcel->getActiveSheet()->getStyle('O1')->getFont()->setBold(true);
+       
         $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
         if (file_exists($exportfilename))
         unlink($exportfilename);
@@ -3688,7 +3678,7 @@ class Reports extends CI_Controller {
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         header('Content-Disposition: attachment; filename="Issued Report.xlsx"');
         readfile($exportfilename);
-        //echo "<script>window.location = 'import_items';</script>";
+      
     }
 
     public function export_aging(){
