@@ -1832,11 +1832,24 @@ class Reports extends CI_Controller {
             window.location.href ='<?php echo base_url(); ?>index.php/reports/item_report/<?php echo $id; ?>'</script> <?php
     } 
 
+    public function slash_replace($query){
+        $search = ["/", " / "];
+        $replace   = ["_", ""];
+        return str_replace($search, $replace, $query);
+    }
+
+    public function slash_unreplace($query){
+        $search = ["/", " / "];
+        $replace   = ["_", ""];
+        return str_replace($search, $replace, $query);
+    }
+
     public function generateAllPRReport(){
            $pr= $this->input->post('pr'); 
+           $p= rawurlencode($this->slash_replace($pr));
            ?>
            <script>
-            window.location.href ='<?php echo base_url(); ?>index.php/reports/all_pr_report/<?php echo $pr; ?>'</script> <?php
+            window.location.href ='<?php echo base_url(); ?>index.php/reports/all_pr_report/<?php echo $p; ?>'</script> <?php
     } 
 
 
@@ -2005,9 +2018,10 @@ class Reports extends CI_Controller {
         $pr=$this->uri->segment(3);
         $data['pr']=$pr;
        
+        $pr=$this->slash_unreplace(rawurldecode($pr));
+        /*$pr=str_replace('+', ' ', urlencode($pr));*/
 
-
-        foreach($this->super_model->custom_query("SELECT item_id, SUM(received_qty) AS qty, ri.ri_id FROM receive_items ri INNER JOIN receive_details rd ON ri.rd_id = rd.rd_id WHERE rd.pr_no = '$pr' GROUP BY  ri.item_id") AS $head){
+        foreach($this->super_model->custom_query("SELECT item_id, SUM(received_qty) AS qty, ri.ri_id FROM receive_items ri INNER JOIN receive_details rd ON ri.rd_id = rd.rd_id WHERE rd.pr_no LIKE '%$pr%' GROUP BY  ri.item_id") AS $head){
            // echo 
 
                 $excess_flag = $this->super_model->custom_query_single("excess","SELECT rh.excess FROM restock_head rh INNER JOIN restock_details rd ON rh.rhead_id = rd.rhead_id WHERE rh.from_pr = '$pr' AND rd.item_id = '$head->item_id'");
