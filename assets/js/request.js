@@ -197,10 +197,13 @@ function saveRequest(){
             url: redirect,
             data: req,
             success: function(output){
-                alert("Request successfully Added!");
-                /*window.location = loc+'index.php/request/mreqf/'+output;*/
-                location.reload();
-                window.open(loc+'index.php/request/mreqf/'+output, '_blank');
+                var conf = confirm('Are you sure you want to save this record?');
+                if(conf){
+                    alert("Request successfully Added!");
+                    /*window.location = loc+'index.php/request/mreqf/'+output;*/
+                    location.reload();
+                    window.open(loc+'index.php/request/mreqf/'+output, '_blank');
+                }
                //alert(output);
             }
       });
