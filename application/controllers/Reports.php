@@ -645,6 +645,7 @@ class Reports extends CI_Controller {
     public function pr_report(){
         $id=$this->uri->segment(3);
         $prno=$this->uri->segment(4);
+        $pr=$this->slash_unreplace(rawurldecode($prno));
        /* $counter = $this->super_model->count_custom_where("receive_head","receive_id = '$id'");
         if($counter!=0){
             foreach($this->super_model->select_row_where("receive_head", "receive_id",$id) AS $head){
@@ -661,9 +662,9 @@ class Reports extends CI_Controller {
         }else {
             $data['head'] = array();
         }*/
-        $counter = $this->super_model->count_custom_where("receive_details","pr_no = '$prno'");
+        $counter = $this->super_model->count_custom_where("receive_details","pr_no = '$pr'");
          if($counter!=0){
-            foreach($this->super_model->select_row_where("receive_details", "pr_no",$prno) AS $det1){
+            foreach($this->super_model->select_row_where("receive_details", "pr_no",$pr) AS $det1){
                 foreach($this->super_model->select_row_where("receive_head", "receive_id",$det1->receive_id) AS $head)
                     $department = $this->super_model->select_column_where("department", "department_name", "department_id", $det1->department_id);
                 $enduse = $this->super_model->select_column_where("enduse", "enduse_name", "enduse_id", $det1->enduse_id);
@@ -686,7 +687,7 @@ class Reports extends CI_Controller {
         }else {
             $data['head'] = array();
         }
-        foreach($this->super_model->select_custom_where("receive_details", "pr_no = '$prno'") AS $det){
+        foreach($this->super_model->select_custom_where("receive_details", "pr_no = '$pr'") AS $det){
                 
                 $data['details'][]=array(
                     "recid"=>$det->receive_id,
@@ -735,12 +736,13 @@ class Reports extends CI_Controller {
     public function pr_report_issue(){
         $id=$this->uri->segment(3);
         $prno=$this->uri->segment(4);
+        $pr=$this->slash_unreplace(rawurldecode($prno));
         if(empty($prno)){
             $data['head']=array();
         }
-        $counter = $this->super_model->count_custom_where("issuance_head","pr_no = '$prno'");
+        $counter = $this->super_model->count_custom_where("issuance_head","pr_no = '$pr'");
          if($counter!=0){
-            foreach($this->super_model->select_row_where("issuance_head", "pr_no",$prno) AS $head){
+            foreach($this->super_model->select_row_where("issuance_head", "pr_no",$pr) AS $head){
               //  foreach($this->super_model->select_row_where("issuance_", "receive_id",$det1->receive_id) AS $head)
                 $department = $this->super_model->select_column_where("department", "department_name", "department_id", $head->department_id);
                 $enduse = $this->super_model->select_column_where("enduse", "enduse_name", "enduse_id", $head->enduse_id);
@@ -791,12 +793,12 @@ class Reports extends CI_Controller {
     public function pr_report_restock(){
         $id=$this->uri->segment(3);
         $prno=$this->uri->segment(4);
-      
+        $pr=$this->slash_unreplace(rawurldecode($prno));
   
-        $counter = $this->super_model->count_custom_where("restock_head","from_pr = '$prno' AND excess = 0");
+        $counter = $this->super_model->count_custom_where("restock_head","from_pr = '$pr' AND excess = 0");
         //echo $counter;
          if($counter!=0){
-            foreach($this->super_model->select_row_where("restock_head", "from_pr",$prno) AS $head){
+            foreach($this->super_model->select_row_where("restock_head", "from_pr",$pr) AS $head){
               //  foreach($this->super_model->select_row_where("issuance_", "receive_id",$det1->receive_id) AS $head)
                 $department = $this->super_model->select_column_where("department", "department_name", "department_id", $head->department_id);
                 $enduse = $this->super_model->select_column_where("enduse", "enduse_name", "enduse_id", $head->enduse_id);
@@ -1247,8 +1249,10 @@ class Reports extends CI_Controller {
         $data['id']=$this->uri->segment(3);
         $sup=$this->uri->segment(4);
         $data['sup']=$this->uri->segment(4);
-        $cat=str_replace("_", " ", $this->uri->segment(5));
-        $data['cat']=str_replace("_", " ", $this->uri->segment(5));
+        //$cat=str_replace("_", " ", $this->uri->segment(5));
+        //$data['cat']=str_replace("_", " ", $this->uri->segment(5));
+        $cat=$this->slash_unreplace(rawurldecode($this->uri->segment(5)));
+        $data['cat']=$this->slash_unreplace(rawurldecode($this->uri->segment(5)));
         $brand=$this->uri->segment(6);
         $data['brand']=$this->uri->segment(6);
         $supit=0;
@@ -1326,7 +1330,7 @@ class Reports extends CI_Controller {
             //echo $id ." - ". $sup . " - " . $cat . " - " . $brand;
             if($counter!=0){
                 //unset($daterec);
-                echo $query;
+                //echo $query;
                 foreach($this->super_model->select_custom_where("receive_items",$query) AS $rec){
 
                     $receivedate=$this->super_model->select_column_where("receive_head", "receive_date", "receive_id", $rec->receive_id);
@@ -1892,29 +1896,32 @@ class Reports extends CI_Controller {
     } 
     public function generatePr(){
         $prno=$this->input->post('pr');
+        $p= rawurlencode($this->slash_replace($prno));
         $prid=$this->input->post('prid');
         ?>
         <script>
-            window.location.href ='<?php echo base_url(); ?>index.php/reports/pr_report/<?php echo $prid;?>/<?php echo $prno;?>'
+            window.location.href ='<?php echo base_url(); ?>index.php/reports/pr_report/<?php echo $prid;?>/<?php echo $p;?>'
         </script> 
     <?php
     }  
      public function generatePrIssue(){
         $prno=$this->input->post('pr');
+        $p= rawurlencode($this->slash_replace($prno));
         $prid=$this->input->post('prid');
         ?>
         <script>
-            window.location.href ='<?php echo base_url(); ?>index.php/reports/pr_report_issue/<?php echo $prid;?>/<?php echo $prno;?>'
+            window.location.href ='<?php echo base_url(); ?>index.php/reports/pr_report_issue/<?php echo $prid;?>/<?php echo $p;?>'
         </script> 
     <?php
     }  
 
      public function generatePrRestock(){
         $prno=$this->input->post('pr');
+        $p= rawurlencode($this->slash_replace($prno));
         $prid=$this->input->post('prid');
         ?>
         <script>
-            window.location.href ='<?php echo base_url(); ?>index.php/reports/pr_report_restock/<?php echo $prid;?>/<?php echo $prno;?>'
+            window.location.href ='<?php echo base_url(); ?>index.php/reports/pr_report_restock/<?php echo $prid;?>/<?php echo $p;?>'
         </script> 
     <?php
     }  

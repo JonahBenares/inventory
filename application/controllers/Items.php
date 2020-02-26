@@ -57,6 +57,18 @@ class Items extends CI_Controller {
         $this->load->view('template/footer');
     }
 
+    public function slash_replace($query){
+        $search = ["/", " / "];
+        $replace   = ["_"];
+        return str_replace($search, $replace, $query);
+    }
+
+    public function slash_unreplace($query){
+        $search = ["_"];
+        $replace   = ["/", " / "];
+        return str_replace($search, $replace, $query);
+    }
+
     public function item_export(){
         $this->load->view('template/header');
         $data['subcat'] = $this->super_model->select_all_order_by('item_subcat', 'subcat_name', 'ASC');

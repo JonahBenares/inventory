@@ -1,3 +1,6 @@
+<?php
+	$ci =& get_instance();
+?>
 <style type="text/css">
 	p {
 	    margin: 0 0 1px;
@@ -176,7 +179,8 @@
 													if(empty($sup['catalog_no'])){
 														$cat='null';
 													} else {
-														$cat= str_replace(" ", "_", $sup['catalog_no']);
+														$cat= rawurlencode($ci->slash_replace($sup['catalog_no']));
+														//$cat= str_replace(" ", "_", $sup['catalog_no']);
 													}
 
 													if(empty($sup['brand_id'])){
