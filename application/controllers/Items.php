@@ -691,9 +691,19 @@ class Items extends CI_Controller {
                 $subcat_prefix=$pndetails[0];
                 $series = $pndetails[1];
 
+                $rows=$this->super_model->count_custom_where("pn_series","subcat_prefix = '$subcat_prefix'");
+                if($rows==0){
+                    $next= "1001";
+                    $pn_no= $subcat_prefix."_1001";
+                } else {
+                    $series = $this->super_model->get_max_where("pn_series", "series","subcat_prefix = '$subcat_prefix'");
+                    $next=$series+1;
+                    $pn_no = $subcat_prefix."_".$next;
+                }
+
                 $pn_data= array(
                     'subcat_prefix'=>$subcat_prefix,
-                    'series'=>$series
+                    'series'=>$next
                 );
                 $this->super_model->insert_into("pn_series", $pn_data);
             }
@@ -702,7 +712,8 @@ class Items extends CI_Controller {
                     'item_id' => $item_id,
                     'category_id' => $this->input->post('cat'),
                     'subcat_id' => $this->input->post('subcat'),
-                    'original_pn' => $this->input->post('pn'),
+                    'original_pn' => $pn_no,
+                    //'original_pn' => $this->input->post('pn'),
                     'item_name' => $this->input->post('item_name'),
                     'unit_id' => $this->input->post('unit'),
                     'group_id' => $this->input->post('group'),
@@ -817,9 +828,19 @@ class Items extends CI_Controller {
                 $subcat_prefix=$pndetails[0];
                 $series = $pndetails[1];
 
+                $rows=$this->super_model->count_custom_where("pn_series","subcat_prefix = '$subcat_prefix'");
+                if($rows==0){
+                    $next= "1001";
+                    $pn_no= $subcat_prefix."_1001";
+                } else {
+                    $series = $this->super_model->get_max_where("pn_series", "series","subcat_prefix = '$subcat_prefix'");
+                    $next=$series+1;
+                    $pn_no = $subcat_prefix."_".$next;
+                }
+
                 $pn_data= array(
                     'subcat_prefix'=>$subcat_prefix,
-                    'series'=>$series
+                    'series'=>$next
                 );
                 $row_count = $this->super_model->count_custom_where("pn_series","subcat_prefix='$subcat_prefix' AND series = '$series'");
                 if($row_count==0){
@@ -831,7 +852,8 @@ class Items extends CI_Controller {
               $data = array(
                     'category_id' => $this->input->post('cat'),
                     'subcat_id' => $this->input->post('subcat'),
-                    'original_pn' => $this->input->post('pn'),
+                    //'original_pn' => $this->input->post('pn'),
+                    'original_pn' => $pn_no,
                     'item_name' => $this->input->post('item_name'),
                     'unit_id' => $this->input->post('unit'),
                     'group_id' => $this->input->post('group'),
