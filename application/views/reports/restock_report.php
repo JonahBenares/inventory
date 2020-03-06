@@ -66,16 +66,32 @@
 											
 											</select>
 										</td>
-										<td align="center"> 
+										<td>
+											<br>
+											<select name="enduse" class="form-control">
+												<option value="" selected="">-Enduse-</option>
+												<?php foreach($enduse AS $e){ ?>
+													<option value="<?php echo $e->enduse_id; ?>"><?php echo $e->enduse_name; ?></option>
+												<?php } ?>
+											</select>
+										</td>
+									</tr>
+									<tr>
+										<td></td>
+										<td></td>
+										<td>
 											<br>
 											<input type="submit" name="search_inventory" value='Generate' class="btn btn-warning btn-block" >
 										</td>
+										<td></td>
+										<td></td>
+										<td></td>
 									</tr>
 								</table>
 							</form>
 							<br>
 							<?php if(!empty($restock)){ ?>
-							<a href = "<?php echo base_url(); ?>index.php/reports/export_restock/<?php echo $from;?>/<?php echo $to;?>/<?php echo $catt1;?>/<?php echo $subcat2;?>/<?php echo $item1;?>" class = "btn btn-primary pull-right">Export to Excel</a>
+							<a href = "<?php echo base_url(); ?>index.php/reports/export_restock/<?php echo $from;?>/<?php echo $to;?>/<?php echo $catt1;?>/<?php echo $subcat2;?>/<?php echo $item1;?>/<?php echo $enduse1;?>" class = "btn btn-primary pull-right">Export to Excel</a>
 							<!-- <button id="printReport" class="btn btn-info pull-right " onclick="printDiv('printableArea')">
 									<span  class="fa fa-print"></span>
 							</button> -->

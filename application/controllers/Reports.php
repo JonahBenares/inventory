@@ -939,11 +939,13 @@ class Reports extends CI_Controller {
         $cat=$this->uri->segment(5);
         $subcat=$this->uri->segment(6);
         $item=$this->uri->segment(7);
+        $enduser=$this->uri->segment(8);
         $data['from']=$this->uri->segment(3);
         $data['to']=$this->uri->segment(4);
         $data['catt1']=$this->uri->segment(5);
         $data['subcat2']=$this->uri->segment(6);
         $data['item1']=$this->uri->segment(7);
+        $data['enduse1']=$this->uri->segment(8);
         $data['item'] = $this->super_model->select_all_order_by('items', 'item_name', 'ASC');
         $data['subcat'] = $this->super_model->select_all_order_by('item_subcat', 'subcat_name', 'ASC');
         $data['category'] = $this->super_model->select_all_order_by('item_categories', 'cat_name', 'ASC');
@@ -965,6 +967,10 @@ class Reports extends CI_Controller {
 
         if($item!='null'){
             $sql.= " i.item_id = '$item' AND";
+        }
+
+        if($enduser!='null'){
+            $sql.= " rh.enduse_id = '$enduser' AND";
         }
 
         $query=substr($sql,0,-3);
@@ -1024,11 +1030,13 @@ class Reports extends CI_Controller {
         $cat=$this->uri->segment(5);
         $subcat=$this->uri->segment(6);
         $item=$this->uri->segment(7);
+        $enduser=$this->uri->segment(8);
         $data['from']=$this->uri->segment(3);
         $data['to']=$this->uri->segment(4);
         $data['catt1']=$this->uri->segment(5);
         $data['subcat2']=$this->uri->segment(6);
         $data['item1']=$this->uri->segment(7);
+        $data['enduse1']=$this->uri->segment(8);
         $data['item'] = $this->super_model->select_all_order_by('items', 'item_name', 'ASC');
         $data['subcat'] = $this->super_model->select_all_order_by('item_subcat', 'subcat_name', 'ASC');
         $data['category'] = $this->super_model->select_all_order_by('item_categories', 'cat_name', 'ASC');
@@ -1049,6 +1057,10 @@ class Reports extends CI_Controller {
 
         if($item!='null'){
             $sql.= " i.item_id = '$item' AND";
+        }
+
+        if($enduser!='null'){
+            $sql.= " rh.enduse_id = '$enduser' AND";
         }
 
         $query=substr($sql,0,-3);
@@ -1737,9 +1749,14 @@ class Reports extends CI_Controller {
            } else {
                 $item = "null";
            } 
+           if(!empty($this->input->post('enduse'))){
+                $enduse = $this->input->post('enduse');
+           } else {
+                $enduse = "null";
+           }
            ?>
            <script>
-            window.location.href ='<?php echo base_url(); ?>index.php/reports/restock_report/<?php echo $from; ?>/<?php echo $to; ?>/<?php echo $cat; ?>/<?php echo $subcat; ?>/<?php echo $item; ?>'</script> <?php
+            window.location.href ='<?php echo base_url(); ?>index.php/reports/restock_report/<?php echo $from; ?>/<?php echo $to; ?>/<?php echo $cat; ?>/<?php echo $subcat; ?>/<?php echo $item; ?>/<?php echo $enduse; ?>'</script> <?php
     }
 
     public function generateExcess(){
@@ -1772,9 +1789,15 @@ class Reports extends CI_Controller {
            } else {
                 $item = "null";
            } 
+
+           if(!empty($this->input->post('enduse'))){
+                $enduse = $this->input->post('enduse');
+           } else {
+                $enduse = "null";
+           }
            ?>
            <script>
-            window.location.href ='<?php echo base_url(); ?>index.php/reports/excess_report/<?php echo $from; ?>/<?php echo $to; ?>/<?php echo $cat; ?>/<?php echo $subcat; ?>/<?php echo $item; ?>'</script> <?php
+            window.location.href ='<?php echo base_url(); ?>index.php/reports/excess_report/<?php echo $from; ?>/<?php echo $to; ?>/<?php echo $cat; ?>/<?php echo $subcat; ?>/<?php echo $item; ?>/<?php echo $enduse; ?>'</script> <?php
     }
 
     public function generateReceived(){
@@ -2825,6 +2848,7 @@ class Reports extends CI_Controller {
         $cat=$this->uri->segment(5);
         $subcat=$this->uri->segment(6);
         $item=$this->uri->segment(7);
+        $enduser=$this->uri->segment(8);
 
          $sql="";
         if($from!='null' && $to!='null'){
@@ -2841,6 +2865,10 @@ class Reports extends CI_Controller {
 
         if($item!='null'){
             $sql.= " i.item_id = '$item' AND";
+        }
+
+        if($enduser!='null'){
+            $sql.= " rh.enduse_id = '$enduser' AND";
         }
 
         $query=substr($sql,0,-3);
@@ -3056,6 +3084,7 @@ class Reports extends CI_Controller {
         $cat=$this->uri->segment(5);
         $subcat=$this->uri->segment(6);
         $item=$this->uri->segment(7);
+        $enduser=$this->uri->segment(8);
 
          $sql="";
         if($from!='null' && $to!='null'){
@@ -3072,6 +3101,10 @@ class Reports extends CI_Controller {
 
         if($item!='null'){
             $sql.= " i.item_id = '$item' AND";
+        }
+
+        if($enduser!='null'){
+            $sql.= " rh.enduse_id = '$enduser' AND";
         }
 
         $query=substr($sql,0,-3);
@@ -3132,7 +3165,7 @@ class Reports extends CI_Controller {
         
         $x = 1;
        
-            foreach($this->super_model->custom_query("SELECT rh.*,i.item_id, sr.supplier_id, rd.rdetails_id FROM restock_head rh INNER JOIN restock_details rd ON rh.rhead_id = rd.rhead_id INNER JOIN items i ON rd.item_id = i.item_id INNER JOIN supplier sr ON sr.supplier_id = rd.supplier_id WHERE rh.saved='1' AND rh.excess='1' AND ".$query."ORDER BY rh.restock_date DESC") AS $itm){
+            foreach($this->super_model->custom_query("SELECT rh.*,i.item_id, sr.supplier_id, rd.rdetails_id, rd.reason FROM restock_head rh INNER JOIN restock_details rd ON rh.rhead_id = rd.rhead_id INNER JOIN items i ON rd.item_id = i.item_id INNER JOIN supplier sr ON sr.supplier_id = rd.supplier_id WHERE rh.saved='1' AND rh.excess='1' AND ".$query."ORDER BY rh.restock_date DESC") AS $itm){
                 $supplier = $this->super_model->select_column_where('supplier', 'supplier_name', 'supplier_id', $itm->supplier_id);
                 $qty = $this->super_model->select_column_where('restock_details', 'quantity', 'rhead_id', $itm->rhead_id); 
                 $pn = $this->super_model->select_column_where('items', 'original_pn', 'item_id', $itm->item_id);
