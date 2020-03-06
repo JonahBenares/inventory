@@ -747,12 +747,14 @@ class Reports extends CI_Controller {
                 $department = $this->super_model->select_column_where("department", "department_name", "department_id", $head->department_id);
                 $enduse = $this->super_model->select_column_where("enduse", "enduse_name", "enduse_id", $head->enduse_id);
                 $purpose = $this->super_model->select_column_where("purpose", "purpose_desc", "purpose_id", $head->purpose_id);
+                $type=  $this->super_model->select_column_where("request_head", "type", "mreqf_no", $head->mreqf_no);
                 $data['head'][]=array(
                     "issuance_id"=>$head->issuance_id,
                     "issue_date"=>$head->issue_date,
                     "issue_time"=>$head->issue_time,
                     "mif_no"=>$head->mif_no,
                     "mreqf_no"=>$head->mreqf_no,
+                    "type"=>$type,
                     "prno"=>$head->pr_no,
                     "department"=>$department,
                     "enduse"=>$enduse,
@@ -1217,6 +1219,7 @@ class Reports extends CI_Controller {
                 $enduse = $this->super_model->select_column_where('enduse', 'enduse_name', 'enduse_id', $itm->enduse_id);
                 $issue_date = $this->super_model->select_column_where('issuance_head', 'issue_date', 'issuance_id', $itm->issuance_id);
                 /*$pr = $this->super_model->select_column_where('request_head', 'pr_no', 'mreqf_no', $itm->mreqf_no);*/
+                 $type=  $this->super_model->select_column_where("request_head", "type", "mreqf_no", $itm->mreqf_no);     
                 $pr = $this->super_model->select_column_where('issuance_head', 'pr_no', 'mreqf_no', $itm->mreqf_no);
                 foreach($this->super_model->select_custom_where("items", "item_id = '$itm->item_id'") AS $itema){
                     $unit = $this->super_model->select_column_where('uom', 'unit_name', 'unit_id', $itema->unit_id);
@@ -1227,6 +1230,7 @@ class Reports extends CI_Controller {
                     'pr'=>$pr,
                     'unit'=>$unit,
                     'supplier'=>$supplier,
+                    'type'=>$type,
                     'item'=>$item,
                     'department'=>$department,
                     'purpose'=>$purpose,
@@ -2026,8 +2030,10 @@ class Reports extends CI_Controller {
         $pr=$this->uri->segment(3);
         $data['pr']=$this->slash_unreplace(rawurldecode($pr));
         $pr=$this->slash_unreplace(rawurldecode($pr));
+
+       /* echo "****".$pr;*/
         //$pr= urldecode($pr);
-        foreach($this->super_model->custom_query("SELECT item_id, SUM(received_qty) AS qty, ri.ri_id FROM receive_items ri INNER JOIN receive_details rd ON ri.rd_id = rd.rd_id WHERE rd.pr_no LIKE '%$pr%' GROUP BY  ri.item_id") AS $head){
+        foreach($this->super_model->custom_query("SELECT item_id, SUM(received_qty) AS qty, ri.ri_id FROM receive_items ri INNER JOIN receive_details rd ON ri.rd_id = rd.rd_id WHERE rd.pr_no = '$pr' GROUP BY  ri.item_id") AS $head){
 
                 $excess_flag = $this->super_model->custom_query_single("excess","SELECT rh.excess FROM restock_head rh INNER JOIN restock_details rd ON rh.rhead_id = rd.rhead_id WHERE rh.from_pr='$pr' AND rd.item_id = '$head->item_id'");
 
@@ -2153,6 +2159,7 @@ class Reports extends CI_Controller {
                "supplier_id"=>$items->supplier_id,
                "brand_id"=>$items->brand_id,
                "catalog_no"=>$items->catalog_no,
+               "item_cost"=>$items->item_cost,
                "quantity"=>$exc_qty,
                "reason"=>'Excess Material',
             );
