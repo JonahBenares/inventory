@@ -50,14 +50,15 @@
 				<div class="panel-body">
 					<div class="canvas-wrapper">
 						<div id="printableArea">
-							<?php foreach($head AS $h) { ?>
+							<?php foreach($head AS $h) { 
+								?>
 							<div style="padding:10px; margin-bottom: 20px;border-radius: 10px;box-shadow: 0px 0px 5px 2px #b9b9b9;border: 1px solid #b9b9b9;border: 1px solid #b9b9b9">								
 								<table width="100%" class="table-borddered">
 									<tr>
 										<td width="10%"><p class="nomarg">Date:</p></td>
 										<td width="20%" colspan="1"><h5 class="nomarg"><?php echo $h['issue_date'] . " " . $h['issue_time']; ?></h5></td>
 										<td width="10%"><p class="nomarg">PR/JO #:</p></td>
-										<td > <h5 class="nomarg labelStyle"><?php echo $h['prno']; ?></h5></td>
+										<td > <?php echo (($h['type'] == 'JO / PR') ? $h['prno'] :  $h['type']); ?></td>
 
 										<!--  <td width = "5%">
 										 	

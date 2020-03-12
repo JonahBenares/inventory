@@ -1,4 +1,4 @@
- <script src="<?php echo base_url(); ?>assets/js/jquery.js"></script>
+<script src="<?php echo base_url(); ?>assets/js/jquery.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/issue.js"></script>
 <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
 <style type="text/css">
@@ -88,7 +88,7 @@
 									<td align="center"><?php echo $list['date'];?> / <?php echo $list['time'];?></td>
 									<td align="center"><?php echo $list['mifno'];?></td>
 									<td align="center"><?php echo $list['mreqf'];?></td>
-									<td align="center"><?php echo $list['prno'];?></td>
+									<td align="center"><?php echo (($list['type'] == 'JO / PR') ? $list['prno'] :  $list['type']); ?></td>
 									<td align="center"><?php echo $list['department'];?></td>
 									<td align="center"><?php echo $list['purpose'];?></td>
 									<td align="center"><?php echo $list['enduse'];?></td>

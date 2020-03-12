@@ -295,6 +295,7 @@ class Issue extends CI_Controller {
                 $department = $this->super_model->select_column_where("department", "department_name", "department_id", $issue->department_id);
                 $purpose = $this->super_model->select_column_where("purpose", "purpose_desc", "purpose_id", $issue->purpose_id);
                 $enduse = $this->super_model->select_column_where("enduse", "enduse_name", "enduse_id", $issue->enduse_id);
+                 $type=  $this->super_model->select_column_where("request_head", "type", "mreqf_no", $issue->mreqf_no);
                 $data['issue_list'][] = array(
                     'issuance_id'=>$issue->issuance_id,
                     'mifno'=>$issue->mif_no,
@@ -302,6 +303,7 @@ class Issue extends CI_Controller {
                     'prno'=>$issue->pr_no,
                     'date'=>$issue->issue_date,
                     'time'=>$issue->issue_time,
+                    'type'=>$type,
                     'department'=>$department,
                     'purpose'=>$purpose,
                     'enduse'=>$enduse
@@ -398,13 +400,15 @@ class Issue extends CI_Controller {
         foreach($this->super_model->select_row_where('issuance_head','issuance_id', $id) AS $issue){
             $department = $this->super_model->select_column_where("department", "department_name", "department_id", $issue->department_id);
             $purpose = $this->super_model->select_column_where("purpose", "purpose_desc", "purpose_id", $issue->purpose_id);
-            $enduse = $this->super_model->select_column_where("enduse", "enduse_name", "enduse_id", $issue->enduse_id);            
+            $enduse = $this->super_model->select_column_where("enduse", "enduse_name", "enduse_id", $issue->enduse_id);       
+             $type=  $this->super_model->select_column_where("request_head", "type", "mreqf_no", $issue->mreqf_no);     
             $data['issuance_details'][] = array(
                 'milf'=>$issue->mif_no,
                 'mreqf'=>$issue->mreqf_no,
                 'prno'=>$issue->pr_no,
                 'date'=>$issue->issue_date,
                 'time'=>$issue->issue_time,
+                'type'=>$type,
                 'department'=>$department,
                 'purpose'=>$purpose,
                 'enduse'=>$enduse,

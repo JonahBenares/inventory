@@ -122,7 +122,7 @@
 										<?php foreach($issue AS $is){ ?>
 										<tr>
 											<td align="center"><?php echo  date('Y-m-d',strtotime($is['issue_date']));?></td>
-											<td align="center"><?php echo $is['pr']?></td>
+											<td align="center"><?php echo (($is['type'] == 'JO / PR') ? $is['pr'] :  $is['type']); ?></td>
 											<td align="center"><?php echo $is['mif_no']?></td>
 											<td align="center"><?php echo $is['pn'];?></td>
 											<td align="center"><?php echo $is['item'];?></td>

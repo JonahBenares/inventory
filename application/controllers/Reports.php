@@ -747,12 +747,14 @@ class Reports extends CI_Controller {
                 $department = $this->super_model->select_column_where("department", "department_name", "department_id", $head->department_id);
                 $enduse = $this->super_model->select_column_where("enduse", "enduse_name", "enduse_id", $head->enduse_id);
                 $purpose = $this->super_model->select_column_where("purpose", "purpose_desc", "purpose_id", $head->purpose_id);
+                $type=  $this->super_model->select_column_where("request_head", "type", "mreqf_no", $head->mreqf_no);
                 $data['head'][]=array(
                     "issuance_id"=>$head->issuance_id,
                     "issue_date"=>$head->issue_date,
                     "issue_time"=>$head->issue_time,
                     "mif_no"=>$head->mif_no,
                     "mreqf_no"=>$head->mreqf_no,
+                    "type"=>$type,
                     "prno"=>$head->pr_no,
                     "department"=>$department,
                     "enduse"=>$enduse,
@@ -1243,6 +1245,7 @@ class Reports extends CI_Controller {
                 $enduse = $this->super_model->select_column_where('enduse', 'enduse_name', 'enduse_id', $itm->enduse_id);
                 $issue_date = $this->super_model->select_column_where('issuance_head', 'issue_date', 'issuance_id', $itm->issuance_id);
                 /*$pr = $this->super_model->select_column_where('request_head', 'pr_no', 'mreqf_no', $itm->mreqf_no);*/
+                 $type=  $this->super_model->select_column_where("request_head", "type", "mreqf_no", $itm->mreqf_no);     
                 $pr = $this->super_model->select_column_where('issuance_head', 'pr_no', 'mreqf_no', $itm->mreqf_no);
                 foreach($this->super_model->select_custom_where("items", "item_id = '$itm->item_id'") AS $itema){
                     $unit = $this->super_model->select_column_where('uom', 'unit_name', 'unit_id', $itema->unit_id);
@@ -1255,6 +1258,7 @@ class Reports extends CI_Controller {
                     'pr'=>$pr,
                     'unit'=>$unit,
                     'supplier'=>$supplier,
+                    'type'=>$type,
                     'item'=>$item,
                     'department'=>$department,
                     'purpose'=>$purpose,
@@ -1273,13 +1277,160 @@ class Reports extends CI_Controller {
         $this->load->view('template/footer');
     }
 
+    public function stock_card_new(){
+        $id=$this->uri->segment(3);
+        $data['id']=$this->uri->segment(3);
+        $sup=$this->uri->segment(4);
+        $data['sup']=$this->uri->segment(4);
+        
+        $cat=$this->slash_unreplace(rawurldecode($this->uri->segment(5)));
+        $data['cat']=$this->slash_unreplace(rawurldecode($this->uri->segment(5)));
+        $brand=$this->uri->segment(6);
+        $data['brand']=$this->uri->segment(6);
+
+        $sql="";
+        if($id!='null'){
+            $sql.= " item_id = '$id' AND";
+        }else {
+            $sql.= "";
+        }
+
+        if($sup!='null'){
+            $sql.= " supplier_id = '$sup' AND";
+        }else {
+            $sql.= "";
+        }
+
+        if($cat!='null'){
+            $sql.= " catalog_no = '$cat' AND";
+        }else {
+            $sql.= "";
+        }
+
+        if($brand!='null'){
+            $sql.= " brand_id = '$brand' AND";
+        }else {
+            $sql.= "";
+        }
+
+        $query=substr($sql,0,-3);
+
+        //echo $query;
+
+        $data['stockcard']=array();
+        $data['balance']=array();
+
+        foreach($this->super_model->custom_query("SELECT * FROM supplier_items WHERE $query AND catalog_no = 'begbal' ") AS $begbal){
+            $supplier = $this->super_model->select_column_where("supplier", "supplier_name", "supplier_id", $begbal->supplier_id);
+             $brand = $this->super_model->select_column_where("brand", "brand_name", "brand_id", $begbal->brand_id);
+            $data['stockcard'][] = array(
+                'supplier'=>$supplier,
+                'catalog_no'=>'begbal',
+                'brand'=>$brand,
+                'pr_no'=>'',
+                'unit_cost'=>$begbal->item_cost,
+                'method'=>'Beginning Balance',
+                'quantity'=>$begbal->quantity,
+                'series'=>'1',
+                'date'=>''
+            );
+
+            $data['balance'][] = array(
+                'series'=>'1',
+                'method'=>'Beginning Balance',
+                'quantity'=>$begbal->quantity,
+                'date'=>''
+            );
+        }
+
+        foreach($this->super_model->custom_query("SELECT rh.receive_id,rh.receive_date, ri.supplier_id, ri.brand_id, ri.catalog_no, ri.received_qty, ri.item_cost FROM receive_head rh INNER JOIN receive_items ri ON rh.receive_id = ri.receive_id WHERE $query AND saved = '1'") AS $receive){
+            $pr_no = $this->super_model->select_column_where("receive_details", "pr_no", "receive_id", $receive->receive_id);
+            $supplier = $this->super_model->select_column_where("supplier", "supplier_name", "supplier_id", $receive->supplier_id);
+             $brand = $this->super_model->select_column_where("brand", "brand_name", "brand_id", $receive->brand_id);
+            $data['stockcard'][] = array(
+                'supplier'=>$supplier,
+                'catalog_no'=>$receive->catalog_no,
+                'brand'=>$brand,
+                'pr_no'=>$pr_no,
+                'unit_cost'=>$receive->item_cost,
+                'method'=>'Receive',
+                'series'=>'2',
+                'quantity'=>$receive->received_qty,
+                'date'=>$receive->receive_date
+            );
+             $data['balance'][] = array(
+                'series'=>'2',
+                'method'=>'Receive',
+                'quantity'=>$receive->received_qty,
+                'date'=>$receive->receive_date
+            );
+        }
+
+        //echo "****SELECT ih.issue_date, id.rq_id, id.supplier_id, id.brand_id, id.catalog_no, id.quantity FROM issuance_head ih INNER JOIN issuance_details id ON ih.issuance_id = id.issuance_id WHERE $query";
+
+        foreach($this->super_model->custom_query("SELECT ih.issue_date, ih.pr_no, id.rq_id, id.supplier_id, id.brand_id, id.catalog_no, id.quantity FROM issuance_head ih INNER JOIN issuance_details id ON ih.issuance_id = id.issuance_id WHERE $query AND saved = '1'") AS $issue){
+            $cost = $this->super_model->select_column_where("request_items", "unit_cost", "rq_id", $issue->rq_id);
+            $supplier = $this->super_model->select_column_where("supplier", "supplier_name", "supplier_id", $issue->supplier_id);
+             $brand = $this->super_model->select_column_where("brand", "brand_name", "brand_id", $issue->brand_id);
+            $data['stockcard'][] = array(
+                'supplier'=>$supplier,
+                'catalog_no'=>$issue->catalog_no,
+                'brand'=>$brand,
+                'pr_no'=>$issue->pr_no,
+                'unit_cost'=>$cost,
+                'method'=>'Issuance',
+                'series'=>'3',
+                'quantity'=>$issue->quantity,
+                'date'=>$issue->issue_date
+            );
+
+            $data['balance'][] = array(
+                'series'=>'3',
+                'method'=>'Issuance',
+                'quantity'=>$issue->quantity,
+                'date'=>$issue->issue_date
+            );
+
+        }
+
+         foreach($this->super_model->custom_query("SELECT rh.restock_date, rh.from_pr, ri.supplier_id, ri.brand_id, ri.catalog_no, ri.quantity, ri.item_cost FROM restock_head rh INNER JOIN restock_details ri ON rh.rhead_id = ri.rhead_id WHERE $query AND saved = '1' AND excess='0'") AS $restock){
+            
+            $supplier = $this->super_model->select_column_where("supplier", "supplier_name", "supplier_id", $restock->supplier_id);
+            $brand = $this->super_model->select_column_where("brand", "brand_name", "brand_id", $restock->brand_id);
+            $data['stockcard'][] = array(
+                'supplier'=>$supplier,
+                'catalog_no'=>$restock->catalog_no,
+                'brand'=>$brand,
+                'pr_no'=>$restock->from_pr,
+                'unit_cost'=>$restock->item_cost,
+                'method'=>'Restock',
+                'series'=>'4',
+                'quantity'=>$restock->quantity,
+                'date'=>$restock->restock_date
+            );
+            $data['balance'][] = array(
+                'series'=>'4',
+                'method'=>'Restock',
+                'quantity'=>$restock->quantity,
+                'date'=>$restock->restock_date
+            );
+
+        }
+
+         $this->load->view('template/header');
+        $this->load->view('template/sidebar',$this->dropdown);
+       
+        $this->load->view('reports/stock_card_new', $data);
+        $this->load->view('template/footer');
+    }
+
+
     public function stock_card(){
         $id=$this->uri->segment(3);
         $data['id']=$this->uri->segment(3);
         $sup=$this->uri->segment(4);
         $data['sup']=$this->uri->segment(4);
-        //$cat=str_replace("_", " ", $this->uri->segment(5));
-        //$data['cat']=str_replace("_", " ", $this->uri->segment(5));
+        
         $cat=$this->slash_unreplace(rawurldecode($this->uri->segment(5)));
         $data['cat']=$this->slash_unreplace(rawurldecode($this->uri->segment(5)));
         $brand=$this->uri->segment(6);
@@ -1292,35 +1443,7 @@ class Reports extends CI_Controller {
         $supplier = $this->super_model->select_column_where("supplier", "supplier_name", "supplier_id", $sup);
         $brandname = $this->super_model->select_column_where("brand", "brand_name", "brand_id", $brand);
         $data['itemdesc'] = $this->super_model->select_column_where("items", "item_name", "item_id", $id);
-        //foreach($this->super_model->select_row_where('receive_items', 'item_id', $id) AS $it){
-
-        /*if($id=='null'){
-            $id='';
-        } else {
-            $id=$id;
-        }
-
-         if($sup=='null'){
-            $sup='';
-            $supit=0;
-        } else {
-            $sup=$sup;
-        }
-
-         if($cat=='null'){
-            $cat='';
-         
-        } else {
-            $cat=$cat;
-        }
-
-         if($brand=='null'){
-            $brand='';
-            $brandit=0;
-        } else {
-            $brand=$brand;
-        }*/
-
+       
         $sql="";
         if($id!='null'){
             $sql.= " item_id = '$id' AND";
@@ -1910,10 +2033,7 @@ class Reports extends CI_Controller {
 
 
     public function generateStkcrd(){
-        /*$catno=$this->input->post('catalog_no');
-        $id= $this->input->post('item_id'); 
-        $sid= $this->input->post('supplier_id'); 
-        $bid= $this->input->post('brand_id');*/
+       
 
             if(!empty($this->input->post('item_id'))){
                 $id = $this->input->post('item_id');
@@ -1945,6 +2065,43 @@ class Reports extends CI_Controller {
         </script> 
     <?php
     } 
+
+
+      public function generateStkcrdNew(){
+       
+
+            if(!empty($this->input->post('item_id'))){
+                $id = $this->input->post('item_id');
+            } else {
+                $id = "null";
+            }
+
+            if(!empty($this->input->post('supplier_id'))){
+                $sid = $this->input->post('supplier_id');
+            } else {
+                $sid = "null";
+            }
+
+            if(!empty($this->input->post('catalog_no'))){
+                $catno = $this->input->post('catalog_no');
+            } else {
+                $catno = "null";
+            } 
+
+            if(!empty($this->input->post('brand_id'))){
+                $bid = $this->input->post('brand_id');
+            } else {
+                $bid = "null";
+            } 
+        ?>
+
+        <script>
+            window.location.href ='<?php echo base_url(); ?>index.php/reports/stock_card_new/<?php echo $id; ?>/<?php echo $sid;?>/<?php echo $catno; ?>/<?php echo $bid; ?>'
+        </script> 
+    <?php
+    } 
+
+
     public function generatePr(){
         $prno=$this->input->post('pr');
         $p= rawurlencode($this->slash_replace($prno));
@@ -2077,8 +2234,10 @@ class Reports extends CI_Controller {
         $pr=$this->uri->segment(3);
         $data['pr']=$this->slash_unreplace(rawurldecode($pr));
         $pr=$this->slash_unreplace(rawurldecode($pr));
+
+       /* echo "****".$pr;*/
         //$pr= urldecode($pr);
-        foreach($this->super_model->custom_query("SELECT item_id, SUM(received_qty) AS qty, ri.ri_id FROM receive_items ri INNER JOIN receive_details rd ON ri.rd_id = rd.rd_id WHERE rd.pr_no LIKE '%$pr%' GROUP BY  ri.item_id") AS $head){
+        foreach($this->super_model->custom_query("SELECT item_id, SUM(received_qty) AS qty, ri.ri_id FROM receive_items ri INNER JOIN receive_details rd ON ri.rd_id = rd.rd_id WHERE rd.pr_no = '$pr' GROUP BY  ri.item_id") AS $head){
 
                 $excess_flag = $this->super_model->custom_query_single("excess","SELECT rh.excess FROM restock_head rh INNER JOIN restock_details rd ON rh.rhead_id = rd.rhead_id WHERE rh.from_pr='$pr' AND rd.item_id = '$head->item_id'");
 
@@ -2204,6 +2363,7 @@ class Reports extends CI_Controller {
                "supplier_id"=>$items->supplier_id,
                "brand_id"=>$items->brand_id,
                "catalog_no"=>$items->catalog_no,
+               "item_cost"=>$items->item_cost,
                "quantity"=>$exc_qty,
                "reason"=>'Excess Material',
             );

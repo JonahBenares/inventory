@@ -176,7 +176,7 @@
                 <?php foreach($issuance_details as $det){ ?>
                 <tr>
                     <td width="10%"><h6 class="nomarg">JO / PR #</h6></td>
-                    <td width="40%" style="border-bottom: 1px solid #999"> <label class="nomarg">: <?php echo $det['prno']?></label></td>
+                    <td width="40%" style="border-bottom: 1px solid #999"> <label class="nomarg">: <?php echo (($det['type'] == 'JO / PR') ? $det['prno'] : $det['type']); ?></label></td>
                     <td width="7%"></td>
                     <td width="10%"><h6 class="nomarg pull-right">MIF No. &nbsp</h6></td>
                     <td colspan="3" style="border-bottom: 1px solid #999"> <label class="nomarg">: <?php echo $det['milf']?></label></td>
