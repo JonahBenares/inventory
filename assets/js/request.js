@@ -141,7 +141,8 @@ function add_item(){
     var redirect=loc+'/index.php/request/getitem';
 
 
-	var itemid =$('#item_id').val();
+    var itemid =$('#item_id').val();
+	var itemname =$('#item_name').val();
     var borrowfrom =$('#borrowfrom').val();
     var original_pn =$('#original_pn').val();
     var unit =$('#unit').val();
@@ -170,12 +171,13 @@ function add_item(){
     	  $.ajax({
     	 		type: "POST",
     	 		url:redirect,
-    	 		data: "itemid="+itemid+"&siid="+siid+"&original_pn="+original_pn+"&unit="+unit+"&cost="+unit_cost+"&quantity="+quantity+"&item="+item+"&count="+count+"&borrow="+borrowfrom,
+    	 		data: "itemid="+itemid+"&itemname="+itemname+"&siid="+siid+"&original_pn="+original_pn+"&unit="+unit+"&cost="+unit_cost+"&quantity="+quantity+"&item="+item+"&count="+count+"&borrow="+borrowfrom,
                 success: function(html){
                 	$('#item_body').append(html);
                 	$('#itemtable').show();
                 	$('#savebutton').show();
-                	document.getElementById("item_id").value = '';
+                    document.getElementById("item_id").value = '';
+                	document.getElementById("item_name").value = '';
                     document.getElementById("original_pn").value = '';
                     document.getElementById("unit").value = '';
                     document.getElementById("unit_cost").value = '';
@@ -276,3 +278,24 @@ $(document).ready(function(){
         $('input[name="getmax"]').val(x);
     });
 });
+
+function chooseItem(){
+    var loc= document.getElementById("baseurl").value;
+    var redirect = loc+'index.php/request/getIteminformation';
+    var item = document.getElementById("item").value;
+    $.ajax({
+        type: 'POST',
+        url: redirect,
+        data: 'item='+item,
+        dataType: 'json',
+        success: function(response){
+            $("#item_id").val(response.item_id);
+            $("#item_name").val(response.item_name);
+            $("#unit").val(response.unit);
+            $("#original_pn").val(response.pn);
+            $("#invqty").val(response.recqty);
+            crossreferencing();
+            balancePRItem();
+        }
+    }); 
+}

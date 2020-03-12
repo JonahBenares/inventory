@@ -1,5 +1,7 @@
 <script src="<?php echo base_url(); ?>assets/js/jquery.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/issue.js"></script>
+<link href="<?php echo base_url(); ?>assets/Styles/select2.min.css" rel="stylesheet" />
+<script src="<?php echo base_url(); ?>assets/js/select2.min.js"></script>
 <style type="text/css">
 	#name-item{
 		width:57%!important;
@@ -33,9 +35,17 @@
 						<table width="100%" >
 							<tr>
 								<td width="20%"><label class="pull-right">Search MReqF No.:</label></td>
-								<td width="60%"><input type = "type" name="mreqf" id="mreqf" class = "form-control" style="margin:4px" autocomplete="off">
-									<span id="suggestion-mreqf"></span>
-									<input type='hidden' name='request_id' id='request_id'></td>
+								<td width="60%">
+								<!-- <input type = "type" name="mreqf" id="mreqf" class = "form-control" style="margin:4px" autocomplete="off">
+									<span id="suggestion-mreqf"></span> -->
+									<select name="mreqf" id='mreqf' class="form-control select2" onchange="chooseMreqf()">
+										<option value = ""></option>
+										<?php foreach($mreqf_list AS $mrf){ ?>
+										<option value = "<?php echo $mrf->mreqf_no;?>"><?php echo $mrf->mreqf_no;?></option>
+										<?php } ?>
+									</select>
+									<input type='hidden' name='request_id' id='request_id'>
+								</td>
 								<td ><input type='submit' class="btn btn-warning" value="Load" onclick="loadIssuance()"></td>					
 							</tr>
 						</table>
@@ -196,3 +206,6 @@
 			</div>
 		</div>
 	</div>
+<script>
+    $('.select2').select2();
+</script>

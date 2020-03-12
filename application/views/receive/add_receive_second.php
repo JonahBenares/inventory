@@ -1,5 +1,9 @@
 <script src="<?php echo base_url(); ?>assets/js/jquery.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/receive.js"></script>
+<link href="<?php echo base_url(); ?>assets/Styles/select2.min.css" rel="stylesheet" />
+<script src="<?php echo base_url(); ?>assets/js/select2.min.js"></script><!-- 
+<script src="<?php echo base_url(); ?>assets/js/bootstrap-select.min.js"></script>
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/Styles/bootstrap-select.min.css" /> -->
 <style type="text/css">
 	body{
 		padding:0px;
@@ -69,8 +73,17 @@
 						<div class="row">
 							<?php if(!isset($rdid)) { ?>
 							<div class="col-lg-2 col-lg-offset-1">
-								<h5>PR/JO#: <input type="text" name="prno" id='prno' class="form-control" autocomplete="off">
-									<span id="suggestion-prno"></span></h5>
+								<h5>
+									PR/JO#: 
+									<select name="prno" id='prno' class="form-control select2" onchange="choosePR()">
+										<option value = ""></option>
+										<?php foreach($pr_list AS $pr){ ?>
+										<option value = "<?php echo $pr->pr_no;?>"><?php echo $pr->pr_no;?></option>
+										<?php } ?>
+									</select>
+								</h5>
+								<!-- <h5>PR/JO#: <input type="text" name="prno" id='prno' class="form-control" autocomplete="off">
+									<span id="suggestion-prno"></span></h5> -->
 							</div>
 							<div class="col-lg-2">
 								<h5>Department: 
@@ -178,8 +191,14 @@
 							<div class="row" >
 									<div class="col-lg-6">
 									<p style="margin:0px" for="">Item Description:</p>
-									<textarea name = "item" id = "item" class="form-control" rows="1" autocomplete="off"></textarea>
-									 <span id="suggestion-item"></span>
+									<!-- <textarea name = "item" id = "item" class="form-control" rows="1" autocomplete="off"></textarea>
+									 <span id="suggestion-item"></span> -->
+									<select name="item" id='item' class="form-control select2" onchange="chooseItem()">
+										<option value = ""></option>
+										<?php foreach($items AS $itm){ ?>
+										<option value = "<?php echo $itm->item_id;?>"><?php echo $itm->original_pn." - ".$itm->item_name;?></option>
+										<?php } ?>
+									</select>
 									 <input type='hidden' name='item_id' id='item_id'>
 									 <input type='hidden' name='original_pn' id='original_pn1'>
 									 <input type='hidden' name='unit' id='unit'>
@@ -187,8 +206,14 @@
 														
 								<div class="col-lg-2">
 									<p  style="margin:0px" for="">Brand:</p>
-									<input type class="form-control" name='brand' id='brand' autocomplete="off">
-									<span id="suggestion-brand"></span>
+									<!-- <input type class="form-control" name='brand' id='brand' autocomplete="off">
+									<span id="suggestion-brand"></span> -->
+									<select name="brand" id='brand' class="form-control select2" onchange="chooseBrand()">
+										<option value = ""></option>
+										<?php foreach($brand AS $brnd){ ?>
+										<option value = "<?php echo $brnd->brand_id;?>"><?php echo $brnd->brand_name;?></option>
+										<?php } ?>
+									</select>
 									<input type='hidden' name='brand_id' id='brand_id'>
 								</div>	
 								<div class="col-lg-2">
@@ -197,8 +222,14 @@
 								</div>
 								<div class="col-lg-2">
 									<p style="margin:0px" for="">Serial No. :</p>
-									<input type="text" name="serial" id="serial" class="form-control">
-									<span id="suggestion-serial"></span>
+									<!-- <input type="text" name="serial" id="serial" class="form-control">
+									<span id="suggestion-serial"></span> -->
+									<select name="serial" id='serial' class="form-control select2" onchange="chooseSerial()">
+										<option value = ""></option>
+										<?php foreach($serial_list AS $srl){ ?>
+										<option value = "<?php echo $srl->serial_no;?>"><?php echo $srl->serial_no;?></option>
+										<?php } ?>
+									</select>
 									<input type='hidden' name='serial_id' id='serial_id'>
 								</div>													
 							</div>
@@ -322,5 +353,8 @@
 		</div>
 	</div>
 
+<script>
+    $('.select2').select2();
+</script>
 
 	

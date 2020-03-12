@@ -194,3 +194,19 @@ function printGP(){
             }
     });
 }
+
+function chooseMreqf(){
+    var loc= document.getElementById("baseurl").value;
+    var redirect = loc+'index.php/issue/getMreqfinformation';
+    var mreqf = document.getElementById("mreqf").value;
+    $.ajax({
+        type: 'POST',
+        url: redirect,
+        data: 'mreqf='+mreqf,
+        dataType: 'json',
+        success: function(response){
+            $("#mreqf").val(response.mreqf);
+            $("#request_id").val(response.request_id);
+        }
+    }); 
+}

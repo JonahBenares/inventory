@@ -180,7 +180,7 @@ class Issue extends CI_Controller {
     
         $year=date('Y-m');
        
-
+        $data['mreqf_list']=$this->super_model->select_custom_where("request_head","saved = '1'");
        $rows=$this->super_model->count_custom_where("issuance_head","create_date LIKE '$year%'");
       
         if($rows==0){
@@ -261,6 +261,14 @@ class Issue extends CI_Controller {
         $this->load->view('template/sidebar',$this->dropdown);
         $this->load->view('issue/load_issue',$data);
         $this->load->view('template/footer');
+    }
+
+    public function getMreqfinformation(){
+        $mreqf = $this->input->post('mreqf');
+        foreach($this->super_model->select_custom_where("request_head","mreqf_no LIKE '%$mreqf%' AND saved = '1'") AS $mr){ 
+            $return = array('mreqf' => $mr->mreqf_no, 'request_id' => $mr->request_id); 
+            echo json_encode($return);   
+        }
     }
 
     public function mreqflist(){

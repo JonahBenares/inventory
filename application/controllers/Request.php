@@ -302,6 +302,7 @@ class Request extends CI_Controller {
         $id=$this->uri->segment(3);
         $data['requestid']= $id;
         $data['request']= $id;
+        $data['item_list']=$this->super_model->select_all_order_by("items","item_name","ASC");
         foreach($this->super_model->select_row_where("request_head", "request_id", $id) AS $req){
             $data['head'][]=array(
                 "mreqf_no"=>$req->mreqf_no,
@@ -348,6 +349,15 @@ class Request extends CI_Controller {
         $this->load->view('template/sidebar',$this->dropdown);
         $this->load->view('request/add_request',$data);
         $this->load->view('template/footer');
+    }
+
+    public function getIteminformation(){
+        $item = $this->input->post('item');
+        foreach($this->super_model->select_custom_where("items", "item_id='$item'") AS $itm){ 
+            $rec_qty = $this->inventory_balance($itm->item_id);
+            $return = array('item_id' => $itm->item_id,'item_name' => $itm->item_name, 'unit' => $itm->unit_id, 'pn' => $itm->original_pn, 'recqty' => $rec_qty); 
+            echo json_encode($return);   
+        }
     }
 
     public function insertRequest(){
@@ -509,7 +519,7 @@ class Request extends CI_Controller {
             'quantity'=>$this->input->post('quantity'),
             'unit_cost'=>$this->input->post('cost'),
             'total_cost'=>$totalcost,
-            'item'=>$this->input->post('item'),
+            'item'=>$this->input->post('itemname'),
             'count'=>$this->input->post('count'),
             'borrow'=>$this->input->post('borrow')
         );

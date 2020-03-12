@@ -499,3 +499,100 @@ function closePopup(){
     window.close();
 }
 
+function choosePR(){
+    var loc= document.getElementById("baseurl").value;
+    var redirect = loc+'index.php/receive/getPRinformation';
+    var prno = document.getElementById("prno").value;
+    $.ajax({
+        type: 'POST',
+        url: redirect,
+        data: 'prno='+prno,
+        dataType: 'json',
+        success: function(response){
+            $("#department").val(response.department);
+            $("#enduse").val(response.enduse);
+            $("#purpose").val(response.purpose);
+            $("#inspected").val(response.inspected_by);
+
+            $("#department").css({"pointer-events": "none"});
+            $("#enduse").css({"pointer-events": "none"});
+            $("#purpose").css({"pointer-events": "none"});
+        }
+    }); 
+}
+
+function chooseItem(){
+    var loc= document.getElementById("baseurl").value;
+    var redirect = loc+'index.php/receive/getIteminformation';
+    var item = document.getElementById("item").value;
+    $.ajax({
+        type: 'POST',
+        url: redirect,
+        data: 'item='+item,
+        dataType: 'json',
+        success: function(response){
+            $("#item_id").val(response.item_id);
+            $("#item_name").val(response.item_name);
+            $("#unit").val(response.unit);
+            $("#original_pn1").val(response.pn);
+        }
+    }); 
+}
+
+function chooseBrand(){
+    var loc= document.getElementById("baseurl").value;
+    var redirect = loc+'index.php/receive/getBrandinformation';
+    var brand = document.getElementById("brand").value;
+    $.ajax({
+        type: 'POST',
+        url: redirect,
+        data: 'brand='+brand,
+        dataType: 'json',
+        success: function(response){
+            $("#brand_id").val(response.brand_id);
+        }
+    }); 
+}
+
+function chooseSerial(){
+    var loc= document.getElementById("baseurl").value;
+    var redirect = loc+'index.php/receive/getSerialinformation';
+    var serial = document.getElementById("serial").value;
+    var item =$('#item').val();
+    var brand =$('#brand').val();
+    var counter =$('#item_body tr').length;
+    var brandl = [];
+    for(var x = 1; x<=counter; x++){
+        var bl =$('#brandlist_'+x).val();
+        brandl.push(bl);
+    }
+
+    var iteml = [];
+    for(var x = 1; x<=counter; x++){
+        var il =$('#itemlist_'+x).val();
+        iteml.push(il);
+    }
+
+    var seriall = [];
+    for(var x = 1; x<=counter; x++){
+        var sl =$('#seriallist_'+x).val();
+        seriall.push(sl);
+    }
+
+    $.ajax({
+        type: 'POST',
+        url: redirect,
+        data: 'serial='+serial+'&item='+item+'&brand='+brand+'&brandl='+brandl+'&iteml='+iteml+'&seriall='+seriall,
+        dataType: 'json',
+        success: function(response){
+            if(response.error!='error'){
+                 $("#serial_id").val(response.serial_id);
+            } else {
+                alert('Warning: Serial number with the same item and brand is already existing.');
+                document.getElementById("additem").style.pointerEvents="none";
+                document.getElementById("additem").style.cursor="default";
+            }
+        }
+    }); 
+}
+
