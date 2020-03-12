@@ -69,14 +69,31 @@
 										</td>
 										<td>
 											<br>
-											<input type="submit" name="search_inventory" value='Generate' class="btn btn-warning btn-block" >
+											<select name="enduse" class="form-control">
+												<option value="" selected="">-Enduse-</option>
+												<?php foreach($enduse AS $e){ ?>
+													<option value="<?php echo $e->enduse_id; ?>"><?php echo $e->enduse_name; ?></option>
+												<?php } ?>
+											</select>
 										</td>
 									</tr>
+									<tr>
+										<td></td>
+										<td></td>
+										<td>
+											<br>
+											<input type="submit" name="search_inventory" value='Generate' class="btn btn-warning btn-block" >
+										</td>
+										<td></td>
+										<td></td>
+										<td></td>
+									</tr>
+									
 								</table>
 							</form>
 							<br>
 							<?php if(!empty($issue)){ ?>
-							<a href = "<?php echo base_url(); ?>index.php/reports/export_issue/<?php echo $from;?>/<?php echo $to;?>/<?php echo $catt;?>/<?php echo $subcat1;?>/<?php echo $item1;?>" class = "btn btn-primary pull-right">Export to Excel</a>
+							<a href = "<?php echo base_url(); ?>index.php/reports/export_issue/<?php echo $from;?>/<?php echo $to;?>/<?php echo $catt;?>/<?php echo $subcat1;?>/<?php echo $item1;?>/<?php echo $enduse1;?>" class = "btn btn-primary pull-right">Export to Excel</a>
 							<button id="printReport" class="btn btn-info pull-right " onclick="printDiv('printableArea')">
 									<span  class="fa fa-print"></span>
 							</button>
@@ -93,6 +110,7 @@
 											<td align="center"><strong>Item Description</strong></td>
 											<td align="center"><strong>UoM</strong></td>
 											<td align="center"><strong>Total Qty Issued</strong></td>
+											<td align="center"><strong>Total Cost</strong></td>
 											<td align="center"><strong>Supplier</strong></td>
 											<td align="center"><strong>Department</strong></td>
 											<td align="center"><strong>Purpose</strong></td>
@@ -110,6 +128,7 @@
 											<td align="center"><?php echo $is['item'];?></td>
 											<td align="center"><?php echo $is['unit'];?></td>
 											<td align="center"><?php echo $is['issqty'];?></td>
+											<td align="center"><?php echo number_format($is['total_cost'],2);?></td>
 											<td align="center"><?php echo $is['supplier'];?></td>
 											<td align="center"><?php echo $is['department'];?></td>
 											<td align="center"><?php echo $is['purpose'];?></td>

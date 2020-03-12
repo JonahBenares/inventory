@@ -309,8 +309,9 @@ var numOfTrue=0;
          alert('Supplier must not be empty. Please choose/click from the suggested supplier list.');
     } else if(itemid==''){
          alert('Item must not be empty. Please choose/click from the suggested item list.');
-    }
-     else {
+    }else if(unitcost==''){
+         alert('Unit Cost must not be empty.');
+    }else {
     	  var rowCount = $('#item_body tr').length;
     	  count=rowCount+1;
     	  $.ajax({

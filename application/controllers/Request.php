@@ -456,7 +456,7 @@ class Request extends CI_Controller {
         $item=$this->input->post('item');
         $rows=$this->super_model->count_custom_where("supplier_items","item_id = '$item'");
         if($rows!=0){
-            echo "<select name='siid' id='siid' class='form-control' onchange='getUnitCost()'>";
+            echo "<select name='siid' id='siid' class='form-control' onchange='getUnitCost()' onclick='getMaxqty()'>";
             echo "<option value=''>-Cross Reference-</option>";
             foreach($this->super_model->select_custom_where("supplier_items","item_id = '$item' AND quantity != '0'") AS $itm){ 
                     $brand = $this->super_model->select_column_where("brand", "brand_name", "brand_id", $itm->brand_id);
@@ -543,6 +543,22 @@ class Request extends CI_Controller {
         $cost = $this->super_model->select_column_join_where_order_limit("item_cost", "receive_items","receive_head", "saved=1 AND supplier_id = '$supplier' AND brand_id = '$brand' AND catalog_no = '$catalog' AND item_id = '$item'","receive_id","DESC","1");*/
         $cost = $this->super_model->select_column_where("supplier_items", "item_cost", "si_id", $siid);
         echo $cost;
+    }
+
+    public function getMaxqty(){
+        $siid=$this->input->post('siid');
+
+        $brand=$this->super_model->select_column_where("supplier_items", "brand_id", "si_id", $siid);
+        $supplier=$this->super_model->select_column_where("supplier_items", "supplier_id", "si_id", $siid);
+        $catalog=$this->super_model->select_column_where("supplier_items", "catalog_no", "si_id", $siid);
+        $itemid=$this->super_model->select_column_where("supplier_items", "item_id", "si_id", $siid);
+
+        $recqty= $this->super_model->select_sum_where("supplier_items", "quantity", "item_id = '$itemid' AND supplier_id = '$supplier' AND brand_id = '$brand' AND catalog_no ='$catalog'");
+
+        $issueqty= $this->super_model->select_sum_join("quantity","issuance_details","issuance_head", "item_id='$itemid' AND supplier_id = '$supplier' AND brand_id = '$brand' AND catalog_no = '$catalog' AND saved='1'","issuance_id");
+
+        $maxqty = $recqty-$issueqty;
+        echo $maxqty;
     }
 }
 ?>

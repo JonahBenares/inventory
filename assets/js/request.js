@@ -154,13 +154,16 @@ function add_item(){
     var i = item.replace(/&/gi,"and");
     var i = i.replace(/#/gi,"");
     var itm = i.replace(/"/gi,"");
-
+    var getmax = document.getElementById("getmax").value;
+    var maxqty = document.getElementById("maxqty").value;
     if(itemid==''){
          alert('Item must not be empty. Please choose/click from the suggested item list.');
     } else if(siid==''){
          alert('Cross Reference must not be empty.');
     } else if(quantity==''){
          alert('Quantity must not be empty.');
+    }else if(getmax>maxqty){
+         alert('Cannot request more than existing quantity!');
     } else {
     	  var rowCount = $('#item_body tr').length;
     	  count=rowCount+1;
@@ -252,3 +255,24 @@ function getUnitCost(){
             }
     });
 }
+
+function getMaxqty(){
+    var siid= document.getElementById("siid").value;
+    var loc= document.getElementById("baseurl").value;
+    var redirect = loc+'index.php/request/getMaxqty';
+     $.ajax({
+            type: "POST",
+            url: redirect,
+            data: 'siid='+siid,
+            success: function(output){
+                document.getElementById("maxqty").value = output;
+            }
+    });
+}
+
+$(document).ready(function(){
+    $("#quantity").keyup(function(){
+        var x = document.getElementById("quantity").value;
+        $('input[name="getmax"]').val(x);
+    });
+});
