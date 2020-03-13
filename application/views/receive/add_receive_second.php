@@ -87,7 +87,7 @@
 							</div>
 							<div class="col-lg-2">
 								<h5>Department: 
-									<select name="department" id='department' class="form-control select2">
+									<select name="department" id='department' class="form-control selectdept">
 										<option value = ""></option>
 										<?php foreach($department AS $dep){ ?>
 										<option value = "<?php echo $dep->department_id;?>"><?php echo $dep->department_name;?></option>
@@ -349,8 +349,5 @@
 		</div>
 	</div>
 
-<script>
-    $('.select2').select2();
-</script>
 
 	
