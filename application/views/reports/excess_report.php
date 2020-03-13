@@ -104,7 +104,9 @@
 												<td width="" align="center"><strong>Item Part No.</strong></td>
 												<td width="" align="center"><strong>Item Description</strong></td>
 												<td width="" align="center"><strong>UoM</strong></td>
+												<td width="" align="center"><strong>Unit Cost</strong></td>
 												<td width="" align="center"><strong>Quantity</strong></td>
+												<td width="" align="center"><strong>Total Cost</strong></td>
 												<td width="" align="center"><strong>Supplier</strong></td>
 												<td width="" align="center"><strong>Department</strong></td>
 												<td width="30%" align="center"><strong>End-Use</strong></td>
@@ -124,7 +126,9 @@
 												<td align="center"><?php echo $e['pn']?></td>
 												<td align="center"><?php echo $e['item']?></td>
 												<td align="center"><?php echo $e['unit']?></td>
+												<td align="center"><?php echo $e['unit_cost']?></td>
 												<td align="center"><?php echo $e['qty']?></td>
+												<td align="center"><?php echo $e['total_cost']?></td>
 												<td align="center"><?php echo $e['supplier']?></td>
 												<td align="center"><?php echo $e['department']?></td>
 												<td align="center"><?php echo $e['enduse']?></td>
