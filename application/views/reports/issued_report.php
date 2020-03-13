@@ -100,6 +100,10 @@
 							<br>
 							<div id="printableArea">
 								<p class="pname"><?php echo $c; ?> - <small class="main_cat"><?php echo $s; ?></small></p>
+								<?php echo "Total Cost w/ PR: " . number_format(array_sum($pr_cost),2) . "<br>"; 
+								echo "Total Cost of WH Stocks: " . number_format(array_sum($wh_cost),2) . "<br>";
+								echo "Total Number of Items w/ PR w/o Cost: " . number_format($wh_wo_cost) . "<br>";
+								echo "Total Number of Items from WH Stocks w/o Cost: " . number_format($pr_wo_cost) . "<br>";?>
 								<table class="table table-hover table-bordered" id="received" style="font-size: 12px">
 									<thead>
 										<tr>
@@ -109,6 +113,7 @@
 											<td align="center"><strong>Item Part No.</strong></td>
 											<td align="center"><strong>Item Description</strong></td>
 											<td align="center"><strong>UoM</strong></td>
+											<td align="center"><strong>Unit Cost</strong></td>
 											<td align="center"><strong>Total Qty Issued</strong></td>
 											<td align="center"><strong>Total Cost</strong></td>
 											<td align="center"><strong>Supplier</strong></td>
@@ -127,6 +132,7 @@
 											<td align="center"><?php echo $is['pn'];?></td>
 											<td align="center"><?php echo $is['item'];?></td>
 											<td align="center"><?php echo $is['unit'];?></td>
+											<td align="center"><?php echo $is['unit_cost'];?></td>
 											<td align="center"><?php echo $is['issqty'];?></td>
 											<td align="center"><?php echo number_format($is['total_cost'],2);?></td>
 											<td align="center"><?php echo $is['supplier'];?></td>

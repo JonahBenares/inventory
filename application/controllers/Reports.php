@@ -978,12 +978,13 @@ class Reports extends CI_Controller {
         $query=substr($sql,0,-3);
         $count=$this->super_model->custom_query("SELECT rh.* FROM restock_head rh INNER JOIN restock_details rd ON rh.rhead_id = rd.rhead_id INNER JOIN items i ON rd.item_id = i.item_id WHERE rh.saved='1' AND rh.excess='1' AND ".$query);
         if($count!=0){
-            foreach($this->super_model->custom_query("SELECT rh.*,i.item_id, sr.supplier_id, rd.rdetails_id FROM restock_head rh INNER JOIN restock_details rd ON rh.rhead_id = rd.rhead_id INNER JOIN items i ON rd.item_id = i.item_id INNER JOIN supplier sr ON sr.supplier_id = rd.supplier_id WHERE rh.saved='1' AND rh.excess='1' AND ".$query."ORDER BY rh.restock_date DESC") AS $itm){
+            foreach($this->super_model->custom_query("SELECT rh.*,rd.item_id, rd.item_cost, sr.supplier_id, rd.rdetails_id FROM restock_head rh INNER JOIN restock_details rd ON rh.rhead_id = rd.rhead_id INNER JOIN items i ON rd.item_id = i.item_id INNER JOIN supplier sr ON sr.supplier_id = rd.supplier_id WHERE rh.saved='1' AND rh.excess='1' AND ".$query."ORDER BY rh.restock_date DESC") AS $itm){
                 $supplier = $this->super_model->select_column_where('supplier', 'supplier_name', 'supplier_id', $itm->supplier_id);
                 $qty = $this->super_model->select_column_where('restock_details', 'quantity', 'rhead_id', $itm->rhead_id); 
                 $pn = $this->super_model->select_column_where('items', 'original_pn', 'item_id', $itm->item_id);
                 $pr = $this->super_model->select_column_where('restock_head', 'from_pr', 'rhead_id', $itm->rhead_id);
                 $item = $this->super_model->select_column_where('items', 'item_name', 'item_id', $itm->item_id);
+                $unit_cost = $itm->item_cost;
                 $department = $this->super_model->select_column_where('department', 'department_name', 'department_id', $itm->department_id);
                 $purpose = $this->super_model->select_column_where('purpose', 'purpose_desc', 'purpose_id', $itm->purpose_id);
                 $enduse = $this->super_model->select_column_where('enduse', 'enduse_name', 'enduse_id', $itm->enduse_id);  
@@ -1001,6 +1002,7 @@ class Reports extends CI_Controller {
                 $returned = $this->super_model->select_column_where("employees", "employee_name", "employee_id", $itm->returned_by);
                 $acknowledge = $this->super_model->select_column_where("employees", "employee_name", "employee_id", $itm->acknowledge_by);
                 $noted_by = $this->super_model->select_column_where('employees', 'employee_name', 'employee_id', $itm->noted_by);
+                $total_cost = $qty*$unit_cost;
                 foreach($this->super_model->select_custom_where("items", "item_id = '$itm->item_id'") AS $itema){
                     $unit = $this->super_model->select_column_where('uom', 'unit_name', 'unit_id', $itema->unit_id);
                 }             
@@ -1014,7 +1016,9 @@ class Reports extends CI_Controller {
                     'purpose'=>$purpose,
                     'enduse'=>$enduse,
                     'pn'=>$pn,
+                    'unit_cost'=>$unit_cost,
                     'qty'=>$qty,
+                    'total_cost'=>$total_cost,
                     'acknowledge'=>$acknowledge,
                     'noted_by'=>$noted_by,
                     'returned_by'=>$returned,
@@ -1069,11 +1073,12 @@ class Reports extends CI_Controller {
         $count=$this->super_model->custom_query("SELECT rh.* FROM restock_head rh INNER JOIN restock_details rd ON rh.rhead_id = rd.rhead_id INNER JOIN items i ON rd.item_id = i.item_id WHERE rh.saved='1' AND rh.excess='0' AND ".$query);
         if($count!=0){
          
-            foreach($this->super_model->custom_query("SELECT rh.*,i.item_id, sr.supplier_id, rd.rdetails_id FROM restock_head rh INNER JOIN restock_details rd ON rh.rhead_id = rd.rhead_id INNER JOIN items i ON rd.item_id = i.item_id INNER JOIN supplier sr ON sr.supplier_id = rd.supplier_id WHERE rh.saved='1' AND rh.excess='0' AND ".$query."ORDER BY rh.restock_date DESC") AS $itm){
+            foreach($this->super_model->custom_query("SELECT rh.*,rd.item_id, rd.item_cost, sr.supplier_id, rd.rdetails_id FROM restock_head rh INNER JOIN restock_details rd ON rh.rhead_id = rd.rhead_id INNER JOIN items i ON rd.item_id = i.item_id INNER JOIN supplier sr ON sr.supplier_id = rd.supplier_id WHERE rh.saved='1' AND rh.excess='0' AND ".$query."ORDER BY rh.restock_date DESC") AS $itm){
                 $supplier = $this->super_model->select_column_where('supplier', 'supplier_name', 'supplier_id', $itm->supplier_id);
                 $qty = $this->super_model->select_column_where('restock_details', 'quantity', 'rhead_id', $itm->rhead_id); 
                 $pn = $this->super_model->select_column_where('items', 'original_pn', 'item_id', $itm->item_id);
-                $pr = $this->super_model->select_column_where('restock_head', 'pr_no', 'rhead_id', $itm->rhead_id);
+                $pr = $this->super_model->select_column_where('restock_head', 'from_pr', 'rhead_id', $itm->rhead_id);
+                $unit_cost = $itm->item_cost;
                 $item = $this->super_model->select_column_where('items', 'item_name', 'item_id', $itm->item_id);
                 $department = $this->super_model->select_column_where('department', 'department_name', 'department_id', $itm->department_id);
                 $purpose = $this->super_model->select_column_where('purpose', 'purpose_desc', 'purpose_id', $itm->purpose_id);
@@ -1083,6 +1088,7 @@ class Reports extends CI_Controller {
                 $returned = $this->super_model->select_column_where("employees", "employee_name", "employee_id", $itm->returned_by);
                 $acknowledge = $this->super_model->select_column_where("employees", "employee_name", "employee_id", $itm->acknowledge_by);
                 $noted_by = $this->super_model->select_column_where('employees', 'employee_name', 'employee_id', $itm->noted_by);
+                $total_cost = $qty*$unit_cost;
                 foreach($this->super_model->select_custom_where("items", "item_id = '$itm->item_id'") AS $itema){
                     $unit = $this->super_model->select_column_where('uom', 'unit_name', 'unit_id', $itema->unit_id);
                 }             
@@ -1096,7 +1102,9 @@ class Reports extends CI_Controller {
                     'purpose'=>$purpose,
                     'enduse'=>$enduse,
                     'pn'=>$pn,
+                    'unit_cost'=>$unit_cost,
                     'qty'=>$qty,
+                    'total_cost'=>$total_cost,
                     'acknowledge'=>$acknowledge,
                     'noted_by'=>$noted_by,
                     'returned_by'=>$returned,
@@ -1158,7 +1166,11 @@ class Reports extends CI_Controller {
                 $supplier = $this->super_model->select_column_where('supplier', 'supplier_name', 'supplier_id', $itm->supplier_id);
                 $recqty = $this->super_model->select_column_where('receive_items', 'received_qty', 'ri_id', $itm->ri_id); 
                 $pn = $this->super_model->select_column_where('items', 'original_pn', 'item_id', $itm->item_id);
+
+
                 $pr = $this->super_model->select_column_where('receive_details', 'pr_no', 'rd_id', $itm->rd_id);
+
+
                 $item = $this->super_model->select_column_where('items', 'item_name', 'item_id', $itm->item_id);
                 $department = $this->super_model->select_column_where('department', 'department_name', 'department_id', $itm->department_id);
                 $purpose = $this->super_model->select_column_where('purpose', 'purpose_desc', 'purpose_id', $itm->purpose_id);
@@ -1179,6 +1191,7 @@ class Reports extends CI_Controller {
                     'enduse'=>$enduse,
                     'pn'=>$pn,
                     'recqty'=>$recqty,
+                    'unit_cost'=>$itm->item_cost,
                     'total_cost'=>$total_cost,
                 );
             }
@@ -1234,6 +1247,8 @@ class Reports extends CI_Controller {
        /* echo "SELECT ih.* FROM issuance_head ih INNER JOIN issuance_details id ON ih.issuance_id = id.issuance_id INNER JOIN items i ON id.item_id = i.item_id WHERE ih.saved='1' AND ".$query;*/
         if($count!=0){
             //echo "SELECT ih.*,i.item_id, id.supplier_id, dt.department_id,pr.purpose_id,e.enduse_id, id.is_id FROM issuance_head ih INNER JOIN issuance_details id ON ih.issuance_id = id.issuance_id INNER JOIN items i ON id.item_id = i.item_id INNER JOIN department dt ON dt.department_id = ih.department_id INNER JOIN purpose pr ON pr.purpose_id = ih.purpose_id INNER JOIN enduse e ON e.enduse_id = ih.enduse_id WHERE ih.saved='1' AND ih.issuance_id = id.issuance_id AND ".$query. " ORDER BY ih.issue_date DESC";
+           $wh_wo_cost=0;
+           $pr_wo_cost=0;
             foreach($this->super_model->custom_query("SELECT ih.*,i.item_id, id.supplier_id, dt.department_id,pr.purpose_id,e.enduse_id, id.is_id, id.rq_id FROM issuance_head ih INNER JOIN issuance_details id ON ih.issuance_id = id.issuance_id INNER JOIN items i ON id.item_id = i.item_id INNER JOIN department dt ON dt.department_id = ih.department_id INNER JOIN purpose pr ON pr.purpose_id = ih.purpose_id INNER JOIN enduse e ON e.enduse_id = ih.enduse_id WHERE ih.saved='1' AND ih.issuance_id = id.issuance_id AND ".$query. " ORDER BY ih.issue_date DESC") AS $itm){
 
                 $supplier = $this->super_model->select_column_where('supplier', 'supplier_name', 'supplier_id', $itm->supplier_id);
@@ -1245,13 +1260,26 @@ class Reports extends CI_Controller {
                 $enduse = $this->super_model->select_column_where('enduse', 'enduse_name', 'enduse_id', $itm->enduse_id);
                 $issue_date = $this->super_model->select_column_where('issuance_head', 'issue_date', 'issuance_id', $itm->issuance_id);
                 /*$pr = $this->super_model->select_column_where('request_head', 'pr_no', 'mreqf_no', $itm->mreqf_no);*/
-                 $type=  $this->super_model->select_column_where("request_head", "type", "mreqf_no", $itm->mreqf_no);     
+                $type=  $this->super_model->select_column_where("request_head", "type", "mreqf_no", $itm->mreqf_no);
+                
                 $pr = $this->super_model->select_column_where('issuance_head', 'pr_no', 'mreqf_no', $itm->mreqf_no);
                 foreach($this->super_model->select_custom_where("items", "item_id = '$itm->item_id'") AS $itema){
                     $unit = $this->super_model->select_column_where('uom', 'unit_name', 'unit_id', $itema->unit_id);
                 }   
                 $unit_cost = $this->super_model->select_column_where("request_items","unit_cost","rq_id",$itm->rq_id);
                 $total_cost = $issqty*$unit_cost;
+                if($type == 'JO / PR'){
+                    $pr_cost[] = $total_cost;
+
+                    if($unit_cost == 0){
+                        $pr_wo_cost++;
+                    }
+                } else {
+                    $wh_cost[] =$total_cost;
+                    if($unit_cost == 0){
+                        $wh_wo_cost++;
+                    }
+                }
                 $data['issue'][] = array(
                     'issue_date'=>$issue_date,
                     'mif_no'=>$itm->mif_no,
@@ -1264,11 +1292,17 @@ class Reports extends CI_Controller {
                     'purpose'=>$purpose,
                     'enduse'=>$enduse,
                     'pn'=>$pn,
+                    'unit_cost'=>$unit_cost,
                     'issqty'=>$issqty,
                     'total_cost'=>$total_cost,
                     'issuance_id'=>$itm->issuance_id
                 );
+
             }
+            $data['pr_cost'] = $pr_cost;
+            $data['wh_cost'] = $wh_cost;
+            $data['wh_wo_cost']=$wh_wo_cost;
+            $data['pr_wo_cost']=$pr_wo_cost;
         }
         $this->load->view('template/header');
         $this->load->view('template/sidebar',$this->dropdown);
@@ -3819,11 +3853,18 @@ class Reports extends CI_Controller {
                 $department = $this->super_model->select_column_where('department', 'department_name', 'department_id', $itm->department_id);
                 $purpose = $this->super_model->select_column_where('purpose', 'purpose_desc', 'purpose_id', $itm->purpose_id);
                 $enduse = $this->super_model->select_column_where('enduse', 'enduse_name', 'enduse_id', $itm->enduse_id);
-                 $pr = $this->super_model->select_column_where('request_head', 'pr_no', 'mreqf_no', $itm->mreqf_no);
+                $type=  $this->super_model->select_column_where("request_head", "type", "mreqf_no", $itm->mreqf_no);
+
+                if($type=='JO / PR'){
+                    $pr = $itm->pr_no;
+                } else {
+                    $pr =  $type;
+                }
                 foreach($this->super_model->select_custom_where("items", "item_id = '$itm->item_id'") AS $itema){
                     $unit = $this->super_model->select_column_where('uom', 'unit_name', 'unit_id', $itema->unit_id);
                 }
                 $unit_cost = $this->super_model->select_column_where("request_items","unit_cost","rq_id",$itm->rq_id);
+
                 $total_cost = $issqty*$unit_cost;
                 $issdate = $this->super_model->select_column_where('issuance_head', 'issue_date', 'issuance_id', $itm->issuance_id);
                 $mif = $this->super_model->select_column_where('issuance_head', 'mif_no', 'issuance_id', $itm->issuance_id);

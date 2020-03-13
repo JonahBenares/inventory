@@ -107,7 +107,9 @@
 											<td width="" align="center"><strong>Item Part No.</strong></td>
 											<td width="" align="center"><strong>Item Description</strong></td>
 											<td width="" align="center"><strong>UoM</strong></td>
+											<td width="" align="center"><strong>Unit Cost</strong></td>
 											<td width="" align="center"><strong>Quantity</strong></td>
+											<td width="" align="center"><strong>Total Cost</strong></td>
 											<td width="" align="center"><strong>Supplier</strong></td>
 											<td width="" align="center"><strong>Department</strong></td>
 											<td width="30%" align="center"><strong>End-Use</strong></td>
@@ -127,7 +129,9 @@
 											<td align="center"><?php echo $rec['pn']?></td>
 											<td align="center"><?php echo $rec['item']?></td>
 											<td align="center"><?php echo $rec['unit']?></td>
+											<td align="center"><?php echo $rec['unit_cost']?></td>
 											<td align="center"><?php echo $rec['qty']?></td>
+											<td align="center"><?php echo $rec['total_cost']?></td>
 											<td align="center"><?php echo $rec['supplier']?></td>
 											<td align="center"><?php echo $rec['department']?></td>
 											<td align="center"><?php echo $rec['enduse']?></td>
