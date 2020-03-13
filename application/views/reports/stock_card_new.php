@@ -63,8 +63,14 @@ $total_bal=0;
 									<tr>
 										<td width="15%"><p>Item Description:</p></td>
 										<td width="40%">
-											<input type="text" class="form-control" name="item" id = "item" autocomplete="off">
-											<span id="suggestion-item"></span>
+											<!-- <input type="text" class="form-control" name="item" id = "item" autocomplete="off">
+											<span id="suggestion-item"></span> -->
+											<select name="item" id='item' class="form-control select2" onchange="chooseItem()">
+												<option value = ""></option>
+												<?php foreach($item_list AS $itm){ ?>
+												<option value = "<?php echo $itm->item_id;?>"><?php echo $itm->original_pn." - ".$itm->item_name;?></option>
+												<?php } ?>
+											</select>
 										</td>
 										<td width="10%"><p class="pull-right">Catalog No.:</p></td>
 										<td width="30%"><input type="text" class="form-control" name="catalog_no" id = "catalog_no"></td>
@@ -76,8 +82,14 @@ $total_bal=0;
 									<tr>
 										<td><p>Supplier:</p></td>
 										<td>
-											<input type="text" class="form-control" name="supplier" id = "supplier" autocomplete="off">
-											<span id="suggestion-supplier"></span>
+											<!-- <input type="text" class="form-control" name="supplier" id = "supplier" autocomplete="off">
+											<span id="suggestion-supplier"></span> -->
+											<select name="supplier" id='supplier' class="form-control select2" onchange="chooseSupplier()" style = "width:91.5%">
+												<option value = ""></option>
+												<?php foreach($supplier_list AS $sup){ ?>
+												<option value = "<?php echo $sup->supplier_id;?>"><?php echo $sup->supplier_name;?></option>
+												<?php } ?>
+											</select>
 										</td>
 										<td><p class="pull-right">Brand:</p></td>
 										<td>

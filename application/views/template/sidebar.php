@@ -133,8 +133,8 @@
 							</tr>
 							<tr>
 								<td width="20%" class = "t"><label>JO / PR #:</label></td>
-								<td colspan="2" >
-									<select name = "prno" id="prno" class = "form-control t" onChange="choosePR();" style="margin:4px">
+								<td colspan="2" style ="padding-bottom: 5px;padding-left: 4px;" >
+									<select name = "prno" id="prno" class = "form-control t select2" onchange="choosePR();" style="margin:4px;width:100%">
 										<option value="" selected="">-Select PR-</option>
 										<?php 
 										$ctpr= count($prno);
@@ -145,8 +145,8 @@
 							</tr>
 							<tr>
 								<td width="20%"><label>Department:</label></td>
-								<td colspan="2">
-									<select name = "department" class = "form-control" id = "department" style="margin:4px">
+								<td colspan="2" style ="padding-bottom: 5px;padding-left: 4px;">
+									<select name = "department" class = "form-control" id = "department" style="margin:4px;width:100%">
 										<option value="" selected="" >-Select Department-</option>
 										<?php foreach($department AS $dept){ ?>
 											<option value="<?php echo $dept->department_id; ?>"><?php echo $dept->department_name; ?></option>
@@ -156,8 +156,8 @@
 							</tr>
 							<tr>
 								<td width="20%"><label>Purpose:</label></td>
-								<td colspan="2" >
-									<select class = "form-control" name="purpose" id = "purpose" style="margin:4px">
+								<td colspan="2" style ="padding-bottom: 5px;padding-left: 4px;" >
+									<select class = "form-control" name="purpose" id = "purpose" style="margin:4px;width:100%">
 										<option value="" selected="">-Select Purpose-</option>
 										<?php foreach($purpose AS $purp){ ?>
 											<option value="<?php echo $purp->purpose_id; ?>"><?php echo $purp->purpose_desc; ?></option>
@@ -167,8 +167,8 @@
 							</tr>
 							<tr>
 								<td width="20%"><label>End-Use:</label></td>
-								<td colspan="2" >
-									<select name = "enduse" class = "form-control" id = "enduse" style="margin:4px">
+								<td colspan="2" style ="padding-bottom: 5px;padding-left: 4px;" >
+									<select name = "enduse" class = "form-control" id = "enduse" style="margin:4px;width:100%">
 										<option value="" selected="">-Select End-Use-</option>
 										<?php foreach($enduse AS $end){ ?>
 											<option value="<?php echo $end->enduse_id; ?>"><?php echo $end->enduse_name; ?></option>
@@ -236,15 +236,21 @@
 							</tr> -->
 							<tr>
 								<td width="26%"><label>From PR. :</label></td>		
-								<td>
-									<input type = "text" name = "prno" id="prres" class = "form-control" style="margin:4px" autocomplete="off">
-									<span id="suggestion-pr1"></span>
+								<td style ="padding-bottom: 5px;padding-left: 4px;">
+									<!--<input type = "text" name = "prno" id="prres" class = "form-control" style="margin:4px" autocomplete="off">
+									 <span id="suggestion-pr1"></span> -->
+									 <select name="prno" id='prres' class="form-control select2" onchange="choosePRSS()" style="margin:4px;width:100%">
+										<option value = "">-Choose PR-</option>
+										<?php foreach($pr_list AS $pr){ ?>
+										<option value = "<?php echo $pr->pr_no;?>"><?php echo $pr->pr_no;?></option>
+										<?php } ?>
+									</select>
 								</td>	
 							</tr>
 							<tr>
 								<td width="20%"><label>Department:</label></td>		
-								<td>
-									<select name="department" id='deptres' class="form-control" style="margin:4px">
+								<td style ="padding-bottom: 5px;padding-left: 4px;">
+									<select name="department" id='deptres' class="form-control" style="margin:4px;width:100%">
 										<option value = "">-Choose Department-</option>
 										<?php foreach($department AS $dep){ ?>
 										<option value = "<?php echo $dep->department_id;?>"><?php echo $dep->department_name;?></option>
@@ -254,8 +260,8 @@
 							</tr>
 							<tr>
 								<td width="20%"><label>Purpose:</label></td>		
-								<td>
-									<select name="purpose" id='purres' class="form-control" style="margin:4px">
+								<td style ="padding-bottom: 5px;padding-left: 4px;">
+									<select name="purpose" id='purres' class="form-control" style="margin:4px;width:100%">
 										<option value = "">-Choose Purpose-</option>
 										<?php foreach($purpose AS $pur){ ?>
 										<option value = "<?php echo $pur->purpose_id;?>"><?php echo $pur->purpose_desc;?></option>
@@ -265,8 +271,8 @@
 							</tr>
 							<tr>
 								<td width="20%"><label>End-Use:</label></td>		
-								<td>
-									<select name="enduse" id='endres' class="form-control" style="margin:4px">
+								<td style ="padding-bottom: 5px;padding-left: 4px;">
+									<select name="enduse" id='endres' class="form-control" style="margin:4px;width:100%">
 										<option value = "">-Choose End-Use-</option>
 										<?php foreach($enduse AS $end){ ?>
 										<option value = "<?php echo $end->enduse_id;?>"><?php echo $end->enduse_name;?></option>
@@ -276,7 +282,7 @@
 							</tr>
 							<tr>
 								<td><label>Returned By:</label></td>		
-								<td><select class="form-control" style="margin:4px" name="returned" id="returnedres">
+								<td style ="padding-bottom: 5px;padding-left: 4px;"><select class="form-control select2" style="margin:4px;width:100%" name="returned" id="returnedres">
 									<option selected="selected" >-Choose Employee-</option>
 									<?php foreach($employee AS $emp){ ?>
 										<option value="<?php echo $emp->employee_id; ?>?"><?php echo $emp->employee_name; ?></option>
@@ -285,8 +291,8 @@
 							</tr>
 							<tr>
 								<td><label>Received By:</label></td>		
-								<td>
-								<select class="form-control" style="margin:4px" name="received" id="received_byres">
+								<td style ="padding-bottom: 5px;padding-left: 4px;">
+								<select class="form-control select2" style="margin:4px;width:100%" name="received" id="received_byres">
 									<option selected="selected" >-Choose Employee-</option>
 									<?php foreach($employee AS $emp1){ ?>
 										<option value="<?php echo $emp1->employee_id; ?>?"><?php echo $emp1->employee_name; ?></option>
@@ -295,8 +301,8 @@
 							</tr>
 							<tr>
 								<td><label>Acknowledge By:</label></td>		
-								<td>
-								<select class="form-control" style="margin:4px" name="acknowledge" id="acknowledge_byres">
+								<td style ="padding-bottom: 5px;padding-left: 4px;">
+								<select class="form-control select2" style="margin:4px;width:100%" name="acknowledge" id="acknowledge_byres">
 									<option selected="selected" >-Choose Employee-</option>
 									<?php foreach($employee AS $emp1){ ?>
 										<option value="<?php echo $emp1->employee_id; ?>?"><?php echo $emp1->employee_name; ?></option>
@@ -305,7 +311,7 @@
 							</tr>
 							<tr>
 								<td><label>Noted By:</label></td>		
-								<td><select class="form-control" style="margin:4px" name="noted_by" id="noted_byres">
+								<td style ="padding-bottom: 5px;padding-left: 4px;"><select class="form-control select2" style="margin:4px;width:100%" name="noted_by" id="noted_byres">
 									<option selected="selected" >-Choose Employee-</option>
 									<?php foreach($employee AS $em){ ?>
 										<option value="<?php echo $em->employee_id; ?>"><?php echo $em->employee_name; ?></option>

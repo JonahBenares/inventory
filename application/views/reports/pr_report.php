@@ -1,5 +1,6 @@
 <script src="<?php echo base_url(); ?>assets/js/jquery.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/reports.js"></script>
+
 <style type="text/css">
 	#name-item{
 		width: 94%!important;
@@ -28,8 +29,14 @@
 							<form method="POST" action ="<?php echo base_url();?>index.php/reports/generatePr">
 								<div class="col-lg-3"> <h5 class="pull-right">Enter PR:</h5> </div>
 								<div class="col-lg-5">
-									<input type="text" name="pr" id="pr" class="form-control" autocomplete='off'>
-									<span id="suggestion-pr"></span>
+									<!-- <input type="text" name="pr" id="pr" class="form-control" autocomplete='off'>
+									<span id="suggestion-pr"></span> -->
+									<select name="pr" id='pr' class="form-control select2" onchange="choosePRS()" style="margin:4px;width:100%">
+										<option value = "">-Choose PR-</option>
+										<?php foreach($pr_rep AS $prs){ ?>
+										<option value = "<?php echo $prs->pr_no;?>"><?php echo $prs->pr_no;?></option>
+										<?php } ?>
+									</select>
 								</div>
 								<div class="col-lg-4"><input type="submit" class="btn btn-warning" name="search_pr" Value="Find"></div>
 								<input type="hidden" name="baseurl" id="baseurl" value="<?php echo base_url(); ?>">
@@ -149,6 +156,7 @@
 		</div>
 	</div>
 	<?php } ?>
+
 
 
 	

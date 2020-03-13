@@ -1,7 +1,5 @@
 <script src="<?php echo base_url(); ?>assets/js/jquery.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/issue.js"></script>
-<link href="<?php echo base_url(); ?>assets/Styles/select2.min.css" rel="stylesheet" />
-<script src="<?php echo base_url(); ?>assets/js/select2.min.js"></script>
 <style type="text/css">
 	#name-item{
 		width:57%!important;
@@ -206,6 +204,3 @@
 			</div>
 		</div>
 	</div>
-<script>
-    $('.select2').select2();
-</script>

@@ -32,8 +32,14 @@
 									<tr>
 										<td width="15%">Search Item:</td>
 										<td>
-											<input type="text" name="item" id="item" class="form-control" autocomplete='off'>
-											<span id="suggestion-item"></span>
+											<!-- <input type="text" name="item" id="item" class="form-control" autocomplete='off'>
+											<span id="suggestion-item"></span> -->
+											<select name="item" id='item' class="form-control select2" onchange="chooseItem()">
+												<option value = ""></option>
+												<?php foreach($item_list AS $itm){ ?>
+												<option value = "<?php echo $itm->item_id;?>"><?php echo $itm->original_pn." - ".$itm->item_name;?></option>
+												<?php } ?>
+											</select>
 										</td>
 										<td>
 											<input type="submit" name="search_inventory" value='Generate Report' class="btn btn-warning" >

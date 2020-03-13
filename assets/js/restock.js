@@ -386,3 +386,21 @@ function chooseSupplier(){
         }
     }); 
 }
+
+function choosePRSS(){
+    var loc= document.getElementById("baseurl").value;
+    var redirect = loc+'index.php/restock/getPRinformation';
+    var prno = document.getElementById("prres").value;
+    $.ajax({
+        type: 'POST',
+        url: redirect,
+        data: 'prno='+prno,
+        dataType: 'json',
+        success: function(response){
+            $("#prres").val(response.pr_no);
+            $("#endres").val(response.enduse);
+            $("#deptres").val(response.department);
+            $("#purres").val(response.purpose);
+        }
+    }); 
+}

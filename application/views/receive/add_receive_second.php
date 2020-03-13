@@ -1,9 +1,5 @@
 <script src="<?php echo base_url(); ?>assets/js/jquery.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/receive.js"></script>
-<link href="<?php echo base_url(); ?>assets/Styles/select2.min.css" rel="stylesheet" />
-<script src="<?php echo base_url(); ?>assets/js/select2.min.js"></script><!-- 
-<script src="<?php echo base_url(); ?>assets/js/bootstrap-select.min.js"></script>
-<link rel="stylesheet" href="<?php echo base_url(); ?>assets/Styles/bootstrap-select.min.css" /> -->
 <style type="text/css">
 	body{
 		padding:0px;
@@ -349,8 +345,5 @@
 		</div>
 	</div>
 
-<script>
-    $('.select2').select2();
-</script>
 
 	
