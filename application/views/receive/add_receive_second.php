@@ -73,7 +73,7 @@
 						<div class="row">
 							<?php if(!isset($rdid)) { ?>
 							<div class="col-lg-2 col-lg-offset-1">
-								<h5>
+								<!-- <h5>
 									PR/JO#: 
 									<select name="prno" id='prno' class="form-control select2" onchange="choosePR()">
 										<option value = ""></option>
@@ -81,13 +81,13 @@
 										<option value = "<?php echo $pr->pr_no;?>"><?php echo $pr->pr_no;?></option>
 										<?php } ?>
 									</select>
-								</h5>
-								<!-- <h5>PR/JO#: <input type="text" name="prno" id='prno' class="form-control" autocomplete="off">
-									<span id="suggestion-prno"></span></h5> -->
+								</h5> -->
+								<h5>PR/JO#: <input type="text" name="prno" id='prno' class="form-control" autocomplete="off">
+									<span id="suggestion-prno"></span></h5>
 							</div>
 							<div class="col-lg-2">
 								<h5>Department: 
-									<select name="department" id='department' class="form-control">
+									<select name="department" id='department' class="form-control select2">
 										<option value = ""></option>
 										<?php foreach($department AS $dep){ ?>
 										<option value = "<?php echo $dep->department_id;?>"><?php echo $dep->department_name;?></option>
@@ -99,7 +99,7 @@
 
 							<div class="col-lg-2">
 								<h5>End-Use: 
-									<select name="enduse" id='enduse' class="form-control">
+									<select name="enduse" id='enduse' class="form-control select2">
 										<option value = ""></option>
 										<?php foreach($enduse AS $end){ ?>
 										<option value = "<?php echo $end->enduse_id;?>"><?php echo $end->enduse_name;?></option>
@@ -110,7 +110,7 @@
 
 								<div class="col-lg-2">
 								<h5>Purpose: 
-									<select name="purpose" id='purpose' class="form-control">
+									<select name="purpose" id='purpose' class="form-control select2">
 										<option value = ""></option>
 										<?php foreach($purpose AS $pur){ ?>
 										<option value = "<?php echo $pur->purpose_id;?>"><?php echo $pur->purpose_desc;?></option>
@@ -123,7 +123,7 @@
 							
 							<div class="col-lg-2">
 									<h5>Inspected By:
-									<select class="form-control" name='inspected' id='inspected'>
+									<select class="form-control select2" name='inspected' id='inspected'>
 										<option value = ''></option>
 										<?php foreach($employee AS $emp){ ?>
 										<option value = "<?php echo $emp['empid'];?>"><?php echo $emp['empname'];?></option>
@@ -142,7 +142,7 @@
 								</div>
 								<div class="col-lg-2">
 									<h5>Department: 
-										<select name="department" id='department' class="form-control">
+										<select name="department" id='department' class="form-control select2">
 											<option value = ""></option>
 											<?php foreach($department AS $dep){ ?>
 											<option value = "<?php echo $dep->department_id;?>" <?php echo (($det['department_id'] == $dep->department_id) ? ' selected' : '');?>><?php echo $dep->department_name;?></option>
@@ -152,7 +152,7 @@
 								</div>	
 								<div class="col-lg-2">
 									<h5>End-Use: 
-									<select name="enduse" id='enduse' class="form-control">
+									<select name="enduse" id='enduse' class="form-control select2">
 										<option value = ""></option>
 										<?php foreach($enduse AS $end){ ?>
 										<option value = "<?php echo $end->enduse_id;?>" <?php echo (($det['enduse_id'] == $end->enduse_id) ? ' selected' : '');?>><?php echo $end->enduse_name;?></option>
@@ -162,7 +162,7 @@
 								</div>	
 								<div class="col-lg-2">
 									<h5>Purpose: 
-									<select name="purpose" id="purpose" class="form-control">
+									<select name="purpose" id="purpose" class="form-control select2">
 										<option value = ""></option>
 										<?php foreach($purpose AS $pur){ ?>
 										<option value = "<?php echo $pur->purpose_id;?>" <?php echo (($det['purpose_id'] == $pur->purpose_id) ? ' selected' : '');?>><?php echo $pur->purpose_desc;?></option>
@@ -172,7 +172,7 @@
 								</div>	
 								<div class="col-lg-2">
 									<h5>Inspected By:
-									<select name="inspected" id="inspected" class="form-control">
+									<select name="inspected" id="inspected" class="form-control select2">
 										<option value = ""></option>
 										<?php foreach($employee AS $emp){ ?>
 										<option value = "<?php echo $emp['empid'];?>" <?php echo (($det['inspected'] == $emp['empid']) ? ' selected' : '');?>><?php echo $emp['empname'];?></option>
@@ -200,20 +200,15 @@
 										<?php } ?>
 									</select>
 									 <input type='hidden' name='item_id' id='item_id'>
+									 <input type='hidden' name='item_name' id='item_name'>
 									 <input type='hidden' name='original_pn' id='original_pn1'>
 									 <input type='hidden' name='unit' id='unit'>
 								</div>
 														
 								<div class="col-lg-2">
 									<p  style="margin:0px" for="">Brand:</p>
-									<!-- <input type class="form-control" name='brand' id='brand' autocomplete="off">
-									<span id="suggestion-brand"></span> -->
-									<select name="brand" id='brand' class="form-control select2" onchange="chooseBrand()">
-										<option value = ""></option>
-										<?php foreach($brand AS $brnd){ ?>
-										<option value = "<?php echo $brnd->brand_id;?>"><?php echo $brnd->brand_name;?></option>
-										<?php } ?>
-									</select>
+									<input type class="form-control" name='brand' id='brand' autocomplete="off">
+									<span id="suggestion-brand"></span>
 									<input type='hidden' name='brand_id' id='brand_id'>
 								</div>	
 								<div class="col-lg-2">
@@ -222,22 +217,23 @@
 								</div>
 								<div class="col-lg-2">
 									<p style="margin:0px" for="">Serial No. :</p>
-									<!-- <input type="text" name="serial" id="serial" class="form-control">
-									<span id="suggestion-serial"></span> -->
-									<select name="serial" id='serial' class="form-control select2" onchange="chooseSerial()">
-										<option value = ""></option>
-										<?php foreach($serial_list AS $srl){ ?>
-										<option value = "<?php echo $srl->serial_no;?>"><?php echo $srl->serial_no;?></option>
-										<?php } ?>
-									</select>
+									<input type="text" name="serial" id="serial" class="form-control" autocomplete="off">
+									<span id="suggestion-serial"></span>
 									<input type='hidden' name='serial_id' id='serial_id'>
 								</div>													
 							</div>
 							<div class="row" >
 							<div class="col-lg-6">
 									<p style="margin:0px" for="">Supplier:</p>
-									<input class="form-control" name="supplier" id="supplier" autocomplete="off">
-									<span id="suggestion-supplier"></span>
+									<!-- <input class="form-control" name="supplier" id="supplier" autocomplete="off">
+									<span id="suggestion-supplier"></span> -->
+									<select name="supplier" id='supplier' class="form-control select2" onchange="chooseSupplier()">
+										<option value = ""></option>
+										<?php foreach($supplier AS $sup){ ?>
+										<option value = "<?php echo $sup->supplier_id;?>"><?php echo $sup->supplier_name;?></option>
+										<?php } ?>
+									</select>
+									<input type='hidden' name='supplier_name' id='supplier_name'>
 									<input type='hidden' name='supplier_id' id='supplier_id'>
 								</div>		
 								<div class="col-lg-2">
