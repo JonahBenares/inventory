@@ -258,7 +258,9 @@ function add_item(){
 
     var supplier =$('#supplier').val();
     var supplierid =$('#supplier_id').val();
+    var suppliername =$('#supplier_name').val();
     var itemid =$('#item_id').val();
+    var itemname =$('#item_name').val();
     var brand =$('#brand').val();
     var brandid =$('#brand_id').val();
     var serial =$('#serial').val();
@@ -283,7 +285,7 @@ function add_item(){
           $.ajax({
                 type: "POST",
                 url:redirect,
-                data: "supplier="+supplier+"&supplierid="+supplierid+"&itemid="+itemid+"&brand="+brand+"&brandid="+brandid+"&serial="+serial+"&serialid="+serialid+"&catno="+catno+"&reason="+reason+"&remarks="+remarks+"&item="+item+"&count="+count+"&quantity="+quantity,
+                data: "supplier="+supplier+"&suppliername="+suppliername+"&supplierid="+supplierid+"&itemname="+itemname+"&itemid="+itemid+"&brand="+brand+"&brandid="+brandid+"&serial="+serial+"&serialid="+serialid+"&catno="+catno+"&reason="+reason+"&remarks="+remarks+"&item="+item+"&count="+count+"&quantity="+quantity,
                 success: function(html){
                     //alert(html);
                     $('#item_body').append(html);
@@ -349,4 +351,38 @@ function getSelectionStart(o) {
         if (r.text == '') return o.value.length
         return o.value.lastIndexOf(r.text)
     } else return o.selectionStart
+}
+
+function chooseItem(){
+    var loc= document.getElementById("baseurl").value;
+    var redirect = loc+'index.php/restock/getIteminformation';
+    var item = document.getElementById("item").value;
+    $.ajax({
+        type: 'POST',
+        url: redirect,
+        data: 'item='+item,
+        dataType: 'json',
+        success: function(response){
+            $("#item_id").val(response.item_id);
+            $("#item_name").val(response.item_name);
+            $("#unit").val(response.unit);
+            $("#original_pn1").val(response.pn);
+        }
+    }); 
+}
+
+function chooseSupplier(){
+    var loc= document.getElementById("baseurl").value;
+    var redirect = loc+'index.php/restock/getSupplierinformation';
+    var supplier = document.getElementById("supplier").value;
+    $.ajax({
+        type: 'POST',
+        url: redirect,
+        data: 'supplier='+supplier,
+        dataType: 'json',
+        success: function(response){
+            $("#supplier_id").val(response.supplier_id);
+            $("#supplier_name").val(response.supplier_name);
+        }
+    }); 
 }

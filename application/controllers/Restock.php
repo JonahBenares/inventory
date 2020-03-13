@@ -140,6 +140,21 @@ class Restock extends CI_Controller {
         $this->load->view('template/footer');
     }
 
+    public function getIteminformation(){
+        $item = $this->input->post('item');
+        foreach($this->super_model->select_custom_where("items", "item_id='$item'") AS $itm){ 
+            $return = array('item_id' => $itm->item_id,'item_name' => $itm->item_name, 'unit' => $itm->unit_id, 'pn' => $itm->original_pn); 
+            echo json_encode($return);   
+        }
+    }
+
+    public function getSupplierinformation(){
+        $supplier = $this->input->post('supplier');
+        foreach($this->super_model->select_custom_where("supplier", "supplier_id='$supplier'") AS $sup){ 
+            $return = array('supplier_id' => $sup->supplier_id,'supplier_name' => $sup->supplier_name); 
+            echo json_encode($return);   
+        }
+    }
 
     public function add_restock_first(){
         $id=$this->uri->segment(3);
@@ -330,6 +345,7 @@ class Restock extends CI_Controller {
         $data['list'] = array(
             'supplier'=>$this->input->post('supplier'),
             'supplierid'=>$this->input->post('supplierid'),
+            'supplier_name'=>$this->input->post('suppliername'),
             'itemid'=>$this->input->post('itemid'),
             'brandid'=>$this->input->post('brandid'),
             'brand'=>$this->input->post('brand'),
@@ -338,7 +354,7 @@ class Restock extends CI_Controller {
             'catno'=>$this->input->post('catno'),
             'reason'=>$this->input->post('reason'),
             'remarks'=>$this->input->post('remarks'),
-            'item'=>$this->input->post('item'),
+            'item'=>$this->input->post('itemname'),
             'quantity'=>$this->input->post('quantity'),
             'count'=>$this->input->post('count')
         );   

@@ -332,8 +332,7 @@ class Receive extends CI_Controller {
         $data['receiveid']=$id;
         $data['rdid']=$rdid;
         $data['supplier'] = $this->super_model->select_all_order_by("supplier", "supplier_name", "ASC");
-        $data['serial_list'] = $this->super_model->select_custom_where("serial_number", "serial_no!='' ORDER BY serial_no ASC");
-        $data['brand'] = $this->super_model->select_custom_where("brand", "brand_name!='' ORDER BY brand_name ASC");
+        $data['brand'] = $this->super_model->select_all_order_by("brand", "brand_name", "ASC");
         $data['items'] = $this->super_model->select_all_order_by("items", "item_name", "ASC");
         $data['pr_list'] = $this->super_model->custom_query("SELECT pr_no, department_id, enduse_id, purpose_id FROM receive_details rd INNER JOIN receive_head rh ON rd.receive_id = rh.receive_id WHERE rh.saved='1' AND rd.closed='0' GROUP BY rd.pr_no");
         foreach($this->super_model->select_row_where("receive_details", "rd_id", $rdid) AS $d){
@@ -400,14 +399,6 @@ class Receive extends CI_Controller {
         $this->load->view('template/footer');
     } 
 
-    public function getPRinformation(){
-        $prno = $this->input->post('prno');
-        foreach($this->super_model->custom_query("SELECT pr_no, department_id, enduse_id, purpose_id, inspected_by FROM receive_details rd INNER JOIN receive_head rh ON rd.receive_id = rh.receive_id WHERE rd.pr_no LIKE '%$prno%' AND rh.saved='1' AND rd.closed='0' GROUP BY rd.pr_no") AS $pr){ 
-            $return = array('purpose' => $pr->purpose_id, 'enduse' => $pr->enduse_id, 'department' => $pr->department_id, 'inspected_by' => $pr->inspected_by); 
-            echo json_encode($return);   
-        }
-    }
-
     public function getIteminformation(){
         $item = $this->input->post('item');
         foreach($this->super_model->select_custom_where("items", "item_id='$item'") AS $itm){ 
@@ -416,60 +407,11 @@ class Receive extends CI_Controller {
         }
     }
 
-    public function getBrandinformation(){
-        $brand = $this->input->post('brand');
-        foreach($this->super_model->select_custom_where("brand", "brand_id='$brand'") AS $brnd){ 
-            $return = array('brand_id' => $brnd->brand_id); 
+    public function getSupplierinformation(){
+        $supplier = $this->input->post('supplier');
+        foreach($this->super_model->select_custom_where("supplier", "supplier_id='$supplier'") AS $sup){ 
+            $return = array('supplier_id' => $sup->supplier_id,'supplier_name' => $sup->supplier_name); 
             echo json_encode($return);   
-        }
-    }
-
-    public function getSerialinformation(){
-        $serial=$this->input->post('serial');
-        $item=$this->input->post('item');
-        $brand=$this->input->post('brand');
-        $brandl=$this->input->post('brandl');
-        $iteml=$this->input->post('iteml');
-        $seriall=$this->input->post('seriall');
-        $count_exist=0;
-        if(empty($seriall)){
-            $s = array();
-        } else {
-            $s =  array($seriall);
-        }
-
-        if(empty($iteml)){
-            $i = array();
-        } else {
-            $i =  array($iteml);
-        }
-
-        if(empty($brandl)){
-            $b = array();
-        } else {
-            $b =  array($brandl);
-        }
-
-        if(in_array($item, $i)){
-            $count_exist++;
-        }
-
-        if(in_array($brand, $b)){
-            $count_exist++;
-        }
-
-        if(in_array($serial, $s)){
-            $count_exist++;
-        }
-
-        if($count_exist==3){
-            $return = array('error' => 'error'); 
-            echo json_encode($return);
-        }else {
-            foreach($this->super_model->select_custom_where("serial_number", "serial_no LIKE '%$serial%'") AS $srl){ 
-                $return = array('serial_id' => $srl->serial_id,'serial_no' => $srl->serial_no); 
-                echo json_encode($return);
-            }
         }
     }
 
@@ -599,10 +541,10 @@ class Receive extends CI_Controller {
         $rows=$this->super_model->custom_query("SELECT pr_no FROM receive_details rd INNER JOIN receive_head rh ON rd.receive_id = rh.receive_id WHERE rd.pr_no LIKE '%$prno%' AND rh.saved='1' AND rd.closed='0' GROUP BY rd.pr_no");
         if($rows!=0){
              echo "<ul id='name-item'>";
-            foreach($this->super_model->custom_query("SELECT pr_no, department_id, enduse_id, purpose_id FROM receive_details rd INNER JOIN receive_head rh ON rd.receive_id = rh.receive_id WHERE rd.pr_no LIKE '%$prno%' AND rh.saved='1' AND rd.closed='0' GROUP BY rd.pr_no") AS $pr){ 
+            foreach($this->super_model->custom_query("SELECT pr_no, department_id, enduse_id, purpose_id, inspected_by FROM receive_details rd INNER JOIN receive_head rh ON rd.receive_id = rh.receive_id WHERE rd.pr_no LIKE '%$prno%' AND rh.saved='1' AND rd.closed='0' GROUP BY rd.pr_no") AS $pr){ 
                     $purpose = $this->super_model->select_column_where("purpose", "purpose_desc", "purpose_id",$pr->purpose_id);
                     ?>
-                   <li onClick="selectPRNO('<?php echo $pr->pr_no; ?>','<?php echo $pr->department_id; ?>','<?php echo $pr->enduse_id; ?>','<?php echo $pr->purpose_id; ?>')"><?php echo $pr->pr_no; ?></li>
+                   <li onClick="selectPRNO('<?php echo $pr->pr_no; ?>','<?php echo $pr->department_id; ?>','<?php echo $pr->enduse_id; ?>','<?php echo $pr->purpose_id; ?>','<?php echo $pr->inspected_by; ?>')"><?php echo $pr->pr_no; ?></li>
                 <?php 
             }
            
@@ -715,6 +657,8 @@ class Receive extends CI_Controller {
         $total=$this->input->post('unitcost')*$this->input->post('recqty');
         $serial =  $this->input->post('serialid');
         $item =  $this->input->post('itemid');
+        $itemname =  $this->input->post('itemname');
+        $suppliername =  $this->input->post('suppliername');
         $brandid =  $this->input->post('brandid');
        /* $count = $this->super_model->count_custom_where("receive_items","item_id = '$item' AND brand_id = '$brandid' AND serial_id = '$serial'");
         $count1 = $this->super_model->count_custom_where("receive_items","brand_id = '$brandid' AND item_id = '$item'");
@@ -774,7 +718,7 @@ class Receive extends CI_Controller {
             $this->load->view('receive/row_item',$data);
         }else{*/
             $data['list'] = array(
-                'supplier'=>$this->input->post('supplier'),
+                'supplier'=>$this->input->post('suppliername'),
                 'supplierid'=>$this->input->post('supplierid'),
                 'itemid'=>$this->input->post('itemid'),
                 'brandid'=>$this->input->post('brandid'),
@@ -790,7 +734,7 @@ class Receive extends CI_Controller {
                 'remarks'=>$this->input->post('remarks'),
                 /*'inspected_name'=>$inspected_name,
                 'inspected'=>$inspected,*/
-                'item'=>$this->input->post('item'),
+                'item'=>$this->input->post('itemname'),
                 'local_mnl'=>$this->input->post('local_mnl'),
                 'count'=>$this->input->post('count'),
                 'total'=>$total

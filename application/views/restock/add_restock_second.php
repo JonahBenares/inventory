@@ -1,5 +1,7 @@
 <script src="<?php echo base_url(); ?>assets/js/jquery.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/restock.js"></script>
+<link href="<?php echo base_url(); ?>assets/Styles/select2.min.css" rel="stylesheet" />
+<script src="<?php echo base_url(); ?>assets/js/select2.min.js"></script>
 <style type="text/css">
 	body{
 		padding:0px;
@@ -69,9 +71,16 @@
 							<div class="row" >
 								<div class="col-lg-6">
 									<p style="margin:0px" for="">Supplier:</p>
-									<input class="form-control" name="supplier" id="supplier" autocomplete="off">
-									<span id="suggestion-supplier"></span>
+									<!-- <input class="form-control" name="supplier" id="supplier" autocomplete="off">
+									<span id="suggestion-supplier"></span> -->
+									<select name="supplier" id='supplier' class="form-control select2" onchange="chooseSupplier()">
+										<option value = ""></option>
+										<?php foreach($supplier AS $sup){ ?>
+										<option value = "<?php echo $sup->supplier_id;?>"><?php echo $sup->supplier_name;?></option>
+										<?php } ?>
+									</select>
 									<input type='hidden' name='supplier_id' id='supplier_id'>
+									<input type='hidden' name='supplier_name' id='supplier_name'>
 								</div>								
 								<div class="col-lg-2">
 									<p  style="margin:0px" for="">Brand:</p>
@@ -93,9 +102,16 @@
 							<div class="row" >
 								<div class="col-lg-6">
 									<p style="margin:0px" for="">Item Description:</p>
-									<textarea name = "item" id = "item" class="form-control" rows="1" autocomplete="off"></textarea>
-									 <span id="suggestion-item"></span>
+									<!-- <textarea name = "item" id = "item" class="form-control" rows="1" autocomplete="off"></textarea>
+									 <span id="suggestion-item"></span> -->
+									<select name="item" id='item' class="form-control select2" onchange="chooseItem()">
+										<option value = ""></option>
+										<?php foreach($items AS $itm){ ?>
+										<option value = "<?php echo $itm->item_id;?>"><?php echo $itm->original_pn." - ".$itm->item_name;?></option>
+										<?php } ?>
+									</select>
 									 <input type='hidden' name='item_id' id='item_id'>
+									 <input type='hidden' name='item_name' id='item_name'>
 									 <input type='hidden' name='original_pn' id='original_pn1'>
 									 <input type='hidden' name='unit' id='unit'>
 								</div>
@@ -173,6 +189,9 @@
 			</div>
 		</div>
 	</div>
+	<script>
+	    $('.select2').select2();
+	</script>	
 	<script type="text/javascript">
 		function removeresitem(rdetails_id,baseurl){
 		    var redirect = baseurl+'index.php/restock/deleteResItem';
