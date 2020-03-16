@@ -41,8 +41,9 @@
 												<?php } ?>
 											</select>
 										</td>
+										<td align="center"><div id='alrt' style="font-weight:bold"></div></td>
 										<td>
-											<input type="submit" name="search_inventory" value='Generate Report' class="btn btn-warning" >
+											<input type="submit" name="search_inventory" id="submit" value='Generate Report' class="btn btn-warning" >
 										</td>
 									</tr>
 								</table>

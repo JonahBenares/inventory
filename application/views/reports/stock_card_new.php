@@ -61,21 +61,21 @@ $total_bal=0;
 							<form method="POST" action="<?php echo base_url(); ?>index.php/reports/generateStkcrdNew">
 								<table width="100%">
 									<tr>
-										<td width="15%"><p>Item Description:</p></td>
-										<td width="40%">
+										<td width="20%"><p>Item Description:</p></td>
+										<td width="30%">
 											<!-- <input type="text" class="form-control" name="item" id = "item" autocomplete="off">
 											<span id="suggestion-item"></span> -->
-											<select name="item" id='item' class="form-control select2" onchange="chooseItem()">
+											<select name="item" id='item' style="width:80%" class="form-control select2" onchange="chooseItem()">
 												<option value = ""></option>
 												<?php foreach($item_list AS $itm){ ?>
 												<option value = "<?php echo $itm->item_id;?>"><?php echo $itm->original_pn." - ".$itm->item_name;?></option>
 												<?php } ?>
 											</select>
 										</td>
-										<td width="10%"><p class="pull-right">Catalog No.:</p></td>
+										<td width="15%"><p class="pull-right">Catalog No.:</p></td>
 										<td width="30%"><input type="text" class="form-control" name="catalog_no" id = "catalog_no"></td>
 										<td width="10%" rowspan="2">
-											<input style="margin:10px" type="submit" name="search_stockcard" value='Generate Report' class="btn btn-warning btn-sm" >
+											<input style="margin:10px" type="submit" name="search_stockcard" id="submit" value='Generate Report' class="btn btn-warning btn-sm" >
 											<!-- <a  href="" class="btn btn-warning ">Generate Report</a> -->
 										</td>
 									</tr>
@@ -84,7 +84,7 @@ $total_bal=0;
 										<td>
 											<!-- <input type="text" class="form-control" name="supplier" id = "supplier" autocomplete="off">
 											<span id="suggestion-supplier"></span> -->
-											<select name="supplier" id='supplier' class="form-control select2" onchange="chooseSupplier()" style = "width:91.5%">
+											<select name="supplier" id='supplier' style="width:80%" class="form-control select2" onchange="chooseSupplier()" >
 												<option value = ""></option>
 												<?php foreach($supplier_list AS $sup){ ?>
 												<option value = "<?php echo $sup->supplier_id;?>"><?php echo $sup->supplier_name;?></option>
@@ -96,6 +96,9 @@ $total_bal=0;
 											<input type="text" class="form-control" name="brand" id = "brand" autocomplete="off">
 											<span id="suggestion-brand"></span>
 										</td>
+									</tr>
+									<tr>
+										<td colspan="5" align="center"><div id='alrt' style="font-weight:bold"></div></td>
 									</tr>
 								</table>
 								<input type="hidden" name="baseurl" id="baseurl" value="<?php echo base_url(); ?>">

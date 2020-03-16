@@ -182,8 +182,9 @@
 							</tr>
 						</table>
 						<div class="modal-footer">
+							<div id='alerts' style="font-weight:bold;text-align: center"></div>
 							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-							<input type='submit' class="btn btn-warning" value='Proceed '> 
+							<input type='submit' class="btn btn-warning" id = "proceeds" value='Proceed '> 
 							<input type="hidden" name="baseurl" id="baseurl" value="<?php echo base_url(); ?>">
 							<input type='hidden' name='userid' value="<?php echo $_SESSION['user_id']; ?>">							
 						</div>
@@ -321,9 +322,10 @@
 							
 						</table>
 						<div class="modal-footer">
+							<div id='alert' style="font-weight:bold;text-align: center"></div>
 							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 							<!-- <input type='submit' class="btn btn-warning" value='Proceed '>  -->
-							<input type="button" class="btn btn-warning" onclick='saveRestock1()' value='Proceed'>
+							<input type="button" class="btn btn-warning" id="proceed" onclick='saveRestock1()' value='Proceed'>
 							<input type='hidden' name='userid' value="<?php echo $_SESSION['user_id']; ?>">
 							<input type="hidden" name="baseurl" id="baseurl1" value="<?php echo base_url(); ?>">
 						</div>

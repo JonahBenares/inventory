@@ -357,6 +357,12 @@ function chooseItem(){
     var loc= document.getElementById("baseurl").value;
     var redirect = loc+'index.php/restock/getIteminformation';
     var item = document.getElementById("item").value;
+    document.getElementById('alrt').innerHTML='<b>Please wait, Loading data!</b>'; 
+    $("#savebutton").hide(); 
+    setTimeout(function() {
+        document.getElementById('alrt').innerHTML=''; 
+        $("#savebutton").show(); 
+    },5000);
     $.ajax({
         type: 'POST',
         url: redirect,
@@ -375,6 +381,12 @@ function chooseSupplier(){
     var loc= document.getElementById("baseurl").value;
     var redirect = loc+'index.php/restock/getSupplierinformation';
     var supplier = document.getElementById("supplier").value;
+    document.getElementById('alrt').innerHTML='<b>Please wait, Loading data!</b>'; 
+    $("#savebutton").hide(); 
+    setTimeout(function() {
+        document.getElementById('alrt').innerHTML=''; 
+        $("#savebutton").show(); 
+    },5000);
     $.ajax({
         type: 'POST',
         url: redirect,
@@ -391,6 +403,12 @@ function choosePRSS(){
     var loc= document.getElementById("baseurl").value;
     var redirect = loc+'index.php/restock/getPRinformation';
     var prno = document.getElementById("prres").value;
+    document.getElementById('alert').innerHTML='<b>Please wait, Loading data!</b>'; 
+    $("#proceed").hide(); 
+    setTimeout(function() {
+        document.getElementById('alert').innerHTML=''; 
+        $("#proceed").show(); 
+    },5000);
     $.ajax({
         type: 'POST',
         url: redirect,

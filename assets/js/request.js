@@ -2,6 +2,12 @@ function choosePR(){
     var loc= document.getElementById("baseurl").value;
     var redirect = loc+'index.php/request/getPR';
     var prno = document.getElementById("prno").value;
+    document.getElementById('alerts').innerHTML='<b>Please wait, Loading data!</b>'; 
+    $("#proceeds").hide(); 
+    setTimeout(function() {
+        document.getElementById('alerts').innerHTML=''; 
+        $("#proceeds").show(); 
+    },5000);
     $.ajax({
             type: 'POST',
             url: redirect,
@@ -283,6 +289,12 @@ function chooseItem(){
     var loc= document.getElementById("baseurl").value;
     var redirect = loc+'index.php/request/getIteminformation';
     var item = document.getElementById("item").value;
+    document.getElementById('alrt').innerHTML='<b>Please wait, Loading data!</b>'; 
+    $("#submit").hide(); 
+    setTimeout(function() {
+        document.getElementById('alrt').innerHTML=''; 
+        $("#submit").show(); 
+    },5000);
     $.ajax({
         type: 'POST',
         url: redirect,

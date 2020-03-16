@@ -178,6 +178,7 @@
 								<tbody id="item_body"></tbody>
 							<?php } ?>
 						</table>
+						<div id='alrt' style="font-weight:bold;text-align: center;"></div>
 						<input type='hidden' name='rhead_id' id='rhead_id' value='<?php echo $rhead_id; ?>'>
 						<input type='hidden' name='counter' id='counter'>
 						<input type="hidden" name="baseurl" id="baseurl" value="<?php echo base_url(); ?>">

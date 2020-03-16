@@ -112,8 +112,9 @@
 								</p>
 							</div>
 							<div class="col-lg-1">
+								<div id='alrt' style="font-weight:bold"></div>
 								<p>				
-									<a type="button" onclick='add_item()' class="btn btn-warning btn-md"><span class="fa fa-plus"></span></a>
+									<a type="button" onclick='add_item()' class="btn btn-warning btn-md" id = "submit"><span class="fa fa-plus"></span></a>
 								</p>
 							</div>
 							<input type="hidden" name="baseurl" id="baseurl" value="<?php echo base_url(); ?>">

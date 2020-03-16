@@ -508,6 +508,12 @@ function chooseItem(){
     var loc= document.getElementById("baseurl").value;
     var redirect = loc+'index.php/receive/getIteminformation';
     var item = document.getElementById("item").value;
+    document.getElementById('alerto').innerHTML='<b>Please wait, Loading data!</b>'; 
+    $("#additem").hide(); 
+    setTimeout(function() {
+        document.getElementById('alerto').innerHTML=''; 
+        $("#additem").show(); 
+    },5000);
     $.ajax({
         type: 'POST',
         url: redirect,
@@ -526,6 +532,12 @@ function chooseSupplier(){
     var loc= document.getElementById("baseurl").value;
     var redirect = loc+'index.php/receive/getSupplierinformation';
     var supplier = document.getElementById("supplier").value;
+    document.getElementById('alerto').innerHTML='<b>Please wait, Loading data!</b>'; 
+    $("#additem").hide(); 
+    setTimeout(function() {
+        document.getElementById('alerto').innerHTML=''; 
+        $("#additem").show(); 
+    },5000);
     $.ajax({
         type: 'POST',
         url: redirect,

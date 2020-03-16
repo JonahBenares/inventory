@@ -10,7 +10,7 @@
 			<li><a href="#">
 				<em class="fa fa-home"></em>
 			</a></li>
-			<li class="active">Item Report</li>
+			<li class="active">All PR Report</li>
 		</ol>
 	</div><!--/.row-->
 	
@@ -41,11 +41,13 @@
 												<option value = "<?php echo $prs->pr_no;?>"><?php echo $prs->pr_no;?></option>
 												<?php } ?>
 											</select>
+											<br>
 											<input type="hidden" name="prid" id="prid">
 										</td>
+										<td align="center"><div id='alrt' style="font-weight:bold"></div></td>
 										<td>
 											<input type="hidden" name="baseurl" id="baseurl" value="<?php echo base_url(); ?>">
-											<input type="submit" name="search_inventory" value='Generate Report' class="btn btn-warning" >
+											<input type="submit" name="search_inventory" id="submit" value='Generate Report' class="btn btn-warning" >
 										</td>
 									</tr>
 								</table>

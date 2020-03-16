@@ -83,7 +83,7 @@
 							</div>
 							<div class="col-lg-2">
 								<h5>Department: 
-									<select name="department" id='department' class="form-control select2">
+									<select name="department" id='department' class="form-control">
 										<option value = ""></option>
 										<?php foreach($department AS $dep){ ?>
 										<option value = "<?php echo $dep->department_id;?>"><?php echo $dep->department_name;?></option>
@@ -95,7 +95,7 @@
 
 							<div class="col-lg-2">
 								<h5>End-Use: 
-									<select name="enduse" id='enduse' class="form-control select2">
+									<select name="enduse" id='enduse' class="form-control">
 										<option value = ""></option>
 										<?php foreach($enduse AS $end){ ?>
 										<option value = "<?php echo $end->enduse_id;?>"><?php echo $end->enduse_name;?></option>
@@ -106,7 +106,7 @@
 
 								<div class="col-lg-2">
 								<h5>Purpose: 
-									<select name="purpose" id='purpose' class="form-control select2">
+									<select name="purpose" id='purpose' class="form-control">
 										<option value = ""></option>
 										<?php foreach($purpose AS $pur){ ?>
 										<option value = "<?php echo $pur->purpose_id;?>"><?php echo $pur->purpose_desc;?></option>
@@ -119,7 +119,7 @@
 							
 							<div class="col-lg-2">
 									<h5>Inspected By:
-									<select class="form-control select2" name='inspected' id='inspected'>
+									<select class="form-control" name='inspected' id='inspected'>
 										<option value = ''></option>
 										<?php foreach($employee AS $emp){ ?>
 										<option value = "<?php echo $emp['empid'];?>"><?php echo $emp['empname'];?></option>
@@ -138,7 +138,7 @@
 								</div>
 								<div class="col-lg-2">
 									<h5>Department: 
-										<select name="department" id='department' class="form-control select2">
+										<select name="department" id='department' class="form-control">
 											<option value = ""></option>
 											<?php foreach($department AS $dep){ ?>
 											<option value = "<?php echo $dep->department_id;?>" <?php echo (($det['department_id'] == $dep->department_id) ? ' selected' : '');?>><?php echo $dep->department_name;?></option>
@@ -148,7 +148,7 @@
 								</div>	
 								<div class="col-lg-2">
 									<h5>End-Use: 
-									<select name="enduse" id='enduse' class="form-control select2">
+									<select name="enduse" id='enduse' class="form-control">
 										<option value = ""></option>
 										<?php foreach($enduse AS $end){ ?>
 										<option value = "<?php echo $end->enduse_id;?>" <?php echo (($det['enduse_id'] == $end->enduse_id) ? ' selected' : '');?>><?php echo $end->enduse_name;?></option>
@@ -158,7 +158,7 @@
 								</div>	
 								<div class="col-lg-2">
 									<h5>Purpose: 
-									<select name="purpose" id="purpose" class="form-control select2">
+									<select name="purpose" id="purpose" class="form-control">
 										<option value = ""></option>
 										<?php foreach($purpose AS $pur){ ?>
 										<option value = "<?php echo $pur->purpose_id;?>" <?php echo (($det['purpose_id'] == $pur->purpose_id) ? ' selected' : '');?>><?php echo $pur->purpose_desc;?></option>
@@ -168,7 +168,7 @@
 								</div>	
 								<div class="col-lg-2">
 									<h5>Inspected By:
-									<select name="inspected" id="inspected" class="form-control select2">
+									<select name="inspected" id="inspected" class="form-control">
 										<option value = ""></option>
 										<?php foreach($employee AS $emp){ ?>
 										<option value = "<?php echo $emp['empid'];?>" <?php echo (($det['inspected'] == $emp['empid']) ? ' selected' : '');?>><?php echo $emp['empname'];?></option>
@@ -273,6 +273,7 @@
 								 -->
 								<div class="col-lg-1">
 									<br>
+									<div id='alerto' style="font-weight:bold"></div>
 									<a class="btn btn-primary btn-outlined btn-md" id='additem' style="margin-top:5px; " onclick='add_item()'><span class="fa fa-plus"></span></a>
 								</div>
 							</div>	

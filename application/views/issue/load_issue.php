@@ -44,7 +44,8 @@
 									</select>
 									<input type='hidden' name='request_id' id='request_id'>
 								</td>
-								<td ><input type='submit' class="btn btn-warning" value="Load" onclick="loadIssuance()"></td>					
+								<td align="center"><div id='alrt' style="font-weight:bold;"></div></td>
+								<td ><input type='submit' id="saveissuance" class="btn btn-warning" value="Load" onclick="loadIssuance()"></td>					
 							</tr>
 						</table>
 						<input type="hidden" name="baseurl" id="baseurl" value="<?php echo base_url(); ?>">

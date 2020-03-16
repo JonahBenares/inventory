@@ -38,7 +38,8 @@
 										<?php } ?>
 									</select>
 								</div>
-								<div class="col-lg-4"><input type="submit" class="btn btn-warning" name="search_pr" Value="Find"></div>
+								<div id='alrt' style="font-weight:bold"></div>
+								<div class="col-lg-4"><input type="submit" class="btn btn-warning" id ="submit" name="search_pr" Value="Find"></div>
 								<input type="hidden" name="baseurl" id="baseurl" value="<?php echo base_url(); ?>">
 								<input type="hidden" name="prid" id="prid">
 							</form>
