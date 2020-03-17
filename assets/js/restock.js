@@ -422,3 +422,27 @@ function choosePRSS(){
         }
     }); 
 }
+
+function choosePRres(){
+    var loc= document.getElementById("baseurl").value;
+    var redirect = loc+'index.php/restock/getPRinformation';
+    var prno = document.getElementById("pr").value;
+    document.getElementById('alertss').innerHTML='<b>Please wait, Loading data!</b>'; 
+    $("#sub").hide(); 
+    setTimeout(function() {
+        document.getElementById('alertss').innerHTML=''; 
+        $("#sub").show(); 
+    },5000);
+    $.ajax({
+        type: 'POST',
+        url: redirect,
+        data: 'prno='+prno,
+        dataType: 'json',
+        success: function(response){
+            $("#pr").val(response.pr_no);
+            $("#end").val(response.enduse);
+            $("#dept").val(response.department);
+            $("#pur").val(response.purpose);
+        }
+    }); 
+}
