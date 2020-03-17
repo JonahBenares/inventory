@@ -357,6 +357,12 @@ function chooseItem(){
     var loc= document.getElementById("baseurl").value;
     var redirect = loc+'index.php/restock/getIteminformation';
     var item = document.getElementById("item").value;
+    document.getElementById('alrt').innerHTML='<b>Please wait, Loading data!</b>'; 
+    $("#savebutton").hide(); 
+    setTimeout(function() {
+        document.getElementById('alrt').innerHTML=''; 
+        $("#savebutton").show(); 
+    },5000);
     $.ajax({
         type: 'POST',
         url: redirect,
@@ -375,6 +381,12 @@ function chooseSupplier(){
     var loc= document.getElementById("baseurl").value;
     var redirect = loc+'index.php/restock/getSupplierinformation';
     var supplier = document.getElementById("supplier").value;
+    document.getElementById('alrt').innerHTML='<b>Please wait, Loading data!</b>'; 
+    $("#savebutton").hide(); 
+    setTimeout(function() {
+        document.getElementById('alrt').innerHTML=''; 
+        $("#savebutton").show(); 
+    },5000);
     $.ajax({
         type: 'POST',
         url: redirect,
@@ -383,6 +395,54 @@ function chooseSupplier(){
         success: function(response){
             $("#supplier_id").val(response.supplier_id);
             $("#supplier_name").val(response.supplier_name);
+        }
+    }); 
+}
+
+function choosePRSS(){
+    var loc= document.getElementById("baseurl").value;
+    var redirect = loc+'index.php/restock/getPRinformation';
+    var prno = document.getElementById("prres").value;
+    document.getElementById('alert').innerHTML='<b>Please wait, Loading data!</b>'; 
+    $("#proceed").hide(); 
+    setTimeout(function() {
+        document.getElementById('alert').innerHTML=''; 
+        $("#proceed").show(); 
+    },5000);
+    $.ajax({
+        type: 'POST',
+        url: redirect,
+        data: 'prno='+prno,
+        dataType: 'json',
+        success: function(response){
+            $("#prres").val(response.pr_no);
+            $("#endres").val(response.enduse);
+            $("#deptres").val(response.department);
+            $("#purres").val(response.purpose);
+        }
+    }); 
+}
+
+function choosePRres(){
+    var loc= document.getElementById("baseurl").value;
+    var redirect = loc+'index.php/restock/getPRinformation';
+    var prno = document.getElementById("pr").value;
+    document.getElementById('alertss').innerHTML='<b>Please wait, Loading data!</b>'; 
+    $("#sub").hide(); 
+    setTimeout(function() {
+        document.getElementById('alertss').innerHTML=''; 
+        $("#sub").show(); 
+    },5000);
+    $.ajax({
+        type: 'POST',
+        url: redirect,
+        data: 'prno='+prno,
+        dataType: 'json',
+        success: function(response){
+            $("#pr").val(response.pr_no);
+            $("#end").val(response.enduse);
+            $("#dept").val(response.department);
+            $("#pur").val(response.purpose);
         }
     }); 
 }

@@ -1,7 +1,5 @@
 <script src="<?php echo base_url(); ?>assets/js/jquery.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/issue.js"></script>
-<link href="<?php echo base_url(); ?>assets/Styles/select2.min.css" rel="stylesheet" />
-<script src="<?php echo base_url(); ?>assets/js/select2.min.js"></script>
 <style type="text/css">
 	#name-item{
 		width:57%!important;
@@ -46,7 +44,8 @@
 									</select>
 									<input type='hidden' name='request_id' id='request_id'>
 								</td>
-								<td ><input type='submit' class="btn btn-warning" value="Load" onclick="loadIssuance()"></td>					
+								<td align="center"><div id='alrt' style="font-weight:bold;"></div></td>
+								<td ><input type='submit' id="saveissuance" class="btn btn-warning" value="Load" onclick="loadIssuance()"></td>					
 							</tr>
 						</table>
 						<input type="hidden" name="baseurl" id="baseurl" value="<?php echo base_url(); ?>">
@@ -206,6 +205,3 @@
 			</div>
 		</div>
 	</div>
-<script>
-    $('.select2').select2();
-</script>

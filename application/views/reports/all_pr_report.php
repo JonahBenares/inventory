@@ -1,5 +1,6 @@
 <script src="<?php echo base_url(); ?>assets/js/jquery.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/reports.js"></script>
+
 <style type="text/css">
 	    #name-item li {width: 50%}
 </style>	
@@ -9,7 +10,7 @@
 			<li><a href="#">
 				<em class="fa fa-home"></em>
 			</a></li>
-			<li class="active">Item Report</li>
+			<li class="active">All PR Report</li>
 		</ol>
 	</div><!--/.row-->
 	
@@ -31,13 +32,22 @@
 								<table width="100%">
 									<tr>
 										<td width="15%"><p class="pull-right">Search PR:</p></td>
-										<td>
-											<input type="text" name="pr" id="pr" class="form-control" autocomplete='off'>
-											<span id="suggestion-pr"></span>
+										<td width="60%">
+											<!-- <input type="text" name="pr" id="pr" class="form-control" autocomplete='off'>
+											<span id="suggestion-pr"></span> -->
+											<select name="pr" id='pr' class="form-control select2" onchange="choosePRS()" style="margin:4px;width:100%">
+												<option value = "">-Choose PR-</option>
+												<?php foreach($pr_rep AS $prs){ ?>
+												<option value = "<?php echo $prs->pr_no;?>"><?php echo $prs->pr_no;?></option>
+												<?php } ?>
+											</select>
+											<br>
 											<input type="hidden" name="prid" id="prid">
 										</td>
+										<td align="center"><div id='alrt' style="font-weight:bold"></div></td>
 										<td>
-											<input type="submit" name="search_inventory" value='Generate Report' class="btn btn-warning" >
+											<input type="hidden" name="baseurl" id="baseurl" value="<?php echo base_url(); ?>">
+											<input type="submit" name="search_inventory" id="submit" value='Generate Report' class="btn btn-warning" >
 										</td>
 									</tr>
 								</table>
@@ -101,4 +111,3 @@
 			</div>
 		</div>
 	</div>
-	<script type="text/javascript"></script>

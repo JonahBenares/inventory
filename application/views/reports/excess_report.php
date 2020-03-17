@@ -41,7 +41,7 @@
 										</td>										
 										<td width="30%">
 											<br>
-											<select name="item" class="form-control" >
+											<select name="item" class="form-control select2" >
 												<option value="" selected="">-Item-</option>
 												<?php foreach($item AS $it){ ?>
 													<option value="<?php echo $it->item_id; ?>"><?php echo $it->item_name; ?></option>
@@ -68,7 +68,7 @@
 										</td>
 										<td>
 											<br>
-											<select name="enduse" class="form-control">
+											<select name="enduse" class="form-control select2">
 												<option value="" selected="">-Enduse-</option>
 												<?php foreach($enduse AS $e){ ?>
 													<option value="<?php echo $e->enduse_id; ?>"><?php echo $e->enduse_name; ?></option>
