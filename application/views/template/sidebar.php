@@ -106,7 +106,7 @@
 		</div>
 	</div>
 	
-	<div class="modal fade" id="requestModal" tabindex="-1" role="dialog" aria-labelledby="requestModal">
+	<div class="modal fade" id="requestModal" role="dialog" aria-labelledby="requestModal">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header modal-headback">
@@ -145,7 +145,7 @@
 							</tr>
 							<tr>
 								<td width="20%"><label>Department:</label></td>
-								<td colspan="2" style ="padding-bottom: 5px;padding-left: 4px;">
+								<td colspan="2" style ="padding-bottom: 5px;">
 									<select name = "department" class = "form-control" id = "department" style="margin:4px;width:100%">
 										<option value="" selected="" >-Select Department-</option>
 										<?php foreach($department AS $dept){ ?>
@@ -156,7 +156,7 @@
 							</tr>
 							<tr>
 								<td width="20%"><label>Purpose:</label></td>
-								<td colspan="2" style ="padding-bottom: 5px;padding-left: 4px;" >
+								<td colspan="2" style ="padding-bottom: 5px;" >
 									<select class = "form-control" name="purpose" id = "purpose" style="margin:4px;width:100%">
 										<option value="" selected="">-Select Purpose-</option>
 										<?php foreach($purpose AS $purp){ ?>
@@ -167,7 +167,7 @@
 							</tr>
 							<tr>
 								<td width="20%"><label>End-Use:</label></td>
-								<td colspan="2" style ="padding-bottom: 5px;padding-left: 4px;" >
+								<td colspan="2" style ="padding-bottom: 5px;" >
 									<select name = "enduse" class = "form-control" id = "enduse" style="margin:4px;width:100%">
 										<option value="" selected="">-Select End-Use-</option>
 										<?php foreach($enduse AS $end){ ?>
@@ -219,7 +219,7 @@
 		</div>
 	</div>
 
-	<div class="modal fade" id="restockModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal fade" id="restockModal" role="dialog" aria-labelledby="myModalLabel">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header modal-headback">
@@ -250,7 +250,7 @@
 							</tr>
 							<tr>
 								<td width="20%"><label>Department:</label></td>		
-								<td style ="padding-bottom: 5px;padding-left: 4px;">
+								<td style ="padding-bottom: 5px;">
 									<select name="department" id='deptres' class="form-control" style="margin:4px;width:100%">
 										<option value = "">-Choose Department-</option>
 										<?php foreach($department AS $dep){ ?>
@@ -261,7 +261,7 @@
 							</tr>
 							<tr>
 								<td width="20%"><label>Purpose:</label></td>		
-								<td style ="padding-bottom: 5px;padding-left: 4px;">
+								<td style ="padding-bottom: 5px;">
 									<select name="purpose" id='purres' class="form-control" style="margin:4px;width:100%">
 										<option value = "">-Choose Purpose-</option>
 										<?php foreach($purpose AS $pur){ ?>
@@ -272,7 +272,7 @@
 							</tr>
 							<tr>
 								<td width="20%"><label>End-Use:</label></td>		
-								<td style ="padding-bottom: 5px;padding-left: 4px;">
+								<td style ="padding-bottom: 5px;">
 									<select name="enduse" id='endres' class="form-control" style="margin:4px;width:100%">
 										<option value = "">-Choose End-Use-</option>
 										<?php foreach($enduse AS $end){ ?>
