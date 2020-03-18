@@ -83,6 +83,7 @@
 							</div>
 							<div class="col-lg-2">
 								<h5>Department: 
+
 									<select name="department" id='department' class="form-control">
 										<option value = ""></option>
 										<?php foreach($department AS $dep){ ?>

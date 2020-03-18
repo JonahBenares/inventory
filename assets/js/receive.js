@@ -225,13 +225,17 @@ function selectPRNO(valu,dept,enduse,purposeid,inspected_by) {
  
     $("#prno").val(valu);
     $("#department").val(dept);
+
+
+
     $("#enduse").val(enduse);
     $("#purpose").val(purposeid);
     $("#inspected").val(inspected_by);
+
  //   $("#purpose").val(purpose1);
   
    /* $("#purpose_id").val(purposeid);*/
-    
+   
     $("#department").css({"pointer-events": "none"});
     $("#enduse").css({"pointer-events": "none"});
     $("#purpose").css({"pointer-events": "none"});
@@ -314,6 +318,8 @@ var numOfTrue=0;
          alert('Item must not be empty. Please choose/click from the suggested item list.');
     }else if(unitcost==''){
          alert('Unit Cost must not be empty.');
+    }else if(recqty==''){
+         alert('Delivered/Received quantity must not be empty.');
     }else {
     	  var rowCount = $('#item_body tr').length;
     	  count=rowCount+1;
