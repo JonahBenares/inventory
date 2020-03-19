@@ -28,7 +28,7 @@ $(document).on('click', '#getEP', function(e){
           type: 'POST',
           data: 'id='+uid+'&recid='+rec_id,
         beforeSend:function(){
-            $("#ep").html('Please wait ..');
+            $("#ep").html('Please wait ...');
         },
         success:function(data){
            $("#ep").html(data);
@@ -514,7 +514,7 @@ function chooseItem(){
     var loc= document.getElementById("baseurl").value;
     var redirect = loc+'index.php/receive/getIteminformation';
     var item = document.getElementById("item").value;
-    document.getElementById('alerto').innerHTML='<b>Please wait, Loading data!</b>'; 
+    document.getElementById('alerto').innerHTML='<b>Please wait, Loading data...</b>'; 
     $("#additem").hide(); 
     setTimeout(function() {
         document.getElementById('alerto').innerHTML=''; 
@@ -538,7 +538,7 @@ function chooseSupplier(){
     var loc= document.getElementById("baseurl").value;
     var redirect = loc+'index.php/receive/getSupplierinformation';
     var supplier = document.getElementById("supplier").value;
-    document.getElementById('alerto').innerHTML='<b>Please wait, Loading data!</b>'; 
+    document.getElementById('alerto').innerHTML='<b>Please wait, Loading data...</b>'; 
     $("#additem").hide(); 
     setTimeout(function() {
         document.getElementById('alerto').innerHTML=''; 
