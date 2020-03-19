@@ -155,6 +155,7 @@ function add_item(){
     var unit =$('#unit').val();
     /*var invqty =$('#invqty').val();*/
     var quantity =parseInt($('#quantity').val());
+    var invqty =parseInt($('#invqty').val());
     var unit_cost =$('#unit_cost').val();
     var siid =$('#siid').val();
     
@@ -172,7 +173,7 @@ function add_item(){
          alert('Cross Reference must not be empty.');
     } else if(quantity==''){
          alert('Quantity must not be empty.');
-    }else if(quantity>maxqty){
+    }else if(quantity>invqty){
          alert('Cannot request more than existing quantity!');
     } else {
     	  var rowCount = $('#item_body tr').length;
