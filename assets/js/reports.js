@@ -142,7 +142,7 @@ function choosePRS(){
     var loc= document.getElementById("baseurl").value;
     var redirect = loc+'index.php/reports/getPRinformation';
     var prno = document.getElementById("pr").value;
-    document.getElementById('alrt').innerHTML='<b>Please wait, Loading data!</b>'; 
+    document.getElementById('alrt').innerHTML='<b>Please wait, Loading data...</b>'; 
     $("#submit").hide(); 
     setTimeout(function() {
         document.getElementById('alrt').innerHTML=''; 
@@ -165,7 +165,7 @@ function chooseItem(){
     var loc= document.getElementById("baseurl").value;
     var redirect = loc+'index.php/reports/getIteminformation';
     var item = document.getElementById("item").value;
-    document.getElementById('alrt').innerHTML='<b>Please wait, Loading data!</b>'; 
+    document.getElementById('alrt').innerHTML='<b>Please wait, Loading data...</b>'; 
     $("#submit").hide(); 
     setTimeout(function() {
         document.getElementById('alrt').innerHTML=''; 
@@ -189,7 +189,7 @@ function chooseSupplier(){
     var loc= document.getElementById("baseurl").value;
     var redirect = loc+'index.php/reports/getSupplierinformation';
     var supplier = document.getElementById("supplier").value;
-    document.getElementById('alrt').innerHTML='<b>Please wait, Loading data!</b>'; 
+    document.getElementById('alrt').innerHTML='<b>Please wait, Loading data...</b>'; 
     $("#submit").hide(); 
     setTimeout(function() {
         document.getElementById('alrt').innerHTML=''; 

@@ -2,7 +2,7 @@ function choosePR(){
     var loc= document.getElementById("baseurl").value;
     var redirect = loc+'index.php/request/getPR';
     var prno = document.getElementById("prno").value;
-    document.getElementById('alerts').innerHTML='<b>Please wait, Loading data!</b>'; 
+    document.getElementById('alerts').innerHTML='<b>Please wait, Loading data...</b>'; 
     $("#proceeds").hide(); 
     setTimeout(function() {
         document.getElementById('alerts').innerHTML=''; 
@@ -104,7 +104,8 @@ function balancePRItem(){
             url: redirectcr,
             data:'item='+itemid+'&pr='+pr,
             success: function(output){
-                alert(output);
+                alert("Available Balance for this PR and Item:" + output);
+                document.getElementById("maxqty").value = output;
             }
           });
     } 
@@ -153,7 +154,8 @@ function add_item(){
     var original_pn =$('#original_pn').val();
     var unit =$('#unit').val();
     /*var invqty =$('#invqty').val();*/
-    var quantity =$('#quantity').val();
+    var quantity =parseInt($('#quantity').val());
+    var invqty =parseInt($('#invqty').val());
     var unit_cost =$('#unit_cost').val();
     var siid =$('#siid').val();
     
@@ -161,15 +163,17 @@ function add_item(){
     var i = item.replace(/&/gi,"and");
     var i = i.replace(/#/gi,"");
     var itm = i.replace(/"/gi,"");
-    var getmax = document.getElementById("getmax").value;
-    var maxqty = document.getElementById("maxqty").value;
+    /*var getmax = parseInt(document.getElementById("getmax").value);*/
+    var maxqty = parseInt(document.getElementById("maxqty").value);
+     //alert(quantity);
+    //alert(maxqty);
     if(itemid==''){
          alert('Item must not be empty. Please choose/click from the suggested item list.');
     } else if(siid==''){
          alert('Cross Reference must not be empty.');
     } else if(quantity==''){
          alert('Quantity must not be empty.');
-    }else if(getmax>maxqty){
+    }else if(quantity>invqty){
          alert('Cannot request more than existing quantity!');
     } else {
     	  var rowCount = $('#item_body tr').length;
@@ -264,7 +268,7 @@ function getUnitCost(){
     });
 }
 
-function getMaxqty(){
+/*function getMaxqty(){
     var siid= document.getElementById("siid").value;
     var loc= document.getElementById("baseurl").value;
     var redirect = loc+'index.php/request/getMaxqty';
@@ -276,7 +280,7 @@ function getMaxqty(){
                 document.getElementById("maxqty").value = output;
             }
     });
-}
+}*/
 
 $(document).ready(function(){
     $("#quantity").keyup(function(){
@@ -289,7 +293,7 @@ function chooseItem(){
     var loc= document.getElementById("baseurl").value;
     var redirect = loc+'index.php/request/getIteminformation';
     var item = document.getElementById("item").value;
-    document.getElementById('alrt').innerHTML='<b>Please wait, Loading data!</b>'; 
+    document.getElementById('alrt').innerHTML='<b>Please wait, Loading data...</b>'; 
     $("#submit").hide(); 
     setTimeout(function() {
         document.getElementById('alrt').innerHTML=''; 

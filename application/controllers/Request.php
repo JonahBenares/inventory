@@ -430,7 +430,11 @@ class Request extends CI_Controller {
 
         $issue_qty = array_sum($qty);
         $bal=($recqty-$issue_qty);
-        echo "Available Balance for this PR and Item: ".$bal;
+        echo $bal;
+    }
+
+    public function max_qty_pritem(){
+
     }
 
      public function itemlist(){
@@ -467,7 +471,7 @@ class Request extends CI_Controller {
         $item=$this->input->post('item');
         $rows=$this->super_model->count_custom_where("supplier_items","item_id = '$item'");
         if($rows!=0){
-            echo "<select name='siid' id='siid' class='form-control' onchange='getUnitCost()' onclick='getMaxqty()'>";
+            echo "<select name='siid' id='siid' class='form-control' onchange='getUnitCost()' >";
             echo "<option value=''>-Cross Reference-</option>";
             foreach($this->super_model->select_custom_where("supplier_items","item_id = '$item' AND quantity != '0'") AS $itm){ 
                     $brand = $this->super_model->select_column_where("brand", "brand_name", "brand_id", $itm->brand_id);
