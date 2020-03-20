@@ -485,6 +485,8 @@ function readPic1(input) {
             cache: false,
             success: function(output){
                var output= output.trim();
+             //  alert(output);
+          
                if(output=='ext'){
                 alert('Error: File extension error.')
                } else {
