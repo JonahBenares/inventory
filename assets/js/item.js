@@ -450,7 +450,7 @@ function readPic1(input) {
 
 
     var pnformat =document.getElementById('pn_format').value;
-    frm.append('pnformat', pn_format);
+    frm.append('pnformat', pnformat);
 
     var img1 = document.getElementById('img1');
     frm.append('img1', img1.files[0]);
@@ -485,8 +485,6 @@ function readPic1(input) {
             cache: false,
             success: function(output){
                var output= output.trim();
-             //  alert(output);
-          
                if(output=='ext'){
                 alert('Error: File extension error.')
                } else {
