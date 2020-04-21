@@ -206,14 +206,19 @@ function add_item(){
 function saveRequest(){
     var req = $("#Requestfrm").serialize();
     var loc= document.getElementById("baseurl").value;
-    var redirect = loc+'index.php/request/insertRequest';
+    var conf = confirm('Are you sure you want to save this record?');
+    alert(conf);
+    if(conf==true){
+        var redirect = loc+'index.php/request/insertRequest';
+    }else {
+        var redirect = '';
+    }
      $.ajax({
             type: "POST",
             url: redirect,
             data: req,
             success: function(output){
-                var conf = confirm('Are you sure you want to save this record?');
-                if(conf){
+                if(conf==true){
                     alert("Request successfully Added!");
                     /*window.location = loc+'index.php/request/mreqf/'+output;*/
                     location.reload();
