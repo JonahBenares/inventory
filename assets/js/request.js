@@ -207,7 +207,6 @@ function saveRequest(){
     var req = $("#Requestfrm").serialize();
     var loc= document.getElementById("baseurl").value;
     var conf = confirm('Are you sure you want to save this record?');
-    alert(conf);
     if(conf==true){
         var redirect = loc+'index.php/request/insertRequest';
     }else {
