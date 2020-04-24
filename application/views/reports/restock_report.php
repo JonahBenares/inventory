@@ -106,19 +106,17 @@
 											<td width="" align="center"><strong>PR#.</strong></td>
 											<td width="" align="center"><strong>Item Part No.</strong></td>
 											<td width="" align="center"><strong>Item Description</strong></td>
+											<td width="" align="center"><strong>Quantity</strong></td>
 											<td width="" align="center"><strong>UoM</strong></td>
 											<td width="" align="center"><strong>Unit Cost</strong></td>
-											<td width="" align="center"><strong>Quantity</strong></td>
+											
 											<td width="" align="center"><strong>Total Cost</strong></td>
 											<td width="" align="center"><strong>Supplier</strong></td>
 											<td width="" align="center"><strong>Department</strong></td>
-											<td width="30%" align="center"><strong>End-Use</strong></td>
 											<td width="" align="center"><strong>Purpose</strong></td>
-											<td width="" align="center"><strong>Acknowledge By</strong></td>
-											<td width="" align="center"><strong>Noted By</strong></td>
-											<td width="" align="center"><strong>Returned By</strong></td>
-											<td align="center" ><strong>Received By</strong></td>
-
+											<td width="30%" align="center"><strong>End-Use</strong></td>
+											<td  align="center"><strong>Reason</strong></td>
+											<td  align="center"><strong>Remarks</strong></td>
 										</tr>
 									</thead>
 									<tbody>
@@ -128,18 +126,16 @@
 											<td align="center"><?php echo $rec['pr']?></td>
 											<td align="center"><?php echo $rec['pn']?></td>
 											<td align="center"><?php echo $rec['item']?></td>
+											<td align="center"><?php echo $rec['qty']?></td>
 											<td align="center"><?php echo $rec['unit']?></td>
 											<td align="center"><?php echo $rec['unit_cost']?></td>
-											<td align="center"><?php echo $rec['qty']?></td>
 											<td align="center"><?php echo $rec['total_cost']?></td>
 											<td align="center"><?php echo $rec['supplier']?></td>
 											<td align="center"><?php echo $rec['department']?></td>
-											<td align="center"><?php echo $rec['enduse']?></td>
 											<td align="center"><?php echo $rec['purpose']?></td>
-											<td align="center"><?php echo $rec['acknowledge']?></td>
-											<td align="center"><?php echo $rec['noted_by']?></td>
-											<td align="center"><?php echo $rec['returned_by']?></td>
-											<td align="center"><?php echo $rec['received_by']?></td>
+											<td align="center"><?php echo $rec['enduse']?></td>
+											<td align="center"><?php echo $rec['reason']?></td>
+											<td align="center"><?php echo $rec['remarks']?></td>
 										</tr>
 										<?php } ?>
 									</tbody>

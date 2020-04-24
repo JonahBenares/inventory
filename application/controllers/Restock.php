@@ -62,14 +62,14 @@ class Restock extends CI_Controller {
                 }else{
                     $returned_by = $this->super_model->select_column_where("users", "fullname", "user_id", $res->returned_by);
                 }*/
-                $returned_by = $this->super_model->select_column_where("employees", "employee_name", "employee_id", $res->returned_by);
+               /* $returned_by = $this->super_model->select_column_where("employees", "employee_name", "employee_id", $res->returned_by);
                 $noted_by = $this->super_model->select_column_where("employees", "employee_name", "employee_id", $res->noted_by);
                 $acknowledge_by = $this->super_model->select_column_where("employees", "employee_name", "employee_id", $res->acknowledge_by);
                 if($res->excess!=1){
                     $received_by = $this->super_model->select_column_where("employees", "employee_name", "employee_id", $res->received_by);
                 }else{
                     $received_by = $this->super_model->select_column_where("users", "fullname", "user_id", $res->received_by);
-                }
+                }*/
                 $data['restock'][] = array(
                     'rhead_id'=>$res->rhead_id,
                     'date'=>$res->restock_date,
@@ -77,11 +77,8 @@ class Restock extends CI_Controller {
                     'department'=>$department,
                     'enduse'=>$enduse,
                     'purpose'=>$purpose,
-                    'acknowledge'=>$acknowledge_by,
-                    'noted'=>$noted_by,
-                    'returned'=>$returned_by,
+                    'mrwf_no'=>$res->mrwf_no,
                     'excess'=>$res->excess,
-                    'received'=>$received_by
                 );
             }
         } else {
