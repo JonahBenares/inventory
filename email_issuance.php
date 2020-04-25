@@ -15,30 +15,30 @@ function select_column_where($table, $column, $where, $value){
 }
 
 
-       $startdate = "2019-11-16";
-       $now="2019-11-24";
-       /* $startdate = date('Y-m-d', strtotime("-7 days"));
-        $now=date('Y-m-d');*/
+      /* $startdate = "2019-11-16";
+       $now="2019-11-24";*/
+        $startdate = date('Y-m-d', strtotime("-7 days"));
+        $now=date('Y-m-d');
         $startday=date('d', strtotime($startdate));
         $daynow=date('d');
         $monthnow=date('M');
         $yearnow=date('Y');
-        $to='jasonflor.cenpri@gmail.com, jonahbenares.cenpri@gmail.com, donna7.cenpri@gmail.com, stephineseverino.cenpri@gmail.com';
+        $to='ericjabiniar2015@yahoo.com, mba_energreen2013@gmail.com, maylen_cenpri@yahoo.com.ph, kervic.cenpri@gmail.com, merrydioso.energreen@gmail.com, donna7.cenpri@gmail.com ,jonahbenares.cenpri@gmail.com, hezielaplaon.cenpri@gmail.com, cristycesar.cenpri@gmail.com, rdestacamento.cenpri@gmail.com';
         // $to='jasonflor.cenpri@gmail.com';
         // $to='donna7.cenpri@gmail.com'; 
         // $to='creiramirez.cenpri@gmail.com, ericjabiniar2015@yahoo.com, mba_energreen2013@yahoo.com, maylen_cenpri@yahoo.com.ph, kervic.cenpri@gmail.com, merrydioso.energreen@gmail.com';
         //$to='creiramirez.cenpri@gmail.com';
         // $to='stephineseverino.cenpri@gmail.com';
 
-        $subject="Inventory Issuance Report: Nov 16-24 2019 (Final)";
-        // $subject="Inventory Issuance Report: ".$monthnow." ".$startday."-".$daynow." ".$yearnow;
+        //$subject="Inventory Issuance Report: Nov 16-24 2019 (Final)";
+         $subject="Inventory Issuance Report: ".$monthnow." ".$startday."-".$daynow." ".$yearnow;
      
         $col1 = 1;
         $row1 = 1;
        
         $message="";
-        // $message.="Inventory Issuance Report: ".$monthnow." ".$startday."-".$daynow." ".$yearnow."<br><br>";
-        $message.="Inventory Issuance Report: Nov 16-24 2019 <br><br>";
+         $message.="Inventory Issuance Report: ".$monthnow." ".$startday."-".$daynow." ".$yearnow."<br><br>";
+        //$message.="Inventory Issuance Report: Nov 16-24 2019 <br><br>";
         $getHead=mysqli_query($con,"SELECT * FROM issuance_head WHERE issue_date  BETWEEN '$startdate' AND '$now'");
         while($head = mysqli_fetch_array($getHead)){
             $department = select_column_where("department", "department_name", "department_id", $head['department_id']);
