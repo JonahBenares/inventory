@@ -200,10 +200,8 @@ function saveRestock1(){
             data:restockdata1,
             success: function(output){
                 //alert(output);
-                if(output==output){
-                  
-                    window.location = loc+'index.php/restock/add_restock_first/'+output;
-                }
+                alert('Restock Successfully!');
+                window.location = loc+'index.php/restock/add_restock_first/'+output;
             }
           });
     }
@@ -358,10 +356,10 @@ function chooseItem(){
     var redirect = loc+'index.php/restock/getIteminformation';
     var item = document.getElementById("item").value;
     document.getElementById('alrt').innerHTML='<b>Please wait, Loading data...</b>'; 
-    $("#savebutton").hide(); 
+    $("#additm").hide(); 
     setTimeout(function() {
         document.getElementById('alrt').innerHTML=''; 
-        $("#savebutton").show(); 
+        $("#additm").show(); 
     },5000);
     $.ajax({
         type: 'POST',
@@ -382,10 +380,10 @@ function chooseSupplier(){
     var redirect = loc+'index.php/restock/getSupplierinformation';
     var supplier = document.getElementById("supplier").value;
     document.getElementById('alrt').innerHTML='<b>Please wait, Loading data...</b>'; 
-    $("#savebutton").hide(); 
+    $("#additm").hide(); 
     setTimeout(function() {
         document.getElementById('alrt').innerHTML=''; 
-        $("#savebutton").show(); 
+        $("#additm").show(); 
     },5000);
     $.ajax({
         type: 'POST',

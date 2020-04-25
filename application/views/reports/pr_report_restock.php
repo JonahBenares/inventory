@@ -136,12 +136,12 @@
 							</div>	
 
 							<!-- end loop -->
+							<?php } ?>
 							<table width="100%" id="prntby">
 				                <tr>
 				                    <td style="font-size:12px">Printed By: <?php echo $printed.' / '. date("Y-m-d"). ' / '. date("h:i:sa")?> </td>
 				                </tr>
 				            </table>
-							<?php } ?>
 						</div>
 					</div>
 				</div>

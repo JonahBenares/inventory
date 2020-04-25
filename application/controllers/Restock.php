@@ -70,6 +70,8 @@ class Restock extends CI_Controller {
                 }else{
                     $received_by = $this->super_model->select_column_where("users", "fullname", "user_id", $res->received_by);
                 }
+                $reason=$this->super_model->select_column_where("restock_details","reason","rhead_id",$res->rhead_id);
+                $remarks=$this->super_model->select_column_where("restock_details","remarks","rhead_id",$res->rhead_id);
                 $data['restock'][] = array(
                     'rhead_id'=>$res->rhead_id,
                     'date'=>$res->restock_date,
@@ -81,6 +83,9 @@ class Restock extends CI_Controller {
                     'noted'=>$noted_by,
                     'returned'=>$returned_by,
                     'excess'=>$res->excess,
+                    'reason'=>$reason,
+                    'mrwf_no'=>$res->mrwf_no,
+                    'remarks'=>$remarks,
                     'received'=>$received_by
                 );
             }
