@@ -54,8 +54,6 @@
 										<td width="" align="center"><strong>Department</strong></td>
 										<td width="" align="center"><strong>Purpose</strong></td>
 										<td width="30%" align="center"><strong>End-Use</strong></td>
-										<td width="30%" align="center"><strong>Reason</strong></td>
-										<td width="" align="center"><strong>Remarks</strong></td>
 										<td align="center" ><strong>Excess</strong></td>
 										<td align="center" ><strong>Action</strong></td>
 
@@ -70,8 +68,6 @@
 										<td align="center"><?php echo $res['department'];?></td>
 										<td align=""><?php echo $res['purpose'];?></td>
 										<td align=""><?php echo $res['enduse'];?></td>
-										<td align=""><?php echo $res['reason'];?></td>
-										<td align=""><?php echo $res['remarks'];?></td>
 										<td align="center"><?php if($res['excess']==1){ echo 'Excess Material'; } ?></td>
 										<td style="padding:3px" align="center">
 											<a  href="<?php echo base_url();?>index.php/restock/view_restock/<?php echo $res['rhead_id'];?>" target = "_blank" class="btn btn-warning btn-xs" title="VIEW" alt='VIEW'><span class="fa fa-eye"></span></a>
