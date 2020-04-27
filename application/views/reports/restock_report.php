@@ -112,8 +112,8 @@
 											<td width="" align="center"><strong>Total Cost</strong></td>
 											<td width="" align="center"><strong>Supplier</strong></td>
 											<td width="" align="center"><strong>Department</strong></td>
-											<td width="" align="center"><strong>Purpose</strong></td>
 											<td width="30%" align="center"><strong>End-Use</strong></td>
+											<td width="" align="center"><strong>Purpose</strong></td>
 											<td  align="center"><strong>Reason</strong></td>
 											<td  align="center"><strong>Remarks</strong></td>
 										</tr>
@@ -131,8 +131,8 @@
 											<td align="center"><?php echo number_format($rec['total_cost'],2); ?></td>
 											<td align="center"><?php echo $rec['supplier']?></td>
 											<td align="center"><?php echo $rec['department']?></td>
-											<td align="center"><?php echo $rec['purpose']?></td>
 											<td align="center"><?php echo $rec['enduse']?></td>
+											<td align="center"><?php echo $rec['purpose']?></td>
 											<td align="center"><?php echo $rec['reason']?></td>
 											<td align="center"><?php echo $rec['remarks']?></td>
 										</tr>

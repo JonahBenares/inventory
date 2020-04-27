@@ -111,10 +111,8 @@
 												<td width="" align="center"><strong>Department</strong></td>
 												<td width="30%" align="center"><strong>End-Use</strong></td>
 												<td width="" align="center"><strong>Purpose</strong></td>
-												<td width="" align="center"><strong>Acknowledge By</strong></td>
-												<td width="" align="center"><strong>Noted By</strong></td>
-												<td width="" align="center"><strong>Returned By</strong></td>
-												<td align="center" ><strong>Received By</strong></td>
+												<td width="" align="center"><strong>Reason</strong></td>
+												<td align="center" ><strong>Remarks</strong></td>
 
 											</tr>
 										</thead>
@@ -133,10 +131,8 @@
 												<td align="center"><?php echo $e['department']?></td>
 												<td align="center"><?php echo $e['enduse']?></td>
 												<td align="center"><?php echo $e['purpose']?></td>
-												<td align="center"><?php echo $e['acknowledge']?></td>
-												<td align="center"><?php echo $e['noted_by']?></td>
-												<td align="center"><?php echo $e['returned_by']?></td>
-												<td align="center"><?php echo $e['received_by']?></td>
+												<td align="center"><?php echo $e['reason']?></td>
+												<td align="center"><?php echo $e['remarks']?></td>
 											</tr>
 											<?php } ?>
 										</tbody>
