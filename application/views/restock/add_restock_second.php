@@ -146,6 +146,8 @@
 								<th class="tr-bottom" width="15%"><center>Description</center></th>
 								<th class="tr-bottom" width="10%"><center>Brand</center></th>
 								<th class="tr-bottom" width="10%"><center>Cat No.</center></th>
+								<th class="tr-bottom" width="10%"><center>Unit Cost</center></th>
+								<th class="tr-bottom" width="10%"><center>Total Cost</center></th>
 								<th class="tr-bottom" width="10%"><center>Serial No.</center></th>
 								<th class="tr-bottom" width="5%"><center>Reason</center></th>
 								<th class="tr-bottom" width="15%"><center>Remarks</center></th>
@@ -168,6 +170,8 @@
 											<td><center><?php echo $ri['item']; ?></center></td>
 											<td><center><?php echo $ri['brand']; ?></center></td>
 											<td><center><?php echo $ri['catalog_no']; ?></center></td>
+											<td><center><?php echo $ri['item_cost']; ?></center></td>
+											<td><center><?php echo $ri['total']; ?></center></td>
 											<td><center><?php echo $ri['serial']; ?></center></td>
 											<td><center><?php echo $ri['reason']; ?></center></td>
 											<td><center><?php echo $ri['remarks']; ?></center></td>

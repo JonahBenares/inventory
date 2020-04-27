@@ -121,6 +121,7 @@ class Restock extends CI_Controller {
             $brand = $this->super_model->select_column_where('brand', 'brand_name', 'brand_id', $rit->brand_id);
             $serial = $this->super_model->select_column_where('serial_number', 'serial_no', 'serial_id', $rit->serial_id);
             $data['rdetails_id'] = $this->super_model->select_column_where('restock_details', 'rdetails_id', 'rhead_id', $id);
+            $total= $rit->quantity*$rit->item_cost;
             $data['details'][] = array(
                     'rdetails_id'=>$rit->rdetails_id,
                     'rhead_id'=>$rit->rhead_id,
@@ -130,7 +131,9 @@ class Restock extends CI_Controller {
                     'catalog_no'=>$rit->catalog_no,
                     'reason'=>$rit->reason,
                     'remarks'=>$rit->remarks,
+                    'item_cost'=>$rit->item_cost,
                     'qty'=>$rit->quantity,
+                    'total'=>$total,
                     'serial'=>$serial
                 );
         }
@@ -193,6 +196,7 @@ class Restock extends CI_Controller {
             $supplier = $this->super_model->select_column_where('supplier', 'supplier_name', 'supplier_id', $det->supplier_id);
             $brand = $this->super_model->select_column_where('brand', 'brand_name', 'brand_id', $det->brand_id);
             $data['rdetails_id'] = $this->super_model->select_column_where('restock_details', 'rdetails_id', 'rhead_id', $id);
+            $total=$det->quantity*$det->item_cost;
             $data['details'][] = array(
                 'rhead_id'=>$det->rhead_id,
                 'serial'=>$serial,
@@ -201,6 +205,8 @@ class Restock extends CI_Controller {
                 'brand'=>$brand,
                 'qty'=>$det->quantity,
                 'catalog_no'=>$det->catalog_no,
+                'item_cost'=>$det->item_cost,
+                'total'=>$total,
                 'reason'=>$det->reason,
                 'remarks'=>$det->remarks
             );
@@ -295,6 +301,7 @@ class Restock extends CI_Controller {
                     'brand_id'=> $this->input->post('brand_id['.$a.']'),
                     'serial_id'=> $this->input->post('serial_id['.$a.']'),
                     'catalog_no'=> $this->input->post('catalog_no['.$a.']'),
+                    'item_cost'=> $this->input->post('item_cost['.$a.']'),
                     'reason'=> $this->input->post('reason['.$a.']'),
                     'remarks'=> $this->input->post('remarks['.$a.']'),
                     'quantity'=> $this->input->post('quantity['.$a.']')
@@ -349,20 +356,30 @@ class Restock extends CI_Controller {
     }
 
     public function getitem(){
+        $item_id=$this->input->post('itemid');
+        $supplier_id=$this->input->post('supplierid');
+        $brand_id=$this->input->post('brandid');
+        $cat_no=$this->input->post('catno');
+        foreach($this->super_model->select_custom_where("receive_items", "item_id='$item_id' AND supplier_id='$supplier_id' AND brand_id='$brand_id' AND catalog_no='$cat_no'") AS $itm){
+            $item_cost=$itm->item_cost; 
+        }
+        $totalcost=$this->input->post('quantity')*$item_cost;
         $data['list'] = array(
             'supplier'=>$this->input->post('supplier'),
-            'supplierid'=>$this->input->post('supplierid'),
+            'supplierid'=>$supplier_id,
             'supplier_name'=>$this->input->post('suppliername'),
-            'itemid'=>$this->input->post('itemid'),
-            'brandid'=>$this->input->post('brandid'),
+            'itemid'=>$item_id,
+            'brandid'=>$brand_id,
             'brand'=>$this->input->post('brand'),
             'serialid'=>$this->input->post('serialid'),
             'serial'=>$this->input->post('serial'),
-            'catno'=>$this->input->post('catno'),
+            'catno'=>$cat_no,
             'reason'=>$this->input->post('reason'),
             'remarks'=>$this->input->post('remarks'),
             'item'=>$this->input->post('itemname'),
             'quantity'=>$this->input->post('quantity'),
+            'item_cost'=>$item_cost,
+            'total'=>$totalcost,
             'count'=>$this->input->post('count')
         );   
         $this->load->view('restock/row_item',$data);
