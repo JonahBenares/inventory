@@ -103,7 +103,7 @@
 												<td width="" align="center"><strong>PR#.</strong></td>
 												<td width="" align="center"><strong>Item Part No.</strong></td>
 												<td width="" align="center"><strong>Item Description</strong></td>
-												<td width="" align="center"><strong>Quantity</strong></td>
+												<td width="" align="center"><strong>Total Qty Excess</strong></td>
 												<td width="" align="center"><strong>UoM</strong></td>
 												<td width="" align="center"><strong>Unit Cost</strong></td>
 												<td width="" align="center"><strong>Total Cost</strong></td>
@@ -126,7 +126,7 @@
 												<td align="center"><?php echo $e['qty']?></td>
 												<td align="center"><?php echo $e['unit']?></td>
 												<td align="center"><?php echo $e['unit_cost']?></td>
-												<td align="center"><?php echo $e['total_cost']?></td>
+												<td align="center"><?php echo number_format($e['total_cost'],2); ?></td>
 												<td align="center"><?php echo $e['supplier']?></td>
 												<td align="center"><?php echo $e['department']?></td>
 												<td align="center"><?php echo $e['enduse']?></td>
