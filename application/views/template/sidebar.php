@@ -473,9 +473,9 @@
 		<div class="banner" >
 			<center>
 			<div style="position:relative;" >
-				<img class=""  src="<?php echo base_url(); ?>assets/default/logo_cenpri.png" width="100%" height="auto" >
+				<img class=""  src="<?php echo base_url(); ?>assets/default/logo/cenpri_logo.png" width="100%" height="auto" style="margin-top: 5px" >
 			</div></center>
-			<div class="moving-obj" style="z-index: 999; position: relative;top:-10px">			
+			<div class="moving-obj" style="z-index: 999; position: relative;top:-5px">			
 				<span class="fa fa-tasks padding-obj"></span>		
 				<span class="infinite-shake fa fa-archive padding-obj"></span>			
 				<span class="fa fa-archive padding-obj"></span>
