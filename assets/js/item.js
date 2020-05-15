@@ -379,6 +379,10 @@ function readPic1(input) {
             contentType: false,
             processData: false,
             cache: false,
+            beforeSend: function(){
+                document.getElementById('alt').innerHTML='<b>Please wait, Saving Data...</b>'; 
+                $("#next").hide(); 
+            },
             success: function(output){
                var output= output.trim();
                if(output=='ext'){
@@ -483,6 +487,10 @@ function readPic1(input) {
             contentType: false,
             processData: false,
             cache: false,
+            beforeSend: function(){
+                document.getElementById('alt').innerHTML='<b>Please wait, Saving Data...</b>'; 
+                $("#next").hide(); 
+            },
             success: function(output){
                var output= output.trim();
              //  alert(output);
