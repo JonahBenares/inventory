@@ -111,6 +111,7 @@ class Restock extends CI_Controller {
         $id=$this->uri->segment(3);
         $data['rhead_id']= $id;
         $data['supplier'] = $this->super_model->select_all_order_by("supplier", "supplier_name", "ASC");
+        $data['brand'] = $this->super_model->select_custom_where("brand", "brand_name!='' ORDER BY brand_name ASC");
         $data['items'] = $this->super_model->select_all_order_by("items", "item_name", "ASC");
         foreach($this->super_model->select_row_where("restock_details", "rhead_id", $id) AS $rit){
             foreach($this->super_model->select_custom_where("items", "item_id = '$rit->item_id'") AS $itema){
@@ -375,7 +376,7 @@ class Restock extends CI_Controller {
             'supplier_name'=>$this->input->post('suppliername'),
             'itemid'=>$item_id,
             'brandid'=>$brand_id,
-            'brand'=>$this->input->post('brand'),
+            'brand'=>$this->input->post('brandname'),
             'serialid'=>$this->input->post('serialid'),
             'serial'=>$this->input->post('serial'),
             'catno'=>$cat_no,
@@ -519,6 +520,14 @@ class Restock extends CI_Controller {
                 <?php 
             }
              echo "<ul>";
+        }
+    }
+
+    public function getBrandinformation(){
+        $brand = $this->input->post('brand');
+        foreach($this->super_model->select_custom_where("brand", "brand_id='$brand'") AS $brnd){  
+            $return = array('brand_id' => $brnd->brand_id,'brand_name' => $brnd->brand_name); 
+            echo json_encode($return);   
         }
     }
 
