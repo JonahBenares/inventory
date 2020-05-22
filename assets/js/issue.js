@@ -118,6 +118,10 @@ function saveIssue(){
 	        type: "POST",
 	        url: redirect,
 	        data: issuedata,
+            beforeSend: function(){
+                document.getElementById('alt').innerHTML='<b>Please wait, Saving Data...</b>'; 
+                $("#savebutton").hide(); 
+            },
 	        success: function(output){
               
 	        	window.location.href = loc+'index.php/issue/view_issue';

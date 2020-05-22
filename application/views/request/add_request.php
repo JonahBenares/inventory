@@ -164,6 +164,7 @@
 								<input type='hidden' name='counter' id='counter'>
 								<input type='hidden' name='userid' id='userid' value="<?php echo $_SESSION['user_id']; ?>">
 								<?php if($saved==0){ ?>
+								<center><div id='alt' style="font-weight:bold"></div></center>
 								<input type='button' class="btn btn-md btn-warning" id='savebutton' onclick='saveRequest()' style="width:100%;background: #ff5d00" value='Save and Print'>
 								<?php } ?>
 							</div>

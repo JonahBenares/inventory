@@ -182,11 +182,12 @@
 													?>
 													</tbody>
 												</table>
+												<center><div id='alt' style="font-weight:bold"></div></center>
 												<input type="hidden" name="count" id="count" value="<?php echo $ct; ?>">
 											<!-- 	<input type="hidden" name="baseurl" id="baseurl" value="<?php echo base_url(); ?>"> -->
 												<input type="hidden" name="userid" id="userid" value="<?php echo $_SESSION['user_id']; ?>">
 												
-												<input type='button' class="btn btn-md btn-warning"  onclick='saveIssue()' style="width:100%;background: #ff5d00" value='Save and Print'>
+												<input type='button' class="btn btn-md btn-warning" id="savebutton"  onclick='saveIssue()' style="width:100%;background: #ff5d00" value='Save and Print'>
 												
 											</div>
 										</div>
