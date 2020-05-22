@@ -126,7 +126,8 @@
 							</div>
 							<hr>
 							<?php if($saved==0){ ?>
-							<button onclick="SaveRes('<?php echo $rhead_id; ?>','<?php echo base_url(); ?>')" class="btn btn-warning" style="width:100%;background: #ff5d00">Save</button>
+							<center><div id='alt' style="font-weight:bold"></div></center>
+							<button onclick="SaveRes('<?php echo $rhead_id; ?>','<?php echo base_url(); ?>')" class="btn btn-warning" style="width:100%;background: #ff5d00" id="savebutton">Save</button>
 							</div>
 							<?php } } }?>
 					</div>

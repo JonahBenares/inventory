@@ -152,7 +152,7 @@
 											<td><center><?php echo $rq['unitcost']; ?></center></td>
 											<td><center><?php echo $rq['totalcost']; ?></center></td>
 											<td><center><?php echo $rq['invqty']; ?></center></td>
-											<td><center></center></td>
+											<td><center><?php echo $rq['borrowfrom_pr']; ?></center></td>
 											<td><center></center></td>
 										</tr>
 										<?php } ?>
@@ -164,6 +164,7 @@
 								<input type='hidden' name='counter' id='counter'>
 								<input type='hidden' name='userid' id='userid' value="<?php echo $_SESSION['user_id']; ?>">
 								<?php if($saved==0){ ?>
+								<center><div id='alt' style="font-weight:bold"></div></center>
 								<input type='button' class="btn btn-md btn-warning" id='savebutton' onclick='saveRequest()' style="width:100%;background: #ff5d00" value='Save and Print'>
 								<?php } ?>
 							</div>
