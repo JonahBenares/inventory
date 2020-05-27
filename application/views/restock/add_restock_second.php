@@ -43,7 +43,7 @@
 	    border-bottom: #a88748 2px solid;
 	    border-radius: 5px;
 	    transition: 0.5s;   
-	    background-size: 200% auto;
+	    background-size: 200% auto
 	}
 
 </style>

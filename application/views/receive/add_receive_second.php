@@ -33,7 +33,7 @@
 	    color: black;
 	    text-transform: uppercase;
 	    background-position: right center;      
-	    box-shadow: 0px 1px 20px 0px #ff8900;
+	    box-shadow: 0px 1px 20px 0px #ff8900
 	}
 	#name-item li {
 	    padding:5px 10px 5px 10px;
