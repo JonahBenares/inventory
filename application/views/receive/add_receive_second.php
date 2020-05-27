@@ -58,8 +58,14 @@
 				<div class="panel-heading">
 					Add New PR/JO
 					<div class="pull-right">
-						<a class="clickable btn-info btn panel-button-tab-right shadow"  href="<?php echo base_url(); ?>index.php/items/add_item_first" target='_blank'>
+						<a class="animated pulse infinite clickable btn-info btn shadow"  href="<?php echo base_url(); ?>index.php/items/add_item_first" target='_blank'>
 							<span class="fa fa-plus"></span> Add New Item
+						</a>
+						<a class="animated pulse infinite btn clickable btn-success shadow"  data-toggle="modal" data-target="#PRModal" style="border:1px solid #75c700">
+							<span class="fa fa-plus"></span> Add New PR/JO #
+						</a>
+						<a class="animated pulse infinite  clickable btn btn-warning shadow"  data-toggle="modal" data-target="#myModal" style="border:1px solid #d68a00">
+							<span class="fa fa-plus"></span> Add New Brand
 						</a>
 					</div>
 				</div>
@@ -78,9 +84,7 @@
 										<?php } ?>
 									</select>
 								</h5>
-								<a class=" clickable panel-toggle panel-button-tab-right shadow"  data-toggle="modal" data-target="#PRModal">
-									<span class="fa fa-plus"></span>
-								</a>
+								
 								<!-- <h5>PR/JO#: <input type="text" name="prno" id='prno' class="form-control" autocomplete="off">
 									<span id="suggestion-prno"></span></h5> -->
 							</div>
@@ -225,9 +229,7 @@
 										<option value = "<?php echo $brnd->brand_id;?>"><?php echo $brnd->brand_name;?></option>
 										<?php } ?>
 									</select>
-									<a class=" clickable panel-toggle panel-button-tab-right shadow"  data-toggle="modal" data-target="#myModal">
-										<span class="fa fa-plus"></span>
-									</a>
+									
 									<input type='hidden' name='brand_id' id='brand_id'>
 									<input type='hidden' name='brand_name' id='brand_name'>
 								</div>	
