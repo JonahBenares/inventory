@@ -131,8 +131,14 @@
 								</div>	
 								<div class="col-lg-4">
 									<p  style="margin:0px" for="">Reason:</p>
-									<textarea class="form-control" rows="1" name='reason' id='reason'></textarea>
-									<span id="suggestion-reason"></span></td>
+									<select name="reason" id='reason' class="form-control select2">
+										<option value = ""></option>
+										<?php foreach($reasonlist AS $res){ ?>
+										<option value = "<?php echo $res->reason;?>"><?php echo $res->reason;?></option>
+										<?php } ?>
+									</select>
+									<!-- <textarea class="form-control" rows="1" name='reason' id='reason'></textarea>
+									<span id="suggestion-reason"></span></td> -->
 								</div>														
 							</div>
 							<div class="row">
