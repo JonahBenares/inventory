@@ -137,6 +137,9 @@
 										<option value = "<?php echo $res->reason;?>"><?php echo $res->reason;?></option>
 										<?php } ?>
 									</select>
+									<a class=" clickable panel-toggle panel-button-tab-right shadow"  data-toggle="modal" data-target="#Reasonmodal">
+										<span class="fa fa-plus"></span>
+									</a>
 									<!-- <textarea class="form-control" rows="1" name='reason' id='reason'></textarea>
 									<span id="suggestion-reason"></span></td> -->
 								</div>														
@@ -232,12 +235,36 @@
 			</div>
 		</div>
 	</div>
+	<div class="modal fade" id="Reasonmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header modal-headback">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="myModalLabel">Add New Reason</h4>
+				</div>
+				<div class="modal-body">
+					<form method="POST">
+						<label>Reason Name</label>
+						<input type = "text" name = "reasonname" id="reasonname" class = "form-control option">
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+							<input type="hidden" name="baseurl1" id="baseurl1" value="<?php echo base_url(); ?>">
+							<input type="button" id = "btnAddres"  class="btn btn-warning" value = "Add" onclick = "addReason()" />
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
 	<script>
 	    $('.select2').select2();
 	</script>	
 	<script type="text/javascript">
 		$('#btnAdd').click(function() {
 		    $('#myModal').modal('hide');
+		});
+		$('#btnAddres').click(function() {
+		    $('#Reasonmodal').modal('hide');
 		});
 		function removeresitem(rdetails_id,baseurl){
 		    var redirect = baseurl+'index.php/restock/deleteResItem';
