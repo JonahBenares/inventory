@@ -113,6 +113,7 @@ class Restock extends CI_Controller {
         $data['supplier'] = $this->super_model->select_all_order_by("supplier", "supplier_name", "ASC");
         $data['brand'] = $this->super_model->select_custom_where("brand", "brand_name!='' ORDER BY brand_name ASC");
         $data['items'] = $this->super_model->select_all_order_by("items", "item_name", "ASC");
+        $data['reasonlist']=$this->super_model->select_custom_where("restock_details", "reason != '' GROUP BY reason");
         foreach($this->super_model->select_row_where("restock_details", "rhead_id", $id) AS $rit){
             foreach($this->super_model->select_custom_where("items", "item_id = '$rit->item_id'") AS $itema){
                 $unit = $this->super_model->select_column_where('uom', 'unit_name', 'unit_id', $itema->unit_id);
