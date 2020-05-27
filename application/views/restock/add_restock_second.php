@@ -43,7 +43,7 @@
 	    border-bottom: #a88748 2px solid;
 	    border-radius: 5px;
 	    transition: 0.5s;   
-	    background-size: 200% auto;
+	    background-size: 200% auto
 	}
 
 </style>
@@ -62,6 +62,12 @@
 						<!-- <a class="clickable btn-info btn panel-button-tab-right shadow"  href="<?php echo base_url(); ?>index.php/items/add_item_first" target='_blank'>
 							<span class="fa fa-plus"></span> Add New Item
 						</a> -->
+						<a class="animated pulse infinite  clickable btn btn-warning shadow" data-toggle="modal" data-target="#myModal" style="border:1px solid #d68a00">
+							<span class="fa fa-plus"></span> Add New Brand
+						</a>
+						<a class="animated pulse infinite  clickable btn btn-danger shadow"  data-toggle="modal" data-target="#Reasonmodal" style="border:1px solid #d68a00">
+							<span class="fa fa-plus"></span> Add New Reason
+						</a>
 					</div>
 				</div>
 				<div class="panel-body">
@@ -92,9 +98,7 @@
 										<option value = "<?php echo $brnd->brand_id;?>"><?php echo $brnd->brand_name;?></option>
 										<?php } ?>
 									</select>
-									<a class=" clickable panel-toggle panel-button-tab-right shadow"  data-toggle="modal" data-target="#myModal">
-										<span class="fa fa-plus"></span>
-									</a>
+									
 									<input type='hidden' name='brand_id' id='brand_id'>
 									<input type='hidden' name='brand_name' id='brand_name'>
 								</div>	
@@ -137,9 +141,7 @@
 										<option value = "<?php echo $res->reason;?>"><?php echo $res->reason;?></option>
 										<?php } ?>
 									</select>
-									<a class=" clickable panel-toggle panel-button-tab-right shadow"  data-toggle="modal" data-target="#Reasonmodal">
-										<span class="fa fa-plus"></span>
-									</a>
+									
 									<!-- <textarea class="form-control" rows="1" name='reason' id='reason'></textarea>
 									<span id="suggestion-reason"></span></td> -->
 								</div>														
