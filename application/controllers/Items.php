@@ -864,14 +864,16 @@ class Items extends CI_Controller {
                 if($row_count==0){
                     $this->super_model->insert_into("pn_series", $pn_data);
                 }
-            }   
+            }else {
+                $pn_no=$this->input->post('pn');
+            }
 
 
               $data = array(
                     'category_id' => $this->input->post('cat'),
                     'subcat_id' => $this->input->post('subcat'),
-                    'original_pn' => $this->input->post('pn'),
-                    //'original_pn' => $pn_no,
+                    //'original_pn' => $this->input->post('pn'),
+                    'original_pn' => $pn_no,
                     'item_name' => $this->input->post('item_name'),
                     'unit_id' => $this->input->post('unit'),
                     'group_id' => $this->input->post('group'),
