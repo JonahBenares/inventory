@@ -150,9 +150,9 @@
 											<?php } ?>
 										</select>
 									</h5>
-									<a class=" clickable panel-toggle panel-button-tab-right shadow"  data-toggle="modal" data-target="#PRModal">
+									<!--<a class=" clickable panel-toggle panel-button-tab-right shadow"  data-toggle="modal" data-target="#PRModal">
 										<span class="fa fa-plus"></span>
-									</a>
+									</a>-->
 								</div>
 								<div class="col-lg-2">
 									<h5>Department: 
