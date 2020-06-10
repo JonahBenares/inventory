@@ -38,53 +38,13 @@
 	.color_back{
 		background: yellow;
 	}
+	.tableFixHead          { overflow-y: auto; height: 400px; }
+	.tableFixHead thead.head { position: sticky!important; top: 0; }
 
-	table {
-  border-collapse: collapse;
-  background: white;
-  table-layout: fixed;
-  width: 100%;
-}
-th, td {
-  padding: 8px 16px;
-  border: 1px solid #ddd;
-  width: 160px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-	.pane {
-  background: #eee;
-}
-.pane-hScroll {
-  overflow: auto;
-  width: 400px;
-  background: gray;
-}
-.pane-vScroll {
-  overflow-y: auto;
-  overflow-x: hidden;
-  height: 200px;
-  background: red;
-}
-
-.pane--table2 {
-  width: 400px;
-  overflow-x: scroll;
-}
-.pane--table2 th, .pane--table2 td {
-  width: auto;
-  min-width: 160px;
-}
-.pane--table2 tbody {
-  overflow-y: scroll;
-  overflow-x: hidden;
-  display: block;
-  height: 200px;
-}
-.pane--table2 thead {
-    display: table-row;
-}
+	/* Just common table stuff. Really. */
+	table  { border-collapse: collapse; width: 100%; }
+	th, td { padding: 8px 16px; }
+	th     { background:#eee; }
 
 </style>
 <?php
@@ -135,275 +95,133 @@ th, td {
 							<button class='btn btn-primary' name='generateAccounting' onclick="generateAccounting()">Generate Report</button>
 							<?php if(!empty($from)){ ?>
 							<a href = "<?php echo base_url();?>index.php/reports/export_foraccounting/<?php echo $from;?>/<?php echo $cat1;?>/<?php echo $subcat1;?>" class = "btn btn-primary pull-right">Export to Excel</a>
+							<div class="tableFixHead">
+								<table class=" table-bordered" width="100%" >
+									<thead class="head">
+									<tr>
+										<th class="table-sty2" rowspan="3" align="center">#</th>
+										<th class="table-sty3" rowspan="3" width="1%" align="center">Part Number </th>
+										<th class="table-sty3" rowspan="3" align="center">Item Description</th>
+										<th class="table-sty2" rowspan="3" align="center">Beginning Balance</th>
+										<th class="table-sty2" rowspan="3" align="center">UOM</th>
+										<th class="table-sty2" colspan="7" align="center">MATERIAL RECEIVED</th>
+										<th class="table-sty4 color_back" rowspan="3" align="center">Total Received (in)</th>
+										<th class="table-sty2" colspan="7" align="center">MATERIAL ISSUED</th>
+										<th class="table-sty4 color_back" rowspan="3" align="center">Total Issued (out)</th>
+										<th class="table-sty2" colspan="7" align="center">MATERIAL RESTOCK</th>
+										<th class="table-sty4 color_back" rowspan="3" align="center">Total Restock (in)</th>
+										<th class="table-sty2" rowspan="3" align="center">Ending Inventory as of (Date)</th>
+									</tr>
+									<tr>
+									  <?php while(strtotime($from) <= strtotime($to)) { ?>	
+										<th class="table-sty2"><?php echo date('m/d', strtotime($from)); ?></th>
+										
+									<?php
+										$from = date ("Y-m-d", strtotime("+1 day", strtotime($from)));
+									 } 
 
-							<div class="pane pane--table1">
-								<div class="pane-hScroll">
-								<table>
-								<thead>
-								<th>1foo</th><th>2foo</th><th>3foo</th><th>4foo</th><th>5foo</th><th>6foo</th>
-								</thead>
+									  while(strtotime($from2) <= strtotime($to)) { ?>	
+										<th class="table-sty2"><?php echo date('m/d', strtotime($from2)); ?></th>
+										
+									<?php
+									$from2 = date ("Y-m-d", strtotime("+1 day", strtotime($from2)));
+									 } 
+									   while(strtotime($from5) <= strtotime($to)) { ?>	
+										<th class="table-sty2"><?php echo date('m/d', strtotime($from5)); ?></th>
+										
+									<?php
+									$from5 = date ("Y-m-d", strtotime("+1 day", strtotime($from5)));
+									 } ?>
+									
+									</tr>
+									<tr>
+										<th class="table-sty2">Qty</th>
+										<th class="table-sty2">Qty</th>
+										<th class="table-sty2">Qty</th>
+										<th class="table-sty2">Qty</th>
+										<th class="table-sty2">Qty</th>
+										<th class="table-sty2">Qty</th>
+										<th class="table-sty2">Qty</th>
+
+										<th class="table-sty2">Qty</th>
+										<th class="table-sty2">Qty</th>
+										<th class="table-sty2">Qty</th>
+										<th class="table-sty2">Qty</th>
+										<th class="table-sty2">Qty</th>
+										<th class="table-sty2">Qty</th>
+										<th class="table-sty2">Qty</th>
+
+										<th class="table-sty2">Qty</th>
+										<th class="table-sty2">Qty</th>
+										<th class="table-sty2">Qty</th>
+										<th class="table-sty2">Qty</th>
+										<th class="table-sty2">Qty</th>
+										<th class="table-sty2">Qty</th>
+										<th class="table-sty2">Qty</th>
+									</tr>
+									</thead>
+									<tbody>
+										<?php
+										$num=1;
+										foreach($items AS $it) { ?>
+										<tr>
+											<td class="table_sty1"><?php echo $num; ?></td>
+											<td class="table_sty1" width="10%"><?php echo $it['pn']; ?></td>
+											<td class="table_sty1"><?php echo $it['item_name']; ?></td>
+											<td class="table_sty1"><center><strong><?php echo $it['beginning']; ?></strong></center></td>
+											<td class="table_sty1"><?php echo $it['unit']; ?></td>
+											
+											<?php 
+											$x=1;
+											while(strtotime($from3) <= strtotime($to)) { 
+
+												$date_rec = date('Y-m-d', strtotime($from3));
+
+											 ?>	
+											<td class="table_sty1"><?php 
+											echo $it['rec_qty'.$x];
+											//echo $it['qty']; ?></td>
+										
+											<?php 
+												$from3 = date ("Y-m-d", strtotime("+1 day", strtotime($from3)));
+												$x++;
+											 } 
+											 $from3=date ("Y-m-d", strtotime("-7 day", strtotime($from3)));
+											 ?>
+
+											<td class="table_sty1 color_back"><center><strong><?php echo $it['total_received']; ?></strong></center></td>
+
+											<?php 
+											$y=1;
+											while(strtotime($from4) <= strtotime($to)) { ?>	
+											<td class="table_sty1"><?php echo $it['iss_qty'.$y]; ?></td>
+										
+											<?php
+												$from4 = date ("Y-m-d", strtotime("+1 day", strtotime($from4)));
+												$y++;
+											 } $from4=date ("Y-m-d", strtotime("-7 day", strtotime($from4))); ?>
+											<td class="table_sty1 color_back"><center><strong><?php echo $it['total_issued']; ?></strong></center></td>
+
+											<?php 
+											$y=1;
+											while(strtotime($from6) <= strtotime($to)) { ?>	
+											<td class="table_sty1"><?php echo $it['res_qty'.$y]; ?></td>
+										
+											<?php
+												$from6 = date ("Y-m-d", strtotime("+1 day", strtotime($from6)));
+												$y++;
+											 } $from6=date ("Y-m-d", strtotime("-7 day", strtotime($from6))); ?>
+											 <td class="table_sty1 color_back"><center><strong><?php echo $it['total_restocked']; ?></strong></center></td>
+											<td class="table_sty1"><center><strong><?php echo $it['ending']; ?></strong></center></td>
+
+
+										</tr>
+										<?php 
+										$num++;
+									} ?>
+									</tbody>
 								</table>
-
-								<div class="pane-vScroll">
-								<table>
-								<tbody>
-								<tr>
-									<td>1</td>
-									<td>foo</td>
-									<td>foo</td>
-									<td>foo</td>
-									<td>foo</td>
-									<td>foo</td>
-								</tr>
-								<tr>
-									<td>2</td>
-									<td>foo</td>
-									<td>foo</td>
-									<td>foo</td>
-									<td>foo</td>
-									<td>foo</td>
-								</tr>
-								<tr>
-									<td>3</td>
-									<td>foo</td>
-									<td>foo</td>
-									<td>foo</td>
-									<td>foo</td>
-									<td>foo</td>
-								</tr>
-								<tr>
-									<td>4</td>
-									<td>foo foo foo foo foo foo foo foo foo foo foo</td>
-									<td>foo</td>
-									<td>foo</td>
-									<td>foo</td>
-									<td>foo</td>
-								</tr>
-								<tr>
-									<td>5</td>
-									<td>foo</td>
-									<td>foo</td>
-									<td>foo</td>
-									<td>foo</td>
-									<td>foo</td>
-								</tr>
-								<tr>
-									<td>6</td>
-									<td>foo</td>
-									<td>foo</td>
-									<td>foo</td>
-									<td>foo</td>
-									<td>foo</td>
-								</tr>
-								<tr>
-									<td>7</td>
-									<td>foo</td>
-									<td>foo</td>
-									<td>foo</td>
-									<td>foo</td>
-									<td>foo</td>
-								</tr>
-								<tr>
-									<td>8</td>
-									<td>foo</td>
-									<td>foo</td>
-									<td>foo</td>
-									<td>foo</td>
-									<td>foo</td>
-								</tr>
-								<tr>
-									<td>9</td>
-									<td>foo</td>
-									<td>foo</td>
-									<td>foo</td>
-									<td>foo</td>
-									<td>foo</td>
-								</tr>
-								<tr>
-									<td>10</td>
-									<td>foo</td>
-									<td>foo</td>
-									<td>foo</td>
-									<td>foo</td>
-									<td>foo</td>
-								</tr>
-								<tr>
-									<td>11</td>
-									<td>foo</td>
-									<td>foo</td>
-									<td>foo</td>
-									<td>foo</td>
-									<td>foo</td>
-								</tr>
-								<tr>
-									<td>12</td>
-									<td>foo</td>
-									<td>foo</td>
-									<td>foo</td>
-									<td>foo</td>
-									<td>foo</td>
-								</tr>
-								<tr>
-									<td>13</td>
-									<td>foo</td>
-									<td>foo</td>
-									<td>foo</td>
-									<td>foo</td>
-									<td>foo</td>
-								</tr>
-								<tr>
-									<td>14</td>
-									<td>foo</td>
-									<td>foo</td>
-									<td>foo</td>
-									<td>foo</td>
-									<td>foo</td>
-								</tr>
-								<tr>
-									<td>15</td>
-									<td>foo</td>
-									<td>foo</td>
-									<td>foo</td>
-									<td>foo</td>
-									<td>foo</td>
-								</tr>
-								<tr>
-									<td>16</td>
-									<td>foo</td>
-									<td>foo</td>
-									<td>foo</td>
-									<td>foo</td>
-									<td>foo</td>
-								</tr>
-								<tr>
-									<td>17</td>
-									<td>foo</td>
-									<td>foo</td>
-									<td>foo</td>
-									<td>foo</td>
-									<td>foo</td>
-								</tr>
-								<tr>
-									<td>18</td>
-									<td>foo</td>
-									<td>foo</td>
-									<td>foo</td>
-									<td>foo</td>
-									<td>foo</td>
-								</tr>
-								<tr>
-									<td>19</td>
-									<td>foo</td>
-									<td>foo</td>
-									<td>foo</td>
-									<td>foo</td>
-									<td>foo</td>
-								</tr>
-								<tr>
-									<td>20</td>
-									<td>foo</td>
-									<td>foo</td>
-									<td>foo</td>
-									<td>foo</td>
-									<td>foo</td>
-								</tr>
-								<tr>
-									<td>21</td>
-									<td>foo</td>
-									<td>foo</td>
-									<td>foo</td>
-									<td>foo</td>
-									<td>foo</td>
-								</tr>
-								<tr>
-									<td>22</td>
-									<td>foo</td>
-									<td>foo</td>
-									<td>foo</td>
-									<td>foo</td>
-									<td>foo</td>
-								</tr>
-								<tr>
-									<td>23</td>
-									<td>foo</td>
-									<td>foo</td>
-									<td>foo</td>
-									<td>foo</td>
-									<td>foo</td>
-								</tr>
-								<tr>
-									<td>24</td>
-									<td>foo</td>
-									<td>foo</td>
-									<td>foo</td>
-									<td>foo</td>
-									<td>foo</td>
-								</tr>
-								<tr>
-									<td>25</td>
-									<td>foo</td>
-									<td>foo</td>
-									<td>foo</td>
-									<td>foo</td>
-									<td>foo</td>
-								</tr>
-								<tr>
-									<td>26</td>
-									<td>foo</td>
-									<td>foo</td>
-									<td>foo</td>
-									<td>foo</td>
-									<td>foo</td>
-								</tr>
-								<tr>
-									<td>27</td>
-									<td>foo</td>
-									<td>foo</td>
-									<td>foo</td>
-									<td>foo</td>
-									<td>foo</td>
-								</tr>
-								<tr>
-									<td>28</td>								
-									<td>foo</td>
-									<td>foo</td>
-									<td>foo</td>
-									<td>foo</td>
-									<td>foo</td>
-								</tr>
-								<tr>
-									<td>28</td>
-
-									<td>foo</td>
-									<td>foo</td>
-									<td>foo</td>
-									<td>foo</td>
-									<td>foo</td>
-								</tr>
-								<tr>
-									<td>29</td>
-
-									<td>foo</td>
-									<td>foo</td>
-									<td>foo</td>
-									<td>foo</td>
-									<td>foo</td>
-								</tr>
-								<tr>
-									<td>30</td>
-
-									<td>foo</td>
-									<td>foo</td>
-									<td>foo</td>
-									<td>foo</td>
-									<td>foo</td>
-								</tr>
-								</tbody>
-								</table>
-								</div>
-								</div>
-								</div>
-							
+							</div>
 							<?php } ?>
 						</div>	
 					</div>
@@ -413,9 +231,11 @@ th, td {
 	</div>
 
 	<script type="text/javascript">
-		// Example 1
-		$('.pane-hScroll').scroll(function() {
-		  $('.pane-vScroll').width($('.pane-hScroll').width() + $('.pane-hScroll').scrollLeft());
+		$(document).ready(function () {
+		  $('#dtHorizontalExample').DataTable({
+		    "scrollX": true
+		  });
+		  $('.dataTables_length').addClass('bs-select');
 		});
 
 		function generateAccounting(){
