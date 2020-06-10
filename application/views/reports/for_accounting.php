@@ -38,13 +38,7 @@
 	.color_back{
 		background: yellow;
 	}
-	.tableFixHead          { overflow-y: auto; height: 400px; }
-	.tableFixHead thead.head { position: sticky!important; top: 0; }
-
-	/* Just common table stuff. Really. */
-	table  { border-collapse: collapse; width: 100%; }
-	th, td { padding: 8px 16px; }
-	th     { background:#eee; }
+	
 
 </style>
 <?php
@@ -95,39 +89,39 @@
 							<button class='btn btn-primary' name='generateAccounting' onclick="generateAccounting()">Generate Report</button>
 							<?php if(!empty($from)){ ?>
 							<a href = "<?php echo base_url();?>index.php/reports/export_foraccounting/<?php echo $from;?>/<?php echo $cat1;?>/<?php echo $subcat1;?>" class = "btn btn-primary pull-right">Export to Excel</a>
-							<div class="tableFixHead">
-								<table class=" table-bordered" width="100%" >
-									<thead class="head">
+							<div style="overflow-x: scroll;">
+								<table class=" table-bordered" width="100%" id="scrollexample" style="font-size: 12px">
+									<thead>
 									<tr>
-										<th class="table-sty2" rowspan="3" align="center">#</th>
-										<th class="table-sty3" rowspan="3" width="1%" align="center">Part Number </th>
-										<th class="table-sty3" rowspan="3" align="center">Item Description</th>
-										<th class="table-sty2" rowspan="3" align="center">Beginning Balance</th>
-										<th class="table-sty2" rowspan="3" align="center">UOM</th>
-										<th class="table-sty2" colspan="7" align="center">MATERIAL RECEIVED</th>
-										<th class="table-sty4 color_back" rowspan="3" align="center">Total Received (in)</th>
-										<th class="table-sty2" colspan="7" align="center">MATERIAL ISSUED</th>
-										<th class="table-sty4 color_back" rowspan="3" align="center">Total Issued (out)</th>
-										<th class="table-sty2" colspan="7" align="center">MATERIAL RESTOCK</th>
-										<th class="table-sty4 color_back" rowspan="3" align="center">Total Restock (in)</th>
-										<th class="table-sty2" rowspan="3" align="center">Ending Inventory as of (Date)</th>
+										<td class="table-sty2" rowspan="3" align="center">#</td>
+										<td class="table-sty3" rowspan="3" width="40%" align="center">Part Number </td>
+										<td class="table-sty3" rowspan="3" align="center">Item Description</td>
+										<td class="table-sty2" rowspan="3" align="center">Beginning Balance</td>
+										<td class="table-sty2" rowspan="3" align="center">UOM</td>
+										<td class="table-sty2" colspan="7" align="center">MATERIAL RECEIVED</td>
+										<td class="table-sty4 color_back" rowspan="3" align="center">Total Received (in)</td>
+										<td class="table-sty2" colspan="7" align="center">MATERIAL ISSUED</td>
+										<td class="table-sty4 color_back" rowspan="3" align="center">Total Issued (out)</td>
+										<td class="table-sty2" colspan="7" align="center">MATERIAL RESTOCK</td>
+										<td class="table-sty4 color_back" rowspan="3" align="center">Total Restock (in)</td>
+										<td class="table-sty2" rowspan="3" align="center">Ending Inventory as of (Date)</td>
 									</tr>
 									<tr>
 									  <?php while(strtotime($from) <= strtotime($to)) { ?>	
-										<th class="table-sty2"><?php echo date('m/d', strtotime($from)); ?></th>
+										<td class="table-sty2"><?php echo date('m/d', strtotime($from)); ?></td>
 										
 									<?php
 										$from = date ("Y-m-d", strtotime("+1 day", strtotime($from)));
 									 } 
 
 									  while(strtotime($from2) <= strtotime($to)) { ?>	
-										<th class="table-sty2"><?php echo date('m/d', strtotime($from2)); ?></th>
+										<td class="table-sty2"><?php echo date('m/d', strtotime($from2)); ?></td>
 										
 									<?php
 									$from2 = date ("Y-m-d", strtotime("+1 day", strtotime($from2)));
 									 } 
 									   while(strtotime($from5) <= strtotime($to)) { ?>	
-										<th class="table-sty2"><?php echo date('m/d', strtotime($from5)); ?></th>
+										<td class="table-sty2"><?php echo date('m/d', strtotime($from5)); ?></td>
 										
 									<?php
 									$from5 = date ("Y-m-d", strtotime("+1 day", strtotime($from5)));
@@ -135,29 +129,29 @@
 									
 									</tr>
 									<tr>
-										<th class="table-sty2">Qty</th>
-										<th class="table-sty2">Qty</th>
-										<th class="table-sty2">Qty</th>
-										<th class="table-sty2">Qty</th>
-										<th class="table-sty2">Qty</th>
-										<th class="table-sty2">Qty</th>
-										<th class="table-sty2">Qty</th>
+										<td class="table-sty2">Qty</td>
+										<td class="table-sty2">Qty</td>
+										<td class="table-sty2">Qty</td>
+										<td class="table-sty2">Qty</td>
+										<td class="table-sty2">Qty</td>
+										<td class="table-sty2">Qty</td>
+										<td class="table-sty2">Qty</td>
 
-										<th class="table-sty2">Qty</th>
-										<th class="table-sty2">Qty</th>
-										<th class="table-sty2">Qty</th>
-										<th class="table-sty2">Qty</th>
-										<th class="table-sty2">Qty</th>
-										<th class="table-sty2">Qty</th>
-										<th class="table-sty2">Qty</th>
+										<td class="table-sty2">Qty</td>
+										<td class="table-sty2">Qty</td>
+										<td class="table-sty2">Qty</td>
+										<td class="table-sty2">Qty</td>
+										<td class="table-sty2">Qty</td>
+										<td class="table-sty2">Qty</td>
+										<td class="table-sty2">Qty</td>
 
-										<th class="table-sty2">Qty</th>
-										<th class="table-sty2">Qty</th>
-										<th class="table-sty2">Qty</th>
-										<th class="table-sty2">Qty</th>
-										<th class="table-sty2">Qty</th>
-										<th class="table-sty2">Qty</th>
-										<th class="table-sty2">Qty</th>
+										<td class="table-sty2">Qty</td>
+										<td class="table-sty2">Qty</td>
+										<td class="table-sty2">Qty</td>
+										<td class="table-sty2">Qty</td>
+										<td class="table-sty2">Qty</td>
+										<td class="table-sty2">Qty</td>
+										<td class="table-sty2">Qty</td>
 									</tr>
 									</thead>
 									<tbody>
@@ -166,7 +160,7 @@
 										foreach($items AS $it) { ?>
 										<tr>
 											<td class="table_sty1"><?php echo $num; ?></td>
-											<td class="table_sty1" width="10%"><?php echo $it['pn']; ?></td>
+											<td class="table_sty1"><?php echo $it['pn']; ?></td>
 											<td class="table_sty1"><?php echo $it['item_name']; ?></td>
 											<td class="table_sty1"><center><strong><?php echo $it['beginning']; ?></strong></center></td>
 											<td class="table_sty1"><?php echo $it['unit']; ?></td>
@@ -231,6 +225,19 @@
 	</div>
 
 	<script type="text/javascript">
+		$(document).ready(function() {
+		    $('#scrollexample').DataTable( {
+		        "scrollY": 300,
+		        "scrollX": true,
+		        paging:         false,
+		        fixedColumns:   {
+		            leftColumns: 1,
+		            rightColumns: 1
+		        }
+		        "lengthMenu": [[-1, 50, 25, 10], ["All", 50, 25, 10]],
+
+		    } );
+		} );
 		$(document).ready(function () {
 		  $('#dtHorizontalExample').DataTable({
 		    "scrollX": true
