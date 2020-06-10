@@ -106,7 +106,6 @@
 							<div class="col-lg-2">
 								<p>				
 									<input placeholder="Quantity" type="text" name="quantity" id="quantity" class="form-control" onkeypress="return isNumberKey(event)">
-									
 									<input type='hidden' name='maxqty' id = "maxqty">
 
 								</p>
