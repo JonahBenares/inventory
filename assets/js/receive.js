@@ -255,6 +255,7 @@ function add_item(){
     var itemid =$('#item_id').val();
 	var itemname =$('#item_name').val();
     var brand =$('#brand').val();
+    var brandname =$('#brand_name').val();
     var brandid =$('#brand_id').val();
     var serial =$('#serial').val();
     var serialid =$('#serial_id').val();
@@ -326,12 +327,18 @@ var numOfTrue=0;
     	  $.ajax({
     	 		type: "POST",
     	 		url:redirect,
-    	 		data: "supplier="+supplier+"&supplierid="+supplierid+"&suppliername="+suppliername+"&itemname="+itemname+"&itemid="+itemid+"&brand="+brand+"&brandid="+brandid+"&serial="+serial+"&serialid="+serialid+"&unitcost="+unitcost+"&catno="+catno+"&unit="+unit+"&expqty="+expqty+"&recqty="+recqty+"&remarks="+remarks+"&item="+item+"&count="+count+"&local_mnl="+local_mnl,
+    	 		data: "supplier="+supplier+"&supplierid="+supplierid+"&suppliername="+suppliername+"&itemname="+itemname+"&itemid="+itemid+"&brand="+brand+"&brandid="+brandid+"&brandname="+brandname+"&serial="+serial+"&serialid="+serialid+"&unitcost="+unitcost+"&catno="+catno+"&unit="+unit+"&expqty="+expqty+"&recqty="+recqty+"&remarks="+remarks+"&item="+item+"&count="+count+"&local_mnl="+local_mnl,
+                beforeSend: function(){
+                    document.getElementById('alerto').innerHTML='<b>Please wait, Loading Data...</b>'; 
+                    $("#additem").hide(); 
+                },
                 success: function(html){
                     //alert(html);
                 	$('#item_body').append(html);
                 	$('#savebutton').show();
-                	$('#itemtable').show();
+                    $('#itemtable').show();
+                    $('#additem').show();
+                	$('#alerto').hide();
                 	document.getElementById("supplier").value = '';
                     document.getElementById("supplier_id").value = '';
                     document.getElementById("supplier_name").value = '';
@@ -344,6 +351,7 @@ var numOfTrue=0;
                     document.getElementById("item_name").value = '';
                     document.getElementById("brand").value = '';
                     document.getElementById("brand_id").value = '';
+                    document.getElementById("brand_name").value = '';
                     document.getElementById("serial").value = '';
                     document.getElementById("serial_id").value = '';
                     document.getElementById("catalog_no").value = '';
@@ -416,6 +424,10 @@ function isNumberKey(txt, evt){
                 type: "POST",
                 url: redirect,
                 data: prdata,
+                beforeSend: function(){
+                    document.getElementById('alt').innerHTML='<b>Please wait, Saving Data...</b>'; 
+                    $("#savebutton").hide(); 
+                },
                 success: function(output){
                     alert('PR successfully added.');
                     window.close();
@@ -468,6 +480,10 @@ function SaveReceive(receiveID,baseurl){
                 type: "POST",
                 url: redirect,
                 data: 'receiveID='+receiveID,
+                beforeSend: function(){
+                    document.getElementById('alt').innerHTML='<b>Please wait, Saving Data...</b>'; 
+                    $("#savebutton").hide(); 
+                },
                 success: function(output){
                      //alert(output);
                     alert('DR successfully saved.');
@@ -554,5 +570,81 @@ function chooseSupplier(){
             $("#supplier_name").val(response.supplier_name);
         }
     }); 
+}
+
+function chooseBrand(){
+    var loc= document.getElementById("baseurl").value;
+    var redirect = loc+'index.php/receive/getBrandinformation';
+    var brand = document.getElementById("brand").value;
+    document.getElementById('alerto').innerHTML='<b>Please wait, Loading data...</b>'; 
+    $("#additem").hide(); 
+    setTimeout(function() {
+        document.getElementById('alerto').innerHTML=''; 
+        $("#additem").show(); 
+    },5000);
+    $.ajax({
+        type: 'POST',
+        url: redirect,
+        data: 'brand='+brand,
+        dataType: 'json',
+        success: function(response){
+            $("#brand_id").val(response.brand_id);
+            $("#brand_name").val(response.brand_name);
+        }
+    }); 
+}
+
+function addBrand() {
+   var brand = document.getElementById("brand");
+   var brandname = document.getElementById("brandname").value;
+   var option = document.createElement("OPTION");
+   option.innerHTML = document.getElementById("brandname").value;
+   option.value = document.getElementById("brandname").value;
+   brand.options.add(option);
+   /*var loc= document.getElementById("baseurl1").value;
+   var redirect = loc+'index.php/receive/insertbrand';
+   $.ajax({
+        type: "POST",
+        url: redirect,
+        data: 'brandname='+brandname,
+        success: function(output){
+            $('#brand').selectmenu('refresh', true);
+            document.getElementById("brandname").value = '';
+        }
+    });*/
+}
+
+function choosePRrec(){
+    var loc= document.getElementById("baseurl").value;
+    var redirect = loc+'index.php/receive/getPRinformation';
+    var prno = document.getElementById("prno").value;
+    document.getElementById('alerto').innerHTML='<b>Please wait, Loading data...</b>'; 
+    $("#additem").hide(); 
+    setTimeout(function() {
+        document.getElementById('alerto').innerHTML=''; 
+        $("#additem").show(); 
+    },5000);
+    $.ajax({
+        type: 'POST',
+        url: redirect,
+        data: 'prno='+prno,
+        dataType: 'json',
+        success: function(response){
+            $("#prno").val(response.pr_no);
+            $("#department").val(response.department_id);
+            $("#enduse").val(response.enduse_id);
+            $("#purpose").val(response.purpose_id);
+            $("#inspected").val(response.inspected_by);
+        }
+    }); 
+}
+
+function addPR() {
+   var prno = document.getElementById("prno");
+   var pr_no = document.getElementById("pr_no").value;
+   var option = document.createElement("OPTION");
+   option.innerHTML = document.getElementById("pr_no").value;
+   option.value = document.getElementById("pr_no").value;
+   prno.options.add(option);
 }
 

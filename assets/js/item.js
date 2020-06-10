@@ -379,6 +379,10 @@ function readPic1(input) {
             contentType: false,
             processData: false,
             cache: false,
+            beforeSend: function(){
+                document.getElementById('alt').innerHTML='<b>Please wait, Saving Data...</b>'; 
+                $("#next").hide(); 
+            },
             success: function(output){
                var output= output.trim();
                if(output=='ext'){
@@ -450,7 +454,7 @@ function readPic1(input) {
 
 
     var pnformat =document.getElementById('pn_format').value;
-    frm.append('pnformat', pn_format);
+    frm.append('pnformat', pnformat);
 
     var img1 = document.getElementById('img1');
     frm.append('img1', img1.files[0]);
@@ -483,6 +487,10 @@ function readPic1(input) {
             contentType: false,
             processData: false,
             cache: false,
+            beforeSend: function(){
+                document.getElementById('alt').innerHTML='<b>Please wait, Saving Data...</b>'; 
+                $("#next").hide(); 
+            },
             success: function(output){
                var output= output.trim();
              //  alert(output);

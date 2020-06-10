@@ -132,9 +132,9 @@
 												<td align="center"><strong>MIF No.</strong></td>
 												<td align="center"><strong>Item Part No.</strong></td>
 												<td align="center"><strong>Item Description</strong></td>
+												<td align="center"><strong>Total Qty Issued</strong></td>
 												<td align="center"><strong>UoM</strong></td>
 												<td align="center"><strong>Unit Cost</strong></td>
-												<td align="center"><strong>Total Qty Issued</strong></td>
 												<td align="center"><strong>Total Cost</strong></td>
 												<td align="center"><strong>Supplier</strong></td>
 												<td align="center"><strong>Department</strong></td>
@@ -151,9 +151,9 @@
 												<td align="center"><?php echo $is['mif_no']?></td>
 												<td align="center"><?php echo $is['pn'];?></td>
 												<td align="center"><?php echo $is['item'];?></td>
+												<td align="center"><?php echo $is['issqty'];?></td>
 												<td align="center"><?php echo $is['unit'];?></td>
 												<td align="center"><?php echo $is['unit_cost'];?></td>
-												<td align="center"><?php echo $is['issqty'];?></td>
 												<td align="center"><?php echo number_format($is['total_cost'],2);?></td>
 												<td align="center"><?php echo $is['supplier'];?></td>
 												<td align="center"><?php echo $is['department'];?></td>

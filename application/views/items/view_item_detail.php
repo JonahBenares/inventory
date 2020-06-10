@@ -151,6 +151,8 @@
 											<?php 
 											
 												if(!empty($supplier)){
+												$columns = array_column($supplier, 'date');
+                                            	$a = array_multisort($columns, SORT_DESC, $supplier);
 												foreach($supplier AS $sup){ 
 											?>
 											<tr>
@@ -189,7 +191,7 @@
 														$brand= $sup['brand_id'];
 													}
 													?>
-													<a href="<?php echo base_url(); ?>index.php/reports/stock_card/<?php echo $item; ?>/<?php echo $supplier;?>/<?php echo $cat;?>/<?php echo $brand;?>" target = "_blank" class="btn btn-primary" title="STOCK CARD"><span class="fa fa-list-alt"></span></a>
+													<a href="<?php echo base_url(); ?>index.php/reports/stock_card_new/<?php echo $item; ?>/<?php echo $supplier;?>/<?php echo $cat;?>/<?php echo $brand;?>" target = "_blank" class="btn btn-primary" title="STOCK CARD"><span class="fa fa-list-alt"></span></a>
 												</td>
 											</tr>
 											<?php }  

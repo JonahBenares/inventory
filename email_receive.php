@@ -15,21 +15,21 @@ function select_column_where($table, $column, $where, $value){
 }
 
 
-       /* $startdate = date('Y-m-d', strtotime("-7 days"));
-        $now=date('Y-m-d');*/
-        $startdate = "2019-11-16";
+        $startdate = date('Y-m-d', strtotime("-7 days"));
+        $now=date('Y-m-d');
+        /*$startdate = "2019-11-16";
         $now="2019-11-24";
-
+*/
         $startday=date('d', strtotime($startdate));
         $daynow=date('d');
         $monthnow=date('M');
         $yearnow=date('Y');
        // $objPHPExcel = new PHPExcel();
         // $to='jasonflor.cenpri@gmail.com';
-        $to='jasonflor.cenpri@gmail.com, jonahbenares.cenpri@gmail.com, donna7.cenpri@gmail.com, stephineseverino.cenpri@gmail.com';
+        $to='ericjabiniar2015@yahoo.com, mba_energreen2013@gmail.com, maylen_cenpri@yahoo.com.ph, kervic.cenpri@gmail.com, merrydioso.energreen@gmail.com, donna7.cenpri@gmail.com ,jonahbenares.cenpri@gmail.com, hezielaplaon.cenpri@gmail.com, cristycesar.cenpri@gmail.com, rdestacamento.cenpri@gmail.com';
         //$to='stephineseverino.cenpri@gmail.com, jonahbenares.cenpri@gmail.com';
         // $to='creiramirez.cenpri@gmail.com, ericjabiniar2015@yahoo.com, mba_energreen2013@yahoo.com, maylen_cenpri@yahoo.com.ph, kervic.cenpri@gmail.com, merrydioso.energreen@gmail.com';
-        $subject="Inventory Receive Report: Nov 16-24 2019 (Final)";
+        $subject="Inventory Receive Report: ".$monthnow." ".$startday."-".$daynow." ".$yearnow;
         // .$monthnow." ".$startday."-".$daynow." ".$yearnow;
       
      
@@ -37,7 +37,7 @@ function select_column_where($table, $column, $where, $value){
         $row1 = 1;
        
         $message='';
-        $message.="Inventory Receive Report: Nov 16-24 2019 <br><br>";
+        $message.="Inventory Receive Report: ". $monthnow." ".$startday."-".$daynow." ".$yearnow."<br><br>";
         // .$monthnow." ".$startday."-".$daynow." ".$yearnow."<br><br>";
         $getHead=mysqli_query($con,"SELECT * FROM receive_head WHERE receive_date BETWEEN '$startdate' AND '$now' AND saved = '1' ORDER BY receive_date ASC");
      

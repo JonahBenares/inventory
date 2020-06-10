@@ -98,6 +98,7 @@ class Items extends CI_Controller {
                 $location = $this->super_model->select_column_where('location', 'location_name', 
                     'location_id', $itm->location_id);
                 $unit = $this->super_model->select_column_where('uom', 'unit_name', 'unit_id', $itm->unit_id);
+                $unit_price = $this->super_model->select_column_custom_where('receive_items', 'item_cost', "item_id='$itm->item_id' ORDER BY receive_id DESC");
                // $totalqty=$this->super_model->select_sum("supplier_items", "quantity", "item_id", $itm->item_id);
                 $totalqty=$this->inventory_balance($itm->item_id);
                 $data['items'][] = array(
@@ -115,6 +116,7 @@ class Items extends CI_Controller {
                     'location'=>$location,                
                     'minimum'=>$itm->min_qty,
                     'damage'=>$itm->damage,
+                    'unit_price'=>$unit_price,
                     'uom'=>$unit
                 );
             }
@@ -822,9 +824,26 @@ class Items extends CI_Controller {
                 $bin= $this->input->post('binid');
              }
 
-            $pnformat=$this->input->post('pnformat');
+            $orig_pn=$this->super_model->select_column_where("items", "original_pn", "item_id", $item_id);
+            $pn_details=explode("_",$this->input->post('pn'));
+            if(count($pn_details)<2){
+                $prefix=0;
+                $series1=0;
+            } else {
+                $prefix=$pn_details[0];
+                $series1=$pn_details[1];
+            }
 
-            if($pnformat==1){
+            $row_count = $this->super_model->count_custom_where("pn_series","subcat_prefix='$prefix' AND series = '$series1'");
+            if($row_count==1){
+                $pnformat=1;
+            } else {
+                $pnformat=0;
+            }
+
+            //$pnformat=$this->input->post('pnformat');
+
+            if($pnformat==0){
                 $pndetails=explode("_", $this->input->post('pn'));
                 $subcat_prefix=$pndetails[0];
                 $series = $pndetails[1];
@@ -843,11 +862,13 @@ class Items extends CI_Controller {
                     'subcat_prefix'=>$subcat_prefix,
                     'series'=>$next
                 );
-                $row_count = $this->super_model->count_custom_where("pn_series","subcat_prefix='$subcat_prefix' AND series = '$series'");
+                $row_count = $this->super_model->count_custom_where("pn_series","subcat_prefix='$subcat_prefix' AND series = '$next'");
                 if($row_count==0){
                     $this->super_model->insert_into("pn_series", $pn_data);
                 }
-            }   
+            }else {
+                $pn_no=$this->input->post('pn');
+            }
 
 
               $data = array(
@@ -980,7 +1001,7 @@ class Items extends CI_Controller {
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('G10', "Item Description");
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('L10', "Nominal Cost");
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('N10', "Qty");
-        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('P10', "Minimum Order Qty");
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('P10', "Price");
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('R10', "Uom");
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('T10', "Location");
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('V10', "Warehouse Location");
@@ -997,7 +1018,7 @@ class Items extends CI_Controller {
         );
 
         //echo "SELECT i.*, ri.local_mnl FROM items i INNER JOIN receive_items ri ON i.item_id = ri.item_id WHERE " .$q." ORDER BY i.item_name ASC";
-        foreach($this->super_model->custom_query("SELECT i.*, ri.local_mnl FROM items i LEFT JOIN receive_items ri ON i.item_id = ri.item_id " .$q." GROUP BY i.item_id ORDER BY i.item_name ASC") AS $items){
+        foreach($this->super_model->custom_query("SELECT i.*, ri.local_mnl FROM items i LEFT JOIN receive_items ri ON i.item_id = ri.item_id " .$q." GROUP BY i.item_id ORDER BY i.original_pn ASC") AS $items){
             $unit =$this->super_model->select_column_where("uom","unit_name", "unit_id", $items->unit_id);
             $rack =$this->super_model->select_column_where("rack","rack_name", "rack_id", $items->rack_id);
             $group =$this->super_model->select_column_where("group","group_name", "group_id", $items->group_id);
@@ -1005,6 +1026,7 @@ class Items extends CI_Controller {
             $location =$this->super_model->select_column_where("location","location_name", "location_id", $items->location_id);
             $bin =$this->super_model->select_column_where("bin","bin_name", "bin_id", $items->bin_id);
             $nominal=$this->super_model->select_ave("supplier_items", "item_cost", "item_id", $items->item_id);
+            $unit_price = $this->super_model->select_column_custom_where('receive_items', 'item_cost', "item_id='$items->item_id' ORDER BY receive_id DESC");
             if($items->local_mnl=='1'){
                 $sup = 'Local';
             } else if($items->local_mnl=='2'){
@@ -1019,7 +1041,7 @@ class Items extends CI_Controller {
             $objPHPExcel->setActiveSheetIndex(0)->setCellValue('G'.$num, $items->item_name);
             $objPHPExcel->setActiveSheetIndex(0)->setCellValue('L'.$num, $nominal);
             $objPHPExcel->setActiveSheetIndex(0)->setCellValue('N'.$num, $totalqty);
-            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('P'.$num, $items->min_qty);
+            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('P'.$num, $unit_price);
             $objPHPExcel->setActiveSheetIndex(0)->setCellValue('R'.$num, $unit);
             $objPHPExcel->setActiveSheetIndex(0)->setCellValue('T'.$num, $location);
             $objPHPExcel->setActiveSheetIndex(0)->setCellValue('V'.$num, $wh);

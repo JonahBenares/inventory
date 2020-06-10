@@ -182,10 +182,16 @@ function add_item(){
     	 		type: "POST",
     	 		url:redirect,
     	 		data: "itemid="+itemid+"&itemname="+itemname+"&siid="+siid+"&original_pn="+original_pn+"&unit="+unit+"&cost="+unit_cost+"&quantity="+quantity+"&item="+item+"&count="+count+"&borrow="+borrowfrom,
+                beforeSend: function(){
+                    document.getElementById('alrt').innerHTML='<b>Please wait, Loading Data...</b>'; 
+                    $("#submit").hide(); 
+                },
                 success: function(html){
                 	$('#item_body').append(html);
                 	$('#itemtable').show();
-                	$('#savebutton').show();
+                    $('#savebutton').show();
+                    $('#submit').show();
+                	$('#alrt').hide();
                     document.getElementById("item_id").value = '';
                 	document.getElementById("item_name").value = '';
                     document.getElementById("original_pn").value = '';
@@ -206,14 +212,22 @@ function add_item(){
 function saveRequest(){
     var req = $("#Requestfrm").serialize();
     var loc= document.getElementById("baseurl").value;
-    var redirect = loc+'index.php/request/insertRequest';
+    var conf = confirm('Are you sure you want to save this record?');
+    if(conf==true){
+        var redirect = loc+'index.php/request/insertRequest';
+    }else {
+        var redirect = '';
+    }
      $.ajax({
             type: "POST",
             url: redirect,
             data: req,
+            beforeSend: function(){
+                document.getElementById('alt').innerHTML='<b>Please wait, Saving Data...</b>'; 
+                $("#savebutton").hide(); 
+            },
             success: function(output){
-                var conf = confirm('Are you sure you want to save this record?');
-                if(conf){
+                if(conf==true){
                     alert("Request successfully Added!");
                     /*window.location = loc+'index.php/request/mreqf/'+output;*/
                     location.reload();

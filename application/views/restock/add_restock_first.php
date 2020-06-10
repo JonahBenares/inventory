@@ -96,6 +96,8 @@
 											<th class="tr-bottom" width="5%"><center>Supplier</center></th>
 											<th class="tr-bottom" width="5%"><center>Brand</center></th>
 											<th class="tr-bottom" width="10%"><center>Catalog No.</center></th>
+											<th class="tr-bottom" width="10%"><center>Unit Cost</center></th>
+											<th class="tr-bottom" width="10%"><center>Total Cost</center></th>
 											<th class="tr-bottom" width="10%"><center>Serial No.</center></th>
 											<th class="tr-bottom" width="5%"><center>Reason</center></th>
 											<th class="tr-bottom" width="20%"><center>Remarks</center></th>
@@ -112,6 +114,8 @@
 											<td><?php echo $det['supplier'];?></td>
 											<td><center><?php echo $det['brand'];?></center></td>
 											<td><center><?php echo $det['catalog_no'];?></center></td>
+											<td><center><?php echo $det['item_cost'];?></center></td>
+											<td><center><?php echo $det['total'];?></center></td>
 											<td><center><?php echo $det['serial'];?></center></td>
 											<td><?php echo $det['reason'];?></td>
 											<td><?php echo $det['remarks'];?></td>
@@ -122,7 +126,8 @@
 							</div>
 							<hr>
 							<?php if($saved==0){ ?>
-							<button onclick="SaveRes('<?php echo $rhead_id; ?>','<?php echo base_url(); ?>')" class="btn btn-warning" style="width:100%;background: #ff5d00">Save</button>
+							<center><div id='alt' style="font-weight:bold"></div></center>
+							<button onclick="SaveRes('<?php echo $rhead_id; ?>','<?php echo base_url(); ?>')" class="btn btn-warning" style="width:100%;background: #ff5d00" id="savebutton">Save</button>
 							</div>
 							<?php } } }?>
 					</div>

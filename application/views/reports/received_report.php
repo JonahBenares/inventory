@@ -105,10 +105,10 @@
 												<th align="center"><strong>PR No.</strong></th>
 												<th align="center"><strong>Item Part No.</strong></th>
 												<th align="center"><strong>Item Description</strong></th>
-												<th align="center"><strong>Unit Cost</strong></th>
 												<th align="center"><strong>Total Qty Received</strong></th>
-												<th align="center"><strong>Total Cost</strong></th>
 												<th align="center"><strong>UoM</strong></th>
+												<th align="center"><strong>Unit Cost</strong></th>
+												<th align="center"><strong>Total Cost</strong></th>
 												<th align="center"><strong>Supplier</strong></th>
 												<th align="center"><strong>Department</strong></th>
 												<th align="center"><strong>Purpose</strong></th>
@@ -122,10 +122,10 @@
 												<td align="center"><?php echo $rec['pr']?></td>
 												<td align="center"><?php echo $rec['pn']?></td>
 												<td align="center"><?php echo $rec['item']?></td>
-												<td align="center"><?php echo number_format($rec['unit_cost'],2)?></td>
 												<td align="center"><?php echo $rec['recqty']?></td>
-												<td align="center"><?php echo number_format($rec['total_cost'],2)?></td>
 												<td align="center"><?php echo $rec['unit']?></td>
+												<td align="center"><?php echo number_format($rec['unit_cost'],2)?></td>
+												<td align="center"><?php echo number_format($rec['total_cost'],2)?></td>
 												<td align="center"><?php echo $rec['supplier']?></td>
 												<td align="center"><?php echo $rec['department']?></td>
 												<td align="center"><?php echo $rec['purpose']?></td>
