@@ -38,7 +38,7 @@
 	.color_back{
 		background: yellow;
 	}
-	
+	td{padding: 0px 18px!important}
 
 </style>
 <?php
@@ -89,7 +89,7 @@
 							<button class='btn btn-primary' name='generateAccounting' onclick="generateAccounting()">Generate Report</button>
 							<?php if(!empty($from)){ ?>
 							<a href = "<?php echo base_url();?>index.php/reports/export_foraccounting/<?php echo $from;?>/<?php echo $cat1;?>/<?php echo $subcat1;?>" class = "btn btn-primary pull-right">Export to Excel</a>
-							<div style="overflow-x: scroll;">
+							<div>
 								<table class=" table-bordered" width="100%" id="scrollexample" style="font-size: 12px">
 									<thead>
 									<tr>
@@ -229,11 +229,6 @@
 		    $('#scrollexample').DataTable( {
 		        "scrollY": 300,
 		        "scrollX": true,
-		        paging:         false,
-		        fixedColumns:   {
-		            leftColumns: 1,
-		            rightColumns: 1
-		        }
 		        "lengthMenu": [[-1, 50, 25, 10], ["All", 50, 25, 10]],
 
 		    } );
