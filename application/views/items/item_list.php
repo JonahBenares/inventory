@@ -80,7 +80,7 @@
 									<th width="10%">Uom</th>
 									<th width="10%">Location</th>
 									<th width="10%">Rack</th>
-									<th width="5%">Minimum Order Qty</th>
+									<!-- <th width="5%">Minimum Order Qty</th> -->
 									<th width="5%">Price</th>
 									<th width="12%">Action</th>
 								</tr>
@@ -98,7 +98,7 @@
 									<td><?php echo $itm['uom']?></td>
 									<td><?php echo $itm['location'];?></td>
 									<td><?php echo $itm['rack'];?></td>
-									<td align="center"><?php echo $itm['minimum'];?></td>
+									<!-- <td align="center"><?php echo $itm['minimum'];?></td> -->
 									<td align="center"><?php echo number_format($itm['unit_price'],2);?></td>
 
 									<td>
