@@ -304,6 +304,18 @@ function add_item(){
                     $('#itemtable').show();
                     $('#additm').show();
                     $('#alrt').hide();
+                    var lth_supplier = document.getElementById("supplier").options.length;
+                    var lth_item = document.getElementById("item").options.length;
+                    var lth_brand = document.getElementById("brand").options.length;
+                    var lth_reason = document.getElementById("reason").options.length;
+                    var lgth = parseInt(lth_supplier)-1;
+                    var lgth_item = parseInt(lth_item)-1;
+                    var lgth_brand = parseInt(lth_brand)-1;
+                    var lgth_reason = parseInt(lth_reason)-1;
+                    document.getElementById("supplier").options.length=lgth;
+                    document.getElementById("item").options.length=lgth_item;
+                    document.getElementById("brand").options.length=lgth_brand;
+                    document.getElementById("reason").options.length=lgth_reason;
                     document.getElementById("supplier").value = '';
                     document.getElementById("supplier_id").value = '';
                     document.getElementById("item_id").value = '';
