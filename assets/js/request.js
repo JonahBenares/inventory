@@ -324,8 +324,9 @@ function chooseItem(){
             $("#unit").val(response.unit);
             $("#original_pn").val(response.pn);
             $("#invqty").val(response.recqty);
-            crossreferencing();
             balancePRItem();
+            crossreferencing();
+            
         }
     }); 
 }

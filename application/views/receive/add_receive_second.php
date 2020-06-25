@@ -297,7 +297,7 @@
 									</select>
 								</div>	
 								 -->
-								<div class="col-lg-1">
+								<div class="col-lg-3">
 									<br>
 									<div id='alerto' style="font-weight:bold"></div>
 									<a class="btn btn-primary btn-outlined btn-md" id='additem' style="margin-top:5px; " onclick='add_item()'><span class="fa fa-plus"></span></a>
@@ -421,6 +421,16 @@
 	$('#btnAddPR').click(function() {
 	    $('#PRModal').modal('hide');
 	});
+
+	$( document ).ready(function() {
+		/*var itemid = $('#item_id').val();
+		var supid = $('#supplier_id').val();
+		 if (itemid === '' && supid === '') {*/
+		 	document.getElementById('alerto').innerHTML='<b>Fill out Item and Supplier first.</b>'; 
+		 	$('#additem').hide();
+		// } 
+	});
+
 </script>
 
 	
