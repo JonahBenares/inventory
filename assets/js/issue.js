@@ -203,20 +203,21 @@ function chooseMreqf(){
     var loc= document.getElementById("baseurl").value;
     var redirect = loc+'index.php/issue/getMreqfinformation';
     var mreqf = document.getElementById("mreqf").value;
-    document.getElementById('alrt').innerHTML='<b>Please wait, Loading data...</b>'; 
-    $("#saveissuance").hide(); 
-    setTimeout(function() {
-        document.getElementById('alrt').innerHTML=''; 
-        $("#saveissuance").show(); 
-    },5000);
     $.ajax({
         type: 'POST',
         url: redirect,
         data: 'mreqf='+mreqf,
         dataType: 'json',
+        beforeSend: function(){
+            document.getElementById('alrt').innerHTML='<b>Please wait, Loading data...</b>'; 
+             $("#saveissuance").hide();
+        },
         success: function(response){
             $("#mreqf").val(response.mreqf);
             $("#request_id").val(response.request_id);
+             document.getElementById('alrt').innerHTML='';
+             $("#saveissuance").show();
+
         }
     }); 
 }

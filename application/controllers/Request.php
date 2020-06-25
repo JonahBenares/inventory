@@ -64,15 +64,11 @@ class Request extends CI_Controller {
             $reqno = explode('-',$maxreqno);
             $series = $reqno[3]+1;
             //echo $reqno[3];
-            if(strlen($series)==1){
-                $newreq_no = "MreqF-".$year."-000".$series;
-            } else if(strlen($series)==2){
-                 $newreq_no = "MreqF-".$year."-00".$series;
-            } else if(strlen($series)==3){
-                 $newreq_no = "MreqF-".$year."-0".$series;
-            } else if(strlen($series)==4){
-                 $newreq_no = "MreqF-".$year."-".$series;
-            }
+            $new_series = str_pad($series, 4, "0", STR_PAD_LEFT);
+           
+            $newreq_no = "MreqF-".$year."-".$new_series;
+          
+            
         }
        // $newreq_no = 'MreqF-2018-09-0010';
         $head_rows = $this->super_model->count_rows("request_head");
@@ -355,6 +351,7 @@ class Request extends CI_Controller {
 
     public function getIteminformation(){
         $item = $this->input->post('item');
+        //$item = 691;
         foreach($this->super_model->select_custom_where("items", "item_id='$item'") AS $itm){ 
             $rec_qty = $this->inventory_balance($itm->item_id);
             $return = array('item_id' => $itm->item_id,'item_name' => $itm->item_name, 'unit' => $itm->unit_id, 'pn' => $itm->original_pn, 'recqty' => $rec_qty); 

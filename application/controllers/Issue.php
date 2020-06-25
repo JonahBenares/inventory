@@ -266,7 +266,7 @@ class Issue extends CI_Controller {
 
     public function getMreqfinformation(){
         $mreqf = $this->input->post('mreqf');
-        foreach($this->super_model->select_custom_where("request_head","mreqf_no LIKE '%$mreqf%' AND saved = '1'") AS $mr){ 
+        foreach($this->super_model->custom_query("SELECT mreqf_no, request_id FROM request_head WHERE mreqf_no LIKE '%$mreqf%' AND saved = '1'") AS $mr){ 
             $return = array('mreqf' => $mr->mreqf_no, 'request_id' => $mr->request_id); 
             echo json_encode($return);   
         }

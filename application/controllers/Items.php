@@ -51,6 +51,18 @@ class Items extends CI_Controller {
         }
     }
 
+    public function activity_log($activity){
+        $timestamp = date('Y-m-d H:i:s');
+        $data = array(
+            "activity_time"=>$timestamp,
+            "activity_name"=>$activity,
+            "user_id"=>$_SESSION['user_id']
+        );
+
+        $this->super_model->insert_into("activity_logs", $data);
+    }
+
+
     public function index(){
         $this->load->view('template/header');
         $this->load->view('template/sidebar',$this->dropdown);
@@ -890,7 +902,9 @@ class Items extends CI_Controller {
                     'damage' => $this->input->post('damage'),
                     'min_qty' => $this->input->post('minimum')
              );
-
+              $act = "Updated item details of item_id ". $item_id;
+                $this->activity_log($act);
+        
               if($this->super_model->update_where("items", $data, "item_id", $item_id)){
                 echo $item_id;
               }
@@ -920,6 +934,8 @@ class Items extends CI_Controller {
     public function delete_item(){
         $id=$this->uri->segment(3);
         $this->load->model('super_model');
+        $act = 'Deleted item id '. $id;
+        $this->activity_log($act);
         if($this->super_model->delete_data($id)){
             echo "<script>alert('Succesfully Deleted'); 
                 window.location ='".base_url()."index.php/items/item_list'; </script>";

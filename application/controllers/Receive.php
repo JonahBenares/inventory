@@ -402,7 +402,7 @@ class Receive extends CI_Controller {
 
     public function getIteminformation(){
         $item = $this->input->post('item');
-        foreach($this->super_model->select_custom_where("items", "item_id='$item'") AS $itm){ 
+        foreach($this->super_model->custom_query("SELECT item_id, item_name, unit_id, original_pn FROM items WHERE item_id='$item'") AS $itm){ 
             $return = array('item_id' => $itm->item_id,'item_name' => $itm->item_name, 'unit' => $itm->unit_id, 'pn' => $itm->original_pn); 
             echo json_encode($return);   
         }
@@ -410,7 +410,7 @@ class Receive extends CI_Controller {
 
     public function getSupplierinformation(){
         $supplier = $this->input->post('supplier');
-        foreach($this->super_model->select_custom_where("supplier", "supplier_id='$supplier'") AS $sup){ 
+        foreach($this->super_model->custom_query("SELECT supplier_id, supplier_name FROM supplier WHERE supplier_id='$supplier'") AS $sup){ 
             $return = array('supplier_id' => $sup->supplier_id,'supplier_name' => $sup->supplier_name); 
             echo json_encode($return);   
         }
@@ -595,7 +595,7 @@ class Receive extends CI_Controller {
 
     public function getBrandinformation(){
         $brand = $this->input->post('brand');
-        foreach($this->super_model->select_custom_where("brand", "brand_id='$brand'") AS $brnd){  
+        foreach($this->super_model->custom_query("SELECT brand_id, brand_name FROM brand WHERE brand_id='$brand'") AS $brnd){  
             $return = array('brand_id' => $brnd->brand_id,'brand_name' => $brnd->brand_name); 
             echo json_encode($return);   
         }
@@ -667,15 +667,7 @@ class Receive extends CI_Controller {
     }
     
     public function getitem(){
-       /* if(!empty($this->input->post('inspected'))){
-        foreach($this->super_model->select_row_where("employees", "employee_id", $this->input->post('inspected')) AS $ins){
-             $inspected = $this->super_model->select_column_where("employees", "employee_name", "employee_id", $ins->employee_id);
-             $inspected_name = $this->super_model->select_column_where("employees", "employee_id", "employee_id",$ins->employee_id);
-            }
-        } else {
-             $inspected="";
-             $inspected_name="";
-        }*/
+     
         foreach($this->super_model->select_row_where("items", "item_id", $this->input->post('itemid')) AS $ins){
             $unit = $this->super_model->select_column_where("uom", "unit_name", "unit_id",$ins->unit_id);
         }
@@ -685,63 +677,7 @@ class Receive extends CI_Controller {
         $itemname =  $this->input->post('itemname');
         $suppliername =  $this->input->post('suppliername');
         $brandid =  $this->input->post('brandid');
-       /* $count = $this->super_model->count_custom_where("receive_items","item_id = '$item' AND brand_id = '$brandid' AND serial_id = '$serial'");
-        $count1 = $this->super_model->count_custom_where("receive_items","brand_id = '$brandid' AND item_id = '$item'");
-        $count2 = $this->super_model->count_custom_where("receive_items","serial_id = '$serial' AND item_id = '$item'");
-        
-        if($count!=0){
-            ?>
-            <script>
-                alert('WARNING: Item with the same serial number and brand has already been encoded.');
-            </script>
-            <?php
-        }else if($count1!=0){ 
-            $data['list'] = array(
-                'supplier'=>$this->input->post('supplier'),
-                'supplierid'=>$this->input->post('supplierid'),
-                'itemid'=>$this->input->post('itemid'),
-                'brandid'=>$this->input->post('brandid'),
-                'brand'=>$this->input->post('brand'),
-                'serialid'=>$this->input->post('serialid'),
-                'serial'=>$this->input->post('serial'),
-                'catno'=>$this->input->post('catno'),
-                'unitcost'=>$this->input->post('unitcost'),
-                'unit'=>$this->input->post('unit'),
-                'unit_name'=>$unit,
-                'expqty'=>$this->input->post('expqty'),
-                'recqty'=>$this->input->post('recqty'),
-                'remarks'=>$this->input->post('remarks'),
-              
-                'item'=>$this->input->post('item'),
-                'local_mnl'=>$this->input->post('local_mnl'),
-                'count'=>$this->input->post('count'),
-                'total'=>$total
-            );  
-            $this->load->view('receive/row_item',$data);
-        }else if($count2!=0){ 
-            $data['list'] = array(
-                'supplier'=>$this->input->post('supplier'),
-                'supplierid'=>$this->input->post('supplierid'),
-                'itemid'=>$this->input->post('itemid'),
-                'brandid'=>$this->input->post('brandid'),
-                'brand'=>$this->input->post('brand'),
-                'serialid'=>$this->input->post('serialid'),
-                'serial'=>$this->input->post('serial'),
-                'catno'=>$this->input->post('catno'),
-                'unitcost'=>$this->input->post('unitcost'),
-                'unit'=>$this->input->post('unit'),
-                'unit_name'=>$unit,
-                'expqty'=>$this->input->post('expqty'),
-                'recqty'=>$this->input->post('recqty'),
-                'remarks'=>$this->input->post('remarks'),
-             
-                'item'=>$this->input->post('item'),
-                'local_mnl'=>$this->input->post('local_mnl'),
-                'count'=>$this->input->post('count'),
-                'total'=>$total
-            );  
-            $this->load->view('receive/row_item',$data);
-        }else{*/
+      
             $data['list'] = array(
                 'supplier'=>$this->input->post('suppliername'),
                 'supplierid'=>$this->input->post('supplierid'),
@@ -757,15 +693,13 @@ class Receive extends CI_Controller {
                 'expqty'=>$this->input->post('expqty'),
                 'recqty'=>$this->input->post('recqty'),
                 'remarks'=>$this->input->post('remarks'),
-                /*'inspected_name'=>$inspected_name,
-                'inspected'=>$inspected,*/
                 'item'=>$this->input->post('itemname'),
                 'local_mnl'=>$this->input->post('local_mnl'),
                 'count'=>$this->input->post('count'),
                 'total'=>$total
             );  
             $this->load->view('receive/row_item',$data);
-        //}
+     
      }
 
      public function insertReceivePR(){

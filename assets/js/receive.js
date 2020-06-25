@@ -271,35 +271,6 @@ function add_item(){
     else if($("input:radio[name=local_mnl]:checked").val() == '2'){
         var local_mnl = '2';
     }
-  /*  var counter =$('#item_body tr').length;
-    var ct= counter + 1;
-   
-var numOfTrue=0;
- */
-
-
- /*  
-   var brandl = [];
-    for(var x = 1; x<=ct; x++){
-        var bl =$('#brandlist_'+x).val();
-        alert(bl);
-        brandl.push(bl);
-
-        
-
-    }
- console.log(brandl);
-
-    var bl_ind =$('#brandlist_'+ct).val();
-   
-    for (var i = 0; i < brandl.length; i++) {
-
-    if (brandl[i] === bl_ind) { //increment if true
-        numOfTrue++; 
-    }
-}
-
-   // */
 
    
     if ($("input:radio[name=local_mnl]:checked").val() == '1') {
@@ -328,10 +299,10 @@ var numOfTrue=0;
     	 		type: "POST",
     	 		url:redirect,
     	 		data: "supplier="+supplier+"&supplierid="+supplierid+"&suppliername="+suppliername+"&itemname="+itemname+"&itemid="+itemid+"&brand="+brand+"&brandid="+brandid+"&brandname="+brandname+"&serial="+serial+"&serialid="+serialid+"&unitcost="+unitcost+"&catno="+catno+"&unit="+unit+"&expqty="+expqty+"&recqty="+recqty+"&remarks="+remarks+"&item="+item+"&count="+count+"&local_mnl="+local_mnl,
-                beforeSend: function(){
+              /*  beforeSend: function(){
                     document.getElementById('alerto').innerHTML='<b>Please wait, Loading Data...</b>'; 
                     $("#additem").hide(); 
-                },
+                },*/
                 success: function(html){
                     //alert(html);
                 	$('#item_body').append(html);
@@ -536,12 +507,9 @@ function chooseItem(){
     var loc= document.getElementById("baseurl").value;
     var redirect = loc+'index.php/receive/getIteminformation';
     var item = document.getElementById("item").value;
+    var suppid = document.getElementById("supplier_id").value;
     document.getElementById('alerto').innerHTML='<b>Please wait, Loading data...</b>'; 
-    $("#additem").hide(); 
-    setTimeout(function() {
-        document.getElementById('alerto').innerHTML=''; 
-        $("#additem").show(); 
-    },5000);
+    $('#additem').hide();
     $.ajax({
         type: 'POST',
         url: redirect,
@@ -552,6 +520,13 @@ function chooseItem(){
             $("#item_name").val(response.item_name);
             $("#unit").val(response.unit);
             $("#original_pn1").val(response.pn);
+            if(response.item_id !== '' && suppid=== ''){
+                document.getElementById('alerto').innerHTML='Please fill out Supplier. If already chosen, please wait...';
+            }
+            if(response.item_id !== '' && suppid!== ''){
+              document.getElementById('alerto').innerHTML=''; 
+                $('#additem').show();
+            }
         }
     }); 
 }
@@ -560,12 +535,10 @@ function chooseSupplier(){
     var loc= document.getElementById("baseurl").value;
     var redirect = loc+'index.php/receive/getSupplierinformation';
     var supplier = document.getElementById("supplier").value;
-    document.getElementById('alerto').innerHTML='<b>Please wait, Loading data...</b>'; 
-    $("#additem").hide(); 
-    setTimeout(function() {
-        document.getElementById('alerto').innerHTML=''; 
-        $("#additem").show(); 
-    },5000);
+     var itid = document.getElementById("item_id").value;
+    // $("#additem").hide(); 
+   // document.getElementById('alerto').innerHTML='<b>Please wait, Loading data...</b>'; 
+   //  $("#additem").hide(); 
     $.ajax({
         type: 'POST',
         url: redirect,
@@ -574,6 +547,10 @@ function chooseSupplier(){
         success: function(response){
             $("#supplier_id").val(response.supplier_id);
             $("#supplier_name").val(response.supplier_name);
+           //if(response.supplier_id !== '' && itid!== ''){
+                document.getElementById('alerto').innerHTML='';
+                $('#additem').show();
+            //} 
         }
     }); 
 }
@@ -582,12 +559,12 @@ function chooseBrand(){
     var loc= document.getElementById("baseurl").value;
     var redirect = loc+'index.php/receive/getBrandinformation';
     var brand = document.getElementById("brand").value;
-    document.getElementById('alerto').innerHTML='<b>Please wait, Loading data...</b>'; 
-    $("#additem").hide(); 
-    setTimeout(function() {
+    //document.getElementById('alerto').innerHTML='<b>Please wait, Loading data...</b>'; 
+   // $("#additem").hide(); 
+  /* setTimeout(function() {
         document.getElementById('alerto').innerHTML=''; 
         $("#additem").show(); 
-    },5000);
+    },5000);*/
     $.ajax({
         type: 'POST',
         url: redirect,
@@ -596,6 +573,7 @@ function chooseBrand(){
         success: function(response){
             $("#brand_id").val(response.brand_id);
             $("#brand_name").val(response.brand_name);
+           // $("#additem").show(); 
         }
     }); 
 }
@@ -625,11 +603,11 @@ function choosePRrec(){
     var redirect = loc+'index.php/receive/getPRinformation';
     var prno = document.getElementById("prno").value;
     document.getElementById('alerto').innerHTML='<b>Please wait, Loading data...</b>'; 
-    $("#additem").hide(); 
+   /* $("#additem").hide(); 
     setTimeout(function() {
         document.getElementById('alerto').innerHTML=''; 
         $("#additem").show(); 
-    },5000);
+    },5000);*/
     $.ajax({
         type: 'POST',
         url: redirect,
