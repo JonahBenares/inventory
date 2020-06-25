@@ -121,7 +121,7 @@ class Masterfile extends CI_Controller {
                  $item=$this->super_model->select_column_where("items", "item_name", "item_id", $ri->item_id);
                  $boqty=$this->backorder_qty($ri->ri_id);
                  if($ri->expected_qty>$ri->received_qty){
-                     $data['list'][$x]=array(
+                     $data['list'][]=array(
                         "pono"=>$ri->po_no,
                         "rdid"=>$ri->rd_id,
                         "item"=>$item,
