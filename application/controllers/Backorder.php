@@ -162,12 +162,14 @@ class Backorder extends CI_Controller {
                  }
         }*/
 
-        foreach($this->super_model->custom_query("SELECT * FROM receive_items lut WHERE NOT EXISTS (SELECT * FROM receive_items nx WHERE nx.po_no = lut.po_no AND nx.ri_id > lut.ri_id) ORDER BY ri_id DESC") AS $ri){
+        foreach($this->super_model->custom_query("SELECT * FROM receive_items lut INNER JOIN receive_details rd ON rd.rd_id = lut.rd_id WHERE NOT EXISTS (SELECT * FROM receive_items nx INNER JOIN receive_details rx ON rx.rd_id = nx.rd_id WHERE nx.item_id = lut.item_id AND nx.supplier_id = lut.supplier_id AND nx.brand_id = lut.brand_id AND nx.catalog_no = lut.catalog_no AND rd.pr_no = rx.pr_no AND nx.ri_id > lut.ri_id) ORDER BY ri_id DESC") AS $ri){
                  $item=$this->super_model->select_column_where("items", "item_name", "item_id", $ri->item_id);
+                 $pr_no=$this->super_model->select_column_where("receive_details", "pr_no", "receive_id", $ri->receive_id);
                  $boqty=$this->backorder_qty($ri->ri_id);
                  if($ri->expected_qty>$ri->received_qty){
                      $data['prback'][]=array(
                         "pono"=>$ri->po_no,
+                        "pr_no"=>$pr_no,
                         "rdid"=>$ri->rd_id,
                         "item"=>$item,
                         "expected"=>$boqty,
@@ -196,6 +198,8 @@ class Backorder extends CI_Controller {
     public function saveBackorder(){
       
         $receive_id= $this->input->post('receive_id');
+        $po_no= $this->input->post('po_no');
+        $dr_no= $this->input->post('dr_no');
         $rdid= $this->input->post('rdid');
         $userid = $_SESSION['user_id'];
          $year=date('Y-m');
@@ -236,9 +240,9 @@ class Backorder extends CI_Controller {
                    'create_date'=> $now,
                    'receive_date'=> $receivedate,
                    'mrecf_no'=> $newrec_no,
-                   'dr_no'=> $hd->dr_no,
+                   'dr_no'=> $dr_no,
                    'jo_no'=> $hd->jo_no,
-                   'po_no'=> $hd->po_no,
+                   'po_no'=> $po_no,
                    'si_no'=> $hd->si_no,
                    'user_id'=> $userid,
                    'saved'=>'1'
@@ -282,7 +286,7 @@ class Backorder extends CI_Controller {
                 $items = array(
                 'rd_id'=>$newrdid,
                 'receive_id'=> $receiveid,
-                'po_no'=>$pono,
+                'po_no'=>$po_no,
                 'supplier_id'=> $rd->supplier_id,
                 'item_id'=> $rd->item_id,
                 'brand_id'=> $rd->brand_id,
