@@ -136,7 +136,7 @@
 		function chooseCategory(){
 			var loc= document.getElementById("baseurl").value;
 			var redirect = loc+'index.php/reports/getCat';
-			var category = document.getElementById(category).value;
+			var category = document.getElementById("category").value;
 			$.ajax({
 				type: 'POST',
 				url: redirect,
