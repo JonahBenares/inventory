@@ -3032,7 +3032,7 @@ class Reports extends CI_Controller {
         $objPHPExcel->getActiveSheet()->getStyle('A11:AJ11')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
         $objPHPExcel->getActiveSheet()->getStyle('A12:AJ12')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
         $objPHPExcel->getActiveSheet()->getStyle('A10:AJ10')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-        $objPHPExcel->getActiveSheet()->getStyle('A10:AJ'.$num)->applyFromArray($styleArray);
+        $objPHPExcel->getActiveSheet()->getStyle('A10:AJ10')->applyFromArray($styleArray);
         $objPHPExcel->getActiveSheet()->getStyle('A3:AJ3')->getBorders()->getBottom()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
         $objPHPExcel->getActiveSheet()->getStyle('A1:AJ1')->getBorders()->getTop()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
         $objPHPExcel->getActiveSheet()->getStyle('A1:AJ1')->getBorders()->getLeft()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
