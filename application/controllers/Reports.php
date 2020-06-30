@@ -649,8 +649,8 @@ class Reports extends CI_Controller {
                 'ending'=>$ending
             );
         }
-        $this->load->view('reports/for_accounting_monthly',$data);
         $data['printed']=$this->super_model->select_column_where('users', 'fullname', 'user_id', $_SESSION['user_id']);
+        $this->load->view('reports/for_accounting_monthly',$data);
         $this->load->view('template/footer');
     }
 
