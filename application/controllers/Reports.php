@@ -553,7 +553,7 @@ class Reports extends CI_Controller {
   //while(strtotime($from) <= strtotime($to)) { 
         foreach($this->super_model->custom_query("SELECT * FROM items ".$query." ORDER BY item_name ASC") AS $it){
            $begbal = $this->super_model->select_column_custom_where("supplier_items","quantity","item_id = '$it->item_id' AND catalog_no = 'begbal'");
-           $beg = $this->begbal($it->item_id, $end_from) + $begbal;
+           $beg = $this->begbal($it->item_id, '2019-10-06') + $begbal;
             $ending=($beg + $this->totalReceived_items($it->item_id, $from, $to) + 
                 $this->totalRestocked_items($it->item_id, $from, $to))-$this->totalIssued_items($it->item_id, $from, $to);
             $data['items'][]=array(
@@ -649,8 +649,8 @@ class Reports extends CI_Controller {
                 'ending'=>$ending
             );
         }
-        $data['printed']=$this->super_model->select_column_where('users', 'fullname', 'user_id', $_SESSION['user_id']);
         $this->load->view('reports/for_accounting_monthly',$data);
+        $data['printed']=$this->super_model->select_column_where('users', 'fullname', 'user_id', $_SESSION['user_id']);
         $this->load->view('template/footer');
     }
 
