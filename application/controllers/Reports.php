@@ -481,7 +481,7 @@ class Reports extends CI_Controller {
     }
 
     public function begbal($item, $enddate){
-        $beginning= ($this->qty_receive_date($item,$enddate) + $this->qty_restocked_date($item,$enddate)) - $this-> qty_issued_date($item,$enddate);
+        $beginning= ($this->qty_receive_date($item,$enddate) + $this->qty_restocked_date($item,$enddate)) - $this->qty_issued_date($item,$enddate);
         return $beginning;
        // echo $this->qty_receive_date($item,$enddate) . "<br>";
     }
@@ -493,29 +493,39 @@ class Reports extends CI_Controller {
     }
 
 
+       
+
+
     public function qty_receive_date($item,$enddate){
        $start = $this->first_transaction();
-       foreach($this->super_model->custom_query("SELECT SUM(ri.received_qty) AS qty FROM receive_head rh INNER JOIN receive_items ri ON rh.receive_id = ri.receive_id WHERE rh.receive_date BETWEEN '$start' AND '$enddate' AND ri.item_id='$item'") AS $r){
+      /* foreach($this->super_model->custom_query("SELECT SUM(ri.received_qty) AS qty FROM receive_head rh INNER JOIN receive_items ri ON rh.receive_id = ri.receive_id WHERE rh.receive_date BETWEEN '$start' AND '$enddate' AND ri.item_id='$item' AND saved='1'") AS $r){
             return $r->qty;
-        }
+        }*/
 
+         $recqty= $this->super_model->select_sum_join("received_qty","receive_items","receive_head", "item_id='$item' AND saved='1' AND receive_date BETWEEN '$start' AND '$enddate'","receive_id");
+          return $recqty;
        
     }
 
      public function qty_restocked_date($item,$enddate){
          $start = $this->first_transaction();
-          foreach($this->super_model->custom_query("SELECT SUM(resd.quantity) AS qty FROM restock_head resh INNER JOIN restock_details resd ON resh.rhead_id = resd.rhead_id WHERE resh.restock_date BETWEEN '$start' AND '$enddate' AND resd.item_id='$item'") AS $r){
+       /*   foreach($this->super_model->custom_query("SELECT SUM(resd.quantity) AS qty FROM restock_head resh INNER JOIN restock_details resd ON resh.rhead_id = resd.rhead_id WHERE resh.restock_date BETWEEN '$start' AND '$enddate' AND resd.item_id='$item' AND saved='1'") AS $r){
             return $r->qty;
         }
+*/
+          $restockqty= $this->super_model->select_sum_join("quantity","restock_details","restock_head", "item_id='$item' AND saved='1' AND excess='0' AND restock_date BETWEEN '$start' AND '$enddate' ","rhead_id");
+          return $restockqty;
 
     }
 
     public function qty_issued_date($item,$enddate){
           
         $start = $this->first_transaction();
-          foreach($this->super_model->custom_query("SELECT SUM(id.quantity) AS qty FROM issuance_head ih INNER JOIN issuance_details id ON ih.issuance_id = id.issuance_id WHERE ih.issue_date BETWEEN '$start' AND '$enddate' AND id.item_id='$item'") AS $r){
+        /*  foreach($this->super_model->custom_query("SELECT SUM(id.quantity) AS qty FROM issuance_head ih INNER JOIN issuance_details id ON ih.issuance_id = id.issuance_id WHERE ih.issue_date BETWEEN '$start' AND '$enddate' AND id.item_id='$item' AND excess='0' AND saved='1'") AS $r){
             return $r->qty;
-        }
+        }*/
+          $issueqty= $this->super_model->select_sum_join("quantity","issuance_details","issuance_head", "item_id='$item' AND saved='1' AND issue_date BETWEEN '$start' AND '$enddate'","issuance_id");
+          return $issueqty;
     }
 
 
@@ -553,7 +563,8 @@ class Reports extends CI_Controller {
   //while(strtotime($from) <= strtotime($to)) { 
         foreach($this->super_model->custom_query("SELECT * FROM items ".$query." ORDER BY item_name ASC") AS $it){
            $begbal = $this->super_model->select_column_custom_where("supplier_items","quantity","item_id = '$it->item_id' AND catalog_no = 'begbal'");
-           $beg = $this->begbal($it->item_id, $end_from) + $begbal;
+
+            $beg = $this->begbal($it->item_id, $end_from) + $begbal;
             $ending=($beg + $this->totalReceived_items($it->item_id, $from, $to) + 
                 $this->totalRestocked_items($it->item_id, $from, $to))-$this->totalIssued_items($it->item_id, $from, $to);
             $data['items'][]=array(
