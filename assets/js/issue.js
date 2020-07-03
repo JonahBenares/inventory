@@ -147,7 +147,8 @@ function saveBackorder(){
                 $("#savebutton").hide(); 
             },
 	        success: function(output){
-
+            $('#savebutton').show();
+            $('#alt').hide();
 	        //window.location.href = loc+'index.php/receive/view_';
 	        window.open( loc+'index.php/receive/mrf/'+output,'_blank');
 	         
