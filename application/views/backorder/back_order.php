@@ -103,6 +103,8 @@
 										<th style='text-align: center;'>Supplier</th>
 										<th style='text-align: center;'>Item Description</th>
 										<th style='text-align: center;'>Brand</th>
+										<th style='text-align: center;'>Unit Price</th>
+										<th style='text-align: center;'>Total Cost</th>
 										<th style='text-align: center;'>Remarks</th>
 									</tr>
 									<tbody id="item_body">
@@ -118,9 +120,29 @@
 											</td>
 											<td><center><?php echo $it['quantity']; ?></center></td>
 											<td><?php echo $it['catalog_no']; ?></td>
-											<td><?php echo $it['supplier']; ?></td>
+											<td>
+												<?php //echo $it['supplier']; ?>
+												<select name ="supplier[]" class="form-control select2" style='width:280px'>
+													<option>--Select Supplier--</option>
+													<?php foreach($supplier AS $s){ ?>
+													<option value="<?php echo $s->supplier_id; ?>" <?php echo ($s->supplier_id==$it['supplier_id']) ? 'selected' : ''?>><?php echo $s->supplier_name; ?></option>
+													<?php } ?>
+												</select>
+											</td>
 											<td><?php echo $it['item']; ?></td>
-											<td><?php echo $it['brand']; ?></td>
+											<td>
+												<?php //echo $it['brand']; ?>
+												<select name ="brand[]" class="form-control select2" style='width:120px'>
+													<option>--Select Supplier--</option>
+													<?php foreach($brand AS $b){ ?>
+													<option value="<?php echo $b->brand_id; ?>" <?php echo ($b->brand_id==$it['brand_id']) ? 'selected' : ''?>><?php echo $b->brand_name; ?></option>
+													<?php } ?>
+												</select>
+											</td>
+											<td>
+												<input type='text' name='item_cost[]' value="<?php echo $it['item_cost']; ?>" style='width:90px'>
+											</td>
+											<td align="center"><?php echo number_format($it['total_cost'],2); ?></td>
 											<td><textarea name='remarks[]' id='remarks[]'></textarea>
 											</td>
 											
