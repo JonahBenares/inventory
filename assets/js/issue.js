@@ -142,6 +142,10 @@ function saveBackorder(){
 	        type: "POST",
 	        url: redirect,
 	        data: issuedata,
+            beforeSend: function(){
+                document.getElementById('alt').innerHTML='<b>Please wait, Saving Data...</b>'; 
+                $("#savebutton").hide(); 
+            },
 	        success: function(output){
 
 	        //window.location.href = loc+'index.php/receive/view_';
@@ -220,4 +224,20 @@ function chooseMreqf(){
 
         }
     }); 
+}
+
+function changePrice(count){
+  //alert(count);
+   var cost = document.getElementById("item_cost"+count).value;
+   var qty = document.getElementById("quantity"+count).value;
+   var item_total = parseFloat(cost) * parseFloat(qty);
+    document.getElementById("total_cost").innerHTML  =item_total;
+}
+
+function changeQty(count){
+  //alert(count);
+   var cost = document.getElementById("item_cost"+count).value;
+   var qty = document.getElementById("quantity"+count).value;
+   var item_total = parseFloat(cost) * parseFloat(qty);
+    document.getElementById("total_cost").innerHTML  =item_total;
 }

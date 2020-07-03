@@ -116,7 +116,7 @@
 										<tr>
 											
 											<td>
-												<input type='number' name='quantity[]' value="<?php echo $it['quantity']; ?>" style='width:50px' max="<?php echo $it['quantity']; ?>">
+												<input type='number' name='quantity[]' id="quantity<?php echo $ct; ?>" value="<?php echo $it['quantity']; ?>" style='width:50px' max="<?php echo $it['quantity']; ?>" onkeyup="changeQty(<?php echo $ct; ?>)">
 											</td>
 											<td><center><?php echo $it['quantity']; ?></center></td>
 											<td><?php echo $it['catalog_no']; ?></td>
@@ -140,9 +140,9 @@
 												</select>
 											</td>
 											<td>
-												<input type='text' name='item_cost[]' value="<?php echo $it['item_cost']; ?>" style='width:90px'>
+												<input type='text' name='item_cost[]' id="item_cost<?php echo $ct; ?>" value="<?php echo $it['item_cost']; ?>" style='width:90px' onkeyup="changePrice(<?php echo $ct; ?>)">
 											</td>
-											<td align="center"><?php echo number_format($it['total_cost'],2); ?></td>
+											<td align="center"><span id="total_cost"><?php echo number_format($it['total_cost'],2); ?></span></td>
 											<td><textarea name='remarks[]' id='remarks[]'></textarea>
 											</td>
 											
@@ -162,11 +162,12 @@
 									?>
 									</tbody>
 								</table>
+								<center><div id='alt' style="font-weight:bold"></div></center>
 								<input type="hidden" name="count" id="count" value="<?php echo $ct; ?>">
 								<input type="hidden" name="baseurl" id="baseurl" value="<?php echo base_url(); ?>">
 								<input type="hidden" name="userid" id="userid" value="<?php echo $_SESSION['user_id']; ?>">
 								
-								<input type='button' class="btn btn-md btn-warning"  onclick='saveBackorder()' style="width:100%;background: #ff5d00" value='Save and Print'>
+								<input type='button' class="btn btn-md btn-warning"  onclick='saveBackorder()' style="width:100%;background: #ff5d00" value='Save and Print' id ="savebutton">
 								
 							</div>
 

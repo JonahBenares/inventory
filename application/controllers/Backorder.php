@@ -131,7 +131,7 @@ class Backorder extends CI_Controller {
         foreach($this->super_model->select_row_where("receive_items", "rd_id", $id) AS $it){
              if($it->expected_qty > $it->received_qty){
                 $boqty=$this->backorder_qty($it->ri_id);
-                $total_cost=$it->received_qty * $it->item_cost;
+                $total_cost=$boqty * $it->item_cost;
                  $data['items'][] = array(
                     "receiveid"=>$it->receive_id,
                     "rdid"=>$it->rd_id,
