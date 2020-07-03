@@ -125,51 +125,6 @@ class Masterfile extends CI_Controller {
             }
         }
 
-      
-     /*   $result=array();
-       $distinct_pr[]=array();
-        $distinct_item[]=array();
-        foreach($this->super_model->custom_query("SELECT * FROM receive_items lut WHERE NOT EXISTS (SELECT * FROM receive_items nx WHERE nx.po_no = lut.po_no AND nx.ri_id > lut.ri_id) AND lut.expected_qty > lut.received_qty ORDER BY ri_id DESC") AS $ri){
-                $item=$this->super_model->select_column_where("items", "item_name", "item_id", $ri->item_id);
-                $pr_no=$this->super_model->select_column_where("receive_details", "pr_no", "receive_id", $ri->receive_id);
-                $boqty=$this->backorder_qty($ri->ri_id);
-               
-                $distinct_pr[] = array(
-                    "pono"=>$ri->po_no,
-                    "pr_no"=>$pr_no,
-                    "rdid"=>$ri->rd_id,
-                    "item"=>$item,
-                    "expected"=>$boqty,
-                    "received"=>$ri->received_qty,
-                );
-                $distinct_item[] = array(
-                    "pono"=>$ri->po_no,
-                    "pr_no"=>$pr_no,
-                    "rdid"=>$ri->rd_id,
-                    "item"=>$item,
-                    "expected"=>$boqty,
-                    "received"=>$ri->received_qty,
-                );
-        }
-       
-
-        
-        
-        $tempPR = array_unique(array_column($distinct_pr, 'pr_no'));
-        $prlist = array_intersect_key($distinct_pr, $tempPR);
-        $tempItem = array_unique(array_column($distinct_item, 'item'));
-        $itemlist = array_intersect_key($distinct_item, $tempItem);
-        $result = array_merge($prlist, $itemlist);
-        foreach(array_unique($result, SORT_REGULAR) AS $ri){
-            $data['list'][]=array(
-                "pono"=>$ri['pono'],
-                "pr_no"=>$ri['pr_no'],
-                "rdid"=>$ri['rdid'],
-                "item"=>$ri['item'],
-                "expected"=>$ri['expected'],
-                "received"=>$ri['received'],
-            );
-        }*/
     
         foreach($this->super_model->select_custom_where("items", "min_qty!='0'") AS $items){
             $current_inv=$this->inventory_balance($items->item_id);
