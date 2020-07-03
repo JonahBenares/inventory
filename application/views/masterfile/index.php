@@ -36,10 +36,6 @@
 					<?php 
 					if(!empty($list)){
 
-
-						// /print_r($list[0]);
-					
-
 					foreach($list AS $li){ 
 							if($li['received']!=0){
 						 ?>
