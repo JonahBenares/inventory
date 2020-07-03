@@ -99,11 +99,11 @@
 									<tr>
 										<th style='text-align: center;'>Receive Qty</th>
 										<th style='text-align: center;'>Back Order Qty </th>
+										<th style='text-align: center;'>Unit Price</th>
 										<th style='text-align: center;'>Cat No.</th>
 										<th style='text-align: center;'>Supplier</th>
 										<th style='text-align: center;'>Item Description</th>
 										<th style='text-align: center;'>Brand</th>
-										<th style='text-align: center;'>Unit Price</th>
 										<th style='text-align: center;'>Total Cost</th>
 										<th style='text-align: center;'>Remarks</th>
 									</tr>
@@ -119,6 +119,9 @@
 												<input type='number' name='quantity[]' id="quantity<?php echo $ct; ?>" value="<?php echo $it['quantity']; ?>" style='width:50px' max="<?php echo $it['quantity']; ?>" onkeyup="changeQty(<?php echo $ct; ?>)">
 											</td>
 											<td><center><?php echo $it['quantity']; ?></center></td>
+											<td>
+												<input type='text' name='item_cost[]' id="item_cost<?php echo $ct; ?>" value="<?php echo $it['item_cost']; ?>" style='width:90px' onkeyup="changePrice(<?php echo $ct; ?>)">
+											</td>
 											<td><?php echo $it['catalog_no']; ?></td>
 											<td>
 												<?php //echo $it['supplier']; ?>
@@ -138,9 +141,6 @@
 													<option value="<?php echo $b->brand_id; ?>" <?php echo ($b->brand_id==$it['brand_id']) ? 'selected' : ''?>><?php echo $b->brand_name; ?></option>
 													<?php } ?>
 												</select>
-											</td>
-											<td>
-												<input type='text' name='item_cost[]' id="item_cost<?php echo $ct; ?>" value="<?php echo $it['item_cost']; ?>" style='width:90px' onkeyup="changePrice(<?php echo $ct; ?>)">
 											</td>
 											<td align="center"><span id="total_cost"><?php echo number_format($it['total_cost'],2); ?></span></td>
 											<td><textarea name='remarks[]' id='remarks[]'></textarea>
