@@ -42,7 +42,7 @@
 					<tr>
 						<td align="center"><?php echo $li['pr_no']; ?></td>
 						<td align="center"><?php echo $li['item']; ?></td>
-						<td align="center"><?php echo $li['expected']; ?></td>
+						<td align="center"><?php echo $li['balance']; ?></td>
 						<td align="center"><?php echo $li['received']; ?></td>
 						<td align="center">
 							<a href="<?php echo base_url(); ?>index.php/backorder/back_order/<?php echo $li['rdid']; ?>" class="btn btn-warning btn-xs">Receive</a>
