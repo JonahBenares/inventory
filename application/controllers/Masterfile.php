@@ -88,110 +88,46 @@ class Masterfile extends CI_Controller {
         return $bo_qty;
     }
 
+    public function get_expected_qty($pr,$item){
+        $expected_qty = $this->super_model->custom_query_single("expected_qty","SELECT ri.expected_qty FROM receive_items ri INNER JOIN receive_details rd ON ri.rd_id = rd.rd_id WHERE rd.pr_no = '$pr' AND ri.item_id='$item' ORDER BY ri_id ASC LIMIT 1");
+        return $expected_qty;
+    }
+
+     public function get_received_qty($pr,$item){
+        $received_qty = $this->super_model->select_sum_join("received_qty","receive_items","receive_details", "pr_no = '$pr' AND item_id='$item'","rd_id");
+        return $received_qty;
+    }
+
+      public function get_rdid($pr,$item){
+        $rd_id = $this->super_model->custom_query_single("rd_id","SELECT ri.rd_id FROM receive_items ri INNER JOIN receive_details rd ON ri.rd_id = rd.rd_id WHERE rd.pr_no = '$pr' AND ri.item_id='$item' ORDER BY ri_id DESC LIMIT 1");
+        return $rd_id;
+    }
+
     public function home(){
         $data[]=array();
-        /*foreach($this->super_model->select_all_group("issuance_details","rq_id") AS $issue){
-            foreach($this->super_model->select_row_where("request_items", "rq_id", $issue->rq_id) AS $request){
-                $pr=$this->super_model->select_column_where("issuance_head", "pr_no", "issuance_id", $issue->issuance_id);
-                $mreqf=$this->super_model->select_column_where("issuance_head", "mreqf_no", "issuance_id", $issue->issuance_id);
-                $enduseid=$this->super_model->select_column_where("issuance_head", "enduse_id", "issuance_id", $issue->issuance_id);
-                $enduse=$this->super_model->select_column_where("enduse", "enduse_name", "enduse_id", $enduseid);
-                $item=$this->super_model->select_column_where("items", "item_name", "item_id", $issue->item_id);
-                $issueqty= $this->super_model->select_sum("issuance_details", "quantity", "rq_id", $issue->rq_id);
-                $reqqty= $request->quantity;
-                
-
-                if($issueqty < $reqqty){
-                    $data['list'][] = array(
-                        "prno"=>$pr,
-                        "mreqf"=>$mreqf,
-                        "enduse"=>$enduse,
-                        "item"=>$item,
-                        "issue_qty"=>$issueqty,
-                        "req_qty"=>$reqqty,
-                        "issueid"=>$issue->issuance_id,
-                        "rid"=>$request->request_id
-                    );
-                }
-            }
-        }*/
+     
         $x=0;
-
-       // foreach($this->super_model->custom_query("SELECT * FROM receive_items lut INNER JOIN receive_details rd ON rd.rd_id = lut.rd_id WHERE NOT EXISTS (SELECT * FROM receive_items nx INNER JOIN receive_details rx ON rx.rd_id = nx.rd_id WHERE nx.item_id = lut.item_id AND nx.supplier_id = lut.supplier_id AND nx.brand_id = lut.brand_id AND nx.catalog_no = lut.catalog_no AND rd.pr_no = rx.pr_no AND nx.ri_id > lut.ri_id) ORDER BY ri_id DESC") AS $ri){
-        $result=array();
-        foreach($this->super_model->custom_query("SELECT * FROM receive_items lut WHERE NOT EXISTS (SELECT * FROM receive_items nx WHERE nx.po_no = lut.po_no AND nx.ri_id > lut.ri_id) AND lut.expected_qty > lut.received_qty ORDER BY ri_id DESC") AS $ri){
-                $item=$this->super_model->select_column_where("items", "item_name", "item_id", $ri->item_id);
-                $pr_no=$this->super_model->select_column_where("receive_details", "pr_no", "receive_id", $ri->receive_id);
-                $boqty=$this->backorder_qty($ri->ri_id);
-                /*if($ri->expected_qty>$ri->received_qty){
-                     $data['list'][]=array(
-                        "pono"=>$ri->po_no,
-                        "pr_no"=>$pr_no,
-                        "rdid"=>$ri->rd_id,
-                        "item"=>$item,
-                        "expected"=>$boqty,
-                        "received"=>$ri->received_qty,
-                    );
-                 }*/
-                $distinct_pr[] = array(
-                    "pono"=>$ri->po_no,
-                    "pr_no"=>$pr_no,
-                    "rdid"=>$ri->rd_id,
-                    "item"=>$item,
-                    "expected"=>$boqty,
-                    "received"=>$ri->received_qty,
-                );
-                $distinct_item[] = array(
-                    "pono"=>$ri->po_no,
-                    "pr_no"=>$pr_no,
-                    "rdid"=>$ri->rd_id,
-                    "item"=>$item,
-                    "expected"=>$boqty,
-                    "received"=>$ri->received_qty,
-                );
-        }
-        $distinct_pr[]=array();
-        $distinct_item[]=array();
-        $tempPR = array_unique(array_column($distinct_pr, 'pr_no'));
-        $prlist = array_intersect_key($distinct_pr, $tempPR);
-        $tempItem = array_unique(array_column($distinct_item, 'item'));
-        $itemlist = array_intersect_key($distinct_item, $tempItem);
-        $result = array_merge($prlist, $itemlist);
-        foreach(array_unique($result, SORT_REGULAR) AS $ri){
-            $data['list'][]=array(
-                "pono"=>$ri['pono'],
-                "pr_no"=>$ri['pr_no'],
-                "rdid"=>$ri['rdid'],
-                "item"=>$ri['item'],
-                "expected"=>$ri['expected'],
-                "received"=>$ri['received'],
-            );
-        }
-      /*   foreach($this->super_model->select_join("receive_items","receive_head", "saved='1'","receive_id") AS $ri){
- 
-               $expected =$this->super_model->select_column_custom_where("receive_items","expected_qty", "po_no='$ri->po_no' AND item_id = '$ri->item_id' AND supplier_id = '$ri->supplier_id' AND brand_id = '$ri->brand_id' AND catalog_no = '$ri->catalog_no'","receive_id");
+       
+        foreach($this->super_model->custom_query("SELECT DISTINCT pr_no, item_id FROM receive_details rd INNER JOIN receive_head rh ON rh.receive_id = rd.receive_id INNER JOIN receive_items ri ON rd.rd_id = ri.rd_id WHERE saved='1'") AS $prlist){
             
-                $received=$this->super_model->select_sum_where_group5("receive_items", "received_qty", "po_no='$ri->po_no' AND item_id = '$ri->item_id' AND supplier_id = '$ri->supplier_id' AND brand_id = '$ri->brand_id' AND catalog_no = '$ri->catalog_no'", "po_no","item_id","supplier_id","brand_id","catalog_no");
-         
-                if($expected > $received){
-
-                     $item=$this->super_model->select_column_where("items", "item_name", "item_id", $ri->item_id);
-                     
-
-                     $data['list'][$x]=array(
-                        "pono"=>$ri->po_no,
-                        "rdid"=>$ri->rd_id,
-                        "item"=>$item,
-                        "expected"=>$ri->expected_qty,
-                        "received"=>$ri->received_qty,
-                        
-                    );
-                $x++;
-               }
-                
-            
+            $expected_qty= $this->get_expected_qty($prlist->pr_no,$prlist->item_id);
+            $received_qty= $this->get_received_qty($prlist->pr_no,$prlist->item_id);
+            $balance = $expected_qty - $received_qty;
+            $rd_id= $this->get_rdid($prlist->pr_no,$prlist->item_id);
+            $item=$this->super_model->select_column_where("items", "item_name", "item_id", $prlist->item_id);
+            if($expected_qty>$received_qty){
+                $data['list'][] = array(
+                    "rdid"=>$rd_id,
+                    "pr_no"=>$prlist->pr_no,
+                    "item"=>$item,
+                    "expected"=>$expected_qty,
+                    "received"=>$received_qty,
+                    "balance"=>$balance
+                );
+            }
         }
-*/
+
+    
         foreach($this->super_model->select_custom_where("items", "min_qty!='0'") AS $items){
             $current_inv=$this->inventory_balance($items->item_id);
             $moq=$items->min_qty;
