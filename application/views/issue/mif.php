@@ -272,7 +272,7 @@
                     </td> 
                     <td></td>
                     <td style="border-bottom:1px solid #000">
-                        <select type="text" class="select" name="released">
+                        <select type="text" class="select" name="released" id="released" onchange="chooseEmprel()">
                             <option></option>
                             <?php /*foreach($employees AS $emp){ */ foreach($released_emp AS $rel){ ?>
                             <option value="<?php echo $rel['empid']; ?>"<?php echo (($rel['empid'] == $released) ?  ' selected' : ''); ?>><?php echo $rel['empname'];?></option>
@@ -291,7 +291,11 @@
                         </select>
                     </td>
                     <td></td>
-                    <td><center>Warehouse Personnel</center></td>
+                   <!--  <td><center>Warehouse Personnel</center></td> -->
+                    <td>
+                        <center><div id='alt' style="font-weight:bold"></div></center>
+                        <input id="position" class="select" style="pointer-events:none" value="<?php echo $us['positionrel'];?>">
+                    </td>
                     <td></td>
                 </tr>
             </table> 
@@ -306,7 +310,7 @@
                 <tr>
                     <td></td>
                     <td style="border-bottom:1px solid #000">
-                        <select type="text" class="select" name="received">
+                        <select type="text" class="select" name="received" id="received" onchange="chooseEmprec()">
                             <option></option>
                             <?php foreach($received_emp AS $rel){ ?>
                             <option value="<?php echo $rel['empid']; ?>"<?php echo (($rel['empid'] == $received) ?  ' selected' : ''); ?>><?php echo $rel['empname'];?></option>
@@ -315,7 +319,7 @@
                     </td>                    
                     <td></td>
                     <td style="border-bottom:1px solid #000">
-                        <select type="text" class="select" name="noted">
+                        <select type="text" class="select" name="noted" id="noted" onchange="chooseEmpnoted()">
                             <option></option>
                             <?php foreach($noted_emp AS $rel){ ?>
                             <option value = "<?php echo $rel['empid'];?>"<?php echo (($rel['empid'] == $noted) ?  ' selected' : ''); ?>><?php echo $rel['empname'];?></option>
@@ -326,9 +330,17 @@
                 </tr>
                 <tr>
                     <td></td>
-                    <td><center>End User/ Requester</center></td>
+                   <!--  <td><center>End User/ Requester</center></td> -->
+                    <td>
+                        <center><div id='alts' style="font-weight:bold"></div></center>
+                        <input id="positionrec" class="select" style="pointer-events:none" value="<?php echo $us['positionrec'];?>">
+                    </td>
                     <td></td>
-                    <td><center>Warehouse In-Charge</center></td>
+                    <!-- <td><center>Warehouse In-Charge</center></td> -->
+                    <td>
+                        <center><div id='altss' style="font-weight:bold"></div></center>
+                        <input id="positionnoted" class="select" style="pointer-events:none" value="<?php echo $us['positionnote'];?>">
+                    </td>
                     <td></td>
                 </tr>
             </table>
