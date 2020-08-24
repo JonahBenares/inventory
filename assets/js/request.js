@@ -164,7 +164,7 @@ function add_item(){
     var i = i.replace(/#/gi,"");
     var itm = i.replace(/"/gi,"");
     /*var getmax = parseInt(document.getElementById("getmax").value);*/
-    var maxqty = parseInt(document.getElementById("maxqty").value);
+    var maxqty = parseFloat(document.getElementById("maxqty").value);
      //alert(quantity);
     //alert(maxqty);
     if(itemid==''){
