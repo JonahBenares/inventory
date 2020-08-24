@@ -262,8 +262,8 @@ function add_item(){
     var unitcost =$('#unit_cost').val();
     var catno =$('#catalog_no').val();
     var unit =$('#unit').val();
-    var expqty =$('#exp_qty').val();
-    var recqty =$('#rec_qty').val();
+    var expqty =parseFloat($('#exp_qty').val());
+    var recqty =parseFloat($('#rec_qty').val());
     var remarks =$('#remarks').val();
     if ($("input:radio[name=local_mnl]:checked").val() == '1') {
         var local_mnl = '1';

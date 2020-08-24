@@ -154,8 +154,8 @@ function add_item(){
     var original_pn =$('#original_pn').val();
     var unit =$('#unit').val();
     /*var invqty =$('#invqty').val();*/
-    var quantity =parseInt($('#quantity').val());
-    var invqty =parseInt($('#invqty').val());
+    var quantity =parseFloat($('#quantity').val());
+    var invqty =parseFloat($('#invqty').val());
     var unit_cost =$('#unit_cost').val();
     var siid =$('#siid').val();
     

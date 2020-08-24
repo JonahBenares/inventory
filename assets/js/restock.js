@@ -275,7 +275,7 @@ function add_item(){
     var catno =$('#catalog_no').val();
     var reason =$('#reason').val();
     var remarks =$('#remarks').val();
-    var quantity =$('#quantity').val();
+    var quantity =parseFloat($('#quantity').val());
     /*var inspected =$('#inspected').val();*/
   
     var item =$('#item').val();
