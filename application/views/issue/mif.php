@@ -132,7 +132,7 @@
             width: 50%;
         }
         @media print{
-            #print1 {
+            #print1, #editbtn  {
                 display: none;
             }
             .nomarg{
@@ -148,6 +148,7 @@
             box-shadow: 0px 2px 1px 1px #dadada;
         }
 </style>
+
 <!-- <body style="padding-top:20px">
     <div class="container">
         <table class = "table-main " style = "width:100%">
@@ -176,7 +177,9 @@
                 <?php foreach($issuance_details as $det){ ?>
                 <tr>
                     <td width="10%"><h6 class="nomarg">JO / PR #</h6></td>
-                    <td width="40%" style="border-bottom: 1px solid #999"> <label class="nomarg">: <?php echo (($det['type'] == 'JO / PR') ? $det['prno'] : $det['type']); ?></label></td>
+                    <td width="40%" style="border-bottom: 1px solid #999"> <label class="nomarg">: <?php echo (($det['type'] == 'JO / PR') ? $det['prno'] : $det['type']); ?></label>
+                        <a onclick="editmodal()" class="btn btn-xs btn-primary pull-right" id="editbtn" ><span class="fa fa-pencil"></span></a>
+                    </td>
                     <td width="7%"></td>
                     <td width="10%"><h6 class="nomarg pull-right">MIF No. &nbsp</h6></td>
                     <td colspan="3" style="border-bottom: 1px solid #999"> <label class="nomarg">: <?php echo $det['milf']?></label></td>
@@ -380,4 +383,9 @@
            
     </div>
 </body>
+<script type="text/javascript">
+    function editmodal() {
+        window.open("<?php echo base_url();?>index.php/issue/editmodal", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=120,left=460,width=400,height=400");
+    }    
+</script>
 </html>

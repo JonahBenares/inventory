@@ -25,6 +25,7 @@
 						<strong> Back Order</strong>
 					</h3>
 				</center>
+				<div style="height: 200px;overflow-x: scroll;">
 				<table class="table table-bordered table-hover shadow-dash">
 					<tr style="background-color: #ffe0a7; font-weight: 600">
 						<td align="center">PR#</td>
@@ -51,6 +52,7 @@
 					<?php } }
 				} ?>
 				</table> 
+				</div>
 			</div>
 		</div> 
 		<?php } else { ?>
@@ -62,6 +64,51 @@
 			</div>
 		</div>
 		<?php } ?>
+
+
+		<div class="panel panel-default animated fadeInRight " style="border: 1px solid #ffcbaa;">
+			<div class="panel-body">
+				<center>
+					<h3>
+						<span class="fa fa-handshake-o"></span>
+						<strong> Borrow Report</strong>
+					</h3>
+				</center>
+				<div style="height: 200px;overflow-x: scroll;">
+					<table class="table table-bordered table-hover shadow-dash">
+						<tr style="background-color: #ffe0a7; font-weight: 600">
+							<td align="center" width="60%">Borrower</td>
+							<td align="center" width="20%">Borrowed From</td>
+							<td align="center" width="20%">Item</td>
+							<td align="center" width="20%">Qty</td>
+							<td align="center" width="20%">MIF No.</td>
+							<td align="center" width="20%"><span class="fa fa-bars"></span></td>
+						</tr>
+						<tr>
+							<td align="center">asdas</td>
+							<td align="center">asdasd</td>
+							<td align="center">asdsadasd</td>
+							<td align="center">12</td>
+							<td align="center">wqeqweqwwe</td>
+							<td align="center"><a href="" class="btn btn-warning btn-xs">Replenish</a></td>							
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+		<!-- Paki if lang d please -->
+		<div class="panel panel-default animated fadeInRight itemSubBevel itemSubColor3" >
+			<div class="panel-body">
+				<center>
+					<h1 class="subFcolor"><span class="fa fa-handshake-o animated fadeInLeft infinite"></span> </h1><h2 class="subColored" style="margin: 0px">Borrow Report</h2>
+				</center>
+			</div>
+		</div>
+
+
+
+
+
 		<?php if(!empty($nto)){ ?>
 		<div class="panel panel-default animated fadeInRight " style="border: 1px solid #ffcbaa;">
 			<div class="panel-body">
@@ -227,7 +274,7 @@
 										<p style="padding-left: 17px;padding-right: 20px;padding-top: 5px"><?php echo $rem['title']; ?></p>
 									</td>
 									<td>
-										<a class='btn btn-primary btn-xs' id="UpRem" data-id = "<?php echo $rem['reminder_id'];?>" data-date="<?php echo $rem['reminder_date']; ?>" data-title="<?php echo $rem['title']; ?>" data-notes="<?php echo $rem['notes']; ?>" data-remind="<?php echo $rem['remind_employee']; ?>" data-toggle="modal" data-target="#UpreminderModal">Edit</a>
+										<a class='btn btn-primary btn-xs' style="width: 100%" id="UpRem" data-id = "<?php echo $rem['reminder_id'];?>" data-date="<?php echo $rem['reminder_date']; ?>" data-title="<?php echo $rem['title']; ?>" data-notes="<?php echo $rem['notes']; ?>" data-remind="<?php echo $rem['remind_employee']; ?>" data-toggle="modal" data-target="#UpreminderModal">Edit</a>
 										<a href="<?php echo base_url(); ?>index.php/masterfile/reminderdone/<?php echo $rem['reminder_id']; ?>" onclick="return confirm('Are you sure?')" class='btn btn-warning btn-xs'>Done</a>
 									</td>
 								</tr>

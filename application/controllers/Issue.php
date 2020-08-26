@@ -797,5 +797,12 @@ class Issue extends CI_Controller {
         }
     }
    
+   public function editmodal()
+   {
+    $this->load->view('template/header');        
+    $this->load->view('issue/editmodal');  
+    $this->load->view('template/footer');  
+
+   }
 }
 ?>

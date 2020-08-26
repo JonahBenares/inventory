@@ -120,7 +120,7 @@ if (isset($this->session->userdata['logged_in'])) {
   	}
 
 	@keyframes mymove {
-	    from {left: -95px;}
+	    from {left: 100%;}
 	    to {left: 230px;}
 	}
   	.font-truck{
