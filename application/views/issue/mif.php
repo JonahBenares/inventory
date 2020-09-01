@@ -168,17 +168,25 @@
         </table>
         <div class="col-lg-12" style="margin:10px 0px 10px">
             <table width="100%">
-                <?php foreach($heads as $det){ 
+                <?php 
+
+              foreach($heads as $h){ 
                             
-                    $released= $det->released_by;
-                    $received= $det->received_by;
-                    $noted= $det->noted_by;
+                    $released= $h->released_by;
+                    $received= $h->received_by;
+                    $noted= $h->noted_by;
+                    $issuance_id = $h->issuance_id;
                 }?>
                 <?php foreach($issuance_details as $det){ ?>
                 <tr>
                     <td width="10%"><h6 class="nomarg">JO / PR #</h6></td>
                     <td width="40%" style="border-bottom: 1px solid #999"> <label class="nomarg">: <?php echo (($det['type'] == 'JO / PR') ? $det['prno'] : $det['type']); ?></label>
-                        <a onclick="editmodal()" class="btn btn-xs btn-primary pull-right" id="editbtn" ><span class="fa fa-pencil"></span></a>
+                        <?php 
+                        if($access['issue_edit']==1){
+                        if(empty($det['prno']) && $det['type'] != 'Warehouse Stocks'){ ?>
+                        <a onclick="editmodal(<?php echo $issuance_id; ?>)" class="btn btn-xs btn-primary pull-right" id="editbtn" ><span class="fa fa-pencil"></span></a>
+                        <?php }
+                        } ?>
                     </td>
                     <td width="7%"></td>
                     <td width="10%"><h6 class="nomarg pull-right">MIF No. &nbsp</h6></td>
@@ -384,8 +392,8 @@
     </div>
 </body>
 <script type="text/javascript">
-    function editmodal() {
-        window.open("<?php echo base_url();?>index.php/issue/editmodal", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=120,left=460,width=400,height=400");
+    function editmodal(issuance_id) {
+        window.open("<?php echo base_url();?>index.php/issue/editmodal/"+issuance_id, "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=120,left=460,width=400,height=400");
     }    
 </script>
 </html>

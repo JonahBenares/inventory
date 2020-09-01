@@ -1,5 +1,6 @@
 <script src="<?php echo base_url(); ?>assets/js/dashboard/bootstrap.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/dashboard/jquery.min.js"></script>
+<script src="<?php echo base_url(); ?>assets/js/reports.js"></script>
 <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main" >
 	<div class="row">
 		<ol class="breadcrumb">
@@ -84,14 +85,16 @@
 							<td align="center" width="20%">MIF No.</td>
 							<td align="center" width="20%"><span class="fa fa-bars"></span></td>
 						</tr>
+						<?php foreach($borrow AS $b){ ?>
 						<tr>
-							<td align="center">asdas</td>
-							<td align="center">asdasd</td>
-							<td align="center">asdsadasd</td>
-							<td align="center">12</td>
-							<td align="center">wqeqweqwwe</td>
-							<td align="center"><a href="" class="btn btn-warning btn-xs">Replenish</a></td>							
+							<td align="center"><?php echo $b['original_pr']; ?></td>
+							<td align="center"><?php echo $b['borrowfrom']; ?></td>
+							<td align="center"><?php echo $b['item']; ?></td>
+							<td align="center"><?php echo $b['quantity']; ?></td>
+							<td align="center"><?php echo $b['mif_no']; ?></td>
+							<td align="center"><a href="javascript:void(0)" onclick="replenishBorrow_dash('<?php echo $b['rqid']; ?>','<?php echo base_url(); ?>')" class="btn btn-info btn-sm">Replenish</a></td>							
 						</tr>
+						<?php } ?>
 					</table>
 				</div>
 			</div>
