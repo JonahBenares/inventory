@@ -1,5 +1,22 @@
 <script src="<?php echo base_url(); ?>assets/js/dashboard/bootstrap.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/dashboard/jquery.min.js"></script>
+<script src="<?php echo base_url(); ?>assets/js/reports.js"></script>
+<style type="text/css">
+	th {
+	  position: -webkit-sticky;
+	  position: sticky;
+	  top: 0;
+	  z-index: 2;
+	  background-color: #ffe0a7; font-weight: 600;
+	}
+	th[scope=row] {
+	  position: -webkit-sticky;
+	  position: sticky;
+	  left: 0;
+	  z-index: 1;
+	  background-color: #ffe0a7; font-weight: 600;
+	}
+</style>
 <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main" >
 	<div class="row">
 		<ol class="breadcrumb">
@@ -25,32 +42,37 @@
 						<strong> Back Order</strong>
 					</h3>
 				</center>
+				<div style="height: 200px;overflow-x: scroll;">
 				<table class="table table-bordered table-hover shadow-dash">
-					<tr style="background-color: #ffe0a7; font-weight: 600">
-						<td align="center">PR#</td>
-						<td align="center">Item</td>
-						<td align="center">Expected Qty</td>
-						<td align="center">Received Qty</td>
-						<td align="center"><span class="fa fa-cog"></span></td>
-					</tr>
+					<thead>
+						<tr>
+							<th align="center">PR#</th>
+							<th align="center">Item</th>
+							<th align="center">Expected Qty</th>
+							<th align="center">Received Qty</th>
+							<th align="center"><span class="fa fa-cog"></span></th>
+						</tr>
+					</thead>
+					<tbody>
 					<?php 
-					if(!empty($list)){
-
-					foreach($list AS $li){ 
-							if($li['received']!=0){
-						 ?>
-					<tr>
-						<td align="center"><?php echo $li['pr_no']; ?></td>
-						<td align="center"><?php echo $li['item']; ?></td>
-						<td align="center"><?php echo $li['balance']; ?></td>
-						<td align="center"><?php echo $li['received']; ?></td>
-						<td align="center">
-							<a href="<?php echo base_url(); ?>index.php/backorder/back_order/<?php echo $li['rdid']; ?>" class="btn btn-warning btn-xs">Receive</a>
-						</td>
-					</tr>
-					<?php } }
-				} ?>
+						if(!empty($list)){
+						foreach($list AS $li){ 
+								if($li['received']!=0){
+							 ?>
+						<tr>
+							<td align="center"><?php echo $li['pr_no']; ?></td>
+							<td align="center"><?php echo $li['item']; ?></td>
+							<td align="center"><?php echo $li['balance']; ?></td>
+							<td align="center"><?php echo $li['received']; ?></td>
+							<td align="center">
+								<a href="<?php echo base_url(); ?>index.php/backorder/back_order/<?php echo $li['rdid']; ?>" class="btn btn-warning btn-xs">Receive</a>
+							</td>
+						</tr>
+						<?php } }
+						} ?>
+					</tbody>
 				</table> 
+				</div>
 			</div>
 		</div> 
 		<?php } else { ?>
@@ -62,6 +84,59 @@
 			</div>
 		</div>
 		<?php } ?>
+
+		<?php if(!empty($borrow)){ ?>
+		<div class="panel panel-default animated fadeInRight " style="border: 1px solid #ffcbaa;">
+			<div class="panel-body">
+				<center>
+					<h3>
+						<span class="fa fa-handshake-o"></span>
+						<strong> Borrow Report</strong>
+					</h3>
+				</center>
+				<div style="height: 200px;overflow-x: scroll;">
+					<table class="table table-bordered table-hover shadow-dash">
+						<thead>
+							<tr>
+								<th align="center" width="60%">Borrower</th>
+								<th align="center" width="20%">Borrowed From</th>
+								<th align="center" width="20%">Item</th>
+								<th align="center" width="20%">Qty</th>
+								<th align="center" width="20%">MIF No.</th>
+								<th align="center" width="20%"><center><span class="fa fa-bars"></span></center></th>
+							</tr>
+						</thead>
+						<tbody>
+							<?php foreach($borrow AS $b){ ?>
+							<tr>
+								<td align="center"><?php echo $b['original_pr']; ?></td>
+								<td align="center"><?php echo $b['borrowfrom']; ?></td>
+								<td align="center"><?php echo $b['item']; ?></td>
+								<td align="center"><?php echo $b['quantity']; ?></td>
+								<td align="center"><?php echo $b['mif_no']; ?></td>
+								<td align="center"><a href="javascript:void(0)" onclick="replenishBorrow_dash('<?php echo $b['rqid']; ?>','<?php echo base_url(); ?>')" class="btn btn-info btn-sm">Replenish</a></td>							
+							</tr>
+							<?php } ?>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		<?php } else { ?>
+		<!-- Paki if lang d please -->
+		<div class="panel panel-default animated fadeInRight itemSubBevel itemSubColor3" >
+			<div class="panel-body">
+				<center>
+					<h1 class="subFcolor"><span class="fa fa-handshake-o animated fadeInLeft infinite"></span> </h1><h2 class="subColored" style="margin: 0px">Borrow Report</h2>
+				</center>
+			</div>
+		</div>
+		<?php } ?>
+
+
+
+
+
 		<?php if(!empty($nto)){ ?>
 		<div class="panel panel-default animated fadeInRight " style="border: 1px solid #ffcbaa;">
 			<div class="panel-body">
@@ -71,24 +146,30 @@
 						<strong> Need to Reorder</strong>
 					</h3>
 				</center>
-				<table class="table table-bordered table-hover shadow-dash">
-					<tr style="background-color: #ffe0a7; font-weight: 600">
-						<td align="center" width="60%">Item</td>
-						<td align="center" width="20%">MOQ</td>
-						<td align="center" width="20%">Cur. Inv.</td>
-					</tr>
-					<?php 
-					if(!empty($nto)){
-					foreach($nto AS $n) { ?>
-					<tr>
-						<td align="center"><?php echo $n['item']; ?></td>
-						<td align="center"><?php echo $n['moq']; ?></td>
-						<td align="center"><?php echo $n['currentinv']; ?></td>
-						
-					</tr>
-					<?php }
-					} ?>
-				</table>
+				<div style="height: 200px;overflow-x: scroll;">
+					<table class="table table-bordered table-hover shadow-dash">
+						<thead>
+							<tr style="background-color: #ffe0a7; font-weight: 600">
+								<th align="center" width="60%">Item</th>
+								<th align="center" width="20%">MOQ</th>
+								<th align="center" width="20%">Cur. Inv.</th>
+							</tr>
+						</thead>
+						<tbody>
+						<?php 
+						if(!empty($nto)){
+						foreach($nto AS $n) { ?>
+						<tr>
+							<td align="center"><?php echo $n['item']; ?></td>
+							<td align="center"><?php echo $n['moq']; ?></td>
+							<td align="center"><?php echo $n['currentinv']; ?></td>
+							
+						</tr>
+						<?php }
+						} ?>
+						</tbody>
+					</table>
+				</div>	
 			</div>
 		</div>
 		<?php } else { ?>
@@ -227,7 +308,7 @@
 										<p style="padding-left: 17px;padding-right: 20px;padding-top: 5px"><?php echo $rem['title']; ?></p>
 									</td>
 									<td>
-										<a class='btn btn-primary btn-xs' id="UpRem" data-id = "<?php echo $rem['reminder_id'];?>" data-date="<?php echo $rem['reminder_date']; ?>" data-title="<?php echo $rem['title']; ?>" data-notes="<?php echo $rem['notes']; ?>" data-remind="<?php echo $rem['remind_employee']; ?>" data-toggle="modal" data-target="#UpreminderModal">Edit</a>
+										<a class='btn btn-primary btn-xs' style="width: 100%" id="UpRem" data-id = "<?php echo $rem['reminder_id'];?>" data-date="<?php echo $rem['reminder_date']; ?>" data-title="<?php echo $rem['title']; ?>" data-notes="<?php echo $rem['notes']; ?>" data-remind="<?php echo $rem['remind_employee']; ?>" data-toggle="modal" data-target="#UpreminderModal">Edit</a>
 										<a href="<?php echo base_url(); ?>index.php/masterfile/reminderdone/<?php echo $rem['reminder_id']; ?>" onclick="return confirm('Are you sure?')" class='btn btn-warning btn-xs'>Done</a>
 									</td>
 								</tr>
