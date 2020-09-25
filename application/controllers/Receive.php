@@ -680,30 +680,33 @@ class Receive extends CI_Controller {
         $itemname =  $this->input->post('itemname');
         $suppliername =  $this->input->post('suppliername');
         $brandid =  $this->input->post('brandid');
-      
-            $data['list'] = array(
-                'supplier'=>$this->input->post('suppliername'),
-                'supplierid'=>$this->input->post('supplierid'),
-                'itemid'=>$this->input->post('itemid'),
-                'brandid'=>$this->input->post('brandid'),
-                'brand'=>$this->input->post('brandname'),
-                'serialid'=>$this->input->post('serialid'),
-                'serial'=>$this->input->post('serial'),
-                'catno'=>trim($this->input->post('catno'), " "),
-                'unitcost'=>$this->input->post('unitcost'),
-                'unit'=>$this->input->post('unit'),
-                'unit_name'=>$unit,
-                'expqty'=>$this->input->post('expqty'),
-                'recqty'=>$this->input->post('recqty'),
-                'remarks'=>$this->input->post('remarks'),
-                'item'=>$this->input->post('itemname'),
-                'local_mnl'=>$this->input->post('local_mnl'),
-                'count'=>$this->input->post('count'),
-                'total'=>$total
-            );  
-            $this->load->view('receive/row_item',$data);
-     
-     }
+        if(!empty($brandid)){
+            $brandname=$this->input->post('brandname');
+        }else{
+            $brandname=$this->input->post('brand');
+        }
+        $data['list'] = array(
+            'supplier'=>$this->input->post('suppliername'),
+            'supplierid'=>$this->input->post('supplierid'),
+            'itemid'=>$this->input->post('itemid'),
+            'brandid'=>$this->input->post('brandid'),
+            'brand'=>$brandname,
+            'serialid'=>$this->input->post('serialid'),
+            'serial'=>$this->input->post('serial'),
+            'catno'=>trim($this->input->post('catno'), " "),
+            'unitcost'=>$this->input->post('unitcost'),
+            'unit'=>$this->input->post('unit'),
+            'unit_name'=>$unit,
+            'expqty'=>$this->input->post('expqty'),
+            'recqty'=>$this->input->post('recqty'),
+            'remarks'=>$this->input->post('remarks'),
+            'item'=>$this->input->post('itemname'),
+            'local_mnl'=>$this->input->post('local_mnl'),
+            'count'=>$this->input->post('count'),
+            'total'=>$total
+        );  
+        $this->load->view('receive/row_item',$data);
+    }
 
      public function insertReceivePR(){
 
