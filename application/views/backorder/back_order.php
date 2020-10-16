@@ -61,6 +61,9 @@
 								<td ><label class="labelStyle"><?php echo $hd['department']; ?></label></td>
 								
 								<td width="15%">
+									<a class="animated pulse infinite  clickable btn btn-warning shadow pull-right"  data-toggle="modal" data-target="#myModal" style="border:1px solid #d68a00">
+										<span class="fa fa-plus"></span> Add New Brand
+									</a>
 								</td>
 							</tr>
 							<tr>
@@ -135,12 +138,13 @@
 											<td><?php echo $it['item']; ?></td>
 											<td>
 												<?php //echo $it['brand']; ?>
-												<select name ="brand[]" class="form-control select2" style='width:120px'>
+												<select name ="brand[]" id='brand' class="form-control select2" style='width:120px' onchange="chooseBrand()">
 													<option>--Select Supplier--</option>
 													<?php foreach($brand AS $b){ ?>
 													<option value="<?php echo $b->brand_id; ?>" <?php echo ($b->brand_id==$it['brand_id']) ? 'selected' : ''?>><?php echo $b->brand_name; ?></option>
 													<?php } ?>
 												</select>
+												<input type='hidden' name='brand_id' id='brand_id'>
 											</td>
 											<td align="center"><span id="total_cost"><?php echo number_format($it['total_cost'],2); ?></span></td>
 											<td><textarea name='remarks[]' id='remarks[]'></textarea>
@@ -166,7 +170,6 @@
 								<input type="hidden" name="count" id="count" value="<?php echo $ct; ?>">
 								<input type="hidden" name="baseurl" id="baseurl" value="<?php echo base_url(); ?>">
 								<input type="hidden" name="userid" id="userid" value="<?php echo $_SESSION['user_id']; ?>">
-								
 								<input type='button' class="btn btn-md btn-warning"  onclick='saveBackorder()' style="width:100%;background: #ff5d00" value='Save and Print' id ="savebutton">
 								
 							</div>
@@ -178,7 +181,32 @@
 					</form>
 					</div>
 				</div>
-
+				<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header modal-headback">
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+								<h4 class="modal-title" id="myModalLabel">Add New Brand</h4>
+							</div>
+							<div class="modal-body">
+								<form method="POST">
+									<label>Brand Name</label>
+									<input type = "text" name = "brandname" id="brandname" class = "form-control option">
+									<div class="modal-footer">
+										<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+										<input type="hidden" name="baseurl1" id="baseurl1" value="<?php echo base_url(); ?>">
+										<input type="button" id = "btnAdd"  class="btn btn-warning" value = "Add" onclick = "addBrand()" />
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
+<script type="text/javascript">
+	$('#btnAdd').click(function() {
+	    $('#myModal').modal('hide');
+	});
+</script>

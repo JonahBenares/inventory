@@ -293,3 +293,28 @@ function chooseEmpnoted(){
         }
     }); 
 }
+
+function chooseBrand(){
+    var loc= document.getElementById("baseurl").value;
+    var redirect = loc+'index.php/backorder/getBrandinformation';
+    var brand = document.getElementById("brand").value;
+    var brand_id = document.getElementById("brand_id").value;
+    $.ajax({
+        type: 'POST',
+        url: redirect,
+        data: 'brand='+brand,
+        dataType: 'json',
+        success: function(response){
+            $("#brand_id").val(response.brand_id);
+        }
+    }); 
+}
+
+function addBrand() {
+   var brand = document.getElementById("brand");
+   var brandname = document.getElementById("brandname").value;
+   var option = document.createElement("OPTION");
+   option.innerHTML = document.getElementById("brandname").value;
+   option.value = document.getElementById("brandname").value;
+   brand.options.add(option);
+}

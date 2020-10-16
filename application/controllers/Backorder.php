@@ -175,6 +175,14 @@ class Backorder extends CI_Controller {
         $this->load->view('template/footer');
     }
 
+    public function getBrandinformation(){
+        $brand = $this->input->post('brand');
+        foreach($this->super_model->custom_query("SELECT brand_id, brand_name FROM brand WHERE brand_id='$brand'") AS $brnd){  
+            $return = array('brand_id' => $brnd->brand_id,'brand_name' => $brnd->brand_name); 
+            echo json_encode($return);   
+        }
+    }
+
     
     public function backorder_qty($riid){
 
@@ -271,7 +279,19 @@ class Backorder extends CI_Controller {
         for($a=0;$a<$counter;$a++){
            // $riid= $this->input->post('riid['.$a.']');
             //echo $riid;
-             foreach($this->super_model->select_row_where("receive_items", "ri_id", $this->input->post('riid['.$a.']')) AS $rd){
+            if(empty($this->input->post('brand_id['.$a.']'))){
+                $maxid=$this->super_model->get_max("brand", "brand_id");
+                $bid=$maxid+1;
+                $brand_data = array(
+                    'brand_id' => $bid,
+                    'brand_name' => $this->input->post('brand['.$a.']')
+                );
+                $this->super_model->insert_into("brand", $brand_data);
+            } else {
+                $bid = $this->input->post('brand['.$a.']');
+            }
+
+            foreach($this->super_model->select_row_where("receive_items", "ri_id", $this->input->post('riid['.$a.']')) AS $rd){
            
                 $items = array(
                 'rd_id'=>$newrdid,
@@ -279,7 +299,7 @@ class Backorder extends CI_Controller {
                 'po_no'=>$po_no,
                 'supplier_id'=> $this->input->post('supplier['.$a.']'),
                 'item_id'=> $rd->item_id,
-                'brand_id'=> $this->input->post('brand['.$a.']'),
+                'brand_id'=> $bid,
                 'catalog_no'=> $rd->catalog_no,
                 'serial_id'=>$rd->serial_id,
                 'item_cost'=> $this->input->post('item_cost['.$a.']'),
