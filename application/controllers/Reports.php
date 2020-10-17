@@ -459,14 +459,14 @@ class Reports extends CI_Controller {
     }
 
     public function totalReceived_items($item, $from, $to){
-        foreach($this->super_model->custom_query("SELECT SUM(ri.received_qty) AS qty FROM receive_head rh INNER JOIN receive_items ri ON rh.receive_id = ri.receive_id WHERE rh.receive_date BETWEEN '$from' AND '$to' AND ri.item_id='$item'") AS $r){
+        foreach($this->super_model->custom_query("SELECT SUM(ri.received_qty) AS qty FROM receive_head rh INNER JOIN receive_items ri ON rh.receive_id = ri.receive_id WHERE rh.receive_date BETWEEN '$from' AND '$to' AND ri.item_id='$item' AND rh.saved='1'") AS $r){
             return $r->qty;
         }
     
     }
 
       public function totalIssued_items($item,  $from, $to){
-        foreach($this->super_model->custom_query("SELECT SUM(id.quantity) AS qty FROM issuance_head ih INNER JOIN issuance_details id ON ih.issuance_id = id.issuance_id WHERE ih.issue_date BETWEEN '$from' AND '$to' AND id.item_id='$item'") AS $r){
+        foreach($this->super_model->custom_query("SELECT SUM(id.quantity) AS qty FROM issuance_head ih INNER JOIN issuance_details id ON ih.issuance_id = id.issuance_id WHERE ih.issue_date BETWEEN '$from' AND '$to' AND id.item_id='$item' AND ih.saved='1'") AS $r){
             return $r->qty;
         }
 
@@ -474,7 +474,7 @@ class Reports extends CI_Controller {
 
     public function totalRestocked_items($item,  $from, $to){
 
-        foreach($this->super_model->custom_query("SELECT SUM(resd.quantity) AS qty FROM restock_head resh INNER JOIN restock_details resd ON resh.rhead_id = resd.rhead_id WHERE resh.restock_date BETWEEN '$from' AND '$to' AND resd.item_id='$item' AND excess ='0'") AS $r){
+        foreach($this->super_model->custom_query("SELECT SUM(resd.quantity) AS qty FROM restock_head resh INNER JOIN restock_details resd ON resh.rhead_id = resd.rhead_id WHERE resh.restock_date BETWEEN '$from' AND '$to' AND resd.item_id='$item' AND excess ='0' AND resh.saved='1'") AS $r){
             return $r->qty;
         }
 
@@ -652,7 +652,7 @@ class Reports extends CI_Controller {
             $beg = $this->begbal($it->item_id, $from) + $begbal;
             $ending=($beg + $this->totalReceived_items($it->item_id, $from, $to) + $this->totalRestocked_items($it->item_id, $from, $to)) - $this->totalIssued_items($it->item_id, $from, $to);
             //$unit_price = $this->super_model->select_column_custom_where('receive_items', 'item_cost', "item_id='$it->item_id' ORDER BY receive_id DESC");
-            $unit_price = $this->super_model->select_column_join_where('item_cost', "receive_head","receive_items", "item_id='$it->item_id' AND receive_date BETWEEN '$from 'AND '$to'","receive_id");
+            $unit_price = $this->super_model->select_column_join_where('item_cost', "receive_head","receive_items", "item_id='$it->item_id' AND receive_date BETWEEN '$from 'AND '$to' AND saved = '1'","receive_id");
             $data['items'][]=array(
                 'item_name'=>$it->item_name,
                 'pn'=>$it->original_pn,
