@@ -481,6 +481,7 @@ class Reports extends CI_Controller {
     }
 
     public function begbal($item, $enddate){
+          
         $beginning= ($this->qty_receive_date($item,$enddate) + $this->qty_restocked_date($item,$enddate)) - $this->qty_issued_date($item,$enddate);
         return $beginning;
        // echo $this->qty_receive_date($item,$enddate) . "<br>";
@@ -661,6 +662,7 @@ class Reports extends CI_Controller {
                 'total_issued'=>$this->totalIssued_items($it->item_id, $from, $to),
                 'total_restocked'=>$this->totalRestocked_items($it->item_id, $from, $to),
                 'unit_price'=>$unit_price,
+                'begbal'=>$begbal,
                 'beginning'=>$beg,
                 'ending'=>$ending
             );

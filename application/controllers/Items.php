@@ -436,6 +436,21 @@ class Items extends CI_Controller {
          return $balance;
     }
 
+
+    public function inventory_balance_date($itemid,$end_date){
+       /*  $recqty= $this->super_model->select_sum("supplier_items", "quantity", "item_id", $itemid);
+         $issueqty= $this->super_model->select_sum("issuance_details","quantity", "item_id",$itemid);*/
+        $begbal= $this->super_model->select_sum_where("supplier_items", "quantity", "item_id='$itemid' AND catalog_no = 'begbal'");
+         $recqty= $this->super_model->select_sum_join("received_qty","receive_items","receive_head", "item_id='$itemid' AND saved='1' AND receive_date <='$end_date'","receive_id");
+         //return $recqty;
+        $issueqty= $this->super_model->select_sum_join("quantity","issuance_details","issuance_head", "item_id='$itemid' AND saved='1' AND issue_date <='$end_date'","issuance_id");
+        //return $issueqty;
+         $restockqty= $this->super_model->select_sum_join("quantity","restock_details","restock_head", "item_id='$itemid' AND excess = '0' AND saved='1' AND restock_date <='$end_date'","rhead_id");
+          //return $restockqty;
+          $balance=($recqty+$begbal+$restockqty)-$issueqty;
+         return $balance;
+    }
+
     public function crossref_balance($itemid,$supplierid,$brandid,$catalogno){
       /*  $recqty= $this->super_model->select_sum_where("supplier_items", "quantity", "item_id = '$itemid' AND supplier_id = '$supplierid' AND brand_id = '$brandid' AND catalog_no ='$catalogno'");*/
 
@@ -965,7 +980,7 @@ class Items extends CI_Controller {
         }
 
         if($date!='null'){
-            $sql.= " receive_date = '$date' AND";
+            $sql.= " receive_date <= '$date' AND";
         }
 
         if($local!='null' || $mnl != 'null'){
@@ -1051,8 +1066,8 @@ class Items extends CI_Controller {
           )
         );
 
-        //echo "SELECT i.*, ri.local_mnl FROM items i INNER JOIN receive_items ri ON i.item_id = ri.item_id WHERE " .$q." ORDER BY i.item_name ASC";
-        foreach($this->super_model->custom_query("SELECT i.*, ri.local_mnl FROM items i LEFT JOIN receive_items ri ON i.item_id = ri.item_id LEFT JOIN receive_head rh ON ri.receive_id = rh.receive_id " .$q." GROUP BY i.item_id ORDER BY i.original_pn ASC") AS $items){
+        //echo "SELECT i.*, ri.local_mnl FROM items i LEFT JOIN receive_items ri ON i.item_id = ri.item_id LEFT JOIN receive_head rh ON ri.receive_id = rh.receive_id " .$q." GROUP BY i.item_id ORDER BY i.original_pn ASC";
+        foreach($this->super_model->custom_query("SELECT i.*, ri.local_mnl FROM items i LEFT JOIN receive_items ri ON i.item_id = ri.item_id LEFT JOIN receive_head rh ON ri.receive_id = rh.receive_id " .$q." AND rh.saved='1' GROUP BY i.item_id ORDER BY i.original_pn ASC") AS $items){
             $unit =$this->super_model->select_column_where("uom","unit_name", "unit_id", $items->unit_id);
             $rack =$this->super_model->select_column_where("rack","rack_name", "rack_id", $items->rack_id);
             $group =$this->super_model->select_column_where("group","group_name", "group_id", $items->group_id);
@@ -1068,7 +1083,7 @@ class Items extends CI_Controller {
             } else {
                 $sup='';
             }
-            $totalqty=$this->inventory_balance($items->item_id);
+            $totalqty=$this->inventory_balance_date($items->item_id,$date);
             $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A'.$num, $x);
             $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B'.$num, $sup);
             $objPHPExcel->setActiveSheetIndex(0)->setCellValue('E'.$num, $items->original_pn);
