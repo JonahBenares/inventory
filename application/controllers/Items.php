@@ -1067,7 +1067,8 @@ class Items extends CI_Controller {
         );
 
         //echo "SELECT i.*, ri.local_mnl FROM items i LEFT JOIN receive_items ri ON i.item_id = ri.item_id LEFT JOIN receive_head rh ON ri.receive_id = rh.receive_id " .$q." GROUP BY i.item_id ORDER BY i.original_pn ASC";
-        foreach($this->super_model->custom_query("SELECT i.*, ri.local_mnl FROM items i LEFT JOIN receive_items ri ON i.item_id = ri.item_id LEFT JOIN receive_head rh ON ri.receive_id = rh.receive_id LEFT JOIN supplier_items si ON si.item_id = i.item_id LEFT JOIN restock_details rd ON rd.item_id = i.item_id " .$q." GROUP BY i.item_id ORDER BY i.original_pn ASC") AS $items){
+        //"SELECT i.*, ri.local_mnl FROM items i LEFT JOIN receive_items ri ON i.item_id = ri.item_id LEFT JOIN receive_head rh ON ri.receive_id = rh.receive_id LEFT JOIN supplier_items si ON si.item_id = i.item_id LEFT JOIN restock_details rd ON rd.item_id = i.item_id " .$q." GROUP BY i.item_id ORDER BY i.original_pn ASC"
+        foreach($this->super_model->select_all('items') AS $items){
             $unit =$this->super_model->select_column_where("uom","unit_name", "unit_id", $items->unit_id);
             $rack =$this->super_model->select_column_where("rack","rack_name", "rack_id", $items->rack_id);
             $group =$this->super_model->select_column_where("group","group_name", "group_id", $items->group_id);
@@ -1076,9 +1077,10 @@ class Items extends CI_Controller {
             $bin =$this->super_model->select_column_where("bin","bin_name", "bin_id", $items->bin_id);
             $nominal=$this->super_model->select_ave("supplier_items", "item_cost", "item_id", $items->item_id);
             $unit_price = $this->super_model->select_column_custom_where('receive_items', 'item_cost', "item_id='$items->item_id' ORDER BY receive_id DESC");
-            if($items->local_mnl=='1'){
+             $local_mnl = $this->super_model->select_column_custom_where('receive_items', 'local_mnl', "item_id='$items->item_id'");
+            if($local_mnl=='1'){
                 $sup = 'Local';
-            } else if($items->local_mnl=='2'){
+            } else if($local_mnl=='2'){
                  $sup = 'Manila';
             } else {
                 $sup='';
