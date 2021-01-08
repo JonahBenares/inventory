@@ -333,6 +333,12 @@ class Items extends CI_Controller {
         } else {
             $subcat='null';
         }
+        
+        if(!empty($this->input->post('qtyselect'))){
+            $qtyselect = $this->input->post('qtyselect');
+        } else {
+            $qtyselect='null';
+        }
 
         if(!empty($this->input->post('local'))){
             $local = $this->input->post('local');
@@ -354,7 +360,7 @@ class Items extends CI_Controller {
 
          ?>
        <script>
-        window.location.href ='<?php echo base_url(); ?>index.php/items/export_item/<?php echo $cat; ?>/<?php echo $subcat; ?>/<?php echo $local; ?>/<?php echo $manila; ?>/<?php echo $date; ?>'</script> <?php
+        window.location.href ='<?php echo base_url(); ?>index.php/items/export_item/<?php echo $cat; ?>/<?php echo $subcat; ?>/<?php echo $local; ?>/<?php echo $manila; ?>/<?php echo $date; ?>/<?php echo $qtyselect; ?>'</script> <?php
     }
     public function update_item(){
         $data['id']=$this->uri->segment(3);
@@ -968,8 +974,8 @@ class Items extends CI_Controller {
         $subcat=$this->uri->segment(4);
         $local=$this->uri->segment(5);
         $mnl=$this->uri->segment(6);
-        $date=$this->uri->segment(7);
-
+        $date=$this->uri->segment(7); 
+        $qtyselect=$this->uri->segment(8);
          $sql="";
         if($cat!='null'){
            $sql.= " category_id = '$cat' AND";
@@ -980,7 +986,13 @@ class Items extends CI_Controller {
         }
 
         if($date!='null'){
-            $sql.= " receive_date <= '$date' AND";
+            $sql.= " (receive_date <= '$date' OR restock_date <= '$date') AND";
+        }
+
+        if($qtyselect!='null' && $qtyselect==1){
+            $sql.= " (ri.received_qty!='0' OR rd.quantity!='0' OR si.quantity!='0') AND";
+        }else{
+            $sql.="";
         }
 
         if($local!='null' || $mnl != 'null'){
@@ -1070,7 +1082,7 @@ class Items extends CI_Controller {
         //"SELECT i.*, ri.local_mnl FROM items i LEFT JOIN receive_items ri ON i.item_id = ri.item_id LEFT JOIN receive_head rh ON ri.receive_id = rh.receive_id LEFT JOIN supplier_items si ON si.item_id = i.item_id LEFT JOIN restock_details rd ON rd.item_id = i.item_id " .$q." GROUP BY i.item_id ORDER BY i.original_pn ASC"
         if(!empty($sql)){
              $q=" WHERE " .$sql . " " . $query2;
-             $sql_query = "SELECT i.*, ri.local_mnl FROM items i LEFT JOIN receive_items ri ON i.item_id = ri.item_id LEFT JOIN receive_head rh ON ri.receive_id = rh.receive_id LEFT JOIN supplier_items si ON si.item_id = i.item_id LEFT JOIN restock_details rd ON rd.item_id = i.item_id " .$q." GROUP BY i.item_id ORDER BY i.original_pn ASC";
+             $sql_query = "SELECT i.*, ri.local_mnl FROM items i LEFT JOIN receive_items ri ON i.item_id = ri.item_id LEFT JOIN receive_head rh ON ri.receive_id = rh.receive_id LEFT JOIN supplier_items si ON si.item_id = i.item_id LEFT JOIN restock_details rd ON rd.item_id = i.item_id LEFT JOIN restock_head r ON rd.rhead_id = r.rhead_id " .$q." GROUP BY i.item_id ORDER BY i.original_pn ASC";
         } else {
            // $q=$sql . " " . $query2;
              $sql_query = "SELECT * from items";
@@ -1095,37 +1107,71 @@ class Items extends CI_Controller {
                 $sup='';
             }
             $totalqty=$this->inventory_balance_date($items->item_id,$date);
-            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A'.$num, $x);
-            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B'.$num, $sup);
-            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('E'.$num, $items->original_pn);
-            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('G'.$num, $items->item_name);
-            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('L'.$num, $nominal);
-            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('N'.$num, $totalqty);
-            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('P'.$num, $unit_price);
-            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('R'.$num, $unit);
-            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('T'.$num, $location);
-            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('V'.$num, $wh);
-            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('X'.$num, $rack);
-            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('Z'.$num, $bin);
-
-            $objPHPExcel->getActiveSheet()->getProtection()->setSheet(true);
-            $objPHPExcel->getActiveSheet()->protectCells('A'.$num.":Z".$num,'admin');
-            $objPHPExcel->getActiveSheet()->mergeCells('B'.$num.":D".$num);
-            $objPHPExcel->getActiveSheet()->mergeCells('E'.$num.":F".$num);
-            $objPHPExcel->getActiveSheet()->mergeCells('G'.$num.":K".$num);
-            $objPHPExcel->getActiveSheet()->mergeCells('L'.$num.":M".$num);
-            $objPHPExcel->getActiveSheet()->mergeCells('N'.$num.":O".$num);
-            $objPHPExcel->getActiveSheet()->mergeCells('P'.$num.":Q".$num);
-            $objPHPExcel->getActiveSheet()->mergeCells('R'.$num.":S".$num);
-            $objPHPExcel->getActiveSheet()->mergeCells('T'.$num.":U".$num);
-            $objPHPExcel->getActiveSheet()->mergeCells('V'.$num.":W".$num);
-            $objPHPExcel->getActiveSheet()->mergeCells('X'.$num.":Y".$num);
-            $objPHPExcel->getActiveSheet()->getStyle('A'.$num.":Z".$num)->applyFromArray($styleArray);
-            $objPHPExcel->getActiveSheet()->getStyle('L'.$num.":Q".$num)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-            $objPHPExcel->getActiveSheet()->getStyle('L'.$num.":P".$num)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
-            //$objPHPExcel->getActiveSheet()->getStyle('X'.$num.":Y".$num)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
-            $num++;
-            $x++;
+            if($totalqty!=0 && $qtyselect==1){
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A'.$num, $x);
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B'.$num, $sup);
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('E'.$num, $items->original_pn);
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('G'.$num, $items->item_name);
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('L'.$num, $nominal);
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('N'.$num, $totalqty);
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('P'.$num, $unit_price);
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('R'.$num, $unit);
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('T'.$num, $location);
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('V'.$num, $wh);
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('X'.$num, $rack);
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('Z'.$num, $bin);
+            
+                $objPHPExcel->getActiveSheet()->getProtection()->setSheet(true);
+                $objPHPExcel->getActiveSheet()->protectCells('A'.$num.":Z".$num,'admin');
+                $objPHPExcel->getActiveSheet()->mergeCells('B'.$num.":D".$num);
+                $objPHPExcel->getActiveSheet()->mergeCells('E'.$num.":F".$num);
+                $objPHPExcel->getActiveSheet()->mergeCells('G'.$num.":K".$num);
+                $objPHPExcel->getActiveSheet()->mergeCells('L'.$num.":M".$num);
+                $objPHPExcel->getActiveSheet()->mergeCells('N'.$num.":O".$num);
+                $objPHPExcel->getActiveSheet()->mergeCells('P'.$num.":Q".$num);
+                $objPHPExcel->getActiveSheet()->mergeCells('R'.$num.":S".$num);
+                $objPHPExcel->getActiveSheet()->mergeCells('T'.$num.":U".$num);
+                $objPHPExcel->getActiveSheet()->mergeCells('V'.$num.":W".$num);
+                $objPHPExcel->getActiveSheet()->mergeCells('X'.$num.":Y".$num);
+                $objPHPExcel->getActiveSheet()->getStyle('A'.$num.":Z".$num)->applyFromArray($styleArray);
+                $objPHPExcel->getActiveSheet()->getStyle('L'.$num.":Q".$num)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                $objPHPExcel->getActiveSheet()->getStyle('L'.$num.":P".$num)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
+                //$objPHPExcel->getActiveSheet()->getStyle('X'.$num.":Y".$num)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
+                $num++;
+                $x++;
+            }else if($qtyselect==0){
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A'.$num, $x);
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B'.$num, $sup);
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('E'.$num, $items->original_pn);
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('G'.$num, $items->item_name);
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('L'.$num, $nominal);
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('N'.$num, $totalqty);
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('P'.$num, $unit_price);
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('R'.$num, $unit);
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('T'.$num, $location);
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('V'.$num, $wh);
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('X'.$num, $rack);
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('Z'.$num, $bin);
+            
+                $objPHPExcel->getActiveSheet()->getProtection()->setSheet(true);
+                $objPHPExcel->getActiveSheet()->protectCells('A'.$num.":Z".$num,'admin');
+                $objPHPExcel->getActiveSheet()->mergeCells('B'.$num.":D".$num);
+                $objPHPExcel->getActiveSheet()->mergeCells('E'.$num.":F".$num);
+                $objPHPExcel->getActiveSheet()->mergeCells('G'.$num.":K".$num);
+                $objPHPExcel->getActiveSheet()->mergeCells('L'.$num.":M".$num);
+                $objPHPExcel->getActiveSheet()->mergeCells('N'.$num.":O".$num);
+                $objPHPExcel->getActiveSheet()->mergeCells('P'.$num.":Q".$num);
+                $objPHPExcel->getActiveSheet()->mergeCells('R'.$num.":S".$num);
+                $objPHPExcel->getActiveSheet()->mergeCells('T'.$num.":U".$num);
+                $objPHPExcel->getActiveSheet()->mergeCells('V'.$num.":W".$num);
+                $objPHPExcel->getActiveSheet()->mergeCells('X'.$num.":Y".$num);
+                $objPHPExcel->getActiveSheet()->getStyle('A'.$num.":Z".$num)->applyFromArray($styleArray);
+                $objPHPExcel->getActiveSheet()->getStyle('L'.$num.":Q".$num)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                $objPHPExcel->getActiveSheet()->getStyle('L'.$num.":P".$num)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
+                //$objPHPExcel->getActiveSheet()->getStyle('X'.$num.":Y".$num)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
+                $num++;
+                $x++;
+            }
         }
         $a = $num+2;
         $b = $num+5;
