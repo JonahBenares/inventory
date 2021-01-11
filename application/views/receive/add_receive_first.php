@@ -117,7 +117,7 @@
 											<th class="tr-bottom" width="5%"><center>UOM</center></th>
 											<th class="tr-bottom" width="20%"><center>Local/Manila</center></th>
 											<th class="tr-bottom" width="5%"><center>Shipping Fee</center></th>
-											<th class="tr-bottom" width="5%"><center>Currency</c
+											<th class="tr-bottom" width="5%"><center>Currency</th>
 											<th class="tr-bottom" width="20%"><center>Remarks</center></th>
 										</tr>
 										<?php 
