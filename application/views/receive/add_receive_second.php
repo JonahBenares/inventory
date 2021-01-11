@@ -276,7 +276,15 @@
 									<p  style="margin:0px" for="">Remarks:</p>
 									<textarea class="form-control" rows="1" name='remarks' id='remarks'></textarea>
 								</div>
-								<div class="col-lg-3">
+								<div class="col-lg-2">
+									<p style="margin:0px"  for="">Shipping Fee:</p>
+									<input class="form-control" name='shipping_fee' id='shipping_fee' onkeypress="return isNumberKey(this, event)" >
+								</div>
+								<div class="col-lg-2">
+									<p style="margin:0px"  for="">Currency:</p>
+									<input class="form-control" name='currency' id='currency' >
+								</div>
+								<div class="col-lg-1">
 									<!-- <p  style="margin:0px" for="">Local:</p>
 									<input type = "radio" name='local_mnl' id='local_mnl' value = "1">
 									<p style="margin:0px" for="">Manila:</p>
@@ -297,7 +305,7 @@
 									</select>
 								</div>	
 								 -->
-								<div class="col-lg-3">
+								<div class="col-lg-1">
 									<br>
 									<div id='alerto' style="font-weight:bold"></div>
 									<a class="btn btn-primary btn-outlined btn-md" id='additem' style="margin-top:5px; " onclick='add_item()'><span class="fa fa-plus"></span></a>
@@ -319,6 +327,8 @@
 								<th class="tr-bottom" width="10%"><center>Delivered / Received</center></th>
 								<!-- <th class="tr-bottom" width="10%"><center>Inspected By</center></th> -->
 								<th class="tr-bottom" width="5%"><center>UOM</center></th>
+								<th class="tr-bottom" width="5%"><center>Shipping Fee</center></th>
+								<th class="tr-bottom" width="5%"><center>Currency</center></th>
 								<th class="tr-bottom" width="15%"><center>Remarks</center></th>
 								<th class="tr-bottom" width="15%"><center>Local/Manila</center></th>
 								<th class="tr-bottom" width="5%"><center>Action</center></th>
@@ -346,6 +356,8 @@
 										<td><center><?php echo $ri['recqty']; ?></center></td>
 										<!-- <td><center><?php //echo $ri['inspected']; ?></center></td> -->
 										<td><center><?php echo $ri['unit']; ?></center></td>
+										<td><center><?php echo $ri['shipping_fee']; ?></center></td>
+										<td><center><?php echo $ri['currency']; ?></center></td>
 										<td><center><?php echo $ri['remarks']; ?></center></td>
 										<td><center><?php echo $ri['local_mnl']; ?></center></td>
 										<td><center> <a class="btn btn-danger table-remove btn-xs" onclick="removerecitem('<?php echo $ri['riid']; ?>','<?php echo base_url(); ?>')"><span class=" fa fa-times"></span></a></center></td>
