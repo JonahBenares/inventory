@@ -199,14 +199,17 @@ class Backorder extends CI_Controller {
         $dr_no= $this->input->post('dr_no');
         $rdid= $this->input->post('rdid');
         $userid = $_SESSION['user_id'];
-         $year=date('Y-m');
-         $now=date('Y-m-d H:i:s');
-         $receivedate=date('Y-m-d');
-            $rows=$this->super_model->count_custom_where("receive_head","create_date LIKE '$year%'");
+        $year=date('Y-m');
+        $now=date('Y-m-d H:i:s');
+        //$receivedate=date('Y-m-d');
+        $receivedate=$this->input->post('receive_date');
+            $rows=$this->super_model->count_rows("receive_head");
+            //$rows=$this->super_model->count_custom_where("receive_head","create_date LIKE '$year%'");
             if($rows==0){
                  $newrec_no = "MrecF-".$year."-0001";
             } else {
-                $maxrecno=$this->super_model->get_max_where("receive_head", "mrecf_no","create_date LIKE '$year%'");
+                $maxrecno=$this->super_model->get_max("receive_head", "mrecf_no");
+                //$maxrecno=$this->super_model->get_max_where("receive_head", "mrecf_no","create_date LIKE '$year%'");
                 $recno = explode('-',$maxrecno);
                 $series = $recno[3]+1;
                 $newrec_no = "MrecF-".$year."-".str_pad($series, 4, '0', STR_PAD_LEFT);
@@ -266,7 +269,8 @@ class Backorder extends CI_Controller {
                    'pr_no'=> $rd->pr_no,
                    'enduse_id'=> $rd->enduse_id,
                    'purpose_id'=> $rd->purpose_id,
-                   'department_id'=> $rd->department_id
+                   'department_id'=> $rd->department_id,
+                   'inspected_by'=> $rd->inspected_by,
                 );
 
         

@@ -242,7 +242,7 @@
                                 foreach($items AS $it){ 
                                     switch($it){
                                         case($det['rdid'] == $it['rdid']):
-
+                                            if($it['recqty']!=0){
                             ?>
                             <tr>
                                 <td class="main-tab" align="center"><?php echo $x; ?></td>
@@ -258,11 +258,11 @@
                                <!--  <td class="main-tab" align="center"><?php echo $it['inspected'];?></td> -->
                             </tr>
                             <?php  
+                                }
                                 $x++;
                                 break;
                                 default: 
                                 }  }  
-
                             ?> 
                         </table>
                     </td>
