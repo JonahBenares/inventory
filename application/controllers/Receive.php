@@ -468,19 +468,19 @@ class Receive extends CI_Controller {
         $now=date('Y-m-d H:i:s');
         $rows=$this->super_model->count_rows("receive_head");
         if($rows==0){
-             $newrec_no = "MrecF-".$year."-0001";
+             $newrec_no = "MRIF-".$year."-0001";
         } else {
             $maxrecno=$this->super_model->get_max("receive_head", "mrecf_no");
             $recno = explode('-',$maxrecno);
             $series = $recno[3]+1;
             if(strlen($series)==1){
-                $newrec_no = "MrecF-".$year."-000".$series;
+                $newrec_no = "MRIF-".$year."-000".$series;
             } else if(strlen($series)==2){
-                 $newrec_no = "MrecF-".$year."-00".$series;
+                 $newrec_no = "MRIF-".$year."-00".$series;
             } else if(strlen($series)==3){
-                 $newrec_no = "MrecF-".$year."-0".$series;
+                 $newrec_no = "MRIF-".$year."-0".$series;
             } else if(strlen($series)==4){
-                 $newrec_no = "MrecF-".$year."-".$series;
+                 $newrec_no = "MRIF-".$year."-".$series;
             }
         }
 
