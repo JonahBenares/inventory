@@ -97,6 +97,8 @@ class Receive extends CI_Controller {
                     'expqty'=>$items->expected_qty,
                     'recqty'=>$items->received_qty,
                     'inspected'=>$inspected,
+                    'shipping_fee'=>$items->shipping_fee,
+                    'currency'=>$currency,
                     'remarks'=>$items->remarks,
                     'total'=>$total
                     
@@ -192,6 +194,8 @@ class Receive extends CI_Controller {
                     'expqty'=>$items->expected_qty,
                     'recqty'=>$items->received_qty,
                     'remarks'=>$items->remarks,
+                    'shipping_fee'=>$items->shipping_fee,
+                    'currency'=>$items->currency,
                     'catno'=>$items->catalog_no,
                     'brand'=>$brand,
                     'unitcost'=>$items->item_cost,
@@ -319,7 +323,9 @@ class Receive extends CI_Controller {
                     'inspected_by'=>$inspected,
                     'remarks'=>$items->remarks,
                     'total'=>$total,
-                    'local_mnl'=>$items->local_mnl
+                    'local_mnl'=>$items->local_mnl,
+                    'shipping_fee'=>$items->shipping_fee,
+                    'currency'=>$items->currency,
                 );
             }
         }
@@ -392,7 +398,9 @@ class Receive extends CI_Controller {
                     'inspected'=>$inspected,
                     'total'=>$total,
                     'serial'=>$serial,
-                    'local_mnl'=>$rit->local_mnl
+                    'local_mnl'=>$rit->local_mnl,
+                    'shipping_fee'=>$rit->shipping_fee,
+                    'currency'=>$rit->currency,
                 );
         }
     } else {
@@ -700,6 +708,8 @@ class Receive extends CI_Controller {
             'expqty'=>$this->input->post('expqty'),
             'recqty'=>$this->input->post('recqty'),
             'remarks'=>$this->input->post('remarks'),
+            'shipping_fee'=>$this->input->post('shipping_fee'),
+            'currency'=>$this->input->post('currency'),
             'item'=>$this->input->post('itemname'),
             'local_mnl'=>$this->input->post('local_mnl'),
             'count'=>$this->input->post('count'),
@@ -818,6 +828,8 @@ class Receive extends CI_Controller {
                 'expected_qty'=> $this->input->post('expqty['.$a.']'),
                 'received_qty'=> $this->input->post('recqty['.$a.']'),
                 'remarks'=> $this->input->post('remarks['.$a.']'),
+                'shipping_fee'=> $this->input->post('shipping_fee['.$a.']'),
+                'currency'=> $this->input->post('currency['.$a.']'),
                 'local_mnl'=> $this->input->post('local_mnl['.$a.']')
                 /*'inspected_by'=> $this->input->post('inspected_name['.$a.']')*/
             );
