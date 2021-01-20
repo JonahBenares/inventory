@@ -2594,7 +2594,12 @@ class Reports extends CI_Controller {
 
                 $in_balance = $head->qty - $issueqty;
 
-                if(($restockqty==0 && $excessqty==0) && $issueqty ==0){
+                if($issueqty==0){
+                    $final_balance = $head->qty;
+                } else if($issueqty!=0){
+                    $final_balance = $head->qty-$issueqty;
+                }
+                /*if(($restockqty==0 && $excessqty==0) && $issueqty ==0){
                     $final_balance = $head->qty;
                 } else if($issueqty!=0 && $restockqty==0 && $excessqty==0){
                     $final_balance = $head->qty-$issueqty;
@@ -2602,7 +2607,7 @@ class Reports extends CI_Controller {
                     $final_balance =  $in_balance + $restockqty; 
                 } else if(($issueqty!=0 && $restockqty!=0 && $excessqty!=0) || ($issueqty==0 && ($restockqty!=0 || $excessqty!=0)) || ($issueqty!=0 && $restockqty==0 && $excessqty!=0)){
                     $final_balance =  $excessqty + $restockqty; 
-                }
+                }*/
 
                 /*$issueqty= $this->super_model->select_sum_join("quantity","issuance_details","issuance_head", "item_id='$id' AND pr_no='$head->pr_no'","issuance_id");
                 $restockqty= $this->super_model->select_sum_join("quantity","restock_details","restock_head", "item_id='$id' AND from_pr='$head->pr_no' AND excess = '0'","rhead_id");*/
