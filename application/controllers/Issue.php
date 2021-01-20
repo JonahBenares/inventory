@@ -407,7 +407,8 @@ class Issue extends CI_Controller {
             $department = $this->super_model->select_column_where("department", "department_name", "department_id", $issue->department_id);
             $purpose = $this->super_model->select_column_where("purpose", "purpose_desc", "purpose_id", $issue->purpose_id);
             $enduse = $this->super_model->select_column_where("enduse", "enduse_name", "enduse_id", $issue->enduse_id);       
-             $type=  $this->super_model->select_column_where("request_head", "type", "mreqf_no", $issue->mreqf_no);     
+             $type=  $this->super_model->select_column_where("request_head", "type", "mreqf_no", $issue->mreqf_no);
+             $remarks=  $this->super_model->select_column_where("request_head", "remarks", "request_id", $issue->request_id);     
             $data['issuance_details'][] = array(
                 'milf'=>$issue->mif_no,
                 'mreqf'=>$issue->mreqf_no,
