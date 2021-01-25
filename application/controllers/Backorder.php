@@ -206,13 +206,13 @@ class Backorder extends CI_Controller {
             $rows=$this->super_model->count_rows("receive_head");
             //$rows=$this->super_model->count_custom_where("receive_head","create_date LIKE '$year%'");
             if($rows==0){
-                 $newrec_no = "MrecF-".$year."-0001";
+                 $newrec_no = "MRIF-".$year."-0001";
             } else {
                 $maxrecno=$this->super_model->get_max("receive_head", "mrecf_no");
                 //$maxrecno=$this->super_model->get_max_where("receive_head", "mrecf_no","create_date LIKE '$year%'");
                 $recno = explode('-',$maxrecno);
                 $series = $recno[3]+1;
-                $newrec_no = "MrecF-".$year."-".str_pad($series, 4, '0', STR_PAD_LEFT);
+                $newrec_no = "MRIF-".$year."-".str_pad($series, 4, '0', STR_PAD_LEFT);
                 /*if(strlen($series)==1){
                     $newrec_no = "MrecF-".$year."-000".$series;
                 } else if(strlen($series)==2){
