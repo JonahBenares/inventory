@@ -342,6 +342,9 @@ function readPic1(input) {
     var minimum =document.getElementById('minimum').value;
     frm.append('minimum', minimum);
 
+    var weight =document.getElementById('weight').value;
+    frm.append('weight', weight);
+
     var pnformat =document.getElementById('pn_format').value;
     frm.append('pnformat', pnformat);
 
@@ -452,6 +455,8 @@ function readPic1(input) {
     var minimum =document.getElementById('minimum').value;
     frm.append('minimum', minimum);
 
+    var weight =document.getElementById('weight').value;
+    frm.append('weight', weight);
 
     var pnformat =document.getElementById('pn_format').value;
     frm.append('pnformat', pnformat);

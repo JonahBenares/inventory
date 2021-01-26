@@ -768,6 +768,7 @@ class Items extends CI_Controller {
                     'expiration' => $this->input->post('expiration'),
                     'damage' => $this->input->post('damage'),
                     'min_qty' => $this->input->post('minimum'),
+                    'weight' => $this->input->post('weight'),
                     'bin_id' => $bin,
                     'picture1' => $filename1,
                     'picture2' => $filename2,
@@ -882,7 +883,7 @@ class Items extends CI_Controller {
                 $pnformat=0;
             }
 */
-            //$pnformat=$this->input->post('pnformat');
+            $pnformat=$this->input->post('pnformat');
 
             if($pnformat==1){
                 $pndetails=explode("_", $this->input->post('pn'));
@@ -927,7 +928,8 @@ class Items extends CI_Controller {
                     'barcode' => $this->input->post('barcode'),
                     'expiration' => $this->input->post('expiration'),
                     'damage' => $this->input->post('damage'),
-                    'min_qty' => $this->input->post('minimum')
+                    'min_qty' => $this->input->post('minimum'),
+                    'weight' => $this->input->post('weight'),
              );
               $act = "Updated item details of item_id ". $item_id;
                 $this->activity_log($act);
