@@ -467,7 +467,7 @@ class Items extends CI_Controller {
 
         //return "item_id='$itemid' AND catalog_no = '$catalogno' AND supplier_id = '$supplierid' AND brand_id = '$brandid'";
         // $recqty= $this->super_model->select_sum_join("received_qty","receive_items","receive_head", "item_id='$itemid' AND supplier_id = '$supplierid' AND brand_id = '$brandid' AND catalog_no = '$catalogno' AND saved='1'","receive_id");
-
+        $begbal= $this->super_model->select_sum_where("supplier_items", "quantity", "item_id='$itemid' AND catalog_no = 'begbal'");
         $recqty= $this->super_model->select_sum_join("received_qty","receive_items","receive_head", "item_id='$itemid' AND supplier_id = '$supplierid' AND brand_id = '$brandid' AND catalog_no = '$catalogno' AND saved='1'","receive_id");
         $issueqty= $this->super_model->select_sum_join("quantity","issuance_details","issuance_head", "item_id='$itemid' AND supplier_id = '$supplierid' AND brand_id = '$brandid' AND catalog_no = '$catalogno' AND saved='1'","issuance_id");
 
@@ -475,7 +475,7 @@ class Items extends CI_Controller {
 
          //$balance=($recqty+$begbal+$restockqty)-$issueqty;
 
-         $balance=($recqty+$restockqty)-$issueqty;
+         $balance=($recqty+$begbal+$restockqty)-$issueqty;
         // echo "item_id='$itemid' AND supplier_id = '$supplierid' AND brand_id = '$brandid' AND catalog_no = '$catalogno' AND saved='1'";
          
          //return "item_id='$itemid' AND supplier_id = '$supplierid' AND brand_id = '$brandid' AND catalog_no = '$catalogno' AND saved='1'". $issueqty;
