@@ -1765,7 +1765,7 @@ class Reports extends CI_Controller {
 
         }
 
-         foreach($this->super_model->custom_query("SELECT rh.restock_date, rh.create_date, rh.from_pr, ri.supplier_id, ri.brand_id, ri.catalog_no, ri.quantity, ri.item_cost FROM restock_head rh INNER JOIN restock_details ri ON rh.rhead_id = ri.rhead_id WHERE $query AND saved = '1' AND excess='0'") AS $restock){
+         foreach($this->super_model->custom_query("SELECT rh.restock_date, rh.from_pr, ri.supplier_id, ri.brand_id, ri.catalog_no, ri.quantity, ri.item_cost FROM restock_head rh INNER JOIN restock_details ri ON rh.rhead_id = ri.rhead_id WHERE $query AND saved = '1' AND excess='0'") AS $restock){
             
             $supplier = $this->super_model->select_column_where("supplier", "supplier_name", "supplier_id", $restock->supplier_id);
             $brand = $this->super_model->select_column_where("brand", "brand_name", "brand_id", $restock->brand_id);
