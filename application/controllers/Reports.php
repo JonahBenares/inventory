@@ -1700,14 +1700,16 @@ class Reports extends CI_Controller {
                 'method'=>'Beginning Balance',
                 'quantity'=>$begbal->quantity,
                 'series'=>'1',
-                'date'=>''
+                'date'=>'',
+                'create_date'=>''
             );
 
             $data['balance'][] = array(
                 'series'=>'1',
                 'method'=>'Beginning Balance',
                 'quantity'=>$begbal->quantity,
-                'date'=>''
+                'date'=>'',
+                'create_date'=>''
             );
         }
 
@@ -1784,13 +1786,15 @@ class Reports extends CI_Controller {
                 'method'=>'Restock',
                 'series'=>'4',
                 'quantity'=>$restock->quantity,
-                'date'=>$restock->restock_date
+                'date'=>$restock->restock_date,
+                'create_date'=>$restock->restock_date
             );
             $data['balance'][] = array(
                 'series'=>'4',
                 'method'=>'Restock',
                 'quantity'=>$restock->quantity,
-                'date'=>$restock->restock_date
+                'date'=>$restock->restock_date,
+                'create_date'=>$restock->restock_date
             );
 
         }
