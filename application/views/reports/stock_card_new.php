@@ -169,7 +169,7 @@ if(!empty($stockcard)){
 												<td><?php echo $stockcard[$x]['supplier']; ?></td>
 												<td><?php echo $stockcard[$x]['catalog_no']; ?></td>
 												<td><?php echo $stockcard[$x]['brand']; ?></td>
-												<td><?php echo $stockcard[$x]['unit_cost']; ?></td>
+												<td><?php echo number_format($stockcard[$x]['total_cost'],2); ?></td>
 												<td><?php echo $stockcard[$x]['method']; ?></td>
 												<td><?php echo (($stockcard[$x]['method']== 'Issuance') ? "-" : "") . $stockcard[$x]['quantity']; ?></td>
 												<td><?php echo $bal[$x]; ?></td>
