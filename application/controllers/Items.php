@@ -377,7 +377,9 @@ class Items extends CI_Controller {
 
 
         $orig_pn=$this->super_model->select_column_where("items", "original_pn", "item_id", $id);
+        //echo "**".$orig_pn;
         $pn_details=explode("_",$orig_pn);
+        //echo "count=".count($pn_details);
         if(count($pn_details)<2){
             $prefix=0;
             $series=0;
@@ -385,6 +387,8 @@ class Items extends CI_Controller {
             $prefix=$pn_details[0];
             $series=$pn_details[1];
         }
+
+        // echo "prefix=".$prefix. ", series=" . $series;
         $row_count = $this->super_model->count_custom_where("pn_series","subcat_prefix='$prefix' AND series = '$series'");
         if($row_count==1){
             $data['pn_format']=1;
@@ -885,7 +889,7 @@ class Items extends CI_Controller {
 */
             $pnformat=$this->input->post('pnformat');
 
-            if($pnformat==1){
+            if($pnformat==0){
                 $pndetails=explode("_", $this->input->post('pn'));
                 $subcat_prefix=$pndetails[0];
                 $series = $pndetails[1];
