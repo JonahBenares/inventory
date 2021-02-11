@@ -96,7 +96,7 @@
 									</div>
 									</form>		
 
-									<div class="modal fade" id="updatePR" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+									<div class="modal fade" id="updatePR" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
 										<div class="modal-dialog" role="document">
 											<div class="modal-content">
 												<div class="modal-header">
@@ -116,6 +116,27 @@
 														<button type="submit" class="btn btn-primary btn-block">Save changes</button>
 													</div>
 												</form>
+											</div>
+										</div>
+									</div>
+									<div class="modal fade" id="PRModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+										<div class="modal-dialog" role="document">
+											<div class="modal-content">
+												<div class="modal-header modal-headback">
+													<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+													<h4 class="modal-title" id="myModalLabel">Add New PR No.</h4>
+												</div>
+												<div class="modal-body">
+													<form method="POST">
+														<label>PR No.</label>
+														<input type = "text" name = "pr_no" id="pr_no" class = "form-control option">
+														<div class="modal-footer">
+															<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+															<input type="hidden" name="baseurl2" id="baseurl2" value="<?php echo base_url(); ?>">
+															<input type="button" id = "btnAddPR"  class="btn btn-warning" value = "Add" onclick = "addPR1()" />
+														</div>
+													</form>
+												</div>
 											</div>
 										</div>
 									</div>
