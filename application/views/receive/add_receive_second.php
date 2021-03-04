@@ -260,7 +260,7 @@
 									<input type='hidden' name='supplier_id' id='supplier_id'>
 								</div>		
 								<div class="col-lg-2">
-									<p style="margin:0px" for="">Unit Cost:</p>
+									<p style="margin:0px" for="">Net Cost/U:</p>
 									<input type="text" name="unit_cost" id="unit_cost" class="form-control">
 								</div>		
 								<div class="col-lg-2">
@@ -278,7 +278,7 @@
 									<textarea class="form-control" rows="1" name='remarks' id='remarks'></textarea>
 								</div>
 								<div class="col-lg-2">
-									<p style="margin:0px"  for="">Shipping Fee:</p>
+									<p style="margin:0px"  for="">Shipping/U & Other Related Cost:</p>
 									<input class="form-control" name='shipping_fee' id='shipping_fee' onkeypress="return isNumberKey(this, event)" >
 								</div>
 								<div class="col-lg-2">
@@ -322,14 +322,14 @@
 								<th class="tr-bottom" width="10%"><center>Brand</center></th>
 								<th class="tr-bottom" width="10%"><center>Cat No.</center></th>
 								<th class="tr-bottom" width="10%"><center>Serial No.</center></th>
-								<th class="tr-bottom" width="5%"><center>Unit Cost</center></th>
-								<th class="tr-bottom" width="5%"><center>Total Cost</center></th>
+								<th class="tr-bottom" width="5%"><center>Net Cost/U</center></th>
+								<th class="tr-bottom" width="5%"><center>Shipping/U & Other Related Cost</center></th>
+								<th class="tr-bottom" width="5%"><center>Total Unit NET Cost</center></th>
 								<th class="tr-bottom" width="10%"><center>Expected Qty</center></th>
 								<th class="tr-bottom" width="10%"><center>Delivered / Received</center></th>
 								<!-- <th class="tr-bottom" width="10%"><center>Inspected By</center></th> -->
 								<th class="tr-bottom" width="5%"><center>UOM</center></th>
-								<th class="tr-bottom" width="5%"><center>Shipping Fee</center></th>
-								<th class="tr-bottom" width="5%"><center>Currency</center></th>
+								<th class="tr-bottom" width="5%"><center>Total Net Cost</center></th>
 								<th class="tr-bottom" width="15%"><center>Remarks</center></th>
 								<th class="tr-bottom" width="15%"><center>Local/Manila</center></th>
 								<th class="tr-bottom" width="5%"><center>Action</center></th>
@@ -352,13 +352,13 @@
 										<td><center><?php echo $ri['catalog_no']; ?></center></td>
 										<td><center><?php echo $ri['serial']; ?></center></td>
 										<td><center><?php echo $ri['unit_cost']; ?></center></td>
+										<td><center><?php echo $ri['shipping_fee']; ?></center></td>
 										<td><center><?php echo $ri['total']; ?></center></td>
 										<td><center><?php echo $ri['expqty']; ?></center></td>
 										<td><center><?php echo $ri['recqty']; ?></center></td>
 										<!-- <td><center><?php //echo $ri['inspected']; ?></center></td> -->
 										<td><center><?php echo $ri['unit']; ?></center></td>
-										<td><center><?php echo $ri['shipping_fee']; ?></center></td>
-										<td><center><?php echo $ri['currency']; ?></center></td>
+										<td><center><?php echo $ri['total_net_cost']; ?></center></td>
 										<td><center><?php echo $ri['remarks']; ?></center></td>
 										<td><center><?php echo $ri['local_mnl']; ?></center></td>
 										<td><center> <a class="btn btn-danger table-remove btn-xs" onclick="removerecitem('<?php echo $ri['riid']; ?>','<?php echo base_url(); ?>')"><span class=" fa fa-times"></span></a></center></td>

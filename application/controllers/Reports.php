@@ -1713,11 +1713,12 @@ class Reports extends CI_Controller {
             );
         }
 
-        foreach($this->super_model->custom_query("SELECT rh.receive_id,rh.receive_date, ri.supplier_id, ri.brand_id, ri.catalog_no, ri.received_qty, ri.item_cost, ri.rd_id,rh.create_date FROM receive_head rh INNER JOIN receive_items ri ON rh.receive_id = ri.receive_id WHERE $query AND saved = '1'") AS $receive){
+        foreach($this->super_model->custom_query("SELECT rh.receive_id,rh.receive_date, ri.supplier_id, ri.brand_id, ri.catalog_no, ri.received_qty, ri.item_cost, ri.rd_id,rh.create_date,ri.shipping_fee FROM receive_head rh INNER JOIN receive_items ri ON rh.receive_id = ri.receive_id WHERE $query AND saved = '1'") AS $receive){
             $pr_no = $this->super_model->select_column_where("receive_details", "pr_no", "rd_id", $receive->rd_id);
             $supplier = $this->super_model->select_column_where("supplier", "supplier_name", "supplier_id", $receive->supplier_id);
              $brand = $this->super_model->select_column_where("brand", "brand_name", "brand_id", $receive->brand_id);
-             $total_cost=$receive->received_qty * $receive->item_cost;
+             //$total_cost=$receive->received_qty * $receive->item_cost;
+             $total_cost=$receive->item_cost + $receive->shipping_fee;
             $data['stockcard'][] = array(
                 'supplier'=>$supplier,
                 'catalog_no'=>$receive->catalog_no,
@@ -1742,11 +1743,14 @@ class Reports extends CI_Controller {
 
         //echo "****SELECT ih.issue_date, id.rq_id, id.supplier_id, id.brand_id, id.catalog_no, id.quantity FROM issuance_head ih INNER JOIN issuance_details id ON ih.issuance_id = id.issuance_id WHERE $query";
 
-        foreach($this->super_model->custom_query("SELECT ih.issue_date, ih.pr_no, id.rq_id, id.supplier_id, id.brand_id, id.catalog_no, id.quantity, ih.create_date FROM issuance_head ih INNER JOIN issuance_details id ON ih.issuance_id = id.issuance_id WHERE $query AND saved = '1'") AS $issue){
+        foreach($this->super_model->custom_query("SELECT ih.issue_date, ih.pr_no, id.rq_id, id.item_id,id.supplier_id, id.brand_id, id.catalog_no, id.quantity, ih.create_date FROM issuance_head ih INNER JOIN issuance_details id ON ih.issuance_id = id.issuance_id WHERE $query AND saved = '1'") AS $issue){
             $cost = $this->super_model->select_column_where("request_items", "unit_cost", "rq_id", $issue->rq_id);
             $supplier = $this->super_model->select_column_where("supplier", "supplier_name", "supplier_id", $issue->supplier_id);
-             $brand = $this->super_model->select_column_where("brand", "brand_name", "brand_id", $issue->brand_id);
-             $total_cost=$issue->quantity * $cost;
+            $brand = $this->super_model->select_column_where("brand", "brand_name", "brand_id", $issue->brand_id);
+            //$shipping_fee = $this->super_model->select_column_custom_where("receive_items", "shipping_fee", "item_id='$issue->item_id' AND supplier_id='$issue->supplier_id' AND brand_id = '$issue->brand_id' AND catalog_no = '$issue->catalog_no'");
+            $shipping_fee = $this->super_model->select_column_join_where("shipping_fee", "receive_details","receive_items", "pr_no='$issue->pr_no'","rd_id");
+            //$total_cost=$issue->quantity * $cost;
+            $total_cost=$cost + $shipping_fee;
             $data['stockcard'][] = array(
                 'supplier'=>$supplier,
                 'catalog_no'=>$issue->catalog_no,
@@ -1775,7 +1779,9 @@ class Reports extends CI_Controller {
             
             $supplier = $this->super_model->select_column_where("supplier", "supplier_name", "supplier_id", $restock->supplier_id);
             $brand = $this->super_model->select_column_where("brand", "brand_name", "brand_id", $restock->brand_id);
-            $total_cost=$restock->quantity * $restock->item_cost;
+            $shipping_fee = $this->super_model->select_column_join_where("shipping_fee", "receive_details","receive_items", "pr_no='$restock->from_pr'","rd_id");
+            //$total_cost=$restock->quantity * $restock->item_cost;
+            $total_cost= $restock->item_cost + $shipping_fee;
             $data['stockcard'][] = array(
                 'supplier'=>$supplier,
                 'catalog_no'=>$restock->catalog_no,

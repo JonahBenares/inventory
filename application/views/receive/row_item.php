@@ -7,14 +7,15 @@
     <td style="padding: 0px "><input type = "text" name = "catalog_no[]" style = "text-align:center;width:100%;border:1px transparent;" value="<?php echo $list['catno']; ?>"></td>
      <td style="padding: 0px "><input type = "text" name = "serial[]" id="seriallist_<?php echo $list['count']; ?>" style = "text-align:center;width:100%;border:1px transparent;" value="<?php echo $list['serial']; ?>"></td>
     <td style="padding: 0px "><input type = "text" name = "unit_cost[]" style = "text-align:center;width:100%;border:1px transparent;" value="<?php echo $list['unitcost']; ?>"></td>
+    <td style="padding: 0px "><input type = "text" name = "shipping_fee[]" style = "text-align:center;width:100%;border:1px transparent;" value = "<?php echo $list['shipping_fee']; ?>" ></td>
     <td style="padding: 0px "><input type = "text" name = "total_cost[]" style = "text-align:center;width:100%;border:1px transparent;" value="<?php echo $list['total']; ?>"></td>
     <td style="padding: 0px "><input type = "text" name = "expqty[]" style = "text-align:center;width:100%;border:1px transparent;" value = "<?php echo $list['expqty']; ?>" ></td>
     <td style="padding: 0px "><input type = "text" name = "recqty[]" style = "text-align:center;width:100%;border:1px transparent;" value = "<?php echo $list['recqty']; ?>" ></td>
    <!--  <td style="padding: 0px "><input type = "text" name = "inspected[]" style = "text-align:center;width:100%;border:0px transparent;" value = "<?php echo $list['inspected']; ?>" > -->
       <!--   <input type = "hidden" name = "inspected_name[]" style = "text-align:center;width:100%;border:0px transparent;" value = "<?php echo $list['inspected_name']; ?>" ></td> -->
     <td style="padding: 0px "><input type = "hidden"  name = "unit[]" value="<?php echo $list['unit']; ?>"><input type = "text" style = "text-align:center;width:100%;border:0px transparent;" value = "<?php echo $list['unit_name']; ?>" ></td>
-    <td style="padding: 0px "><input type = "text" name = "shipping_fee[]" style = "text-align:center;width:100%;border:1px transparent;" value = "<?php echo $list['shipping_fee']; ?>" ></td>
-    <td style="padding: 0px "><input type = "text" name = "currency[]" style = "text-align:center;width:100%;border:1px transparent;" value = "<?php echo $list['currency']; ?>" ></td>
+    <!-- <td style="padding: 0px "><input type = "text" name = "currency[]" style = "text-align:center;width:100%;border:1px transparent;" value = "<?php echo $list['currency']; ?>" ></td> -->
+    <td style="padding: 0px "><input type = "text" name = "total_net_cost[]" style = "text-align:center;width:100%;border:1px transparent;" value="<?php echo $list['total_net_cost']; ?>"></td>
     <td style="padding: 0px "><textarea rows="3" wrap="soft" name = "remarks[]"  style = "width:100%;border:1px transparent;" ><?php echo $list['remarks']; ?></textarea></td>
     <td><?php if($list['local_mnl'] == '1'){ ?>
     <input type = "hidden" name = "local_mnl[]" style = "text-align:center;width:100%;border:1px transparent;" value = "1" ><input type = "text" style = "text-align:center;width:100%;border:0px transparent;" value = "Local" >
