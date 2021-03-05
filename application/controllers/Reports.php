@@ -1748,7 +1748,7 @@ class Reports extends CI_Controller {
             $supplier = $this->super_model->select_column_where("supplier", "supplier_name", "supplier_id", $issue->supplier_id);
             $brand = $this->super_model->select_column_where("brand", "brand_name", "brand_id", $issue->brand_id);
             //$shipping_fee = $this->super_model->select_column_custom_where("receive_items", "shipping_fee", "item_id='$issue->item_id' AND supplier_id='$issue->supplier_id' AND brand_id = '$issue->brand_id' AND catalog_no = '$issue->catalog_no'");
-            $shipping_fee = $this->super_model->select_column_join_where("shipping_fee", "receive_details","receive_items", "pr_no='$issue->pr_no'","rd_id");
+            $shipping_fee = $this->super_model->select_column_join_where_order_limit("shipping_fee", "receive_items","receive_details", "item_id='$issue->item_id' AND pr_no='$issue->pr_no'","rd_id","DESC","1");
             //$total_cost=$issue->quantity * $cost;
             $total_cost=$cost + $shipping_fee;
             $data['stockcard'][] = array(
@@ -1775,11 +1775,11 @@ class Reports extends CI_Controller {
 
         }
 
-         foreach($this->super_model->custom_query("SELECT rh.restock_date, rh.from_pr, ri.supplier_id, ri.brand_id, ri.catalog_no, ri.quantity, ri.item_cost FROM restock_head rh INNER JOIN restock_details ri ON rh.rhead_id = ri.rhead_id WHERE $query AND saved = '1' AND excess='0'") AS $restock){
+         foreach($this->super_model->custom_query("SELECT rh.restock_date, rh.from_pr, ri.item_id, ri.supplier_id, ri.brand_id, ri.catalog_no, ri.quantity, ri.item_cost FROM restock_head rh INNER JOIN restock_details ri ON rh.rhead_id = ri.rhead_id WHERE $query AND saved = '1' AND excess='0'") AS $restock){
             
             $supplier = $this->super_model->select_column_where("supplier", "supplier_name", "supplier_id", $restock->supplier_id);
             $brand = $this->super_model->select_column_where("brand", "brand_name", "brand_id", $restock->brand_id);
-            $shipping_fee = $this->super_model->select_column_join_where("shipping_fee", "receive_details","receive_items", "pr_no='$restock->from_pr'","rd_id");
+            $shipping_fee = $this->super_model->select_column_join_where_order_limit("shipping_fee", "receive_items","receive_details", "item_id='$restock->item_id' AND pr_no='$restock->from_pr'","rd_id","DESC","1");
             //$total_cost=$restock->quantity * $restock->item_cost;
             $total_cost= $restock->item_cost + $shipping_fee;
             $data['stockcard'][] = array(
