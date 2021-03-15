@@ -198,6 +198,7 @@ class Backorder extends CI_Controller {
         $po_no= $this->input->post('po_no');
         $dr_no= $this->input->post('dr_no');
         $rdid= $this->input->post('rdid');
+        $si_no= $this->input->post('si_no');
         $userid = $_SESSION['user_id'];
         $year_series=date('Y');
         $year=date('Y-m');
@@ -243,7 +244,7 @@ class Backorder extends CI_Controller {
                    'dr_no'=> $dr_no,
                    'jo_no'=> $hd->jo_no,
                    'po_no'=> $po_no,
-                   'si_no'=> $hd->si_no,
+                   'si_no'=> $si_no,
                    'user_id'=> $userid,
                    'saved'=>'1'
 

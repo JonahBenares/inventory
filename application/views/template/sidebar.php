@@ -75,7 +75,7 @@
 						<table width="100%">
 							<tr>
 								<td width="10%"><label>Date:</label></td>
-								<td width="90%"><input type = "date" name = "receive_date" class = "form-control" id="e"><br></td>
+								<td width="90%"><input type = "date" name = "receive_date" class = "form-control" id="e" style="pointer-events: none;"><br></td>
 							</tr>
 							<tr>
 								<td width="10%"><label>DR#:</label></td>
