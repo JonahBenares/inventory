@@ -1058,7 +1058,7 @@ class Receive extends CI_Controller {
 
     public function edit_prc_mrk(){
         $data = array(
-            'item_cost'=>$this->input->post('price'),
+            //'item_cost'=>$this->input->post('price'),
             'remarks'=>$this->input->post('remarks'),
         );
         $id = $this->input->post('id');
@@ -1069,11 +1069,11 @@ class Receive extends CI_Controller {
         $catalog = $this->super_model->select_column_where("receive_items", "catalog_no", "ri_id", $id);
         $receiveid = $this->super_model->select_column_where("receive_items", "receive_id", "ri_id", $id);
 
-        $price = array(
+        /*$price = array(
             'item_cost'=>$this->input->post('price')
-        );
+        );*/
             if($this->super_model->update_custom_where("receive_items",$data,"ri_id = '$id'")){
-                  $this->super_model->update_custom_where("supplier_items",$price,"item_id = '$itemid' AND supplier_id = '$supplierid' AND brand_id='$brandid' AND catalog_no = '$catalog'");
+                  //$this->super_model->update_custom_where("supplier_items",$price,"item_id = '$itemid' AND supplier_id = '$supplierid' AND brand_id='$brandid' AND catalog_no = '$catalog'");
             ?> 
             <script>
                 alert('Successfully Updated'); 

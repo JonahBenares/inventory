@@ -7,9 +7,9 @@
 				<center><h4 class="pname">Update Price & Remarks</h4></center>
 				
 				<div class="col-lg-12">
-					<p>Price:
+					<!-- <p>Price:
 						<input type="text" class="form-control" name="price" value = "<?php echo $r->item_cost; ?>">
-					</p>
+					</p> -->
 					<p>Remarks:
 						<textarea rows="3" name = "remarks" class="form-control"><?php echo $r->remarks?></textarea>
 					</p>
