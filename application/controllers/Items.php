@@ -479,7 +479,8 @@ class Items extends CI_Controller {
 
          //$balance=($recqty+$begbal+$restockqty)-$issueqty;
 
-         $balance=($recqty+$begbal+$restockqty)-$issueqty;
+        // $balance=($recqty+$begbal+$restockqty)-$issueqty;
+         $balance=($recqty+$restockqty)-$issueqty;
         // echo "item_id='$itemid' AND supplier_id = '$supplierid' AND brand_id = '$brandid' AND catalog_no = '$catalogno' AND saved='1'";
          
          //return "item_id='$itemid' AND supplier_id = '$supplierid' AND brand_id = '$brandid' AND catalog_no = '$catalogno' AND saved='1'". $issueqty;
@@ -519,7 +520,15 @@ class Items extends CI_Controller {
                             $date = "";
                         }
                        // print_r($daterec);
+                        if($sup->catalog_no == 'begbal'){
+                            $begbal_start= $this->super_model->select_sum_where("supplier_items", "quantity", "item_id='$sup->item_id' AND catalog_no = 'begbal'");
+                            $begbal_issue= $this->super_model->select_sum_where("issuance_details", "quantity", "item_id='$sup->item_id' AND catalog_no = 'begbal'");
+                             $begbal_restock= $this->super_model->select_sum_where("restock_details", "quantity", "item_id='$sup->item_id' AND catalog_no = 'begbal'");
+                            $balance = ($begbal_start+$begbal_restock)-$begbal_issue;
+                            //echo "item_id='$sup->itemid' AND catalog_no = 'begbal'";
+                        } else {
                         $balance= $this->crossref_balance($id,$sup->supplier_id,$sup->brand_id,$sup->catalog_no);
+                        }
                       
                         foreach($this->super_model->select_row_where("serial_number", "si_id", $sup->si_id) AS $ser){
 
