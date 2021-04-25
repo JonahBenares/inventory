@@ -189,9 +189,10 @@ function add_item(){
                 success: function(html){
                 	$('#item_body').append(html);
                 	$('#itemtable').show();
-                    $('#savebutton').show();
-                    $('#submit').show();
+                    $('#savebutton').hide();
+                    $('#submit').hide();
                 	$('#alrt').hide();
+
                     document.getElementById("item_id").value = '';
                 	document.getElementById("item_name").value = '';
                     document.getElementById("original_pn").value = '';
@@ -281,9 +282,12 @@ function getUnitCost(){
                 $("#submit").hide(); 
             },
             success: function(output){
-                $("#submit").show(); 
-                $('#alrt').hide();
                 document.getElementById("unit_cost").value = output;
+                if(output != ''){
+                    $("#submit").show(); 
+                    $('#alrt').hide();
+                }
+                
             }
     });
 }
@@ -317,7 +321,7 @@ function chooseItem(){
     $("#submit").hide(); 
     setTimeout(function() {
         document.getElementById('alrt').innerHTML=''; 
-        $("#submit").show(); 
+        /*$("#submit").show(); */
     },5000);
     $.ajax({
         type: 'POST',
