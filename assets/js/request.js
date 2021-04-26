@@ -185,14 +185,16 @@ function add_item(){
                 beforeSend: function(){
                     document.getElementById('alrt').innerHTML='<b>Please wait, Loading Data...</b>'; 
                     $("#submit").hide(); 
+                    $('#savebutton').hide();
                 },
                 success: function(html){
                 	$('#item_body').append(html);
                 	$('#itemtable').show();
-                    $('#savebutton').hide();
+                    $('#savebutton').show();
                     $('#submit').hide();
                 	$('#alrt').hide();
 
+                    $('.select2-selection__rendered').empty();
                     document.getElementById("item_id").value = '';
                 	document.getElementById("item_name").value = '';
                     document.getElementById("original_pn").value = '';
