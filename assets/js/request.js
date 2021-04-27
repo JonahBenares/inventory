@@ -188,6 +188,14 @@ function add_item(){
                     $('#savebutton').hide();
                 },
                 success: function(html){
+                    $('#siid')
+                        .find('option')
+                        .remove()
+                        .end()
+                        .append('<option value="whatever">Please choose item.</option>')
+                        .val('whatever')
+                    ;
+
                 	$('#item_body').append(html);
                 	$('#itemtable').show();
                     $('#savebutton').show();
