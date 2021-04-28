@@ -408,7 +408,9 @@ class Issue extends CI_Controller {
             $purpose = $this->super_model->select_column_where("purpose", "purpose_desc", "purpose_id", $issue->purpose_id);
             $enduse = $this->super_model->select_column_where("enduse", "enduse_name", "enduse_id", $issue->enduse_id);       
              $type=  $this->super_model->select_column_where("request_head", "type", "mreqf_no", $issue->mreqf_no);
-             $remarks=  $this->super_model->select_column_where("request_head", "remarks", "request_id", $issue->request_id);     
+             $remarks=  $this->super_model->select_column_where("request_head", "remarks", "request_id", $issue->request_id);
+             $unit_cost=  $this->super_model->select_column_where("request_items", "unit_cost", "request_id", $issue->request_id);
+             $total_cost=  $this->super_model->select_column_where("request_items", "total_cost", "request_id", $issue->request_id);     
             $data['issuance_details'][] = array(
                 'milf'=>$issue->mif_no,
                 'mreqf'=>$issue->mreqf_no,
@@ -428,11 +430,15 @@ class Issue extends CI_Controller {
                 $serial = $this->super_model->select_column_where("serial_number", "serial_no", "serial_id", $rt->serial_id);
                 $uom = $this->super_model->select_column_where("uom", "unit_name", "unit_id", $rt->unit_id);
                 $rec_qty = $this->super_model->select_sum("supplier_items", "quantity", "item_id", $rt->item_id);
+                $unit_cost = $this->super_model->select_sum("request_items", "unit_cost", "rq_id", $rt->rq_id);
+                $total_cost = $this->super_model->select_sum("request_items", "total_cost", "rq_id", $rt->rq_id);
                 $data['issue_itm'][] = array(
                     'item'=>$item,
                     'qty'=>$rt->quantity,
                     'serial' => $serial,
                     'uom'=>$uom,
+                    'unit_cost'=>$unit_cost,
+                    'total_cost'=>$total_cost,
                     'pn'=>$rt->pn_no,
                     'invqty'=>$rec_qty,
                     'brand'=>$this->super_model->select_column_where("brand", "brand_name", "brand_id", $rt->brand_id),
