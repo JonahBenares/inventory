@@ -326,9 +326,10 @@ class Request extends CI_Controller {
             foreach($this->super_model->select_row_where('request_items','request_id', $id) AS $rt){
                 $item = $this->super_model->select_column_where("items", "item_name", "item_id", $rt->item_id);
                 $rec_qty = $this->super_model->select_sum("supplier_items", "quantity", "item_id", $rt->item_id);
+                //echo "item_id = '$rt->item_id'<br>";
                 foreach($this->super_model->select_custom_where("supplier_items","item_id = '$rt->item_id' AND quantity != '0'") AS $itm){
-                    $brand = $this->super_model->select_column_where("brand", "brand_name", "brand_id", $itm->brand_id);
-                    $supplier = $this->super_model->select_column_where("supplier", "supplier_name", "supplier_id", $itm->supplier_id);
+                    $brand = $this->super_model->select_column_where("brand", "brand_name", "brand_id", $rt->brand_id);
+                    $supplier = $this->super_model->select_column_where("supplier", "supplier_name", "supplier_id", $rt->supplier_id);
                     $unit = $this->super_model->select_column_where("uom", "unit_name", "unit_id", $rt->unit_id);
                     $cross = $supplier ." - ". $itm->catalog_no ." - ". $brand . " (".$itm->quantity.")";
                 }
