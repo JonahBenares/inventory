@@ -58,8 +58,11 @@
 
 							if(!empty($list)){ ?>
 							<div id="printableArea">
-								<p class="pname"><?php echo $pr; ?><button id="printReport" class="btn btn-md btn-primary pull-right " onclick="printDiv('printableArea')">Print</button></p>
-								
+								<p class="pname"><?php echo $pr; ?><button id="printReport" class="btn btn-md btn-primary pull-right " onclick="printDiv('printableArea')">Print</button></p></div>
+								<?php foreach($list AS $li){ ?>
+								<p class="nomarg"><strong>End-Use: <?php echo $li['enduse']; ?></strong></p>
+								<p ><strong>Purpose: <?php echo $li['purpose']; ?></strong> </p>
+								<?php } ?>
 								<table class="table table-hover table-bordered">
 									<thead>
 										<tr>
@@ -94,8 +97,7 @@
 											<?php } ?></td>
 											
 										</tr>
-									<?php 
-									} ?>
+									<?php } ?>
 									</tbody>
 								</table>
 								<table width="100%" id="prntby">
