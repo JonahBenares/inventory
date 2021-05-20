@@ -122,7 +122,7 @@ class Reports extends CI_Controller {
         return $qty;
     }
 
-     public function qty_restocked($item,$supplier,$brand,$catalog){
+    public function qty_restocked($item,$supplier,$brand,$catalog){
       /*  $qty=$this->super_model->select_sum_where("restock","quantity","item_id='$item' AND supplier_id = '$supplier' AND brand_id = '$brand' AND catalog_no = '$catalog'");*/
         $qty2=$this->super_model->select_sum_where("restock_details","quantity","item_id='$item' AND supplier_id = '$supplier' AND brand_id = '$brand' AND catalog_no = '$catalog'");
         $total=$qty2;
@@ -450,7 +450,7 @@ class Reports extends CI_Controller {
 
     }
 
-     public function getRestocked_items($item, $date){
+    public function getRestocked_items($item, $date){
         
         foreach($this->super_model->custom_query("SELECT SUM(resd.quantity) AS qty FROM restock_head resh INNER JOIN restock_details resd ON resh.rhead_id = resd.rhead_id WHERE resh.restock_date = '$date' AND resd.item_id='$item' AND excess ='0'") AS $r){
             return $r->qty;
@@ -465,7 +465,7 @@ class Reports extends CI_Controller {
     
     }
 
-      public function totalIssued_items($item,  $from, $to){
+    public function totalIssued_items($item,  $from, $to){
         foreach($this->super_model->custom_query("SELECT SUM(id.quantity) AS qty FROM issuance_head ih INNER JOIN issuance_details id ON ih.issuance_id = id.issuance_id WHERE ih.issue_date BETWEEN '$from' AND '$to' AND id.item_id='$item' AND ih.saved='1'") AS $r){
             return $r->qty;
         }
@@ -508,7 +508,7 @@ class Reports extends CI_Controller {
        
     }
 
-     public function qty_restocked_date($item,$enddate){
+    public function qty_restocked_date($item,$enddate){
          $start = $this->first_transaction();
        /*   foreach($this->super_model->custom_query("SELECT SUM(resd.quantity) AS qty FROM restock_head resh INNER JOIN restock_details resd ON resh.rhead_id = resd.rhead_id WHERE resh.restock_date BETWEEN '$start' AND '$enddate' AND resd.item_id='$item' AND saved='1'") AS $r){
             return $r->qty;
@@ -4960,6 +4960,7 @@ class Reports extends CI_Controller {
         }  
     }
 
+
   /*  $col=1;
     $row++;
     $col1=1;
@@ -4984,6 +4985,17 @@ class Reports extends CI_Controller {
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         header('Content-Disposition: attachment; filename="All Receive.xlsx"');
         readfile ($exportfilename);
+    } 
+
+    public function tagged_as_excess(){
+        $this->load->view('template/header');
+        $this->load->view('template/sidebar',$this->dropdown);
+        $this->load->view('reports/tagged_as_excess');
+        $this->load->view('template/footer');
+        
     }
+
+
+     
 }
 ?>
