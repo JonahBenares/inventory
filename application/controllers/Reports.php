@@ -2664,10 +2664,10 @@ class Reports extends CI_Controller {
         $data['pr_rep']=$this->super_model->custom_query("SELECT * FROM receive_details GROUP BY pr_no");
        /* echo "****".$pr;*/
         //$pr= urldecode($pr);
-        foreach($this->super_model->custom_query("SELECT item_id, SUM(received_qty) AS qty, ri.ri_id FROM receive_items ri INNER JOIN receive_details rd ON ri.rd_id = rd.rd_id WHERE rd.pr_no = '$pr' GROUP BY  ri.item_id") AS $head){
+        foreach($this->super_model->custom_query("SELECT item_id, SUM(received_qty) AS qty, ri.ri_id,rd.purpose_id,rd.enduse_id FROM receive_items ri INNER JOIN receive_details rd ON ri.rd_id = rd.rd_id WHERE rd.pr_no = '$pr' GROUP BY  ri.item_id") AS $head){
 
-                $enduse = $this->super_model->select_column_where("enduse", "enduse_name", "enduse_id", $head->ri_id);
-                $purpose = $this->super_model->select_column_where("purpose", "purpose_desc", "purpose_id", $head->ri_id);
+                $data['enduse']= $this->super_model->select_column_where("enduse", "enduse_name", "enduse_id", $head->enduse_id);
+                $data['purpose'] = $this->super_model->select_column_where("purpose", "purpose_desc", "purpose_id", $head->purpose_id);
 
                 $excess_flag = $this->super_model->custom_query_single("excess","SELECT rh.excess FROM restock_head rh INNER JOIN restock_details rd ON rh.rhead_id = rd.rhead_id WHERE rh.from_pr='$pr' AND rd.item_id = '$head->item_id'");
 
@@ -2693,8 +2693,8 @@ class Reports extends CI_Controller {
                     "ri_id"=>$head->ri_id,
                     "item"=>$this->super_model->select_column_where("items", "item_name", "item_id", $head->item_id),
                     "item_id"=>$head->item_id,
-                    "purpose"=>$purpose,
-                    "enduse"=>$enduse,
+                    //"purpose"=>$purpose,
+                    //"enduse"=>$enduse,
                     "recqty"=>$head->qty,
                     "issueqty"=>$issueqty,
                     "restockqty"=>$restockqty,
