@@ -15,6 +15,9 @@ class Reports extends CI_Controller {
         $this->dropdown['enduse'] = $this->super_model->select_all_order_by('enduse', 'enduse_name', 'ASC');
         $this->dropdown['employee'] = $this->super_model->select_all_order_by('employees', 'employee_name', 'ASC');
         $this->dropdown['pr_list']=$this->super_model->custom_query("SELECT pr_no, enduse_id, purpose_id,department_id FROM receive_head INNER JOIN receive_details WHERE saved='1' GROUP BY pr_no");
+        $this->dropdown['pr_issue_list']=$this->super_model->custom_query("SELECT pr_no, enduse_id, purpose_id, department_id FROM issuance_head WHERE saved='1' GROUP BY pr_no");
+        $this->dropdown['pr_restock_list']=$this->super_model->custom_query("SELECT pr_no, enduse_id, purpose_id, department_id FROM restock_head WHERE saved='1' GROUP BY pr_no");
+        $this->dropdown['pr_excess_list']=$this->super_model->custom_query("SELECT from_pr, enduse_id, purpose_id, department_id FROM restock_head WHERE saved='1' GROUP BY from_pr");
         // $this->dropdown['prno'] = $this->super_model->select_join_where("receive_details","receive_head", "saved='1' AND create_date BETWEEN CURDATE() - INTERVAL 60 DAY AND CURDATE()","receive_id");
         //$this->dropdown['prno'] = $this->super_model->select_join_where_order("receive_details","receive_head", "saved='1'","receive_id", "receive_date", "DESC");
          if(isset($_SESSION['user_id'])){
@@ -1197,12 +1200,16 @@ class Reports extends CI_Controller {
         $subcat=$this->uri->segment(6);
         $item=$this->uri->segment(7);
         $enduser=$this->uri->segment(8);
+        $purpose=$this->uri->segment(9);
+        $from_pr=$this->uri->segment(10);
         $data['from']=$this->uri->segment(3);
         $data['to']=$this->uri->segment(4);
         $data['catt1']=$this->uri->segment(5);
         $data['subcat2']=$this->uri->segment(6);
         $data['item1']=$this->uri->segment(7);
         $data['enduse1']=$this->uri->segment(8);
+        $data['purpose1']=$this->uri->segment(9);
+        $data['from_pr1']=$this->uri->segment(10);
         $data['item'] = $this->super_model->select_all_order_by('items', 'item_name', 'ASC');
         $data['subcat'] = $this->super_model->select_all_order_by('item_subcat', 'subcat_name', 'ASC');
         $data['category'] = $this->super_model->select_all_order_by('item_categories', 'cat_name', 'ASC');
@@ -1228,6 +1235,14 @@ class Reports extends CI_Controller {
 
         if($enduser!='null'){
             $sql.= " rh.enduse_id = '$enduser' AND";
+        }
+
+        if($purpose!='null'){
+            $sql.= " rh.purpose_id = '$purpose' AND";
+        }
+
+        if($from_pr!='null'){
+            $sql.= " rh.from_pr = '$from_pr' AND";
         }
 
         $query=substr($sql,0,-3);
@@ -1279,12 +1294,16 @@ class Reports extends CI_Controller {
         $subcat=$this->uri->segment(6);
         $item=$this->uri->segment(7);
         $enduser=$this->uri->segment(8);
+        $purpose=$this->uri->segment(9);
+        $pr_no=$this->uri->segment(10);
         $data['from']=$this->uri->segment(3);
         $data['to']=$this->uri->segment(4);
         $data['catt1']=$this->uri->segment(5);
         $data['subcat2']=$this->uri->segment(6);
         $data['item1']=$this->uri->segment(7);
         $data['enduse1']=$this->uri->segment(8);
+        $data['purpose1']=$this->uri->segment(9);
+        $data['pr_no1']=$this->uri->segment(10);
         $data['item'] = $this->super_model->select_all_order_by('items', 'item_name', 'ASC');
         $data['subcat'] = $this->super_model->select_all_order_by('item_subcat', 'subcat_name', 'ASC');
         $data['category'] = $this->super_model->select_all_order_by('item_categories', 'cat_name', 'ASC');
@@ -1309,6 +1328,14 @@ class Reports extends CI_Controller {
 
         if($enduser!='null'){
             $sql.= " rh.enduse_id = '$enduser' AND";
+        }
+
+        if($purpose!='null'){
+            $sql.= " rh.purpose_id = '$purpose' AND";
+        }
+
+        if($pr_no!='null'){
+            $sql.= " rh.pr_no = '$pr_no' AND";
         }
 
         $query=substr($sql,0,-3);
@@ -1365,12 +1392,16 @@ class Reports extends CI_Controller {
         $subcat=$this->uri->segment(6);
         $item=$this->uri->segment(7);
         $enduser=$this->uri->segment(8);
+        $purpose=$this->uri->segment(9);
+        $pr_no=$this->uri->segment(10);
         $data['from']=$this->uri->segment(3);
         $data['to']=$this->uri->segment(4);
         $data['catt1']=$this->uri->segment(5);
         $data['subcat2']=$this->uri->segment(6);
         $data['item1']=$this->uri->segment(7);
         $data['enduse1']=$this->uri->segment(8);
+        $data['purpose1']=$this->uri->segment(9);
+        $data['pr_no1']=$this->uri->segment(10);
         $data['item'] = $this->super_model->select_all_order_by('items', 'item_name', 'ASC');
         $data['subcat'] = $this->super_model->select_all_order_by('item_subcat', 'subcat_name', 'ASC');
         $data['category'] = $this->super_model->select_all_order_by('item_categories', 'cat_name', 'ASC');
@@ -1395,6 +1426,14 @@ class Reports extends CI_Controller {
 
         if($enduser!='null'){
             $sql.= " rh.enduse_id = '$enduser' AND";
+        }
+
+        if($purpose!='null'){
+            $sql.= " rh.purpose_id = '$purpose' AND";
+        }
+
+        if($pr_no!='null'){
+            $sql.= " rh.pr_no = '$pr_no' AND";
         }
 
         $query=substr($sql,0,-3);
@@ -1452,12 +1491,16 @@ class Reports extends CI_Controller {
         $subcat=$this->uri->segment(6);
         $item=$this->uri->segment(7);
         $enduser=$this->uri->segment(8);
+        $purpose=$this->uri->segment(9);
+        $pr_no=$this->uri->segment(10);
         $data['from']=$this->uri->segment(3);
         $data['to']=$this->uri->segment(4);
         $data['catt1']=$this->uri->segment(5);
         $data['subcat2']=$this->uri->segment(6);
         $data['item1']=$this->uri->segment(7);
         $data['enduse1']=$this->uri->segment(8);
+        $data['purpose1']=$this->uri->segment(9);
+        $data['pr_no1']=$this->uri->segment(10);
         $data['item'] = $this->super_model->select_all_order_by('items', 'item_name', 'ASC');
         $data['subcat'] = $this->super_model->select_all_order_by('item_subcat', 'subcat_name', 'ASC');
         $data['category'] = $this->super_model->select_all_order_by('item_categories', 'cat_name', 'ASC');
@@ -1482,6 +1525,14 @@ class Reports extends CI_Controller {
 
         if($enduser!='null'){
             $sql.= " rd.enduse_id = '$enduser' AND";
+        }
+                
+        if($purpose!='null'){
+            $sql.= " rd.purpose_id = '$purpose' AND";
+        }
+                
+        if($pr_no!='null'){
+            $sql.= " rd.pr_no = '$pr_no' AND";
         }
 
         $query=substr($sql,0,-3);
@@ -1538,12 +1589,16 @@ class Reports extends CI_Controller {
         $subcat=$this->uri->segment(6);
         $item=$this->uri->segment(7);
         $enduser=$this->uri->segment(8);
+        $purpose=$this->uri->segment(9);
+        $pr_no=$this->uri->segment(10);
         $data['from']=$this->uri->segment(3);
         $data['to']=$this->uri->segment(4);
         $data['catt']=$this->uri->segment(5);
         $data['subcat1']=$this->uri->segment(6);
         $data['item1']=$this->uri->segment(7);
         $data['enduse1']=$this->uri->segment(8);
+        $data['purpose1']=$this->uri->segment(9);
+        $data['pr_no1']=$this->uri->segment(10);
         $data['item'] = $this->super_model->select_all_order_by('items','item_name','ASC');
         $data['subcat'] = $this->super_model->select_all_order_by('item_subcat','subcat_name','ASC');
         $data['category'] = $this->super_model->select_all_order_by('item_categories','cat_name','ASC');
@@ -1568,6 +1623,14 @@ class Reports extends CI_Controller {
 
         if($enduser!='null'){
             $sql.= " ih.enduse_id = '$enduser' AND";
+        }
+
+        if($purpose!='null'){
+            $sql.= " ih.purpose_id = '$purpose' AND";
+        }
+                
+        if($pr_no!='null'){
+            $sql.= " ih.pr_no = '$pr_no' AND";
         }
 
         $query=substr($sql,0,-3);
@@ -2298,9 +2361,19 @@ class Reports extends CI_Controller {
            } else {
                 $enduse = "null";
            }
+           if(!empty($this->input->post('purpose'))){
+                $purpose = $this->input->post('purpose');
+           } else {
+                $purpose = "null";
+           }
+           if(!empty($this->input->post('pr_no'))){
+                $pr_no = $this->input->post('pr_no');
+           } else {
+                $pr_no = "null";
+           }
            ?>
            <script>
-            window.location.href ='<?php echo base_url(); ?>index.php/reports/restock_report/<?php echo $from; ?>/<?php echo $to; ?>/<?php echo $cat; ?>/<?php echo $subcat; ?>/<?php echo $item; ?>/<?php echo $enduse; ?>'</script> <?php
+            window.location.href ='<?php echo base_url(); ?>index.php/reports/restock_report/<?php echo $from; ?>/<?php echo $to; ?>/<?php echo $cat; ?>/<?php echo $subcat; ?>/<?php echo $item; ?>/<?php echo $enduse; ?>/<?php echo $purpose; ?>/<?php echo $pr_no; ?>'</script> <?php
     }
 
     public function generateExcess(){
@@ -2339,9 +2412,21 @@ class Reports extends CI_Controller {
            } else {
                 $enduse = "null";
            }
+                      
+           if(!empty($this->input->post('purpose'))){
+                $purpose = $this->input->post('purpose');
+           } else {
+                $purpose = "null";
+           }
+                      
+           if(!empty($this->input->post('from_pr'))){
+                $from_pr = $this->input->post('from_pr');
+           } else {
+                $from_pr = "null";
+           }
            ?>
            <script>
-            window.location.href ='<?php echo base_url(); ?>index.php/reports/excess_report/<?php echo $from; ?>/<?php echo $to; ?>/<?php echo $cat; ?>/<?php echo $subcat; ?>/<?php echo $item; ?>/<?php echo $enduse; ?>'</script> <?php
+            window.location.href ='<?php echo base_url(); ?>index.php/reports/excess_report/<?php echo $from; ?>/<?php echo $to; ?>/<?php echo $cat; ?>/<?php echo $subcat; ?>/<?php echo $item; ?>/<?php echo $enduse; ?>/<?php echo $purpose; ?>/<?php echo $from_pr; ?>'</script> <?php
     }
 
     public function generateReceived(){
@@ -2379,9 +2464,19 @@ class Reports extends CI_Controller {
            } else {
                 $enduse = "null";
            }
+           if(!empty($this->input->post('purpose'))){
+                $purpose = $this->input->post('purpose');
+           } else {
+                $purpose = "null";
+           }
+           if(!empty($this->input->post('pr_no'))){
+                $pr_no = $this->input->post('pr_no');
+           } else {
+                $pr_no = "null";
+           }
            ?>
            <script>
-            window.location.href ='<?php echo base_url(); ?>index.php/reports/received_report/<?php echo $from; ?>/<?php echo $to; ?>/<?php echo $cat; ?>/<?php echo $subcat; ?>/<?php echo $item; ?>/<?php echo $enduse; ?>'</script> <?php
+            window.location.href ='<?php echo base_url(); ?>index.php/reports/received_report/<?php echo $from; ?>/<?php echo $to; ?>/<?php echo $cat; ?>/<?php echo $subcat; ?>/<?php echo $item; ?>/<?php echo $enduse; ?>/<?php echo $purpose; ?>/<?php echo $pr_no; ?>'</script> <?php
     }
 
     public function generateIssue(){
@@ -2419,10 +2514,21 @@ class Reports extends CI_Controller {
                 $enduse = $this->input->post('enduse');
            } else {
                 $enduse = "null";
+           }
+
+           if(!empty($this->input->post('purpose'))){
+                $purpose = $this->input->post('purpose');
+           } else {
+                $purpose = "null";
+           }
+           if(!empty($this->input->post('pr_no'))){
+                $pr_no = $this->input->post('pr_no');
+           } else {
+                $pr_no = "null";
            } 
            ?>
            <script>
-            window.location.href ='<?php echo base_url(); ?>index.php/reports/issued_report/<?php echo $from; ?>/<?php echo $to; ?>/<?php echo $cat; ?>/<?php echo $subcat; ?>/<?php echo $item; ?>/<?php echo $enduse; ?>'</script> <?php
+            window.location.href ='<?php echo base_url(); ?>index.php/reports/issued_report/<?php echo $from; ?>/<?php echo $to; ?>/<?php echo $cat; ?>/<?php echo $subcat; ?>/<?php echo $item; ?>/<?php echo $enduse; ?>/<?php echo $purpose; ?>/<?php echo $pr_no; ?>'</script> <?php
     }
 
     public function generateItemReport(){
@@ -3507,6 +3613,14 @@ class Reports extends CI_Controller {
             $sql.= " rh.enduse_id = '$enduser' AND";
         }
 
+        if($purpose!='null'){
+            $sql.= " rh.purpose_id = '$purpose' AND";
+        }
+
+        if($pr_no!='null'){
+            $sql.= " rh.pr_no = '$pr_no' AND";
+        }
+
         $query=substr($sql,0,-3);
 
         require_once(APPPATH.'../assets/js/phpexcel/Classes/PHPExcel/IOFactory.php');
@@ -3752,6 +3866,14 @@ class Reports extends CI_Controller {
             $sql.= " rh.enduse_id = '$enduser' AND";
         }
 
+        if($purpose!='null'){
+            $sql.= " rh.purpose_id = '$purpose' AND";
+        }
+
+        if($from_pr!='null'){
+            $sql.= " rh.from_pr = '$from_pr' AND";
+        }
+
         $query=substr($sql,0,-3);
 
         require_once(APPPATH.'../assets/js/phpexcel/Classes/PHPExcel/IOFactory.php');
@@ -3975,6 +4097,8 @@ class Reports extends CI_Controller {
         $subcat=$this->uri->segment(6);
         $item=$this->uri->segment(7);
         $enduser=$this->uri->segment(8);
+        $purpose=$this->uri->segment(9);
+        $pr_no=$this->uri->segment(10);
 
         $sql="";
         if($from!='null' && $to!='null'){
@@ -3995,6 +4119,14 @@ class Reports extends CI_Controller {
 
         if($enduser!='null'){
             $sql.= " rd.enduse_id = '$enduser' AND";
+        }
+
+        if($purpose!='null'){
+            $sql.= " rd.purpose_id = '$purpose' AND";
+        }
+
+        if($pr_no!='null'){
+            $sql.= " rd.pr_no = '$pr_no' AND";
         }
 
         $query=substr($sql,0,-3);
@@ -4224,6 +4356,8 @@ class Reports extends CI_Controller {
         $subcat=$this->uri->segment(6);
         $item=$this->uri->segment(7);
         $enduser=$this->uri->segment(8);
+        $purpose=$this->uri->segment(9);
+        $pr_no=$this->uri->segment(10);
         $sql='';
         if($from!='null' && $to!='null'){
            $sql.= " ih.issue_date BETWEEN '$from' AND '$to' AND";
@@ -4244,6 +4378,15 @@ class Reports extends CI_Controller {
         if($enduser!='null'){
             $sql.= " ih.enduse_id = '$enduser' AND";
         }
+
+        if($purpose!='null'){
+            $sql.= " ih.purpose_id = '$purpose' AND";
+        }
+
+        if($pr_no!='null'){
+            $sql.= " ih.pr_no = '$pr_no' AND";
+        }
+
         $query=substr($sql,0,-3);
 
         //echo "SELECT ih.*,i.item_id, sr.supplier_id,dt.department_id,pr.purpose_id,e.enduse_id, id.is_id FROM issuance_head ih INNER JOIN issuance_details id ON ih.issuance_id = id.issuance_id INNER JOIN items i ON id.item_id = i.item_id INNER JOIN supplier sr ON sr.supplier_id = id.supplier_id INNER JOIN department dt ON dt.department_id = ih.department_id INNER JOIN purpose pr ON pr.purpose_id = ih.purpose_id INNER JOIN enduse e ON e.enduse_id = ih.enduse_id WHERE ih.saved='1' AND ih.issuance_id = id.issuance_id AND ".$query. "ORDER BY ih.issue_date DESC";
