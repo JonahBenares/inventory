@@ -73,7 +73,7 @@
 											<td align="center"><strong><?php echo $li['item']; ?></td>
 											<td align="center"><strong><strong><?php echo $li['excessqty']; ?></strong></td>		
 											<td align="center"><strong><strong><?php echo $li['date_tagged']; ?></strong></td>			
-											<td align="center"><strong><?php echo $tagged_by; ?></td>
+											<td align="center"><strong><?php echo $li['tagged_by']; ?></td>
 											
 										</tr>
 										<?php } ?>
@@ -81,10 +81,10 @@
 								</table>
 							</div>
 							<?php } ?>
-							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+</div>	

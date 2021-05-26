@@ -3591,6 +3591,8 @@ class Reports extends CI_Controller {
         $subcat=$this->uri->segment(6);
         $item=$this->uri->segment(7);
         $enduser=$this->uri->segment(8);
+        $purpose=$this->uri->segment(9);
+        $pr_no=$this->uri->segment(10);
 
          $sql="";
         if($from!='null' && $to!='null'){
@@ -3844,6 +3846,8 @@ class Reports extends CI_Controller {
         $subcat=$this->uri->segment(6);
         $item=$this->uri->segment(7);
         $enduser=$this->uri->segment(8);
+        $purpose=$this->uri->segment(9);
+        $from_pr=$this->uri->segment(10);
 
          $sql="";
         if($from!='null' && $to!='null'){
@@ -4358,6 +4362,7 @@ class Reports extends CI_Controller {
         $enduser=$this->uri->segment(8);
         $purpose=$this->uri->segment(9);
         $pr_no=$this->uri->segment(10);
+
         $sql='';
         if($from!='null' && $to!='null'){
            $sql.= " ih.issue_date BETWEEN '$from' AND '$to' AND";
@@ -5155,7 +5160,7 @@ class Reports extends CI_Controller {
         $data['pr']=$this->slash_unreplace(rawurldecode($pr));
         $pr_no=$this->slash_unreplace(rawurldecode($pr));
         $data['tag_pr']=$this->super_model->custom_query("SELECT * FROM restock_head GROUP BY from_pr");
-        foreach($this->super_model->custom_query("SELECT rd.item_id, SUM(quantity) AS qty, rh.rhead_id,rh.restock_date,rh.purpose_id,rh.enduse_id FROM restock_details rd INNER JOIN restock_head rh ON rh.rhead_id = rd.rhead_id INNER JOIN items i ON rd.item_id = i.item_id WHERE rh.saved='1' AND rh.excess='1' AND rh.from_pr = '$pr_no' GROUP BY  rd.item_id") AS $head){
+        foreach($this->super_model->custom_query("SELECT rd.item_id, SUM(quantity) AS qty, rh.rhead_id,rh.restock_date,rh.purpose_id,rh.enduse_id,rd.user_id FROM restock_details rd INNER JOIN restock_head rh ON rh.rhead_id = rd.rhead_id INNER JOIN items i ON rd.item_id = i.item_id WHERE rh.saved='1' AND rh.excess='1' AND rh.from_pr = '$pr_no' GROUP BY  rd.item_id") AS $head){
 
                 $data['enduse']= $this->super_model->select_column_where("enduse", "enduse_name", "enduse_id", $head->enduse_id);
                 $data['purpose'] = $this->super_model->select_column_where("purpose", "purpose_desc", "purpose_id", $head->purpose_id);
@@ -5164,6 +5169,7 @@ class Reports extends CI_Controller {
                 $data['list'][] = array(
                     "rhead_id"=>$head->rhead_id,
                     "item"=>$this->super_model->select_column_where("items", "item_name", "item_id", $head->item_id),
+                    "tagged_by"=>$this->super_model->select_column_where("users", "fullname", "user_id", $head->user_id),
                     "item_id"=>$head->item_id,
                     "excessqty"=>$head->qty,
                     "date_tagged"=>$head->restock_date,
@@ -5173,7 +5179,6 @@ class Reports extends CI_Controller {
         }
         $this->load->view('template/header');
         $this->load->view('template/sidebar',$this->dropdown);
-        $data['tagged_by']=$this->super_model->select_column_where('users', 'fullname', 'user_id', $_SESSION['user_id']);
         $this->load->view('reports/tagged_as_excess',$data);
         $this->load->view('template/footer');
     }

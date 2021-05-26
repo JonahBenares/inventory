@@ -106,8 +106,8 @@
 							</form>
 							<br>
 							<?php if(!empty($restock)){ ?>
-							<a href = "<?php echo base_url(); ?>index.php/reports/export_restock/<?php echo $from;?>/<?php echo $to;?>/<?php echo $catt1;?>/<?php echo $subcat2;?>/<?php echo $item1;?>/<?php echo $enduse1;?>" class = "btn btn-primary pull-right">Export to Excel</a>
-							<a href="<?php echo base_url(); ?>index.php/reports/restock_report_print/<?php echo $from;?>/<?php echo $to;?>/<?php echo $catt1;?>/<?php echo $subcat2;?>/<?php echo $item1;?>/<?php echo $enduse1;?>" class="btn btn-info pull-right "><span  class="fa fa-print"></span></a>
+							<a href = "<?php echo base_url(); ?>index.php/reports/export_restock/<?php echo $from;?>/<?php echo $to;?>/<?php echo $catt1;?>/<?php echo $subcat2;?>/<?php echo $item1;?>/<?php echo $enduse1;?>/<?php echo $purpose1;?>/<?php echo $pr_no1;?>" class = "btn btn-primary pull-right">Export to Excel</a>
+							<a href="<?php echo base_url(); ?>index.php/reports/restock_report_print/<?php echo $from;?>/<?php echo $to;?>/<?php echo $catt1;?>/<?php echo $subcat2;?>/<?php echo $item1;?>/<?php echo $enduse1;?>/<?php echo $purpose1;?>/<?php echo $pr_no1;?>" class="btn btn-info pull-right "><span  class="fa fa-print"></span></a>
 							<br>
 							<div id="printableArea">
 								<p class="pname"><?php echo $c; ?> - <small class="main_cat"><?php echo $s; ?></small></p>

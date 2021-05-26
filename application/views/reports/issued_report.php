@@ -106,7 +106,7 @@
 							</form>
 							<br>
 							<?php if(!empty($issue)){ ?>
-							<a href = "<?php echo base_url(); ?>index.php/reports/export_issue/<?php echo $from;?>/<?php echo $to;?>/<?php echo $catt;?>/<?php echo $subcat1;?>/<?php echo $item1;?>/<?php echo $enduse1;?>" class = "btn btn-primary pull-right">Export to Excel</a>
+							<a href = "<?php echo base_url(); ?>index.php/reports/export_issue/<?php echo $from;?>/<?php echo $to;?>/<?php echo $catt;?>/<?php echo $subcat1;?>/<?php echo $item1;?>/<?php echo $enduse1;?>/<?php echo $purpose1;?>/<?php echo $pr_no1;?>" class = "btn btn-primary pull-right">Export to Excel</a>
 							<button id="printReport" class="btn btn-info pull-right " onclick="printDiv('printableArea')">
 									<span  class="fa fa-print"></span>
 							</button>
