@@ -1776,7 +1776,7 @@ class Reports extends CI_Controller {
             );
         }
 
-        foreach($this->super_model->custom_query("SELECT rh.receive_id,rh.receive_date, ri.supplier_id, ri.brand_id, ri.catalog_no, ri.received_qty, ri.item_cost, ri.rd_id,rh.create_date,ri.shipping_fee FROM receive_head rh INNER JOIN receive_items ri ON rh.receive_id = ri.receive_id WHERE $query AND saved = '1'") AS $receive){
+        foreach($this->super_model->custom_query("SELECT rh.receive_id,rh.receive_date, ri.supplier_id, ri.brand_id, ri.catalog_no, ri.received_qty, ri.item_cost, ri.rd_id,rh.create_date,ri.shipping_fee, rh.po_no FROM receive_head rh INNER JOIN receive_items ri ON rh.receive_id = ri.receive_id WHERE $query AND saved = '1'") AS $receive){
             $pr_no = $this->super_model->select_column_where("receive_details", "pr_no", "rd_id", $receive->rd_id);
             $supplier = $this->super_model->select_column_where("supplier", "supplier_name", "supplier_id", $receive->supplier_id);
              $brand = $this->super_model->select_column_where("brand", "brand_name", "brand_id", $receive->brand_id);
@@ -1787,6 +1787,7 @@ class Reports extends CI_Controller {
                 'catalog_no'=>$receive->catalog_no,
                 'brand'=>$brand,
                 'pr_no'=>$pr_no,
+                'po_no'=>$receive->po_no,
                 'unit_cost'=>$receive->item_cost,
                 'total_cost'=>$total_cost,
                 'method'=>'Receive',
@@ -1812,6 +1813,8 @@ class Reports extends CI_Controller {
             $brand = $this->super_model->select_column_where("brand", "brand_name", "brand_id", $issue->brand_id);
             //$shipping_fee = $this->super_model->select_column_custom_where("receive_items", "shipping_fee", "item_id='$issue->item_id' AND supplier_id='$issue->supplier_id' AND brand_id = '$issue->brand_id' AND catalog_no = '$issue->catalog_no'");
             $shipping_fee = $this->super_model->select_column_join_where_order_limit("shipping_fee", "receive_items","receive_details", "item_id='$issue->item_id' AND pr_no='$issue->pr_no'","rd_id","DESC","1");
+            $receive_id = $this->super_model->select_column_join_where_order_limit("receive_id", "receive_items","receive_details", "item_id='$issue->item_id' AND pr_no='$issue->pr_no'","rd_id","DESC","1");
+            $po_no = $this->super_model->select_column_where("receive_head", "po_no","receive_id", $receive_id);
             //$total_cost=$issue->quantity * $cost;
             $total_cost=$cost + $shipping_fee;
             $data['stockcard'][] = array(
@@ -1819,6 +1822,7 @@ class Reports extends CI_Controller {
                 'catalog_no'=>$issue->catalog_no,
                 'brand'=>$brand,
                 'pr_no'=>$issue->pr_no,
+                'po_no'=>$po_no,
                 'unit_cost'=>$cost,
                 'total_cost'=>$total_cost,
                 'method'=>'Issuance',
@@ -1843,6 +1847,8 @@ class Reports extends CI_Controller {
             $supplier = $this->super_model->select_column_where("supplier", "supplier_name", "supplier_id", $restock->supplier_id);
             $brand = $this->super_model->select_column_where("brand", "brand_name", "brand_id", $restock->brand_id);
             $shipping_fee = $this->super_model->select_column_join_where_order_limit("shipping_fee", "receive_items","receive_details", "item_id='$restock->item_id' AND pr_no='$restock->from_pr'","rd_id","DESC","1");
+            $receive_id = $this->super_model->select_column_join_where_order_limit("receive_id", "receive_items","receive_details", "item_id='$restock->item_id' AND pr_no='$restock->from_pr'","rd_id","DESC","1");
+            $po_no = $this->super_model->select_column_where("receive_head", "po_no","receive_id", $receive_id);
             //$total_cost=$restock->quantity * $restock->item_cost;
             $total_cost= $restock->item_cost + $shipping_fee;
             $data['stockcard'][] = array(
@@ -1850,6 +1856,7 @@ class Reports extends CI_Controller {
                 'catalog_no'=>$restock->catalog_no,
                 'brand'=>$brand,
                 'pr_no'=>$restock->from_pr,
+                'po_no'=>$po_no,
                 'unit_cost'=>$restock->item_cost,
                 'total_cost'=>$total_cost,
                 'method'=>'Restock',
