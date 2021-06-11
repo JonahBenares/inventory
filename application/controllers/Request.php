@@ -325,8 +325,9 @@ class Request extends CI_Controller {
         if($row1!=0){
             foreach($this->super_model->select_row_where('request_items','request_id', $id) AS $rt){
                 $item = $this->super_model->select_column_where("items", "item_name", "item_id", $rt->item_id);
-                $rec_qty = $this->super_model->select_sum("supplier_items", "quantity", "item_id", $rt->item_id);
+               // $rec_qty = $this->super_model->select_sum("supplier_items", "quantity", "item_id", $rt->item_id);
                 //echo "item_id = '$rt->item_id'<br>";
+                $inv_qty =$this->inventory_balance($rt->item_id);
                 foreach($this->super_model->select_custom_where("supplier_items","item_id = '$rt->item_id' AND quantity != '0'") AS $itm){
                     $brand = $this->super_model->select_column_where("brand", "brand_name", "brand_id", $rt->brand_id);
                     $supplier = $this->super_model->select_column_where("supplier", "supplier_name", "supplier_id", $rt->supplier_id);
@@ -343,7 +344,7 @@ class Request extends CI_Controller {
                     'unitcost'=>$rt->unit_cost,
                     'totalcost'=>$rt->total_cost,
                     'borrowfrom_pr'=>$rt->borrowfrom_pr,
-                    'invqty'=>$rec_qty
+                    'invqty'=>$inv_qty
                 );
             }
         }else{
@@ -403,6 +404,7 @@ class Request extends CI_Controller {
     }*/
 
        public function inventory_balance($itemid){
+        //$itemid='647';
        /*  $recqty= $this->super_model->select_sum("supplier_items", "quantity", "item_id", $itemid);
          $issueqty= $this->super_model->select_sum("issuance_details","quantity", "item_id",$itemid);*/
         $begbal= $this->super_model->select_sum_where("supplier_items", "quantity", "item_id='$itemid' AND catalog_no = 'begbal'");
@@ -419,12 +421,12 @@ class Request extends CI_Controller {
     public function checkpritem(){
         $item = $this->input->post('item');
         $pr = $this->input->post('pr');
-
+      
        // $rdid=$this->super_model->select_column_where("receive_details", "rd_id", "pr_no", $pr);
 
         //$recqty=$this->super_model->select_column_custom_where("receive_items", "received_qty", "rd_id ='$rdid' AND item_id = '$item'");
 
-          $recqty = $this->super_model->custom_query_single("received_qty","SELECT ri.received_qty FROM receive_items ri INNER JOIN receive_details rd ON ri.rd_id = rd.rd_id INNER JOIN receive_head rh ON rd.receive_id = rh.receive_id WHERE rh.saved = '1' AND rd.pr_no = '$pr' AND ri.item_id = '$item'");
+          $recqty = $this->super_model->custom_query_single("sumqty","SELECT SUM(ri.received_qty) as sumqty FROM receive_items ri INNER JOIN receive_details rd ON ri.rd_id = rd.rd_id INNER JOIN receive_head rh ON rd.receive_id = rh.receive_id WHERE rh.saved = '1' AND rd.pr_no = '$pr' AND ri.item_id = '$item'");
 
            $issue_qty = $this->super_model->custom_query_single("issueqty","SELECT SUM(quantity) AS issueqty FROM issuance_head ih INNER JOIN issuance_details id ON ih.issuance_id = id.issuance_id WHERE pr_no= '$pr' AND item_id='$item'");
 
@@ -439,6 +441,7 @@ class Request extends CI_Controller {
 
         //$issue_qty = array_sum($qty);
         $bal=($recqty-$issue_qty);
+
         echo $bal;
     }
 
@@ -522,7 +525,7 @@ class Request extends CI_Controller {
              $supplier_id = $si->supplier_id;
              $brand_id=$si->brand_id;
              $catalog_no = $si->catalog_no;
-             $invqty = $si->quantity;
+             $invqty = $this->inventory_balance($si->item_id);
              foreach($this->super_model->select_custom_where("items","item_id = '$si->item_id'") AS $it){
                  $unit = $this->super_model->select_column_where("uom", "unit_name", "unit_id", $it->unit_id);
             }
