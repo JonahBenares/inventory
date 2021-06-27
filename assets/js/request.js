@@ -76,16 +76,16 @@ function selectItem(id,val,unit,original_pn,qty) {
      $("#suggestion-item").hide();
 }
 
-function crossreferencing(){
+function crossreferencing(prno){
     var itemid= document.getElementById("item_id").value;
-   // alert(itemid);
+    
      var loc= document.getElementById("baseurl").value;
     var redirectcr=loc+'/index.php/request/crossreflist';
     if(itemid!=""){
          $.ajax({
             type: "POST",
             url: redirectcr,
-            data:'item='+itemid,
+            data:'item='+itemid+'&prno='+prno,
             success: function(data){
                 $("#crossreference_list").html(data);
             }
@@ -280,14 +280,16 @@ function printMReqF(){
     });
 }
 
-function getUnitCost(){
-    var siid= document.getElementById("siid").value;
+function getUnitCost(prno,itemid){
+   
+    //var siid= document.getElementById("siid").value;
     var loc= document.getElementById("baseurl").value;
-    var redirect = loc+'index.php/request/getSIDetails';
+    //var redirect = loc+'index.php/request/getSIDetails';
+    var redirect = loc+'index.php/request/getReceiveCost';
      $.ajax({
             type: "POST",
             url: redirect,
-            data: 'siid='+siid,
+            data: 'prno='+prno+'&itemid='+itemid,
             beforeSend: function(){
                 document.getElementById('alrt').innerHTML='<b>Please wait, Loading data...</b>'; 
                 $("#submit").hide(); 
@@ -324,7 +326,7 @@ $(document).ready(function(){
     });
 });
 
-function chooseItem(){
+function chooseItem(prno){
     var loc= document.getElementById("baseurl").value;
     var redirect = loc+'index.php/request/getIteminformation';
     var item = document.getElementById("item").value;
@@ -346,7 +348,7 @@ function chooseItem(){
             $("#original_pn").val(response.pn);
             $("#invqty").val(response.recqty);
             balancePRItem();
-            crossreferencing();
+            crossreferencing(prno);
             
         }
     }); 
