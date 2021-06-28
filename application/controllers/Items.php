@@ -388,9 +388,9 @@ class Items extends CI_Controller {
             $series=$pn_details[1];
         }
 
-        // echo "prefix=".$prefix. ", series=" . $series;
+       //  echo "prefix=".$prefix. ", series=" . $series;
         $row_count = $this->super_model->count_custom_where("pn_series","subcat_prefix='$prefix' AND series = '$series'");
-        if($row_count==1){
+        if($row_count!=0){
             $data['pn_format']=1;
         } else {
             $data['pn_format']=0;
