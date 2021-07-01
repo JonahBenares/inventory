@@ -425,10 +425,15 @@ class Request extends CI_Controller {
        // $rdid=$this->super_model->select_column_where("receive_details", "rd_id", "pr_no", $pr);
 
         //$recqty=$this->super_model->select_column_custom_where("receive_items", "received_qty", "rd_id ='$rdid' AND item_id = '$item'");
-
-          $recqty = $this->super_model->custom_query_single("sumqty","SELECT SUM(ri.received_qty) as sumqty FROM receive_items ri INNER JOIN receive_details rd ON ri.rd_id = rd.rd_id INNER JOIN receive_head rh ON rd.receive_id = rh.receive_id WHERE rh.saved = '1' AND rd.pr_no = '$pr' AND ri.item_id = '$item'");
+        if($pr!=''){
+            $recqty = $this->super_model->custom_query_single("sumqty","SELECT SUM(ri.received_qty) as sumqty FROM receive_items ri INNER JOIN receive_details rd ON ri.rd_id = rd.rd_id INNER JOIN receive_head rh ON rd.receive_id = rh.receive_id WHERE rh.saved = '1' AND rd.pr_no = '$pr' AND ri.item_id = '$item'");
 
            $issue_qty = $this->super_model->custom_query_single("issueqty","SELECT SUM(quantity) AS issueqty FROM issuance_head ih INNER JOIN issuance_details id ON ih.issuance_id = id.issuance_id WHERE pr_no= '$pr' AND item_id='$item'");
+        }else{
+            $recqty = $this->super_model->custom_query_single("sumqty","SELECT SUM(quantity) as sumqty FROM supplier_items WHERE item_id = '$item' AND catalog_no = 'begbal'");
+
+            $issue_qty = $this->super_model->custom_query_single("issueqty","SELECT SUM(quantity) AS issueqty FROM issuance_head ih INNER JOIN issuance_details id ON ih.issuance_id = id.issuance_id WHERE pr_no= '$pr' AND item_id='$item' AND catalog_no = 'begbal'");
+        }
 
       /*  $qty=array(0);
         foreach($this->super_model->select_row_where("request_head", "pr_no", $pr) AS $req){
@@ -588,7 +593,11 @@ class Request extends CI_Controller {
       public function getReceiveCost(){
         $itemid=$this->input->post('itemid');
         $prno=$this->input->post('prno');
-        $cost = $this->super_model->custom_query_single("item_cost","SELECT item_cost FROM receive_head rh INNER JOIN receive_details rd ON rh.receive_id = rd.receive_id INNER JOIN receive_items ri ON rd.rd_id = ri.rd_id WHERE rd.pr_no = '$prno' AND item_id = '$itemid'");
+        if($prno!=''){
+            $cost = $this->super_model->custom_query_single("item_cost","SELECT item_cost FROM receive_head rh INNER JOIN receive_details rd ON rh.receive_id = rd.receive_id INNER JOIN receive_items ri ON rd.rd_id = ri.rd_id WHERE rd.pr_no = '$prno' AND item_id = '$itemid'");
+        }else{
+            $cost = $this->super_model->custom_query_single("item_cost","SELECT item_cost FROM supplier_items WHERE item_id = '$itemid' AND catalog_no='begbal'");
+        }
        
         echo $cost;
     }
