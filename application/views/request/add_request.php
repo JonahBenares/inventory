@@ -74,11 +74,12 @@
 						</table>
 						<hr>
 						<div class="row">
+
 							<div class="col-lg-4">							
 								<p>
 									<!-- <input placeholder="Item Description" type="text" name="item" id="item" class="form-control" autocomplete="off">
 									<span id="suggestion-item"></span> -->
-									<select name="item" id='item' class="form-control select2" onchange="chooseItem()">
+									<select name="item" id='item' class="form-control select2" onchange="chooseItem('<?php echo $prno; ?>')">
 										<option value = ""></option>
 										<?php foreach($item_list AS $itm){ ?>
 										<option value = "<?php echo $itm->item_id;?>"><?php echo $itm->original_pn." - ".$itm->item_name;?></option>
