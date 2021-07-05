@@ -104,7 +104,7 @@ function balancePRItem(){
             url: redirectcr,
             data:'item='+itemid+'&pr='+pr,
             success: function(output){
-                console.log(output);
+                //console.log(output);
                 alert("Available Balance for this PR and Item: " + output);
                 document.getElementById("maxqty").value = output;
             }
