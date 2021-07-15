@@ -295,6 +295,7 @@ function getUnitCost(prno,itemid){
                 $("#submit").hide(); 
             },
             success: function(output){
+            
                 document.getElementById("unit_cost").value = output;
                 if(output != ''){
                     $("#submit").show(); 
