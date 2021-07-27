@@ -1837,9 +1837,9 @@ class Reports extends CI_Controller {
 
         //echo "****SELECT ih.issue_date, id.rq_id, id.supplier_id, id.brand_id, id.catalog_no, id.quantity FROM issuance_head ih INNER JOIN issuance_details id ON ih.issuance_id = id.issuance_id WHERE $query";
       if(empty($query)){
-            $que_is= "SELECT ih.issue_date, ih.pr_no, id.rq_id, id.item_id,id.supplier_id, id.brand_id, id.catalog_no, id.quantity, ih.create_date FROM issuance_head ih INNER JOIN issuance_details id ON ih.issuance_id = id.issuance_id WHERE saved = '1'";
+            $que_is= "SELECT ih.issue_date, ih.pr_no, id.rq_id, id.item_id,id.supplier_id, id.brand_id, id.catalog_no, id.quantity, id.remarks, ih.create_date FROM issuance_head ih INNER JOIN issuance_details id ON ih.issuance_id = id.issuance_id WHERE saved = '1'";
         } else {
-            $que_is= "SELECT ih.issue_date, ih.pr_no, id.rq_id, id.item_id,id.supplier_id, id.brand_id, id.catalog_no, id.quantity, ih.create_date FROM issuance_head ih INNER JOIN issuance_details id ON ih.issuance_id = id.issuance_id WHERE $query AND saved = '1'";
+            $que_is= "SELECT ih.issue_date, ih.pr_no, id.rq_id, id.item_id,id.supplier_id, id.brand_id, id.catalog_no, id.quantity, id.remarks, ih.create_date FROM issuance_head ih INNER JOIN issuance_details id ON ih.issuance_id = id.issuance_id WHERE $query AND saved = '1'";
         }
         foreach($this->super_model->custom_query($que_is) AS $issue){
             $cost = $this->super_model->select_column_where("request_items", "unit_cost", "rq_id", $issue->rq_id);
@@ -1863,6 +1863,7 @@ class Reports extends CI_Controller {
                 'series'=>'3',
                 'quantity'=>$issue->quantity,
                 'date'=>$issue->issue_date,
+                'remarks'=>$issue->remarks,
                 'create_date'=>$issue->create_date
             );
 

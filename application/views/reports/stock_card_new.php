@@ -148,6 +148,7 @@ if(!empty($stockcard)){
 											<th style="text-align: center" width="6%">Total Unit Cost</th>
 											<th style="text-align: center" width="0%">Method</th>
 											<th style="text-align: center" width="0%">Quantity</th>
+											<th style="text-align: center" width="0%">Notes</th>
 											<th style="text-align: center" width="0%">Running Balance</th>
 										</tr>
 									</thead>
@@ -176,6 +177,7 @@ if(!empty($stockcard)){
 												<td><?php echo number_format($stockcard[$x]['total_cost'],2); ?></td>
 												<td><?php echo $stockcard[$x]['method']; ?></td>
 												<td><?php echo (($stockcard[$x]['method']== 'Issuance') ? "-" : "") . $stockcard[$x]['quantity']; ?></td>
+												<td><?php echo (($stockcard[$x]['method']== 'Issuance') ? $stockcard[$x]['remarks'] : "") ?></td>
 												<td><?php echo $bal[$x]; ?></td>
 												
 											</tr>
