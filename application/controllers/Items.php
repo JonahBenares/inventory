@@ -1006,7 +1006,7 @@ class Items extends CI_Controller {
         }
 
         if($qtyselect!='null' && $qtyselect==1){
-            $sql.= " (ri.received_qty!='0' OR rd.quantity!='0' OR si.quantity!='0') AND";
+            $sql.= " (ri.received_qty!='0' OR rd.quantity!='0') AND";
         }else{
             $sql.="";
         }
