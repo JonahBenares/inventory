@@ -282,9 +282,8 @@ class Backorder extends CI_Controller {
         $pono=$this->super_model->select_column_where("receive_head", "po_no", "receive_id", $receive_id);
          //print_r($this->input->post('riid'));
         for($a=0;$a<$counter;$a++){
-           // $riid= $this->input->post('riid['.$a.']');
-            //echo $riid;
-            if(empty($this->input->post('brand_id['.$a.']'))){
+         
+           /* if(empty($this->input->post('brand_id['.$a.']'))){
                 $maxid=$this->super_model->get_max("brand", "brand_id");
                 $bid=$maxid+1;
                 $brand_data = array(
@@ -294,7 +293,7 @@ class Backorder extends CI_Controller {
                 $this->super_model->insert_into("brand", $brand_data);
             } else {
                 $bid = $this->input->post('brand['.$a.']');
-            }
+            }*/
 
             foreach($this->super_model->select_row_where("receive_items", "ri_id", $this->input->post('riid['.$a.']')) AS $rd){
            
@@ -304,7 +303,7 @@ class Backorder extends CI_Controller {
                 'po_no'=>$po_no,
                 'supplier_id'=> $this->input->post('supplier['.$a.']'),
                 'item_id'=> $rd->item_id,
-                'brand_id'=> $bid,
+                'brand_id'=> $rd->brand_id,
                 'catalog_no'=> $rd->catalog_no,
                 'serial_id'=>$rd->serial_id,
                 'item_cost'=> $this->input->post('item_cost['.$a.']'),
