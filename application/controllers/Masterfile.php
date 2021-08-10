@@ -89,13 +89,14 @@ class Masterfile extends CI_Controller {
     }
 
     public function get_expected_qty($pr,$item){
-        /*$expected_qty = $this->super_model->custom_query_single("expected_qty","SELECT ri.expected_qty FROM receive_items ri INNER JOIN receive_details rd ON ri.rd_id = rd.rd_id WHERE rd.pr_no = '$pr' AND ri.item_id='$item' ORDER BY ri_id ASC LIMIT 1");*/
-        $expected_qty = $this->super_model->select_sum_join("expected_qty","receive_items","receive_details", "pr_no = '$pr' AND item_id='$item'","rd_id");
+        $expected_qty = $this->super_model->custom_query_single("expected_qty","SELECT ri.expected_qty FROM receive_items ri INNER JOIN receive_details rd ON ri.rd_id = rd.rd_id WHERE rd.pr_no = '$pr' AND ri.item_id='$item' ORDER BY ri_id ASC LIMIT 1");
+        //$expected_qty = $this->super_model->select_sum_join("expected_qty","receive_items","receive_details", "pr_no = '$pr' AND item_id='$item'","rd_id");
         return $expected_qty;
     }
 
      public function get_received_qty($pr,$item){
         $received_qty = $this->super_model->select_sum_join("received_qty","receive_items","receive_details", "pr_no = '$pr' AND item_id='$item'","rd_id");
+          // $received_qty =  $this->super_model->custom_query_single("total_received", "SELECT SUM(received_qty) AS total_received FROM receive_items ri INNER JOIN receive_details rd ON rd.rd_id = ri.rd_id WHERE pr_no = '$pr' AND item_id='$item'");
         return $received_qty;
     }
 
