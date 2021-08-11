@@ -118,7 +118,7 @@ class Masterfile extends CI_Controller {
             $rd_id= $this->get_rdid($prlist->pr_no,$prlist->item_id);
             $item=$this->super_model->select_column_where("items", "item_name", "item_id", $prlist->item_id);
 
-            if($balance>$received_qty){
+            if($expected_qty>$received_qty){
                 //echo $item . " = " . $expected_qty . " > " . $received_qty . "<br>";
                 $data['list'][] = array(
                     "rdid"=>$rd_id,
