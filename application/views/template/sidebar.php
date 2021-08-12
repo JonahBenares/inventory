@@ -349,7 +349,7 @@
 					<a class="navbar-brand" href="#"><span >WAREHOUSE</span>Inventory System</a>
 				</ul>
 				<ul class="nav navbar-top-links navbar-right">
-					<li class="category"">
+					<li class="category">
 						<a class="dropdown-toggle count-info" href="<?php echo base_url(); ?>index.php/masterfile/category_list">
 							<span class="fa fa-th-large"></span>
 							<span class="tooltiptext shadow">Item Category</span>
@@ -477,12 +477,12 @@
 			<div style="position:relative;" >
 				<img class=""  src="<?php echo base_url(); ?>assets/default/logo/cenpri_logo.png" width="100%" height="auto" style="margin-top: 5px" >
 			</div></center>
-			<div class="moving-obj" style="z-index: 999; position: relative;top:-5px">			
+			<!-- <div class="moving-obj" style="z-index: 999; position: relative;top:-5px">			
 				<span class="fa fa-tasks padding-obj"></span>		
 				<span class="infinite-shake fa fa-archive padding-obj"></span>			
 				<span class="fa fa-archive padding-obj"></span>
 				<span class="fa fa-truck font-truck padding-obj"></span>
-			</div>
+			</div> -->
 		</div>
 		<ul class="nav menu">
 			<li ><a href="<?php echo base_url(); ?>index.php/masterfile/home"><em class="fa fa-dashboard">&nbsp;</em> Dashboard</a></li>
@@ -580,6 +580,26 @@
 					</li>
 				</ul>
 			</li>	
+			<li class="parent ">
+				<a data-toggle="collapse" href="#sub-damage">
+					<span class="fa fa-chain-broken">&nbsp;</span> Damage Items 
+					<span data-toggle="collapse" href="#sub-damage" class="icon pull-right">
+						<em class="fa fa-plus"></em>
+					</span>
+				</a>
+				<ul class="children collapse" id="sub-damage">
+					<li>
+						<a href="<?php echo base_url(); ?>index.php/damage/add_dmg_item" class="">
+							<span class="fa fa-arrow-right">&nbsp;</span> Add New
+						</a>
+					</li>
+					<li>
+						<a class="" href="<?php echo base_url(); ?>index.php/damage/damage_list">
+							<span class="fa fa-arrow-right">&nbsp;</span> View List
+						</a>
+					</li>
+				</ul>
+			</li>
 			<?php if($receive_add == 1){ ?>
 			<li><a href="<?php echo base_url(); ?>index.php/backorder/back_order"><em class="fa fa-retweet">&nbsp;</em> Back Order</a></li>	
 			<?php } ?>

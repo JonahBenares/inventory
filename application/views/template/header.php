@@ -705,6 +705,15 @@ if (isset($this->session->userdata['logged_in'])) {
 		font-weight: 600;
 	}
 
+	.panel-default .panel-heading-danger {
+	    background-image: linear-gradient(to right, #f55a5a 0%, #de2c2c 51%, #fd6d6d 100%);;
+	    border-bottom: 1px solid #e9ecf2;
+	    transition: 0.5s;
+	    background-size: 200% auto;
+	    color: #fff;
+	    font-weight: 600;
+	}
+
 	.panel-default .panel-heading:hover {
 	  	background-position: right center; /* change the direction of the change here */
 	}
