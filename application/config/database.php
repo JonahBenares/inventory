@@ -76,11 +76,11 @@ $query_builder = TRUE;
 $db['default'] = array(
 	'dsn'	=> '',
 	'hostname' => 'localhost',
-	'username' => 'root',
+	'username' => 'root', 
 	'password' => '',
 	'database' => 'db_inventory',
 	'dbdriver' => 'mysqli',
-	'dbprefix' => '',
+	'dbprefix' => '', 
 	'pconnect' => FALSE,
 	'db_debug' => (ENVIRONMENT !== 'production'),
 	//'db_debug'=> FALSE,

@@ -186,7 +186,7 @@
 													}
 
 													if(empty($sup['brand_id'])){
-														$brand='null';
+														$brand=0;
 													} else {
 														$brand= $sup['brand_id'];
 													}

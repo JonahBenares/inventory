@@ -51,7 +51,8 @@ class Backorder extends CI_Controller {
         }
     }
      public function get_expected_qty($pr,$item){
-        $expected_qty = $this->super_model->custom_query_single("expected_qty","SELECT ri.expected_qty FROM receive_items ri INNER JOIN receive_details rd ON ri.rd_id = rd.rd_id WHERE rd.pr_no = '$pr' AND ri.item_id='$item' ORDER BY ri_id ASC LIMIT 1");
+        //$expected_qty = $this->super_model->custom_query_single("expected_qty","SELECT ri.expected_qty FROM receive_items ri INNER JOIN receive_details rd ON ri.rd_id = rd.rd_id WHERE rd.pr_no = '$pr' AND ri.item_id='$item' ORDER BY ri_id ASC LIMIT 1");
+        $expected_qty = $this->super_model->select_sum_join("expected_qty","receive_items","receive_details", "pr_no = '$pr' AND item_id='$item'","rd_id");
         return $expected_qty;
     }
 
@@ -88,6 +89,7 @@ class Backorder extends CI_Controller {
         }
 
         foreach($this->super_model->select_row_where("receive_items", "rd_id", $id) AS $it){
+            
              if($it->expected_qty > $it->received_qty){
                 $boqty=$this->backorder_qty($it->ri_id);
                 $total_cost=$boqty * $it->item_cost;
@@ -115,9 +117,10 @@ class Backorder extends CI_Controller {
             
             $expected_qty= $this->get_expected_qty($prlist->pr_no,$prlist->item_id);
             $received_qty= $this->get_received_qty($prlist->pr_no,$prlist->item_id);
+            $balance = $expected_qty - $received_qty;
             $rd_id= $this->get_rdid($prlist->pr_no,$prlist->item_id);
             $item=$this->super_model->select_column_where("items", "item_name", "item_id", $prlist->item_id);
-            if($expected_qty>$received_qty){
+            if($balance>$received_qty){
                 $data['prback'][] = array(
                     "rdid"=>$rd_id,
                     "pr_no"=>$prlist->pr_no,
@@ -281,9 +284,8 @@ class Backorder extends CI_Controller {
         $pono=$this->super_model->select_column_where("receive_head", "po_no", "receive_id", $receive_id);
          //print_r($this->input->post('riid'));
         for($a=0;$a<$counter;$a++){
-           // $riid= $this->input->post('riid['.$a.']');
-            //echo $riid;
-            if(empty($this->input->post('brand_id['.$a.']'))){
+         
+           /* if(empty($this->input->post('brand_id['.$a.']'))){
                 $maxid=$this->super_model->get_max("brand", "brand_id");
                 $bid=$maxid+1;
                 $brand_data = array(
@@ -293,7 +295,7 @@ class Backorder extends CI_Controller {
                 $this->super_model->insert_into("brand", $brand_data);
             } else {
                 $bid = $this->input->post('brand['.$a.']');
-            }
+            }*/
 
             foreach($this->super_model->select_row_where("receive_items", "ri_id", $this->input->post('riid['.$a.']')) AS $rd){
            
@@ -303,7 +305,7 @@ class Backorder extends CI_Controller {
                 'po_no'=>$po_no,
                 'supplier_id'=> $this->input->post('supplier['.$a.']'),
                 'item_id'=> $rd->item_id,
-                'brand_id'=> $bid,
+                'brand_id'=> $rd->brand_id,
                 'catalog_no'=> $rd->catalog_no,
                 'serial_id'=>$rd->serial_id,
                 'item_cost'=> $this->input->post('item_cost['.$a.']'),
