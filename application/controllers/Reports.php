@@ -2907,7 +2907,7 @@ class Reports extends CI_Controller {
 
     public function getPRinformation(){
         $pr = $this->input->post('pr');
-        foreach($this->super_model->select_custom_where("receive_details", "pr_no LIKE '%$pr%' GROUP BY pr_no") AS $pr){  
+        foreach($this->super_model->select_custom_where("receive_details", "pr_no = '$pr' GROUP BY pr_no") AS $pr){ 
             $return = array('receive_id' => $pr->receive_id,'pr_no' => $pr->pr_no); 
             echo json_encode($return);   
         }
