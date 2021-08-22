@@ -1,5 +1,5 @@
 <script src="<?php echo base_url(); ?>assets/js/jquery.js"></script>
-<script src="<?php echo base_url(); ?>assets/js/item.js"></script>
+<script src="<?php echo base_url(); ?>assets/js/damage.js"></script>
 <script src="<?php echo base_url(); ?>assets/jquery.min.js"></script>
 
 <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
@@ -31,13 +31,13 @@
 					DAMAGE ITEM LIST
 					<div class="pull-right">
 						<!-- onclick="item_export()" -->
-						<a href="#" data-toggle="modal" data-target="#export_item" class="btn btn-primary btn-md">Export Items</a>						
+						<!--<a href="#" data-toggle="modal" data-target="#export_damage_item" class="btn btn-primary btn-md">Export Items</a>-->						
 						<!-- <a class="btn btn-primary btn-md"  href="<?php echo base_url(); ?>index.php/items/export_item">
 							Export Items
 						</a> -->
-						<a class=" clickable panel-toggle panel-button-tab-right shadow"  data-toggle="modal" data-target="#modal_addnew">
+						<!--<a class=" clickable panel-toggle panel-button-tab-right shadow"  data-toggle="modal" data-target="#modal_addnew">
 							<span class="fa fa-search"></span>
-						</a>
+						</a>-->
 						
 						<a class="clickable panel-toggle panel-button-tab-right shadow"  href="<?php echo base_url(); ?>index.php/damage/add_dmg_item">
 							<span class="fa fa-plus"></span></span>
@@ -80,27 +80,31 @@
 									<th width="10%">Uom</th>
 									<th width="10%">Location</th>
 									<th width="10%">Rack</th>
-									<!-- <th width="5%">Minimum Order Qty</th> -->
 									<th width="5%">Price</th>
 									<th width="12%">Action</th>
 								</tr>
 							</thead>
 							<tbody>
+								<?php 
+								
+								foreach($items AS $itm) { ?>
 								<tr>
-									<td >ds</td>
-									<td></td>
-									<td align="center"></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<!-- <td align="center"><?php echo $itm['minimum'];?></td> -->
-									<td align="center"></td>
+									<td style="border-left: 5px solid red;" ><?php echo $itm['original_pn'];  ?></td>
+									<td><?php echo $itm['item_description']?></td>
+									<td align="center"><?php echo $itm['quantity']?></td>
+									<td><?php echo $itm['uom']?></td>
+									<td><?php echo $itm['location'];?></td>
+									<td><?php echo $itm['rack'];?></td>
+									<td align="center"><?php echo number_format($itm['item_cost'],2);?></td>
+
 									<td>
-										<a href="<?php echo base_url(); ?>index.php/damage/view_dmg_item/" class="btn btn-warning btn-xs" target='_blank' title="VIEW"><span class="fa fa-eye"></span></a>
-										<a href="<?php echo base_url(); ?>index.php/damage/update_dmg_item/" class="btn btn-primary btn-xs" title="UPDATE"><span class="fa fa-pencil-square-o"></span></a>
-										<a  href="<?php echo base_url(); ?>index.php/damage/delete_item/" onclick="confirmationDelete(this);return false;" class="btn btn-danger btn-xs" title="DELETE" alt='DELETE'><span class="fa fa-trash-o"></span></a>
+										<?php ?>
+										<a href="<?php echo base_url(); ?>index.php/damage/view_dmg_item/<?php echo $itm['damage_id'];?>" class="btn btn-warning btn-xs" target='_blank' title="VIEW"><span class="fa fa-eye"></span></a>
+										<a href="<?php echo base_url(); ?>index.php/damage/update_dmg_item/<?php echo $itm['damage_id'];?>" class="btn btn-primary btn-xs" title="UPDATE"><span class="fa fa-pencil-square-o"></span></a>
+										<a  href="<?php echo base_url(); ?>index.php/damage/delete_damage_item/<?php echo $itm['damage_id'];?>" onclick="confirmationDelete(this);return false;" class="btn btn-danger btn-xs" title="DELETE" alt='DELETE'><span class="fa fa-trash-o"></span></a>
 									</td>
 								</tr>
+								<?php } ?>
 							</tbody>
 						</table>
 					</div>
