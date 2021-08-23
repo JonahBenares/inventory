@@ -410,7 +410,7 @@ function readPic1(input) {
     }
   }
 
-  function saveChangesItem(){
+  function saveChangesDamageItem(){
     var frm = new FormData();
 
     var subcat =document.getElementById('subcat').value;
@@ -421,6 +421,9 @@ function readPic1(input) {
 
     var item_description =document.getElementById('item_description').value;
     frm.append('item_description', item_description);
+
+    var damageid =document.getElementById('damageid').value;
+    frm.append('damage_id', damageid);
 
     var group =document.getElementById('group').value;
     frm.append('group', group);
@@ -541,7 +544,7 @@ function readPic1(input) {
                if(output=='ext'){
                 alert('Error: File extension error.')
                } else {
-                alert('Item successfully updated!');
+                alert('Damage Item successfully updated!');
                 window.location = '../damage_list/'+output;
                }
               
@@ -564,9 +567,9 @@ function readPic1(input) {
     }
   }
 
-  function item_export() {
+  function damage_item_export() {
     var loc= document.getElementById("baseurl").value;
-    var redirect = loc+'index.php/items/item_export';
+    var redirect = loc+'index.php/damage/damage_item_export';
     window.open(redirect, "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=100,left=450,width=450,height=350");
   }
 

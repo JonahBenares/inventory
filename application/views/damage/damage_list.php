@@ -31,13 +31,13 @@
 					DAMAGE ITEM LIST
 					<div class="pull-right">
 						<!-- onclick="item_export()" -->
-						<!--<a href="#" data-toggle="modal" data-target="#export_damage_item" class="btn btn-primary btn-md">Export Items</a>-->						
+						<a href="#" data-toggle="modal" data-target="#export_damage_item" class="btn btn-primary btn-md">Export Items</a>						
 						<!-- <a class="btn btn-primary btn-md"  href="<?php echo base_url(); ?>index.php/items/export_item">
 							Export Items
 						</a> -->
-						<!--<a class=" clickable panel-toggle panel-button-tab-right shadow"  data-toggle="modal" data-target="#modal_addnew">
+						<a class=" clickable panel-toggle panel-button-tab-right shadow"  data-toggle="modal" data-target="#modal_addnew">
 							<span class="fa fa-search"></span>
-						</a>-->
+						</a>
 						
 						<a class="clickable panel-toggle panel-button-tab-right shadow"  href="<?php echo base_url(); ?>index.php/damage/add_dmg_item">
 							<span class="fa fa-plus"></span></span>
@@ -48,7 +48,7 @@
 				<div class="panel-body">
 					<div class="canvas-wrapper">
 						<div class="row" style="padding:0px 10px 0px 10px">
-							<!-- <?php 
+							<?php 
 						
 							if(!empty($_POST)){
 								
@@ -57,7 +57,7 @@
 									<div class='alert alert-warning alert-shake'>
 										<center>
 											<strong>Oops!</strong> Your search query returns empty.
-											<a href='<?php echo base_url(); ?>index.php/items/item_list' class='remove_filter alert-link'>Remove Filters</a>. 
+											<a href='<?php echo base_url(); ?>index.php/damage/damage_list' class='remove_filter alert-link'>Remove Filters</a>. 
 										</center>
 									</div>
 									<?php
@@ -66,10 +66,10 @@
 									<div class='alert alert-warning alert-shake'>
 										<center>
 											<strong>Filters applied:</strong> <?php echo  $filter; ?>.
-											<a href='<?php echo base_url(); ?>index.php/items/item_list' class='remove_filter alert-link'>Remove Filters</a>. 
+											<a href='<?php echo base_url(); ?>index.php/damage/damage_list' class='remove_filter alert-link'>Remove Filters</a>. 
 										</center>
 									</div>
-							<?php  }	}?> -->
+							<?php  }	}?>
 						</div>
 						<table class="table table-bordered table-hover" id="item_table">
 							<thead>
@@ -113,14 +113,14 @@
 		</div>
 	</div>
 	<!---MO-D-A-L-->
-	<!-- <div class="modal fade" id="modal_addnew" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" >
+	<div class="modal fade" id="modal_addnew" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" >
 		<div class="modal-dialog" role="document">
 			<div class="modal-content modbod">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 					<h4 class="modal-title" id="myModalLabel">Search</h4>
 				</div>
-				<form method="POST" action = "<?php echo base_url(); ?>index.php/items/search_item" role="search">
+				<form method="POST" action = "<?php echo base_url(); ?>index.php/damage/search_item" role="search">
 					<div class="modal-body">
 
 						<table style="width:100%">
@@ -212,12 +212,6 @@
 									<input type="text" class="form-control" name="barcode">
 								</td>
 							</tr>
-							<tr>
-								<td class="td-sclass"><label for="sub">Expiration:</label></td>
-								<td class="td-sclass">
-									<input type="text" class="form-control" name="expiration">
-								</td>
-							</tr>
 						</table>					
 					</div>
 					<div class="modal-footer">
@@ -227,8 +221,8 @@
 				</form>
 			</div>
 		</div>
-	</div> -->
-	<div class="modal fade" id="export_item" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	</div>
+	<div class="modal fade" id="export_damage_item" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header modal-headback">
@@ -236,12 +230,12 @@
 					<h4 class="modal-title" id="myModalLabel">Filter Export</h4>
 				</div>
 				<div class="modal-body" style="padding:30px 50px 30px 50px">
-					<form method='POST' action='<?php echo base_url(); ?>index.php/items/filter_export' target='_blank'>
+					<form method='POST' action='<?php echo base_url(); ?>index.php/damage/filter_export' target='_blank'>
 						<table width="100%" >
 							<tr>
 								<td width="5%"><label>Date:</label></td>
 								<td width="80%" colspan="5">
-									<input type = "date" name="date" class="form-control" id="date">
+									<input type = "date" name="date_added" class="form-control" id="date_added">
 								</td>
 							</tr>
 							<tr><td ><br></td></tr>
@@ -264,24 +258,6 @@
 										<option value='' selected>-Select Sub Category-</option>
 									</select>
 								</td>
-							</tr>
-							<tr><td><br></td></tr>
-							<tr>
-								<td></td>
-								<td width="8%"><label class="contener">Without 0 Quantity:</label></td>
-								<td width="10%"><input style="width:25px" type="radio" class="form-control" name="qtyselect" id="withqty" value='1'></td>
-								<td width="5%"></td>
-								<td width="8%"><label class="contener">All Quantity:</label></td>
-								<td width="10%"><input style="width:25px" type="radio" name="qtyselect" class="form-control" id='withoutqty' value='0'></td>
-							</tr>
-							<tr><td><br></td></tr>
-							<tr>
-								<td></td>
-								<td width="8%"><label class="contener">Local:</label></td>
-								<td width="10%"><input style="width:25px" type="checkbox" class="form-control" name="local" id="local" value='1'></td>
-								<td width="5%"></td>
-								<td width="8%"><label class="contener">Manila:</label></td>
-								<td width="10%"><input style="width:25px" type="checkbox" name="manila" class="form-control" id='manila' value='2'></td>
 							</tr>
 						</table>
 						<br>

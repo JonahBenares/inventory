@@ -219,7 +219,7 @@
 									<br>	
 									<div class="row" style="padding: 0px 0px 50px 0px">
 										<center><div id='alt' style="font-weight:bold"></div></center>
-										<div class="col-lg-12"><input type='button' class="btn btn-warning form-control" style="background: #ff5d00" onclick='saveDamageItem()' value='NEXT' id="next" name='nextitem'></div>
+										<div class="col-lg-12"><input type='button' class="btn btn-warning form-control" style="background: #ff5d00" onclick='saveDamageItem()' value='ADD' id="next" name='nextitem'></div>
 									</div>
 									<input type="hidden" name="category_id" id="category_id">
 									<input type="hidden" name="binid" id="binid">

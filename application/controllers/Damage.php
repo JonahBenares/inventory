@@ -75,11 +75,11 @@ class Damage extends CI_Controller {
         return str_replace($search, $replace, $query);
     }
 
-    public function item_export(){
+    public function damage_item_export(){
         $this->load->view('template/header');
         $data['subcat'] = $this->super_model->select_all_order_by('item_subcat', 'subcat_name', 'ASC');
         $data['category'] = $this->super_model->select_all_order_by('item_categories', 'cat_name', 'ASC');
-        $this->load->view('items/item_export',$data);
+        $this->load->view('damage/damage_list',$data);
     }
 
     public function damage_list(){
@@ -449,12 +449,12 @@ class Damage extends CI_Controller {
                 $bin= $this->input->post('binid');
              }
       
-            $row_items=$this->super_model->count_rows("items");
-            if($row_items==0){
-                $item_id=1;
+            $row_damage=$this->super_model->count_rows("damage_items");
+            if($row_damage==0){
+                $damage_id=1;
             } else {
-                 $maxid=$this->super_model->get_max("items", "item_id");
-                 $item_id=$maxid+1;
+                 $maxid=$this->super_model->get_max("damage_items", "damage_id");
+                 $damage_id=$maxid+1;
             }
 
             $pnformat=$this->input->post('pnformat');
@@ -519,7 +519,7 @@ class Damage extends CI_Controller {
                 }
 
               $data = array(
-                    //'damage_id' => $damage_id,
+                    'damage_id' => $damage_id,
                     'category_id' => $this->input->post('cat'),
                     'subcat_id' => $this->input->post('subcat'),
                     'original_pn' => $pn_no,
@@ -558,8 +558,8 @@ class Damage extends CI_Controller {
     }
 
     public function savechanges_item(){
-        $timestamp = date('Y-m-d H:i:s');
         $itemdesc=$this->clean($this->input->post('item_description'));
+        $damage_id=$this->input->post('damage_id');
         $error_ext=0;
         $dest= realpath(APPPATH . '../uploads/');
         if(!empty($_FILES['img1']['name'])){
@@ -570,12 +570,14 @@ class Damage extends CI_Controller {
             if($ext1=='php' || ($ext1!='png' && $ext1 != 'jpg' && $ext1!='jpeg')){
                 $error_ext++;
             } else {
-                 $filename1=$itemdesc.'1.'.$ext1;
-                 move_uploaded_file($_FILES["img1"]['tmp_name'], $dest.'/'.$filename1);
+                 $filename1=$damage_id.'1.'.$ext1;
+                 move_uploaded_file($_FILES["img1"]['tmp_name'], $dest.'\/'.$filename1);
+                 $data_pic1 = array(
+                    'picture1'=>$filename1
+                 );
+                 $this->super_model->update_where("damage_items", $data_pic1, "damage_id", $damage_id);
             }
 
-        } else {
-            $filename1="";
         }
 
         if(!empty($_FILES['img2']['name'])){
@@ -586,12 +588,14 @@ class Damage extends CI_Controller {
             if($ext2=='php' || ($ext2!='png' && $ext2 != 'jpg' && $ext2!='jpeg')){
                 $error_ext++;
             } else {
-                $filename2=$itemdesc.'2.'.$ext2;
-                move_uploaded_file($_FILES["img2"]['tmp_name'], $dest.'/'.$filename2);
+                $filename2=$damage_id.'2.'.$ext2;
+                move_uploaded_file($_FILES["img2"]['tmp_name'], $dest.'\/'.$filename2);
+                 $data_pic2 = array(
+                    'picture2'=>$filename2
+                 );
+                 $this->super_model->update_where("damage_items", $data_pic2, "damage_id", $damage_id);
             }
-        } else {
-            $filename2="";
-        }
+        } 
 
         if(!empty($_FILES['img3']['name'])){
              $img3= basename($_FILES['img3']['name']);
@@ -601,12 +605,14 @@ class Damage extends CI_Controller {
             if($ext3=='php' || ($ext3!='png' && $ext3 != 'jpg' && $ext3!='jpeg')){
                 $error_ext++;
             } else {
-                $filename3=$itemdesc.'3.'.$ext3;
-                move_uploaded_file($_FILES["img3"]['tmp_name'], $dest.'/'.$filename3);
+                $filename3=$damage_id.'3.'.$ext3;
+                move_uploaded_file($_FILES["img3"]['tmp_name'], $dest.'\/'.$filename3);
+                $data_pic3 = array(
+                    'picture3'=>$filename3
+                 );
+                 $this->super_model->update_where("damage_items", $data_pic3, "damage_id", $damage_id);
             }
-        } else {
-            $filename3="";
-        }
+        } 
 
         if($error_ext!=0){
             echo "ext";
@@ -634,14 +640,8 @@ class Damage extends CI_Controller {
              } else {
                 $bin= $this->input->post('binid');
              }
-      
-            $row_items=$this->super_model->count_rows("items");
-            if($row_items==0){
-                $item_id=1;
-            } else {
-                 $maxid=$this->super_model->get_max("items", "item_id");
-                 $item_id=$maxid+1;
-            }
+            
+            $orig_pn=$this->super_model->select_column_where("damage_items", "original_pn", "damage_id", $damage_id);
 
             $pnformat=$this->input->post('pnformat');
 
@@ -655,18 +655,11 @@ class Damage extends CI_Controller {
                     $next= "1001";
                     $pn_no= $subcat_prefix."_1001";
                 } else {
-                    $series = $this->super_model->get_max_where("pn_series", "series","subcat_prefix = '$subcat_prefix'");
-                    $next=$series+1;
-                    $pn_no = $subcat_prefix."_".$next;
+                    $pn_no=$this->input->post('pn');
                 }
 
-                $pn_data= array(
-                    'subcat_prefix'=>$subcat_prefix,
-                    'series'=>$next
-                );
-                $this->super_model->insert_into("pn_series", $pn_data);
-            } else {
-                $pn_no = $this->input->post('pn');
+            }else {
+                $pn_no=$this->input->post('pn');
             }
 
             $brandid=$this->input->post('brandid');
@@ -705,7 +698,6 @@ class Damage extends CI_Controller {
                 }
 
               $data = array(
-                    //'damage_id' => $damage_id,
                     'category_id' => $this->input->post('cat'),
                     'subcat_id' => $this->input->post('subcat'),
                     'original_pn' => $pn_no,
@@ -729,9 +721,6 @@ class Damage extends CI_Controller {
                     'bin_id' => $bin,
                     'brand_id' => $bid,
                     'serial_id' => $sid,
-                    'picture1' => $filename1,
-                    'picture2' => $filename2,
-                    'picture3' => $filename3,
              );
         
               if($this->super_model->update_where("damage_items", $data, "damage_id", $damage_id)){
@@ -740,14 +729,12 @@ class Damage extends CI_Controller {
         }
     }
 
-    public function delete_dmg_item(){
-        $damageid=$this->uri->segment(3);
-        $id=$this->uri->segment(4);
-        if($this->super_model->delete_where("damage_items", "damage_id", $damageid)){
-             redirect(base_url().'index.php/items/add_dmg_item_second/'.$id);
+    public function delete_damage_item(){
+        $id=$this->uri->segment(3);
+        if($this->super_model->delete_where('damage_items', 'damage_id', $id)){
+            echo "<script>alert('Damage Item Succesfully Deleted'); 
+                window.location ='".base_url()."index.php/damage/damage_list'; </script>";
         }
-        
-        
     }
 
     public function count_damage_item(){
@@ -760,14 +747,14 @@ class Damage extends CI_Controller {
         echo $row_items;
     }
 
-    public function delete_damage_item(){
+    /*public function delete_damage_item(){
         $id=$this->uri->segment(3);
         $this->load->model('super_model');
         if($this->super_model->delete_data($id)){
             echo "<script>alert('Succesfully Deleted'); 
                 window.location ='".base_url()."index.php/damage/damage_list'; </script>";
         }
-    }
+    }*/
 
     public function export_damage_item(){
         $cat=$this->uri->segment(3);
@@ -1216,7 +1203,6 @@ class Damage extends CI_Controller {
         $warehouse=$this->input->post('warehouse');
         $rack=$this->input->post('rack');
         $barcode=$this->input->post('barcode');
-        $expiration=$this->input->post('expiration');
         $data['category'] = $this->super_model->select_all('item_categories');
         $data['subcat'] = $this->super_model->select_all('item_subcat');
         $data['group'] = $this->super_model->select_all('group');
@@ -1228,104 +1214,91 @@ class Damage extends CI_Controller {
         $sql="";
         $filter ="";
         if(!empty($category)){
-            $sql.= " items.category_id = '$category' AND";
+            $sql.= " damage_items.category_id = '$category' AND";
             $filter.="Category = " . $this->super_model->select_column_where('item_categories', 'cat_name', 
                         'cat_id', $category). ", ";
         }
 
         if(!empty($subcat)){
-            $sql.= " items.subcat_id = '$subcat' AND";
+            $sql.= " damage_items.subcat_id = '$subcat' AND";
             $filter.="Sub Category = " . $this->super_model->select_column_where('item_subcat', 'subcat_name', 
                         'subcat_id', $subcat) . ", ";
         }
 
         if(!empty($item_desc)){
-            $sql.= " items.item_name LIKE '%$item_desc%' AND";
+            $sql.= " damage_items.item_description LIKE '%$item_desc%' AND";
             $filter.="Item Desc = " .$item_desc. ", ";
         }
 
         if(!empty($pn)){
-            $sql.= " items.original_pn LIKE '%$pn%' OR supplier_items.catalog_no LIKE '%$pn%' AND";
+            $sql.= " damage_items.original_pn LIKE '%$pn%' OR supplier_items.catalog_no LIKE '%$pn%' AND";
             $filter.="PN No. = " .$pn. ", ";
         }
 
         if(!empty($group)){
-            $sql.= " items.group_id = '$group' AND";
+            $sql.= " damage_items.group_id = '$group' AND";
             $filter.="Group = " . $this->super_model->select_column_where('group', 'group_name', 
                         'group_id', $group). ", ";
         }
 
         if(!empty($section)){
-            $sql.= " items.location_id = '$section' AND";
+            $sql.= " damage_items.location_id = '$section' AND";
             $filter.="Section = " . $this->super_model->select_column_where('location', 'location_name', 
                         'location_id', $section). ", ";
         }
 
         if(!empty($bin)){
-            $sql.= " items.bin_id = '$bin' AND";
+            $sql.= " damage_items.bin_id = '$bin' AND";
             $filter.="Bin = " . $this->super_model->select_column_where('bin', 'bin_name', 'bin_id', $bin). ", ";
         }
 
         if(!empty($warehouse)){
-            $sql.= " items.warehouse_id = '$warehouse' AND";
+            $sql.= " damage_items.warehouse_id = '$warehouse' AND";
             $filter.="Warehouse = " . $this->super_model->select_column_where('warehouse', 'warehouse_name', 
                         'warehouse_id', $warehouse). ", ";
         }
 
         if(!empty($rack)){
-            $sql.= " items.rack_id = '$rack' AND";
+            $sql.= " damage_items.rack_id = '$rack' AND";
             $filter.="Rack = " . $this->super_model->select_column_where('rack', 'rack_name', 'rack_id', $rack) . ", ";
         }
 
         if(!empty($barcode)){
-            $sql.= " items.barcode = '$barcode' AND";
+            $sql.= " damage_items.barcode = '$barcode' AND";
             $filter.="Barcode = " .  $barcode . ", ";
-        }
-
-        if(!empty($expiration)){
-            $sql.= " items.expiration = '$expiration' AND";
-            $filter.="Expiration = " .  $expiration . ", ";
         }
 
         $query=substr($sql,0,-3);
         $filter=substr($filter,0,-2);
-        $data['access']=$this->access;
-        $count=$this->super_model->count_join_where("items","supplier_items", $query, 'item_id');
        
         $data['filter']=$filter;
-        if($count!=0){
+        if($query!=0){
             $data['count_query'] = 1;
-            foreach($this->super_model->select_join_where("items", "supplier_items", $query, "item_id") AS $itm){
-                //$totalqty=$this->super_model->select_sum("supplier_items", "quantity", "item_id", $itm->item_id);
-                foreach($this->super_model->select_custom_where("items", "item_id = '$itm->item_id'") AS $itema){
+                foreach($this->super_model->select_custom_where("damage_items", "damage_id = '$itm->damage_id'") AS $itema){
                     $unit = $this->super_model->select_column_where('uom', 'unit_name', 'unit_id', $itema->unit_id);
                 }
-                $totalqty=$this->inventory_balance($itm->item_id);
                  $data['items'][] = array(
                     'item_id'=>$itm->item_id,
                     'original_pn'=>$itm->original_pn,
-                    'item_name'=>$itm->item_name,
+                    'item_description'=>$itm->item_description,
                     'category'=>$this->super_model->select_column_where('item_categories', 'cat_name', 
                     'cat_id', $itm->category_id),
                     'subcategory'=>$this->super_model->select_column_where('item_subcat', 'subcat_name', 
                     'subcat_id', $itm->subcat_id),
-                    'quantity'=>$totalqty,
-                    'damage'=>$itm->damage,
+                    'quantity'=>$itm->qunatity,
                     'uom'=>$unit,
                     'location'=>$this->super_model->select_column_where('location', 'location_name', 
                     'location_id', $itm->location_id),
                     'bin'=>$this->super_model->select_column_where('bin', 'bin_name', 'bin_id', $itm->bin_id),
                     'rack'=>$this->super_model->select_column_where('rack', 'rack_name', 'rack_id', $itm->rack_id),
-                    'minimum'=>$itm->min_qty,
                 );
-            }
         } else {
             $data['count_query'] = 0;
              $data['items']=array();
         }
         $this->load->view('template/header');
         $this->load->view('template/sidebar',$this->dropdown);
-        $this->load->view('items/item_list',$data);
+        $this->load->view('damage/damage_list',$data);
         $this->load->view('template/footer');
     }
 
