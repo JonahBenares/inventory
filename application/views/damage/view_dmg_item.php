@@ -93,7 +93,7 @@
 										<td ><strong>Brand:</strong></td>
 										<td ><p><?php echo $det['brand'];?></p></td>
 										<td ><strong>Local/Manila:</strong></td>
-										<td ><p></p><?php echo $det['local_mnl'] == '0' ? 'Local' : 'Manila' ;?></td>
+										<td ><p></p><?php echo $det['local_mnl'] == '1' ? 'Local' : 'Manila' ;?></td>
 									</tr>									
 								</table>
 								<hr>

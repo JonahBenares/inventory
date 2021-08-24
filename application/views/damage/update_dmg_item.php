@@ -128,8 +128,8 @@
 										<div class="col-lg-6">
 											<label for="local_mnl">Local/Manila:</label>
                                			 		<select type="text" class="form-control" name="local_mnl" id="local_mnl">
-                                    				<option value = "0" <?php echo (($i->local_mnl == '0') ? 'selected' : '');?>>Local</option>
-                                    				<option value = "1" <?php echo (($i->local_mnl == '1') ? 'selected' : '');?>>Manila</option>
+                                    				<option value = "0" <?php echo (($i->local_mnl == '1') ? 'selected' : '');?>>Local</option>
+                                    				<option value = "1" <?php echo (($i->local_mnl == '2') ? 'selected' : '');?>>Manila</option>
                                					 </select>
 										</div>
 									</div>

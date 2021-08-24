@@ -163,10 +163,10 @@
 								</td>
 							</tr>
 							<tr>
-								<td class="td-sclass"><label for="sub">Section:</label></td>
+								<td class="td-sclass"><label for="sub">Location:</label></td>
 								<td class="td-sclass">
-									<select class="form-control" name="section">
-										<option value='' selected>-Choose Section-</option>
+									<select class="form-control" name="location">
+										<option value='' selected>-Choose Location-</option>
 										<?php foreach($location as $loc) { ?>
 										<option value='<?php echo $loc->location_id; ?>'><?php echo $loc->location_name; ?></option>
 										<?php } ?>
@@ -235,7 +235,7 @@
 							<tr>
 								<td width="5%"><label>Date:</label></td>
 								<td width="80%" colspan="5">
-									<input type = "date" name="date_added" class="form-control" id="date_added">
+									<input type = "date" name="date" class="form-control" id="date">
 								</td>
 							</tr>
 							<tr><td ><br></td></tr>
@@ -258,6 +258,15 @@
 										<option value='' selected>-Select Sub Category-</option>
 									</select>
 								</td>
+							</tr>
+							<tr><td><br></td></tr>
+							<tr>
+								<td></td>
+								<td width="8%"><label class="contener">Local:</label></td>
+								<td width="10%"><input style="width:25px" type="checkbox" class="form-control" name="local" id="local" value='1'></td>
+								<td width="5%"></td>
+								<td width="8%"><label class="contener">Manila:</label></td>
+								<td width="10%"><input style="width:25px" type="checkbox" name="manila" class="form-control" id='manila' value='2'></td>
 							</tr>
 						</table>
 						<br>

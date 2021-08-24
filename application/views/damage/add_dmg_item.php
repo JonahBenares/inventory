@@ -128,8 +128,8 @@
 											<label for="local_mnl">Local/Manila:</label>
 											<select class="form-control" name="local_mnl" id="local_mnl">
 												<option value='' selected>-Choose Local/Manila-</option>
-                                    			<option value = "0">Local</option>
-                                    			<option value = "1">Manila</option>
+                                    			<option value = "1">Local</option>
+                                    			<option value = "2">Manila</option>
                                 			</select>
 										</div>
 									</div>
