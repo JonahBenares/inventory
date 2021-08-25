@@ -902,7 +902,6 @@ class Reports extends CI_Controller {
         $id=$this->uri->segment(3);
         $prno=$this->uri->segment(4);
         $pr=$this->slash_unreplace(rawurldecode($prno));
-        echo $id."=". "**".$prno . "-". $pr;
         $data['pr_rep']=$this->super_model->custom_query("SELECT * FROM receive_details GROUP BY pr_no");
        /* $counter = $this->super_model->count_custom_where("receive_head","receive_id = '$id'");
         if($counter!=0){
@@ -2908,7 +2907,7 @@ class Reports extends CI_Controller {
 
     public function getPRinformation(){
         $pr = $this->input->post('pr');
-        foreach($this->super_model->select_custom_where("receive_details", "pr_no = '$pr' GROUP BY pr_no") AS $pr){  
+        foreach($this->super_model->select_custom_where("receive_details", "pr_no LIKE '%$pr%' GROUP BY pr_no") AS $pr){  
             $return = array('receive_id' => $pr->receive_id,'pr_no' => $pr->pr_no); 
             echo json_encode($return);   
         }
