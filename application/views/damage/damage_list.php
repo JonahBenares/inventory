@@ -1,5 +1,5 @@
 <script src="<?php echo base_url(); ?>assets/js/jquery.js"></script>
-<script src="<?php echo base_url(); ?>assets/js/item.js"></script>
+<script src="<?php echo base_url(); ?>assets/js/damage.js"></script>
 <script src="<?php echo base_url(); ?>assets/jquery.min.js"></script>
 
 <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
@@ -31,7 +31,7 @@
 					DAMAGE ITEM LIST
 					<div class="pull-right">
 						<!-- onclick="item_export()" -->
-						<a href="#" data-toggle="modal" data-target="#export_item" class="btn btn-primary btn-md">Export Items</a>						
+						<a href="#" data-toggle="modal" data-target="#export_damage_item" class="btn btn-primary btn-md">Export Items</a>						
 						<!-- <a class="btn btn-primary btn-md"  href="<?php echo base_url(); ?>index.php/items/export_item">
 							Export Items
 						</a> -->
@@ -48,7 +48,7 @@
 				<div class="panel-body">
 					<div class="canvas-wrapper">
 						<div class="row" style="padding:0px 10px 0px 10px">
-							<!-- <?php 
+							<?php 
 						
 							if(!empty($_POST)){
 								
@@ -57,7 +57,7 @@
 									<div class='alert alert-warning alert-shake'>
 										<center>
 											<strong>Oops!</strong> Your search query returns empty.
-											<a href='<?php echo base_url(); ?>index.php/items/item_list' class='remove_filter alert-link'>Remove Filters</a>. 
+											<a href='<?php echo base_url(); ?>index.php/damage/damage_list' class='remove_filter alert-link'>Remove Filters</a>. 
 										</center>
 									</div>
 									<?php
@@ -66,10 +66,10 @@
 									<div class='alert alert-warning alert-shake'>
 										<center>
 											<strong>Filters applied:</strong> <?php echo  $filter; ?>.
-											<a href='<?php echo base_url(); ?>index.php/items/item_list' class='remove_filter alert-link'>Remove Filters</a>. 
+											<a href='<?php echo base_url(); ?>index.php/damage/damage_list' class='remove_filter alert-link'>Remove Filters</a>. 
 										</center>
 									</div>
-							<?php  }	}?> -->
+							<?php  }	}?>
 						</div>
 						<table class="table table-bordered table-hover" id="item_table">
 							<thead>
@@ -80,27 +80,31 @@
 									<th width="10%">Uom</th>
 									<th width="10%">Location</th>
 									<th width="10%">Rack</th>
-									<!-- <th width="5%">Minimum Order Qty</th> -->
 									<th width="5%">Price</th>
 									<th width="12%">Action</th>
 								</tr>
 							</thead>
 							<tbody>
+								<?php 
+								
+								foreach($items AS $itm) { ?>
 								<tr>
-									<td >ds</td>
-									<td></td>
-									<td align="center"></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<!-- <td align="center"><?php echo $itm['minimum'];?></td> -->
-									<td align="center"></td>
+									<td style="border-left: 5px solid red;" ><?php echo $itm['original_pn'];  ?></td>
+									<td><?php echo $itm['item_description']?></td>
+									<td align="center"><?php echo $itm['quantity']?></td>
+									<td><?php echo $itm['uom']?></td>
+									<td><?php echo $itm['location'];?></td>
+									<td><?php echo $itm['rack'];?></td>
+									<td align="center"><?php echo number_format($itm['item_cost'],2);?></td>
+
 									<td>
-										<a href="<?php echo base_url(); ?>index.php/damage/view_dmg_item/" class="btn btn-warning btn-xs" target='_blank' title="VIEW"><span class="fa fa-eye"></span></a>
-										<a href="<?php echo base_url(); ?>index.php/damage/update_dmg_item/" class="btn btn-primary btn-xs" title="UPDATE"><span class="fa fa-pencil-square-o"></span></a>
-										<a  href="<?php echo base_url(); ?>index.php/damage/delete_item/" onclick="confirmationDelete(this);return false;" class="btn btn-danger btn-xs" title="DELETE" alt='DELETE'><span class="fa fa-trash-o"></span></a>
+										<?php ?>
+										<a href="<?php echo base_url(); ?>index.php/damage/view_dmg_item/<?php echo $itm['damage_id'];?>" class="btn btn-warning btn-xs" target='_blank' title="VIEW"><span class="fa fa-eye"></span></a>
+										<a href="<?php echo base_url(); ?>index.php/damage/update_dmg_item/<?php echo $itm['damage_id'];?>" class="btn btn-primary btn-xs" title="UPDATE"><span class="fa fa-pencil-square-o"></span></a>
+										<a  href="<?php echo base_url(); ?>index.php/damage/delete_damage_item/<?php echo $itm['damage_id'];?>" onclick="confirmationDelete(this);return false;" class="btn btn-danger btn-xs" title="DELETE" alt='DELETE'><span class="fa fa-trash-o"></span></a>
 									</td>
 								</tr>
+								<?php } ?>
 							</tbody>
 						</table>
 					</div>
@@ -109,14 +113,14 @@
 		</div>
 	</div>
 	<!---MO-D-A-L-->
-	<!-- <div class="modal fade" id="modal_addnew" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" >
+	<div class="modal fade" id="modal_addnew" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" >
 		<div class="modal-dialog" role="document">
 			<div class="modal-content modbod">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 					<h4 class="modal-title" id="myModalLabel">Search</h4>
 				</div>
-				<form method="POST" action = "<?php echo base_url(); ?>index.php/items/search_item" role="search">
+				<form method="POST" action = "<?php echo base_url(); ?>index.php/damage/search_item" role="search">
 					<div class="modal-body">
 
 						<table style="width:100%">
@@ -159,10 +163,10 @@
 								</td>
 							</tr>
 							<tr>
-								<td class="td-sclass"><label for="sub">Section:</label></td>
+								<td class="td-sclass"><label for="sub">Location:</label></td>
 								<td class="td-sclass">
-									<select class="form-control" name="section">
-										<option value='' selected>-Choose Section-</option>
+									<select class="form-control" name="location">
+										<option value='' selected>-Choose Location-</option>
 										<?php foreach($location as $loc) { ?>
 										<option value='<?php echo $loc->location_id; ?>'><?php echo $loc->location_name; ?></option>
 										<?php } ?>
@@ -208,12 +212,6 @@
 									<input type="text" class="form-control" name="barcode">
 								</td>
 							</tr>
-							<tr>
-								<td class="td-sclass"><label for="sub">Expiration:</label></td>
-								<td class="td-sclass">
-									<input type="text" class="form-control" name="expiration">
-								</td>
-							</tr>
 						</table>					
 					</div>
 					<div class="modal-footer">
@@ -223,8 +221,8 @@
 				</form>
 			</div>
 		</div>
-	</div> -->
-	<div class="modal fade" id="export_item" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	</div>
+	<div class="modal fade" id="export_damage_item" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header modal-headback">
@@ -232,7 +230,7 @@
 					<h4 class="modal-title" id="myModalLabel">Filter Export</h4>
 				</div>
 				<div class="modal-body" style="padding:30px 50px 30px 50px">
-					<form method='POST' action='<?php echo base_url(); ?>index.php/items/filter_export' target='_blank'>
+					<form method='POST' action='<?php echo base_url(); ?>index.php/damage/filter_export' target='_blank'>
 						<table width="100%" >
 							<tr>
 								<td width="5%"><label>Date:</label></td>
@@ -260,15 +258,6 @@
 										<option value='' selected>-Select Sub Category-</option>
 									</select>
 								</td>
-							</tr>
-							<tr><td><br></td></tr>
-							<tr>
-								<td></td>
-								<td width="8%"><label class="contener">Without 0 Quantity:</label></td>
-								<td width="10%"><input style="width:25px" type="radio" class="form-control" name="qtyselect" id="withqty" value='1'></td>
-								<td width="5%"></td>
-								<td width="8%"><label class="contener">All Quantity:</label></td>
-								<td width="10%"><input style="width:25px" type="radio" name="qtyselect" class="form-control" id='withoutqty' value='0'></td>
 							</tr>
 							<tr><td><br></td></tr>
 							<tr>

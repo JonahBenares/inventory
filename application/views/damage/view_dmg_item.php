@@ -12,7 +12,7 @@
 			<li><a href="#">
 				<em class="fa fa-home"></em>
 			</a></li>
-			<li class=""><a href="<?php echo base_url(); ?>index.php/items/item_list">Damage Items </a></li>
+			<li class=""><a href="<?php echo base_url(); ?>index.php/damage/damage_list">Damage Items </a></li>
 			<li class="active"> View Details</li>
 		</ol>
 	</div><!--/.row-->
@@ -33,13 +33,14 @@
 					<div class="canvas-wrapper">
 						<div class="col-lg-12">
 							<div style="padding: 5px 30px 20px 30px">
+								<?php foreach($details AS $det) { ?>
 								<table width="100%">
 									<tr>
 										<td colspan="2" width="95%">
-											<h1 class="pname2" style="margin:0;margin-bottom:20px" > Category name</h1> 
+											<h1 class="pname2" style="margin:0;margin-bottom:20px" ><?php echo $det['category'];?></h1> 
 										</td>										
 										<td style="padding: 0px" width="5%">
-											<a href="<?php echo base_url(); ?>index.php/damage/update_dmg_item/" class="btn btn-info" title="Update">
+											<a href="<?php echo base_url(); ?>index.php/damage/update_dmg_item/<?php echo $det['damage_id']; ?>" class="btn btn-info" title="Update">
 												<span class="fa fa-pencil"></span>
 											</a>
 										</td>
@@ -66,75 +67,69 @@
 								<table style="width:100%">
 									<tr>
 										<td width="15%"><strong>Description:</strong></td>
-										<td width="41%"><p class="main_cat">Item Name</p></td>
+										<td width="41%"><p class="main_cat"><?php echo $det['item_description'];?></p></td>
 										<td width="12%"><strong>Quantity:</strong></td>
-										<td width="32%"><p>asd</p></td>
+										<td width="32%"><p><?php echo $det['quantity'];?></p></td>
 									</tr>
 									<tr>
 										<td ><strong>Sub Category:</strong></td>
-										<td ><p>sub cat</p></td>
+										<td ><p><?php echo $det['subcategory'];?></p></td>
 										<td ><strong>Unit Cost:</strong></td>
-										<td ><p>location</p></td>
+										<td ><p><?php echo $det['item_cost'];?></p></td>
 									</tr>
 									<tr>
 										<td ><strong>Part Number:</strong></td>
-										<td ><p>00125566</p></td>
+										<td ><p><?php echo $det['original_pn'];?></p></td>
 										<td ><strong>UOM:</strong></td>
-										<td ><p>00996</p></td>
+										<td ><p><?php echo $det['unit'];?></p></td>
 									</tr>
 									<tr>
 										<td ><strong>Serial Number:</strong></td>
-										<td ><p>group 1</p></td>
+										<td ><p><?php echo $det['serial'];?></p></td>
 										<td ><strong>Catalog No:</strong></td>
-										<td ><p>racker</p></td>
+										<td ><p><?php echo $det['catalog'];?></p></td>
 									</tr>
 									<tr>
 										<td ><strong>Brand:</strong></td>
-										<td ><p>0012144555225</p></td>
+										<td ><p><?php echo $det['brand'];?></p></td>
 										<td ><strong>Local/Manila:</strong></td>
-										<td ><p></p></td>
+										<td ><p></p><?php echo $det['local_mnl'] == '1' ? 'Local' : 'Manila' ;?></td>
 									</tr>									
 								</table>
 								<hr>
 								<table style="width:100%">
 									<tr>
-										<td width="15%"><strong>Warehouse:</strong></td>
-										<td width="41%"><p class="main_cat"> aksdh</p></td>
-										<td width="12%"><strong>Unit:</strong></td>
-										<td width="32%"><p>asd</p></td>
+										<td width="15%"><strong>Supplier:</strong></td>
+										<td width="41%"><p class="main_cat"><?php echo $det['supplier'];?></p></td>
+										<td><strong>Warehouse:</strong></td>
+										<td><p><?php echo $det['warehouse'];?></p></td>
 									</tr>
 									<tr>
 										<td ><strong>Location:</strong></td>
-										<td ><p>sub cat</p></td>
+										<td ><p><?php echo $det['location'];?></p></td>
 										<td ><strong>Group:</strong></td>
-										<td ><p>location</p></td>
+										<td ><p><?php echo $det['group'];?></p></td>
 									</tr>
 									<tr>
 										<td ><strong>Bin:</strong></td>
-										<td ><p>sub cat</p></td>
+										<td ><p><?php echo $det['bin'];?></p></td>
 										<td ><strong>Rack:</strong></td>
-										<td ><p>location</p></td>
+										<td ><p><?php echo $det['rack'];?></p></td>
 									</tr>
 									<tr>
 										<td ><strong>Barcode:</strong></td>
-										<td ><p>sub cat</p></td>
+										<td ><p><?php echo $det['barcode'];?></p></td>
 										<td ><strong>Weight:</strong></td>
-										<td ><p>location</p></td>
-									</tr>
-									<tr>
-										<td ><strong>Expiration:</strong></td>
-										<td ><p>sub cat</p></td>
-										<td ><strong>Supplier:</strong></td>
-										<td ><p></p></td>
-									</tr>									
+										<td ><p><?php echo $det['weight'];?></p></td>
+									</tr>								
 								</table>
 								<hr>
-								<table width="100%">
+								<table style="width:100%">
 									<tr>
-										<td width="100%">Remarks</td>
+										<td width="15%"><strong>Remarks:</strong></td>
 									</tr>
 									<tr>
-										<td><textarea class="form-control" rows="5"></textarea></td>
+										<td width="41%"><p class="main_cat"><?php echo $det['remarks'];?></p></td>
 									</tr>
 								</table>
 								<!-- <h3>Cross Reference</h3> -->
@@ -213,31 +208,29 @@
 									<tr>
 										<td width="33.33333333%" style="padding:10px">
 											<div class="thumbnail" style="padding:10px">
-												<img id="pic1" class="pictures" src="<?php echo base_url(); ?>assets/default/default-img.jpg ?>" alt="your image">
-												<!-- <img id="pic1" class="pictures" src="<?php if(!empty($det['picture1'])) { 
+												<img id="pic1" class="pictures" src="<?php if(!empty($det['picture1'])) { 
 													echo base_url(); ?>uploads/<?php echo $det['picture1']; 
-												 } else { echo base_url(); ?>assets/default/default-img.jpg <?php } ?>" alt="your image" /> -->
+												 } else { echo base_url(); ?>assets/default/default-img.jpg <?php } ?>" alt="your image" />
 											</div>
 										</td>
 										<td width="33.33333333%" style="padding:10px">
 											<div class="thumbnail" style="padding:10px">
-												<img id="pic1" class="pictures" src="<?php echo base_url(); ?>assets/default/default-img.jpg ?>" alt="your image">
-												<!-- <img id="pic1" class="pictures" src="<?php if(!empty($det['picture2'])) { 
+												<img id="pic1" class="pictures" src="<?php if(!empty($det['picture2'])) { 
 													echo base_url(); ?>uploads/<?php echo $det['picture2']; 
-												 } else { echo base_url(); ?>assets/default/default-img.jpg <?php } ?>" alt="your image" /> -->
+												 } else { echo base_url(); ?>assets/default/default-img.jpg <?php } ?>" alt="your image" />
 											</div>
 										</td>
 										<td width="33.33333333%" style="padding:10px">
 											<div class="thumbnail" style="padding:10px">
-												<img id="pic1" class="pictures" src="<?php echo base_url(); ?>assets/default/default-img.jpg ?>" alt="your image">
-												<!-- <img id="pic1" class="pictures" src="<?php if(!empty($det['picture3'])) { 
+												<img id="pic1" class="pictures" src="<?php if(!empty($det['picture3'])) { 
 													echo base_url(); ?>uploads/<?php echo $det['picture3']; 
-												 } else { echo base_url(); ?>assets/default/default-img.jpg<?php } ?>" alt="your image" /> -->
+												 } else { echo base_url(); ?>assets/default/default-img.jpg<?php } ?>" alt="your image" />
 											</div>
 										</td>
 									</tr>
 								</table>
 								<hr>
+								<?php } ?>
 							</div>
 						</div>
 					</div>
