@@ -123,7 +123,7 @@ function saveIssue(){
                 $("#savebutton").hide(); 
             },
 	        success: function(output){
-              
+                //alert(output);
 	        	window.location.href = loc+'index.php/issue/view_issue';
 	        	window.open( loc+'index.php/issue/mif/'+output,'_blank');
 	         

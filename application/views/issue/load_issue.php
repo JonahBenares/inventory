@@ -93,6 +93,8 @@
 											<tr>
 												<td><p class="nomarg">JO / PR #:</p></td>
 												<td> <h5 class="nomarg"><?php echo $head[$x]['prno']; ?></h5></td>
+												<td><p class="nomarg pull-right">Type:</p></td>
+												<td> <h5 class="nomarg"><?php echo $head[$x]['type']; ?></h5></td>
 											</tr>
 										</table>
 										<input type="hidden" name="request_id" id="request_id" value="<?php echo $head[$x]['requestid']; ?>">

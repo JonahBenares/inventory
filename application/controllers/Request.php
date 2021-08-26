@@ -131,6 +131,7 @@ class Request extends CI_Controller {
             $data['request'][] = array(
                 'requestid'=>$request->request_id,
                 'mreqf'=>$request->mreqf_no,
+                'type'=>$request->type,
                 'prno'=>$request->pr_no,
                 'date'=>$request->request_date,
                 'department'=>$department,
