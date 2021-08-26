@@ -158,42 +158,6 @@ class Damage extends CI_Controller {
       
     }
 
-    public function filter_export(){
-        if(!empty($this->input->post('category_exp'))){
-            $cat = $this->input->post('category_exp');
-        } else {
-            $cat='null';
-        }
-
-        if(!empty($this->input->post('subcat_exp'))){
-            $subcat = $this->input->post('subcat_exp');
-        } else {
-            $subcat='null';
-        }
-        
-        if(!empty($this->input->post('local'))){
-            $local = $this->input->post('local');
-        } else {
-            $local='null';
-        }
-
-        if(!empty($this->input->post('manila'))){
-            $manila = $this->input->post('manila');
-        } else {
-            $manila='null';
-        }
-
-        if(!empty($this->input->post('date'))){
-            $date = $this->input->post('date');
-        } else {
-            $date='null';
-        }
-
-         ?>
-       <script>
-        window.location.href ='<?php echo base_url(); ?>index.php/damage/export_damage_item/<?php echo $cat; ?>/<?php echo $subcat; ?>/<?php echo $local; ?>/<?php echo $manila; ?>/<?php echo $date; ?>'</script> <?php
-    }
-
     public function update_dmg_item(){
         $data['id']=$this->uri->segment(3);
         $id=$this->uri->segment(3);
@@ -740,6 +704,42 @@ class Damage extends CI_Controller {
         echo $row_items;
     }
 
+    public function filter_export(){
+        if(!empty($this->input->post('category_exp'))){
+            $cat = $this->input->post('category_exp');
+        } else {
+            $cat='null';
+        }
+
+        if(!empty($this->input->post('subcat_exp'))){
+            $subcat = $this->input->post('subcat_exp');
+        } else {
+            $subcat='null';
+        }
+        
+        if(!empty($this->input->post('local'))){
+            $local = $this->input->post('local');
+        } else {
+            $local='null';
+        }
+
+        if(!empty($this->input->post('manila'))){
+            $manila = $this->input->post('manila');
+        } else {
+            $manila='null';
+        }
+
+        if(!empty($this->input->post('date'))){
+            $date = $this->input->post('date');
+        } else {
+            $date='null';
+        }
+
+         ?>
+       <script>
+        window.location.href ='<?php echo base_url(); ?>index.php/damage/export_damage_item/<?php echo $cat; ?>/<?php echo $subcat; ?>/<?php echo $local; ?>/<?php echo $manila; ?>/<?php echo $date; ?>'</script> <?php
+    }
+
     public function export_damage_item(){
         $cat=$this->uri->segment(3);
         $subcat=$this->uri->segment(4);
@@ -809,7 +809,7 @@ class Damage extends CI_Controller {
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C2', "CENTRAL NEGROS POWER RELIABILITY, INC.");
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C3', "Purok San Jose, Brgy. Calumangan, Bago City");
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('C4', "Tel. No. 476 - 7382");
-        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('N2', "MATERIAL INVENTORY REPORT TO DATE");
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('N2', "DAMAGE INVENTORY REPORT TO DATE");
 
 
 
