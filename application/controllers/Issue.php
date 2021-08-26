@@ -714,7 +714,7 @@ class Issue extends CI_Controller {
             );
         
              $this->super_model->insert_into("issuance_details", $details);
-              echo $type;
+              //echo $type;
              $description=$this->super_model->select_column_where("items", "item_name", "item_id", $itemid);
              $cat=$this->super_model->select_column_where("items", "category_id", "item_id", $itemid);
              $subcat=$this->super_model->select_column_where("items", "subcat_id", "item_id", $itemid);
