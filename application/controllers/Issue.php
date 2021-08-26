@@ -225,6 +225,7 @@ class Issue extends CI_Controller {
                     "department"=>$this->super_model->select_column_where("department", "department_name", "department_id", $hd->department_id),
                     "purpose"=>$this->super_model->select_column_where("purpose", "purpose_desc", "purpose_id", $hd->purpose_id),
                     "enduse"=>$this->super_model->select_column_where("enduse", "enduse_name", "enduse_id", $hd->enduse_id),
+                    "type"=>$hd->type,
                     "prno"=>$hd->pr_no,
                     "borrowfrom"=>$hd->borrowfrom_pr,
                     "remarks"=>$hd->remarks,
@@ -600,13 +601,17 @@ class Issue extends CI_Controller {
 
     public function saveIssuance(){
       
-       //$requestid= $this->input->post('request_id');
-       $requestid=$this->input->post('request_id');
+       $requestid= $this->input->post('request_id');
+       //$requestid=$this->input->post('request_id');
+       //$requestid = '4508';
+       $type=$this->super_model->select_column_where("request_head", "type", "request_id", $requestid);
 
        $rqid=$this->input->post('rqid');
-      
+     // $rqid = '1';
        $quantity=$this->input->post('quantity');
+       //$quantity='3';
        $userid=$this->input->post('userid');
+       //$userid='1';
         $serial=$this->input->post('serial');
         //$count=$this->input->post('count');
        // $check=$this->input->post('check');
@@ -683,6 +688,7 @@ class Issue extends CI_Controller {
        for($x=0; $x<$count; $x++){
 
          $itemid=$this->super_model->select_column_where("request_items", "item_id", "rq_id", $rqid[$x]);
+
          $supplierid=$this->super_model->select_column_where("request_items", "supplier_id", "rq_id", $rqid[$x]);
          $catalogno=$this->super_model->select_column_where("request_items", "catalog_no", "rq_id", $rqid[$x]);
          $brandid=$this->super_model->select_column_where("request_items", "brand_id", "rq_id", $rqid[$x]);
@@ -708,6 +714,54 @@ class Issue extends CI_Controller {
             );
         
              $this->super_model->insert_into("issuance_details", $details);
+              echo $type;
+             $description=$this->super_model->select_column_where("items", "item_name", "item_id", $itemid);
+             $cat=$this->super_model->select_column_where("items", "category_id", "item_id", $itemid);
+             $subcat=$this->super_model->select_column_where("items", "subcat_id", "item_id", $itemid);
+             $group=$this->super_model->select_column_where("items", "group_id", "item_id", $itemid);
+             $location=$this->super_model->select_column_where("items", "location_id", "item_id", $itemid);
+             $bin=$this->super_model->select_column_where("items", "bin_id", "item_id", $itemid);
+             $warehouse=$this->super_model->select_column_where("items", "warehouse_id", "item_id", $itemid);
+             $rack=$this->super_model->select_column_where("items", "rack_id", "item_id", $itemid);
+             $weight=$this->super_model->select_column_where("items", "weight", "item_id", $itemid);
+             $picture1=$this->super_model->select_column_where("items", "picture1", "item_id", $itemid);
+             $picture2=$this->super_model->select_column_where("items", "picture2", "item_id", $itemid);
+             $picture3=$this->super_model->select_column_where("items", "picture3", "item_id", $itemid);
+
+            
+            if($type == 'Damage Items'){
+
+                 $damage = array(
+                    'request_id'=>$requestid,
+                    'issuance_id'=>$issueid,
+                    'item_id'=>$itemid,
+                    'item_description'=>$description,
+                    'category_id'=>$cat,
+                    'subcat_id'=>$subcat,
+                    'original_pn'=>$pn_no,
+                    'unit_id'=>$uom,
+                    'group_id'=>$group,
+                    'location_id'=>$location,
+                    'bin_id'=>$bin,
+                    'warehouse_id'=>$warehouse,
+                    'rack_id'=>$rack,
+                    'picture1'=>$picture1,
+                    'picture2'=>$picture2,
+                    'picture3'=>$picture3,
+                    'weight'=>$weight,
+                    'supplier_id'=>$supplierid,
+                    'catalog_no'=>$catalogno,
+                    'brand_id'=>$brandid,
+                    'serial_id'=>$serial[$x],
+                    'quantity'=>$quantity[$x],
+                    'date_added'=>$create,
+                    'added_by'=>$userid,
+                    'remarks'=>$remarks[$x]
+
+                 );
+
+                  $this->super_model->insert_into("damage_items", $damage);
+             }
         }
        }
 
