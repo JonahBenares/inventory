@@ -273,8 +273,8 @@
 								</div>															
 							</div>
 							<div class="row">
-								<div class="col-lg-6">
-									<p  style="margin:0px" for="">Remarks:</p>
+								<div class="col-lg-4">
+									<p  style="margin:0px" for=""><br>Remarks:</p>
 									<textarea class="form-control" rows="1" name='remarks' id='remarks'></textarea>
 								</div>
 								<div class="col-lg-2">
@@ -282,10 +282,15 @@
 									<input class="form-control" name='shipping_fee' id='shipping_fee' onkeypress="return isNumberKey(this, event)" >
 								</div>
 								<div class="col-lg-2">
-									<p style="margin:0px"  for="">Currency:</p>
+									<p style="margin:0px"  for=""><br>Expiry</p>
+									<input class="form-control" name='shipping_fee' id='shipping_fee' onkeypress="return isNumberKey(this, event)" >
+								</div>
+								<div class="col-lg-2">
+									<p style="margin:0px"  for=""><br>Currency:</p>
 									<input class="form-control" name='currency' id='currency' >
 								</div>
 								<div class="col-lg-1">
+									<br>
 									<!-- <p  style="margin:0px" for="">Local:</p>
 									<input type = "radio" name='local_mnl' id='local_mnl' value = "1">
 									<p style="margin:0px" for="">Manila:</p>
@@ -314,66 +319,72 @@
 							</div>	
 						</div>
 						<br>
-						<table width="100%"  class="table table-bordered " style="font-size: 14px">
-							<tr>
-								<th class="tr-bottom" width="5%"><center>Item No.</center></th>
-								<th class="tr-bottom" width="20%"><center>Supplier</center></th>
-								<th class="tr-bottom" width="15%"><center>Description</center></th>
-								<th class="tr-bottom" width="10%"><center>Brand</center></th>
-								<th class="tr-bottom" width="10%"><center>Cat No.</center></th>
-								<th class="tr-bottom" width="10%"><center>Serial No.</center></th>
-								<th class="tr-bottom" width="5%"><center>Net Cost/U</center></th>
-								<th class="tr-bottom" width="5%"><center>Shipping/U & Other Related Cost</center></th>
-								<th class="tr-bottom" width="5%"><center>Total Unit NET Cost</center></th>
-								<th class="tr-bottom" width="10%"><center>Expected Qty</center></th>
-								<th class="tr-bottom" width="10%"><center>Delivered / Received</center></th>
-								<!-- <th class="tr-bottom" width="10%"><center>Inspected By</center></th> -->
-								<th class="tr-bottom" width="5%"><center>UOM</center></th>
-								<th class="tr-bottom" width="5%"><center>Total Net Cost</center></th>
-								<th class="tr-bottom" width="15%"><center>Remarks</center></th>
-								<th class="tr-bottom" width="15%"><center>Local/Manila</center></th>
-								<th class="tr-bottom" width="5%"><center>Action</center></th>
-							</tr>
-							<?php 
-							if(isset($rdid)){
-								$count= count($receive_items); 
-								?>
-								<tbody id="item_body">
-								<?php if($count==0) { ?>
-									<tr><td colspan='14'><center>No items added.</center></td></tr>
-								<?php } else { 
-									$x=1;
-									foreach($receive_items AS $ri) { ?>
-									<tr>
-										<td><center><?php echo $x; ?></center></td>
-										<td><center><?php echo $ri['supplier']; ?></center></td>
-										<td><center><?php echo $ri['item']; ?></center></td>
-										<td><center><?php echo $ri['brand']; ?></center></td>
-										<td><center><?php echo $ri['catalog_no']; ?></center></td>
-										<td><center><?php echo $ri['serial']; ?></center></td>
-										<td><center><?php echo $ri['unit_cost']; ?></center></td>
-										<td><center><?php echo $ri['shipping_fee']; ?></center></td>
-										<td><center><?php echo $ri['total']; ?></center></td>
-										<td><center><?php echo $ri['expqty']; ?></center></td>
-										<td><center><?php echo $ri['recqty']; ?></center></td>
-										<!-- <td><center><?php //echo $ri['inspected']; ?></center></td> -->
-										<td><center><?php echo $ri['unit']; ?></center></td>
-										<td><center><?php echo $ri['total_net_cost']; ?></center></td>
-										<td><center><?php echo $ri['remarks']; ?></center></td>
-										<td><center><?php echo $ri['local_mnl']; ?></center></td>
-										<td><center> <a class="btn btn-danger table-remove btn-xs" onclick="removerecitem('<?php echo $ri['riid']; ?>','<?php echo base_url(); ?>')"><span class=" fa fa-times"></span></a></center></td>
-									</tr>
-								<?php $x++; } 
-									}	 ?>
-								
-								</tbody>
-							<?php
-							} else { ?>
-								<tbody id="item_body"></tbody>
-							<?php } ?>
-
-							
-						</table>
+						<div style="overflow-y: scroll;">
+							<table style="width: 3000px;">
+								<tr>
+									<td>
+										<table  class="table table-bordered " style="font-size: 12px">
+											<tr>
+												<th class="tr-bottom" style="width: 5px;"><center>Item No.</center></th>
+												<th class="tr-bottom" style="width: 140px;"><center>Supplier</center></th>
+												<th class="tr-bottom" style="width: 140px;"><center>Description</center></th>
+												<th class="tr-bottom" style="width: 80px;"><center>Brand</center></th>
+												<th class="tr-bottom" style="width: 60px;"><center>Cat No.</center></th>
+												<th class="tr-bottom" style="width: 50px;"><center>Serial No.</center></th>
+												<th class="tr-bottom" style="width: 40px;"><center>Net Cost/U</center></th>
+												<th class="tr-bottom" style="width: 100px;"><center>Shipping/U & Other Related Cost</center></th>
+												<th class="tr-bottom" style="width: 100px;"><center>Total Unit NET Cost</center></th>
+												<th class="tr-bottom" style="width: 40px;"><center>Expected Qty</center></th>
+												<th class="tr-bottom" style="width: 40px;"><center>Delivered / Received</center></th>
+												<th class="tr-bottom" style="width: 40px;"><center>UOM</center></th>
+												<th class="tr-bottom" style="width: 40px;"><center>Total Net Cost</center></th>
+												<th class="tr-bottom" style="width: 40px;"><center>Remarks</center></th>
+												<th class="tr-bottom" style="width: 40px;"><center>Local/Manila</center></th>
+												<th class="tr-bottom" style="width: 40px;"><center>Expiry</center></th>
+												<th class="tr-bottom" style="width: 5px;"><center>Action</center></th>
+											</tr>
+											<?php 
+											if(isset($rdid)){
+												$count= count($receive_items); 
+												?>
+												<tbody id="item_body">
+												<?php if($count==0) { ?>
+													<tr><td colspan='14'><center>No items added.</center></td></tr>
+												<?php } else { 
+													$x=1;
+													foreach($receive_items AS $ri) { ?>
+													<tr>
+														<td><center><?php echo $x; ?></center></td>
+														<td><center><?php echo $ri['supplier']; ?></center></td>
+														<td><center><?php echo $ri['item']; ?></center></td>
+														<td><center><?php echo $ri['brand']; ?></center></td>
+														<td><center><?php echo $ri['catalog_no']; ?></center></td>
+														<td><center><?php echo $ri['serial']; ?></center></td>
+														<td><center><?php echo $ri['unit_cost']; ?></center></td>
+														<td><center><?php echo $ri['shipping_fee']; ?></center></td>
+														<td><center><?php echo $ri['total']; ?></center></td>
+														<td><center><?php echo $ri['expqty']; ?></center></td>
+														<td><center><?php echo $ri['recqty']; ?></center></td>
+														<td><center><?php echo $ri['unit']; ?></center></td>
+														<td><center><?php echo $ri['total_net_cost']; ?></center></td>
+														<td><center><?php echo $ri['remarks']; ?></center></td>
+														<td><center><?php echo $ri['local_mnl']; ?></center></td>
+														<td><center>Expiry</center></td>
+														<td><center> <a class="btn btn-danger table-remove btn-xs" onclick="removerecitem('<?php echo $ri['riid']; ?>','<?php echo base_url(); ?>')"><span class=" fa fa-times"></span></a></center></td>
+													</tr>
+												<?php $x++; } 
+													}	 ?>
+												
+												</tbody>
+											<?php
+											} else { ?>
+												<tbody id="item_body"></tbody>
+											<?php } ?>										
+										</table>
+									</td>
+								</tr>
+							</table>
+						</div>
 						<center><div id='alt' style="font-weight:bold"></div></center>
 						<input type='hidden' name='receiveid' id='receiveid' value='<?php echo $receiveid; ?>'>
 						<input type='hidden' name='counter' id='counter'>

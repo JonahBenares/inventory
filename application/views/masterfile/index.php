@@ -58,9 +58,7 @@
 					<?php 
 						if(!empty($list)){
 						foreach($list AS $li){ 
-								if($li['received']!=0){
-
-									
+								if($li['received']!=0){									
 							 ?>
 						<tr>
 							<td align="center"><?php echo $li['pr_no']; ?></td>
@@ -185,6 +183,51 @@
 			</div>
 		</div>
 		<?php } ?>
+
+
+
+
+		<div class="panel panel-default animated fadeInRight " style="border: 1px solid #ffcbaa;">
+			<div class="panel-body">
+				<center>
+					<h3>
+						<span class="fa fa-shopping-cart"></span>
+						<strong> Expiring Products in 90days</strong>
+					</h3>
+				</center>
+				<div style="height: 200px;overflow-x: scroll;">
+					<table class="table table-bordered table-hover shadow-dash">
+						<thead>
+							<tr style="background-color: #ffe0a7; font-weight: 600">
+								<th align="center" width="40%">Item</th>
+								<th align="center" width="15%">PR</th>
+								<th align="center" width="15%">Brand</th>
+								<th align="center" width="10%">Qty</th>
+								<th align="center" width="10%">Catalog No.</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td align="center"><?php ; ?></td>
+								<td align="center"><?php ; ?></td>
+								<td align="center"><?php ; ?></td>
+								<td align="center"><?php ; ?></td>
+								<td align="center"><?php ; ?></td>						
+							</tr>
+						</tbody>
+					</table>
+				</div>	
+			</div>
+		</div>
+	<!-- 
+		<div class="panel panel-default animated fadeInRight itemSubBevel itemSubColor3" >
+			<div class="panel-body">
+				<center>
+					<h1 class="subFcolor"><span class="fa fa-calendar animated fadeInLeft infinite"></span> </h1><h2 class="subColored" style="margin: 0px">Expiring Products in 90days</h2>
+				</center>
+			</div>
+		</div>
+ -->
 	</div>
 
 	<div class="modal fade" id="reminderModal" tabindex="-1" role="dialog" aria-labelledby="reminderModal">
