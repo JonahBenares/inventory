@@ -128,6 +128,7 @@
 										<option value="" selected="">-Select Request Type-</option>
 										<option value = "JO / PR">JO / PR</option>
 										<option value = "Warehouse Stocks">Warehouse Stocks</option>
+										<option value = "Damage Items">Damage Items</option>
 									</select>
 								</td>
 							</tr>

@@ -76,6 +76,7 @@
 									<td width="1%" align="center">#</td>
 									<td width="29%" align="center"><strong>Date</strong></td>
 									<td width="15%" align="center"><strong>MReqF No.</strong></td>
+									<td width="15%" align="center"><strong>Type</strong></td>
 									<td width="15%" align="center"><strong>PR / JO #</strong></td>
 									<td width="15%" align="center"><strong>Department</strong></td>
 									<td width="15%" align="center"><strong>Purpose</strong></td>
@@ -90,6 +91,7 @@
 									<td align="center"><?php echo $x; ?></td>
 									<td align="center"><?php echo $re['date'];?></td>
 									<td align="center"><?php echo $re['mreqf'];?></td>
+									<td align="center"><?php echo $re['type'];?></td>
 									<td align="center"><?php echo $re['prno'];?></td>
 									<td align="center"><?php echo $re['department'];?></td>
 									<td align="center"><?php echo $re['purpose'];?></td>
