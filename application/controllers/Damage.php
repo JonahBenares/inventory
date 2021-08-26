@@ -207,8 +207,8 @@ class Damage extends CI_Controller {
         $binid=$this->super_model->select_column_where("damage_items", "bin_id", "damage_id", $id);
         $data['bin_name'] = $this->super_model->select_column_where("bin", "bin_name", "bin_id", $binid);
 
-        $brandid=$this->super_model->select_column_where("damage_items", "bin_id", "damage_id", $id);
-        $data['brand_name'] = $this->super_model->select_column_where("bin", "bin_name", "bin_id", $brandid);
+        $brandid=$this->super_model->select_column_where("damage_items", "brand_id", "damage_id", $id);
+        $data['brand_name'] = $this->super_model->select_column_where("brand", "brand_name", "brand_id", $brandid);
 
         $serialid=$this->super_model->select_column_where("damage_items", "serial_id", "damage_id", $id);
         $data['serial_no'] = $this->super_model->select_column_where("serial_number", "serial_no", "serial_id", $serialid);
