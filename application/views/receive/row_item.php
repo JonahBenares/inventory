@@ -24,6 +24,7 @@
     <?php } else { ?>
         <input type = "hidden" name = "local_mnl[]" style = "text-align:center;width:100%;border:1px transparent;pointer-events: none" value = "0" ><input type = "text" style = "text-align:center;width:100%;border:0px transparent;pointer-events: none" value = "0" >
     <?php } ?></td>
+    <td style="padding: 0px "><input type = "text" name = "expiration_date[]" style = "text-align:center;width:100%;border:1px transparent;pointer-events: none" value="<?php echo $list['expiration_date']; ?>"></td>
 
     <td ><center>
         <a class="btn btn-danger table-remove btn-xs" onclick="remove_item(<?php echo $list['count']; ?>)"><span class=" fa fa-times"></span></a></center>
