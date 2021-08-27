@@ -207,13 +207,15 @@
 							</tr>
 						</thead>
 						<tbody>
+							<?php foreach($expiry AS $b){ ?>
 							<tr>
-								<td align="center"><?php ; ?></td>
-								<td align="center"><?php ; ?></td>
-								<td align="center"><?php ; ?></td>
-								<td align="center"><?php ; ?></td>
-								<td align="center"><?php ; ?></td>						
+								<td align="center"><?php echo $b['item']; ?></td>
+								<td align="center"><?php echo $b['pr_no']; ?></td>
+								<td align="center"><?php echo $b['brand']; ?></td>
+								<td align="center"><?php echo $b['received_qty']; ?></td>
+								<td align="center"><?php echo $b['catalog']; ?></td>						
 							</tr>
+							<?php } ?>
 						</tbody>
 					</table>
 				</div>	

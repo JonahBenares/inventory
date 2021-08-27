@@ -58,6 +58,12 @@ class Masterfile extends CI_Controller {
         $this->load->view('template/footer');
     }
 
+    public function dateDiff($date_1 , $date_2){
+        $datetime2 = date_create($date_2);
+        $datetime1 = date_create($date_1 );
+        $interval = date_diff($datetime2, $datetime1);
+        return $interval->format('%a');
+    }
 
      /*public function inventory_balance($itemid){
          $recqty= $this->super_model->select_sum("supplier_items", "quantity", "item_id", $itemid);
@@ -181,11 +187,34 @@ class Masterfile extends CI_Controller {
             $data['borrow']=array();
         }
 
+        $expiry_date = $this->super_model->select_column_where('receive_items', 'expiration_date', 'ri_id', $rd_id);
+        $now=date('Y-m-d');
+        $expiry=$this->dateDiff($expiry_date , $now);
+        $count=$this->super_model->select_count_join_inner("receive_items","receive_details", "receive_items.expiration_date !='' ORDER BY expiration_date DESC","rd_id");
+        if($count!=0 && $expiry<=90){
+            foreach($this->super_model->select_inner_join("receive_items","receive_details", "receive_items.expiration_date !='' ORDER BY expiration_date DESC","rd_id") AS $itms){
+               
+                $data['expiry'][]=array(
+                    'riid'=>$itms->ri_id,
+                    'pr_no'=>$this->super_model->select_column_where("receive_details", "pr_no", "rd_id", $itms->rd_id),
+                    'item'=>$this->super_model->select_column_where("items", "item_name", "item_id", $itms->item_id),
+                    'brand'=>$this->super_model->select_column_where("brand", "brand_name", "brand_id", $itms->brand_id),
+                    'catalog'=>$itms->catalog_no,
+                    'received_qty'=>$itms->received_qty
+
+
+                );
+            } 
+        } else {
+            $data['expiry']=array();
+        }
+
         $this->load->view('template/header');
         $this->load->view('template/sidebar',$this->dropdown);
         $this->load->view('masterfile/index',$data);
         $this->load->view('template/footer');
     }
+
 
     public function login_process(){
         $username=$this->input->post('username');
