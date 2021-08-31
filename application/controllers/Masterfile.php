@@ -187,13 +187,11 @@ class Masterfile extends CI_Controller {
             $data['borrow']=array();
         }
 
-        $expiry_date = $this->super_model->select_column_where('receive_items', 'expiration_date', 'ri_id', $rd_id);
-        $now=date('Y-m-d');
-        $expiry=$this->dateDiff($expiry_date , $now);
-        $count=$this->super_model->select_count_join_inner("receive_items","receive_details", "receive_items.expiration_date !='' ORDER BY expiration_date DESC","rd_id");
-        if($count!=0 && $expiry<=90){
-            foreach($this->super_model->select_inner_join("receive_items","receive_details", "receive_items.expiration_date !='' ORDER BY expiration_date DESC","rd_id") AS $itms){
-               
+        
+        foreach($this->super_model->select_inner_join("receive_items","receive_details", "receive_items.expiration_date !='' ORDER BY expiration_date DESC","rd_id") AS $itms){
+            $now=date('Y-m-d');
+            $expiry=$this->dateDiff($itms->expiration_date , $now);
+            if($expiry<=90){
                 $data['expiry'][]=array(
                     'riid'=>$itms->ri_id,
                     'pr_no'=>$this->super_model->select_column_where("receive_details", "pr_no", "rd_id", $itms->rd_id),
@@ -204,9 +202,9 @@ class Masterfile extends CI_Controller {
 
 
                 );
-            } 
-        } else {
-            $data['expiry']=array();
+            } else {
+                $data['expiry']=array();
+            }
         }
 
         $this->load->view('template/header');
