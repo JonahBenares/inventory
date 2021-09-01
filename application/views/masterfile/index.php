@@ -225,7 +225,6 @@
 				</div>	
 			</div>
 		</div>
-	<!-- 
 		<div class="panel panel-default animated fadeInRight itemSubBevel itemSubColor3" >
 			<div class="panel-body">
 				<center>
@@ -233,7 +232,6 @@
 				</center>
 			</div>
 		</div>
- -->
 	</div>
 
 	<div class="modal fade" id="reminderModal" tabindex="-1" role="dialog" aria-labelledby="reminderModal">
