@@ -186,55 +186,8 @@
 
 
 
-		<?php if(!empty($expiry)){ ?>
-		<div class="panel panel-default animated fadeInRight " style="border: 1px solid #ffcbaa;">
-			<div class="panel-body">
-				<center>
-					<h3>
-						<span class="fa fa-shopping-cart"></span>
-						<strong> Expiring Products in 90days</strong>
-					</h3>
-				</center>
-				<div style="height: 200px;overflow-x: scroll;">
-					<table class="table table-bordered table-hover shadow-dash">
-						<thead>
-							<tr style="background-color: #ffe0a7; font-weight: 600">
-								<th align="center" width="40%">Item</th>
-								<th align="center" width="15%">PR</th>
-								<th align="center" width="15%">Brand</th>
-								<th align="center" width="10%">Qty</th>
-								<th align="center" width="10%">Catalog No.</th>
-								<th align="center" width="10%">Expiry</th>
-							</tr>
-						</thead>
-						<tbody>
-							<?php 
-							if(!empty($expiry)){
-							foreach($expiry AS $e){ ?>
-							<tr>
-								<td align="center"><?php echo $e['item']; ?></td>
-								<td align="center"><?php echo $e['pr_no']; ?></td>
-								<td align="center"><?php echo $e['brand']; ?></td>
-								<td align="center"><?php echo $e['received_qty']; ?></td>
-								<td align="center"><?php echo $e['catalog']; ?></td>
-								<td align="center"><?php echo $e['expiration_date']; ?></td>						
-							</tr>
-							<?php } } ?>
-						</tbody>
-					</table>
-				</div>	
-			</div>
-		</div>
-		<?php } else { ?>
-		<div class="panel panel-default animated fadeInRight itemSubBevel itemSubColor3" >
-			<div class="panel-body">
-				<center>
-					<h1 class="subFcolor"><span class="fa fa-calendar animated fadeInLeft infinite"></span> </h1><h2 class="subColored" style="margin: 0px">Expiring Products in 90days</h2>
-				</center>
-			</div>
-		</div>
+		
 	</div>
-	<?php } ?>
 
 	<div class="modal fade" id="reminderModal" tabindex="-1" role="dialog" aria-labelledby="reminderModal">
 		<div class="modal-dialog" role="document">
@@ -332,8 +285,8 @@
 	</div>
 
 	<div class="col-lg-5" >
-	<?php if(!empty($reminders)){ ?>
-		<div class="panel panel-default animated fadeInDown" style="border: 1px solid #ffcbaa;">
+		<?php if(!empty($reminders)){ ?>
+		<div class="panel panel-default animated fadeInDown" style="border: 1px solid #ffcbaa;" >
 			<div class="panel-heading" >
 				<span class="fa fa-bell bell" style="color:#fff"></span>
 				REMINDER
@@ -341,7 +294,7 @@
 					<em class="fa fa-plus"></em>
 				</a>
 			</div>
-			<div class="panel-body">
+			<div class="panel-body" style="height:225px; overflow-x: scroll;">
 				<?php 	
 				$space = '&#13 &#13 &#13 &#13 &#13 &#13 &#13 &#13 &#13 &#13 &#13 &#13 &#13 &#13 &#13 &#13 &#13 &#13 &#13 &#13 &#13 &#13 &#13 &#13 &#13 &#13 &#13 &#13 &#13 &#13 &#13 &#13 &#13 &#13 &#13 &#13 &#13 &#13 &#13 &#13 &#13 &#13 &#13 &#13 &#13 &#13 &#13 &#13 &#13 &#13 &#13 &#13';
 				$space2 = '&#13 &#13 &#13 &#13 &#13 &#13 &#13 &#13 &#13 &#13 &#13 &#13 &#13 &#13 &#13 &#13 &#13 &#13 &#13 &#13 &#13 &#13 &#13 &#13 &#13 &#13 &#13 &#13 &#13';
@@ -383,6 +336,55 @@
 			<div class="panel-body panel-bell-body">
 				<center>
 					<h1 class="subFcolor"><span class="fa fa-bell bell"></span> </h1><h2 class="subColored" style="margin: 0px">Reminder</h2>
+				</center>
+			</div>
+		</div>
+		<?php } ?>
+
+		<?php if(!empty($expiry)){ ?>
+		<div class="panel panel-default animated fadeInRight " style="border: 1px solid #ffcbaa;">
+			<div class="panel-body">
+				<center>
+					<h3>
+						<span class="fa fa-shopping-cart"></span>
+						<strong> Expiring Products in 90days</strong>
+					</h3>
+				</center>
+				<div style="height: 200px;overflow-x: scroll;">
+					<table class="table table-bordered table-hover shadow-dash" width="100%">
+						<thead>
+							<tr style="background-color: #ffe0a7; font-weight: 600;width:1000px">
+								<th align="center" style="">Item</th>
+								<th align="center" style="">PR</th>
+								<th align="center" style="">Brand</th>
+								<th align="center" style="">Qty</th>
+								<th align="center" style="">Catalog No.</th>
+								<th align="center" style="">Expiry</th>
+							</tr>
+						</thead>
+						<tbody>
+							<?php 
+							if(!empty($expiry)){
+							foreach($expiry AS $e){ ?>
+							<tr>
+								<td align="center"><?php echo $e['item']; ?></td>
+								<td align="center"><?php echo $e['pr_no']; ?></td>
+								<td align="center"><?php echo $e['brand']; ?></td>
+								<td align="center"><?php echo $e['received_qty']; ?></td>
+								<td align="center"><?php echo $e['catalog']; ?></td>
+								<td align="center"><?php echo $e['expiration_date']; ?></td>						
+							</tr>
+							<?php } } ?>
+						</tbody>
+					</table>
+				</div>	
+			</div>
+		</div>
+		<?php } else { ?>
+		<div class="panel panel-default animated fadeInRight itemSubBevel itemSubColor3" >
+			<div class="panel-body">
+				<center>
+					<h1 class="subFcolor"><span class="fa fa-calendar animated fadeInLeft infinite"></span> </h1><h2 class="subColored" style="margin: 0px">Expiring Products in 90days</h2>
 				</center>
 			</div>
 		</div>

@@ -26,9 +26,9 @@
 				</div>
 				<div class="panel-body">
 					<div class="canvas-wrapper">
+							<a href = "<?php echo base_url(); ?>index.php/reports//" class = "btn btn-primary pull-right">Export to Excel</a>
 						<div class="col-lg-12">
 							
-							<!-- <a href = "<?php echo base_url(); ?>index.php/reports/export_excess/" class = "btn btn-primary pull-right">Export to Excel</a> -->
 							<br>
 							<div id="printableArea">							
 								<div style="overflow-x: scroll;padding-bottom: 20px ">
