@@ -198,7 +198,8 @@ class Masterfile extends CI_Controller {
                     'item'=>$this->super_model->select_column_where("items", "item_name", "item_id", $itms->item_id),
                     'brand'=>$this->super_model->select_column_where("brand", "brand_name", "brand_id", $itms->brand_id),
                     'catalog'=>$itms->catalog_no,
-                    'received_qty'=>$itms->received_qty
+                    'received_qty'=>$itms->received_qty,
+                    'expiration_date'=>$itms->expiration_date
 
 
                 );

@@ -204,18 +204,22 @@
 								<th align="center" width="15%">Brand</th>
 								<th align="center" width="10%">Qty</th>
 								<th align="center" width="10%">Catalog No.</th>
+								<th align="center" width="10%">Expiry</th>
 							</tr>
 						</thead>
 						<tbody>
-							<?php foreach($expiry AS $b){ ?>
+							<?php 
+							if(!empty($expiry)){
+							foreach($expiry AS $e){ ?>
 							<tr>
-								<td align="center"><?php echo $b['item']; ?></td>
-								<td align="center"><?php echo $b['pr_no']; ?></td>
-								<td align="center"><?php echo $b['brand']; ?></td>
-								<td align="center"><?php echo $b['received_qty']; ?></td>
-								<td align="center"><?php echo $b['catalog']; ?></td>						
+								<td align="center"><?php echo $e['item']; ?></td>
+								<td align="center"><?php echo $e['pr_no']; ?></td>
+								<td align="center"><?php echo $e['brand']; ?></td>
+								<td align="center"><?php echo $e['received_qty']; ?></td>
+								<td align="center"><?php echo $e['catalog']; ?></td>
+								<td align="center"><?php echo $e['expiration_date']; ?></td>						
 							</tr>
-							<?php } ?>
+							<?php } } ?>
 						</tbody>
 					</table>
 				</div>	
