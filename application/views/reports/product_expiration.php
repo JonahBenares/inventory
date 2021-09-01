@@ -27,8 +27,8 @@
 				<div class="panel-body">
 					<div class="canvas-wrapper">
 						<div class="col-lg-12">
-							
-							<!-- <a href = "<?php echo base_url(); ?>index.php/reports/export_excess/" class = "btn btn-primary pull-right">Export to Excel</a> -->
+							<!--<a href = "<?php echo base_url(); ?>index.php/reports//" class = "btn btn-primary pull-right">Export to Excel</a>
+							 <a href = "<?php echo base_url(); ?>index.php/reports/export_excess/" class = "btn btn-primary pull-right">Export to Excel</a> -->
 							<a href="<?php echo base_url(); ?>index.php/reports/product_expiration_print" target="_blank" class="btn btn-info pull-right ">
 								<span  class="fa fa-print"></span>
 							</a>
