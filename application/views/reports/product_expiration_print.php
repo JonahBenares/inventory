@@ -1,15 +1,17 @@
 <script src="<?php echo base_url(); ?>assets/js/jquery.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/reports.js"></script>
 <style type="text/css">
-	    #name-item li {width: 50%}
-</style>	
+	#name-item{
+		width: 50%!important;
+	}
+</style>
 <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
 	<div class="row">
 		<ol class="breadcrumb">
 			<li><a href="#">
 				<em class="fa fa-home"></em>
 			</a></li>
-			<li class="active"> Product Expiration Report</li>
+			<li class="active"> Borrowing Report</li>
 		</ol>
 	</div><!--/.row-->
 	
@@ -27,18 +29,11 @@
 				<div class="panel-body">
 					<div class="canvas-wrapper">
 						<div class="col-lg-12">
-							
-							<!-- <a href = "<?php echo base_url(); ?>index.php/reports/export_excess/" class = "btn btn-primary pull-right">Export to Excel</a> -->
-							<a href="<?php echo base_url(); ?>index.php/reports/product_expiration_print" target="_blank" class="btn btn-info pull-right ">
-								<span  class="fa fa-print"></span>
-							</a>
-							<br><br>
-							<div id="printableArea">							
-								<div style="overflow-x: scroll;padding-bottom: 20px ">
-									<table class="table-bordered table-hover table" id="received" style="font-size: 12px;width:2400px">
-										<thead>
-											<tr>
-												<td style="width:" align="center"><strong>Product Name</strong></td>
+							<div id="printableArea">
+								<table class="table table-hover table-bordered">
+									<thead>
+										<tr>	
+											<td style="width:" align="center"><strong>Product Name</strong></td>
 												<td style="width:50px" align="center"><strong>Remaining Days</strong></td>
 												<td style="width:50px" align="center"><strong>Expiration Date</strong></td>
 												<td style="width:50px" align="center"><strong>Qty</strong></td>
@@ -51,12 +46,12 @@
 												<td style="width:150px" align="center"><strong>Rack</strong></td>
 												<td style="width:150px" align="center"><strong>Bin</strong></td>
 												<td style="width:100px" align="center"><strong>Receive Date</strong></td>
-											</tr>
-										</thead>
-										<tbody>
-											<?php foreach($expiry AS $e){ ?>
-											<tr>
-												<td align="center"><?php echo $e['item_name']; ?></td>
+										</tr>
+									</thead>
+									<tbody>
+										<?php foreach($expiry AS $e){ ?>
+										<tr>
+											<td align="center"><?php echo $e['item_name']; ?></td>
 												<td align="center" <?php echo (($e['remaining_days']<=0) ? " style='color:red;font-weight:900'" : " "); ?>><?php echo $e['remaining_days'] . " day/s"; ?></td>
 												<td align="center"><?php echo $e['expiration_date']; ?></td>
 												<td align="center"><?php echo $e['received_qty']; ?></td>
@@ -68,17 +63,11 @@
 												<td align="center"><?php echo $e['location']; ?></td>
 												<td align="center"><?php echo $e['rack']; ?></td>
 												<td align="center"><?php echo $e['bin']; ?></td>
-												<td align="center"><?php echo $e['receive_date']; ?></td>
-											</tr>
-										</tbody>
-									</table>
-									<table width="100%" id="prntby">
-						                <tr>
-						                    <td style="font-size:12px">Printed By: <?php echo $printed.' / '. date("Y-m-d"). ' / '. date("h:i:sa")?> </td>
-						                </tr>
-						                <?php } ?>
-						            </table> 
-								</div>
+												<td align="center"><?php echo $e['receive_date']; ?></td>								
+										</tr>
+										<?php } ?>
+									</tbody>
+								</table>
 							</div>
 						</div>
 					</div>
@@ -86,3 +75,11 @@
 			</div>
 		</div>
 	</div>
+	<script type="text/javascript">   
+     	$(window).load(function() {
+	      	var printContents = document.getElementById('printableArea').innerHTML;
+	     	var originalContents = document.body.innerHTML;
+	     	document.body.innerHTML = printContents;
+	      	window.print();
+	    });
+	</script>

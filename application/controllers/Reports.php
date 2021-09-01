@@ -5294,9 +5294,88 @@ class Reports extends CI_Controller {
     }
 
     public function product_expiration(){
+        $count=$this->super_model->select_count_join_inner("receive_items","receive_details", "receive_items.expiration_date !='' ORDER BY expiration_date DESC","rd_id");
+        if($count!=0){
+            foreach($this->super_model->select_inner_join("receive_items","receive_details", "receive_items.expiration_date !='' ORDER BY expiration_date DESC","rd_id") AS $itms){
+            $now=date('Y-m-d');
+            $remaining_days=$this->dateDifference($itms->expiration_date , $now);
+                foreach($this->super_model->select_row_where('items', 'item_id', $itms->item_id) AS $det){
+                    $location = $this->super_model->select_column_where('location','location_name','location_id',$det->location_id);
+                    $rack = $this->super_model->select_column_where('rack','rack_name','rack_id',$det->rack_id);
+                    $bin = $this->super_model->select_column_where('bin','bin_name','bin_id',$det->bin_id);
+                    $unit = $this->super_model->select_column_where('uom','unit_name','unit_id',$det->unit_id);
+            }
+                $data['expiry'][]=array(
+                    'riid'=>$itms->ri_id,
+                    'brand'=>$this->super_model->select_column_where("brand", "brand_name", "brand_id", $itms->brand_id),
+                    'catalog'=>$itms->catalog_no,
+                    'pr_no'=>$this->super_model->select_column_where("receive_details", "pr_no", "rd_id", $itms->rd_id),
+                    'item_name'=>$this->super_model->select_column_where("items", "item_name", "item_id", $itms->item_id),
+                    'brand'=>$this->super_model->select_column_where("brand", "brand_name", "brand_id", $itms->brand_id),
+                    'serial_no'=>$this->super_model->select_column_where("serial_number", "serial_no", "serial_id", $itms->serial_id),
+                    'receive_date'=>$this->super_model->select_column_where("receive_head", "receive_date", "receive_id", $itms->receive_id),
+                    'bin'=>$bin,
+                    'rack'=>$rack,
+                    'location'=>$location,
+                    'unit'=>$unit,
+                    'catalog_no'=>$itms->catalog_no,
+                    'received_qty'=>$itms->received_qty,
+                    'expiration_date'=>$itms->expiration_date,
+                    'remaining_days'=>$remaining_days,
+
+
+
+                );
+            } 
+        } else {
+            $data['expiry']=array();
+        }
         $this->load->view('template/header');
         $this->load->view('template/sidebar',$this->dropdown);
-        $this->load->view('reports/product_expiration');
+        $this->load->view('reports/product_expiration',$data);
+        $this->load->view('template/footer');
+    }
+
+    public function product_expiration_print(){
+        $count=$this->super_model->select_count_join_inner("receive_items","receive_details", "receive_items.expiration_date !='' ORDER BY expiration_date DESC","rd_id");
+        if($count!=0){
+            foreach($this->super_model->select_inner_join("receive_items","receive_details", "receive_items.expiration_date !='' ORDER BY expiration_date DESC","rd_id") AS $itms){
+            $now=date('Y-m-d');
+            $remaining_days=$this->dateDifference($itms->expiration_date , $now);
+                foreach($this->super_model->select_row_where('items', 'item_id', $itms->item_id) AS $det){
+                    $location = $this->super_model->select_column_where('location','location_name','location_id',$det->location_id);
+                    $rack = $this->super_model->select_column_where('rack','rack_name','rack_id',$det->rack_id);
+                    $bin = $this->super_model->select_column_where('bin','bin_name','bin_id',$det->bin_id);
+                    $unit = $this->super_model->select_column_where('uom','unit_name','unit_id',$det->unit_id);
+            }
+                $data['expiry'][]=array(
+                    'riid'=>$itms->ri_id,
+                    'brand'=>$this->super_model->select_column_where("brand", "brand_name", "brand_id", $itms->brand_id),
+                    'catalog'=>$itms->catalog_no,
+                    'pr_no'=>$this->super_model->select_column_where("receive_details", "pr_no", "rd_id", $itms->rd_id),
+                    'item_name'=>$this->super_model->select_column_where("items", "item_name", "item_id", $itms->item_id),
+                    'brand'=>$this->super_model->select_column_where("brand", "brand_name", "brand_id", $itms->brand_id),
+                    'serial_no'=>$this->super_model->select_column_where("serial_number", "serial_no", "serial_id", $itms->serial_id),
+                    'receive_date'=>$this->super_model->select_column_where("receive_head", "receive_date", "receive_id", $itms->receive_id),
+                    'bin'=>$bin,
+                    'rack'=>$rack,
+                    'location'=>$location,
+                    'unit'=>$unit,
+                    'catalog_no'=>$itms->catalog_no,
+                    'received_qty'=>$itms->received_qty,
+                    'expiration_date'=>$itms->expiration_date,
+                    'remaining_days'=>$remaining_days,
+
+
+
+                );
+            } 
+        } else {
+            $data['expiry']=array();
+        }
+        $this->load->view('template/header');
+        $this->load->view('template/sidebar',$this->dropdown);
+        $this->load->view('reports/product_expiration_print',$data);
         $this->load->view('template/footer');
     }
      
