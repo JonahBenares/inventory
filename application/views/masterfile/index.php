@@ -186,7 +186,7 @@
 
 
 
-
+		<?php if(!empty($expiry)){ ?>
 		<div class="panel panel-default animated fadeInRight " style="border: 1px solid #ffcbaa;">
 			<div class="panel-body">
 				<center>
@@ -225,6 +225,7 @@
 				</div>	
 			</div>
 		</div>
+		<?php } else { ?>
 		<div class="panel panel-default animated fadeInRight itemSubBevel itemSubColor3" >
 			<div class="panel-body">
 				<center>
@@ -233,6 +234,7 @@
 			</div>
 		</div>
 	</div>
+	<?php } ?>
 
 	<div class="modal fade" id="reminderModal" tabindex="-1" role="dialog" aria-labelledby="reminderModal">
 		<div class="modal-dialog" role="document">
