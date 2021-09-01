@@ -5293,7 +5293,12 @@ class Reports extends CI_Controller {
         $this->load->view('template/footer');
     }
 
-
+    public function product_expiration(){
+        $this->load->view('template/header');
+        $this->load->view('template/sidebar',$this->dropdown);
+        $this->load->view('reports/product_expiration');
+        $this->load->view('template/footer');
+    }
      
 }
 ?>

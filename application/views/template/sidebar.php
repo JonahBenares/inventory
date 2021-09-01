@@ -715,6 +715,11 @@
 							<span class="fa fa-arrow-right">&nbsp;</span> Borrowing Report
 						</a>
 					</li>
+					<li>
+						<a class="" href="<?php echo base_url(); ?>index.php/reports/product_expiration">
+							<span class="fa fa-arrow-right">&nbsp;</span> Product Expiration
+						</a>
+					</li>
 				</ul>
 			</li>		
 		</ul>
