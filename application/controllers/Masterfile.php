@@ -58,11 +58,11 @@ class Masterfile extends CI_Controller {
         $this->load->view('template/footer');
     }
 
-    public function dateDiff($date_1 , $date_2){
+    public function dateDifference($date_1 , $date_2){
         $datetime2 = date_create($date_2);
         $datetime1 = date_create($date_1 );
         $interval = date_diff($datetime2, $datetime1);
-        return $interval->format('%a');
+        return $interval->format('%R%a');
     }
 
      /*public function inventory_balance($itemid){
@@ -187,15 +187,19 @@ class Masterfile extends CI_Controller {
             $data['borrow']=array();
         }
 
-        
         foreach($this->super_model->select_inner_join("receive_items","receive_details", "receive_items.expiration_date !='' ORDER BY expiration_date DESC","rd_id") AS $itms){
+            $pr_no=$this->super_model->select_column_where("receive_details", "pr_no", "rd_id", $itms->rd_id);
+            $item=$this->super_model->select_column_where("items", "item_name", "item_id", $itms->item_id);
+            $issuance_id = $this->super_model->select_column_join_where_order_limit("issuance_id", "issuance_head","issuance_details", "item_id='$itms->item_id' AND pr_no='$pr_no'","issuance_id","DESC","1");
+            $issue_pr = $this->super_model->select_column_where("issuance_head", "pr_no","issuance_id", $issuance_id);
+            $issue_item = $this->super_model->select_column_where("issuance_details", "item_id","is_id", $issuance_id);
             $now=date('Y-m-d');
-            $expiry=$this->dateDiff($itms->expiration_date , $now);
-            if($expiry<=90){
+            $expiry=$this->dateDifference($itms->expiration_date , $now);
+            if($expiry>=90 || $expiry>0 AND $pr_no!=$issue_pr AND $item!=$issue_item){
                 $data['expiry'][]=array(
                     'riid'=>$itms->ri_id,
-                    'pr_no'=>$this->super_model->select_column_where("receive_details", "pr_no", "rd_id", $itms->rd_id),
-                    'item'=>$this->super_model->select_column_where("items", "item_name", "item_id", $itms->item_id),
+                    'pr_no'=>$pr_no,
+                    'item'=>$item,
                     'brand'=>$this->super_model->select_column_where("brand", "brand_name", "brand_id", $itms->brand_id),
                     'catalog'=>$itms->catalog_no,
                     'received_qty'=>$itms->received_qty,
