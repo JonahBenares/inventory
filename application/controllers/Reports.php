@@ -5322,9 +5322,6 @@ class Reports extends CI_Controller {
                     'received_qty'=>$itms->received_qty,
                     'expiration_date'=>$itms->expiration_date,
                     'remaining_days'=>$remaining_days,
-
-
-
                 );
             } 
         } else {
@@ -5365,9 +5362,6 @@ class Reports extends CI_Controller {
                     'received_qty'=>$itms->received_qty,
                     'expiration_date'=>$itms->expiration_date,
                     'remaining_days'=>$remaining_days,
-
-
-
                 );
             } 
         } else {

@@ -192,10 +192,10 @@ class Masterfile extends CI_Controller {
             $item=$this->super_model->select_column_where("items", "item_name", "item_id", $itms->item_id);
             $issuance_id = $this->super_model->select_column_join_where_order_limit("issuance_id", "issuance_head","issuance_details", "item_id='$itms->item_id' AND pr_no='$pr_no'","issuance_id","DESC","1");
             $issue_pr = $this->super_model->select_column_where("issuance_head", "pr_no","issuance_id", $issuance_id);
-            $issue_item = $this->super_model->select_column_where("issuance_details", "item_id","is_id", $issuance_id);
+            $issue_item = $this->super_model->select_column_where("issuance_details", "item_id","is_id", $issuance_id); 
             $now=date('Y-m-d');
             $expiry=$this->dateDifference($itms->expiration_date , $now);
-            if($expiry>=90 || $expiry>0 AND $pr_no!=$issue_pr AND $item!=$issue_item){
+            if(($expiry>=90 || $expiry>0) AND ($pr_no!=$issue_pr || $item!=$issue_item)){
                 $data['expiry'][]=array(
                     'riid'=>$itms->ri_id,
                     'pr_no'=>$pr_no,
