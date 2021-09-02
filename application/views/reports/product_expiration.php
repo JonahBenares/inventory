@@ -70,13 +70,13 @@
 												<td align="center"><?php echo $e['bin']; ?></td>
 												<td align="center"><?php echo $e['receive_date']; ?></td>
 											</tr>
+											<?php } ?>
 										</tbody>
 									</table>
 									<table width="100%" id="prntby">
 						                <tr>
 						                    <td style="font-size:12px">Printed By: <?php echo $printed.' / '. date("Y-m-d"). ' / '. date("h:i:sa")?> </td>
 						                </tr>
-						                <?php } ?>
 						            </table> 
 								</div>
 							</div>
