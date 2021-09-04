@@ -357,7 +357,8 @@
 								<th align="center" style="">Item</th>
 								<th align="center" style="">PR</th>
 								<th align="center" style="">Brand</th>
-								<th align="center" style="">Qty</th>
+								<th align="center" style="">Received Qty</th>
+								<th align="center" style="">Remaining Qty</th>
 								<th align="center" style="">Catalog No.</th>
 								<th align="center" style="">Expiry</th>
 							</tr>
@@ -371,6 +372,7 @@
 								<td align="center"><?php echo $e['pr_no']; ?></td>
 								<td align="center"><?php echo $e['brand']; ?></td>
 								<td align="center"><?php echo $e['received_qty']; ?></td>
+								<td align="center"><?php echo $e['remaining_qty']; ?></td>
 								<td align="center"><?php echo $e['catalog']; ?></td>
 								<td align="center"><?php echo $e['expiration_date']; ?></td>						
 							</tr>
