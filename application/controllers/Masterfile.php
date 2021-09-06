@@ -187,18 +187,17 @@ class Masterfile extends CI_Controller {
             $data['borrow']=array();
         }
 
-        foreach($this->super_model->select_inner_join("receive_items","receive_details", "receive_items.expiration_date !='' ORDER BY expiration_date DESC","rd_id") AS $itms){
+        /*foreach($this->super_model->select_inner_join("receive_items","receive_details", "receive_items.expiration_date !='' ORDER BY expiration_date DESC","rd_id") AS $itms){
             $pr_no=$this->super_model->select_column_where("receive_details", "pr_no", "rd_id", $itms->rd_id);
             $item=$this->super_model->select_column_where("items", "item_name", "item_id", $itms->item_id);
-            $issuance_id = $this->super_model->select_column_join_where_order_limit("issuance_id", "issuance_head","issuance_details", "item_id='$itms->item_id' AND pr_no='$pr_no'","issuance_id","DESC","1");
-            $issue_pr = $this->super_model->select_column_where("issuance_head", "pr_no","issuance_id", $issuance_id);
-            $issue_item = $this->super_model->select_column_where("issuance_details", "item_id","is_id", $issuance_id); 
-            //$issue_qty = $this->super_model->select_column_where("issuance_details", "quantity","is_id", $issuance_id);
+            //$issuance_id = $this->super_model->select_column_join_where_order_limit("issuance_id", "issuance_head","issuance_details", "item_id='$itms->item_id' AND pr_no='$pr_no'","issuance_id","DESC","1");
+            //$issue_pr = $this->super_model->select_column_where("issuance_head", "pr_no","issuance_id", $issuance_id);
+            //$issue_item = $this->super_model->select_column_where("issuance_details", "item_id","is_id", $issuance_id); 
             $issue_qty= $this->super_model->select_sum_join("quantity","issuance_details","issuance_head", "item_id='$itms->item_id' AND pr_no='$pr_no'","issuance_id");
             $remaining_qty = ($itms->received_qty - $issue_qty);
             $now=date('Y-m-d');
             $expiry=$this->dateDifference($itms->expiration_date , $now);
-            if(($expiry>=90 || $expiry>0) AND ($pr_no!=$issue_pr || $item!=$issue_item || $itms->received_qty!=$issue_qty) AND ($remaining_qty!=0 || $remaining_qty>0)){
+            if($expiry>=90 || $expiry>0 || $remaining_qty>0){
                 $data['expiry'][]=array(
                     'riid'=>$itms->ri_id,
                     'pr_no'=>$pr_no,
@@ -214,7 +213,7 @@ class Masterfile extends CI_Controller {
             } else {
                 $data['expiry']=array();
             }
-        }
+        }*/
 
         $this->load->view('template/header');
         $this->load->view('template/sidebar',$this->dropdown);

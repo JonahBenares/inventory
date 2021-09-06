@@ -101,7 +101,7 @@ class Receive extends CI_Controller {
                     'shipping_fee'=>$items->shipping_fee,
                     'currency'=>$items->currency,
                     'remarks'=>$items->remarks,
-                    'expiration_date'=>$items->expiration_date,
+                    //'expiration_date'=>$items->expiration_date,
                     'total'=>$total,
                     'total_net_cost'=>$total_net_cost,
                     
@@ -334,7 +334,7 @@ class Receive extends CI_Controller {
                     'local_mnl'=>$items->local_mnl,
                     'shipping_fee'=>$items->shipping_fee,
                     'currency'=>$items->currency,
-                    'expiration_date'=>$items->expiration_date,
+                    //'expiration_date'=>$items->expiration_date,
                 );
             }
         }
@@ -412,7 +412,7 @@ class Receive extends CI_Controller {
                     'local_mnl'=>$rit->local_mnl,
                     'shipping_fee'=>$rit->shipping_fee,
                     'currency'=>$rit->currency,
-                    'expiration_date'=>$rit->expiration_date,
+                    //'expiration_date'=>$rit->expiration_date,
                 );
         }
     } else {
@@ -728,7 +728,7 @@ class Receive extends CI_Controller {
             'currency'=>$this->input->post('currency'),
             'item'=>$this->input->post('itemname'),
             'local_mnl'=>$this->input->post('local_mnl'),
-            'expiration_date'=>$this->input->post('expiration_date'),
+            //'expiration_date'=>$this->input->post('expiration_date'),
             'count'=>$this->input->post('count'),
             'total'=>$total,
             'total_net_cost'=>$total_net_cost,
@@ -849,7 +849,7 @@ class Receive extends CI_Controller {
                 'shipping_fee'=> $this->input->post('shipping_fee['.$a.']'),
                 'currency'=> $this->input->post('currency['.$a.']'),
                 'local_mnl'=> $this->input->post('local_mnl['.$a.']'),
-                'expiration_date'=> $this->input->post('expiration_date['.$a.']')
+                //'expiration_date'=> $this->input->post('expiration_date['.$a.']')
                 /*'inspected_by'=> $this->input->post('inspected_name['.$a.']')*/
             );
             //print_r($items);

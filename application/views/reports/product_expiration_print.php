@@ -36,7 +36,7 @@
 											<td style="width:" align="center"><strong>Product Name</strong></td>
 												<td style="width:50px" align="center"><strong>Remaining Days</strong></td>
 												<td style="width:50px" align="center"><strong>Expiration Date</strong></td>
-												<td style="width:50px" align="center"><strong>Qty</strong></td>
+												<td style="width:50px" align="center"><strong>Remaining Qty</strong></td>
 												<td style="width:50px" align="center"><strong>UOM</strong></td>
 												<td style="width:150px" align="center"><strong>PN/ Catalog Number</strong></td>
 												<td style="width:150px" align="center"><strong>Brand</strong></td>
@@ -49,12 +49,15 @@
 										</tr>
 									</thead>
 									<tbody>
-										<?php foreach($expiry AS $e){ ?>
+										<?php 
+											foreach($expiry AS $e){ 
+												if($e['remaining_qty']!=0){
+														?>
 										<tr>
 											<td align="center"><?php echo $e['item_name']; ?></td>
 												<td align="center" <?php echo (($e['remaining_days']<=0) ? " style='color:red;font-weight:900'" : " "); ?>><?php echo $e['remaining_days'] . " day/s"; ?></td>
 												<td align="center"><?php echo $e['expiration_date']; ?></td>
-												<td align="center"><?php echo $e['received_qty']; ?></td>
+												<td align="center"><?php echo $e['remaining_qty']; ?></td>
 												<td align="center"><?php echo $e['unit']; ?></td>
 												<td align="center"><?php echo $e['catalog_no']; ?></td>
 												<td align="center"><?php echo $e['brand']; ?></td>
@@ -65,7 +68,7 @@
 												<td align="center"><?php echo $e['bin']; ?></td>
 												<td align="center"><?php echo $e['receive_date']; ?></td>								
 										</tr>
-										<?php } ?>
+										<?php } }?>
 									</tbody>
 								</table>
 							</div>

@@ -5293,7 +5293,7 @@ class Reports extends CI_Controller {
         $this->load->view('template/footer');
     }
 
-    public function product_expiration(){
+    /*public function product_expiration(){
         $count=$this->super_model->select_count_join_inner("receive_items","receive_details", "receive_items.expiration_date !='' ORDER BY expiration_date DESC","rd_id");
         if($count!=0){
             foreach($this->super_model->select_inner_join("receive_items","receive_details", "receive_items.expiration_date !='' ORDER BY expiration_date DESC","rd_id") AS $itms){
@@ -5305,6 +5305,9 @@ class Reports extends CI_Controller {
                     $bin = $this->super_model->select_column_where('bin','bin_name','bin_id',$det->bin_id);
                     $unit = $this->super_model->select_column_where('uom','unit_name','unit_id',$det->unit_id);
             }
+            $pr_no=$this->super_model->select_column_where("receive_details", "pr_no", "rd_id", $itms->rd_id);
+            $issue_qty= $this->super_model->select_sum_join("quantity","issuance_details","issuance_head", "item_id='$itms->item_id' AND pr_no='$pr_no'","issuance_id");
+            $remaining_qty = ($itms->received_qty - $issue_qty);
                 $data['expiry'][]=array(
                     'riid'=>$itms->ri_id,
                     'brand'=>$this->super_model->select_column_where("brand", "brand_name", "brand_id", $itms->brand_id),
@@ -5319,7 +5322,7 @@ class Reports extends CI_Controller {
                     'location'=>$location,
                     'unit'=>$unit,
                     'catalog_no'=>$itms->catalog_no,
-                    'received_qty'=>$itms->received_qty,
+                    'remaining_qty'=>$remaining_qty,
                     'expiration_date'=>$itms->expiration_date,
                     'remaining_days'=>$remaining_days,
                 );
@@ -5345,6 +5348,9 @@ class Reports extends CI_Controller {
                     $bin = $this->super_model->select_column_where('bin','bin_name','bin_id',$det->bin_id);
                     $unit = $this->super_model->select_column_where('uom','unit_name','unit_id',$det->unit_id);
             }
+            $pr_no=$this->super_model->select_column_where("receive_details", "pr_no", "rd_id", $itms->rd_id);
+            $issue_qty= $this->super_model->select_sum_join("quantity","issuance_details","issuance_head", "item_id='$itms->item_id' AND pr_no='$pr_no'","issuance_id");
+            $remaining_qty = ($itms->received_qty - $issue_qty);
                 $data['expiry'][]=array(
                     'riid'=>$itms->ri_id,
                     'brand'=>$this->super_model->select_column_where("brand", "brand_name", "brand_id", $itms->brand_id),
@@ -5359,7 +5365,7 @@ class Reports extends CI_Controller {
                     'location'=>$location,
                     'unit'=>$unit,
                     'catalog_no'=>$itms->catalog_no,
-                    'received_qty'=>$itms->received_qty,
+                    'remaining_qty'=>$remaining_qty,
                     'expiration_date'=>$itms->expiration_date,
                     'remaining_days'=>$remaining_days,
                 );
@@ -5371,7 +5377,7 @@ class Reports extends CI_Controller {
         $this->load->view('template/sidebar',$this->dropdown);
         $this->load->view('reports/product_expiration_print',$data);
         $this->load->view('template/footer');
-    }
+    }*/
      
 }
 ?>

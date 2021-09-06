@@ -281,10 +281,10 @@
 									<p style="margin:0px"  for="">Shipping/U & Other Related Cost:</p>
 									<input class="form-control" name='shipping_fee' id='shipping_fee' onkeypress="return isNumberKey(this, event)" >
 								</div>
-								<div class="col-lg-2">
+								<!--<div class="col-lg-2">
 									<p style="margin:0px"  for=""><br>Expiry</p>
 									<input class="form-control" type="date" name='expiration_date' id='expiration_date' >
-								</div>
+								</div>-->
 								<div class="col-lg-2">
 									<p style="margin:0px"  for=""><br>Currency:</p>
 									<input class="form-control" name='currency' id='currency' >
@@ -340,7 +340,7 @@
 												<th class="tr-bottom" style="width: 40px;"><center>Total Net Cost</center></th>
 												<th class="tr-bottom" style="width: 40px;"><center>Remarks</center></th>
 												<th class="tr-bottom" style="width: 40px;"><center>Local/Manila</center></th>
-												<th class="tr-bottom" style="width: 40px;"><center>Expiry</center></th>
+												<!--<th class="tr-bottom" style="width: 40px;"><center>Expiry</center></th>-->
 												<th class="tr-bottom" style="width: 5px;"><center>Action</center></th>
 											</tr>
 											<?php 
@@ -369,7 +369,7 @@
 														<td><center><?php echo $ri['total_net_cost']; ?></center></td>
 														<td><center><?php echo $ri['remarks']; ?></center></td>
 														<td><center><?php echo $ri['local_mnl']; ?></center></td>
-														<td><center><?php echo $ri['expiration_date']; ?></center></td>
+														<!--<td><center><?php echo $ri['expiration_date']; ?></center></td>-->
 														<td><center>Expiry</center></td>
 														<td><center> <a class="btn btn-danger table-remove btn-xs" onclick="removerecitem('<?php echo $ri['riid']; ?>','<?php echo base_url(); ?>')"><span class=" fa fa-times"></span></a></center></td>
 													</tr>

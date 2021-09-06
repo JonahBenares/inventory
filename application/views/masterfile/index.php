@@ -341,7 +341,7 @@
 		</div>
 		<?php } ?>
 
-		<?php if(!empty($expiry)){ ?>
+		<!--<?php if(!empty($expiry)){ ?>
 		<div class="panel panel-default animated fadeInRight " style="border: 1px solid #ffcbaa;">
 			<div class="panel-body">
 				<center>
@@ -391,7 +391,7 @@
 			</div>
 		</div>
 		<?php } ?>
-	</div>
+	</div>-->
 	
 	
 	<script>

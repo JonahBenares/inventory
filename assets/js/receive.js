@@ -267,7 +267,7 @@ function add_item(){
     var remarks =$('#remarks').val();
     var shipping_fee =parseFloat($('#shipping_fee').val());
     var currency =$('#currency').val();
-    var expiration_date =$('#expiration_date').val();
+    //var expiration_date =$('#expiration_date').val();
     if ($("input:radio[name=local_mnl]:checked").val() == '1') {
         var local_mnl = '1';
     } 
@@ -301,7 +301,7 @@ function add_item(){
     	  $.ajax({
     	 		type: "POST",
     	 		url:redirect,
-    	 		data: "supplier="+supplier+"&supplierid="+supplierid+"&suppliername="+suppliername+"&itemname="+itemname+"&itemid="+itemid+"&brand="+brand+"&brandid="+brandid+"&brandname="+brandname+"&serial="+serial+"&serialid="+serialid+"&unitcost="+unitcost+"&catno="+catno+"&unit="+unit+"&expqty="+expqty+"&recqty="+recqty+"&remarks="+remarks+"&item="+item+"&count="+count+"&local_mnl="+local_mnl+"&expiration_date="+expiration_date+"&shipping_fee="+shipping_fee+"&currency="+currency,
+    	 		data: "supplier="+supplier+"&supplierid="+supplierid+"&suppliername="+suppliername+"&itemname="+itemname+"&itemid="+itemid+"&brand="+brand+"&brandid="+brandid+"&brandname="+brandname+"&serial="+serial+"&serialid="+serialid+"&unitcost="+unitcost+"&catno="+catno+"&unit="+unit+"&expqty="+expqty+"&recqty="+recqty+"&remarks="+remarks+"&item="+item+"&count="+count+"&local_mnl="+local_mnl+"&shipping_fee="+shipping_fee+"&currency="+currency,
               /*  beforeSend: function(){
                     document.getElementById('alerto').innerHTML='<b>Please wait, Loading Data...</b>'; 
                     $("#additem").hide(); 
@@ -328,7 +328,7 @@ function add_item(){
                     document.getElementById("supplier_name").value = '';
                     document.getElementById("item_id").value = '';
                     document.getElementById("unit").value = '';
-                    document.getElementById("expiration_date").value = '';
+                    //document.getElementById("expiration_date").value = '';
                     document.getElementById("shipping_fee").value = '';
                     document.getElementById("currency").value = '';
                     document.getElementById("exp_qty").value = '';
