@@ -3,6 +3,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
 <script src="<?php echo base_url(); ?>assets/js/jquery.js"></script>
 <script src="<?php echo base_url(); ?>assets/js/request.js"></script>
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/Styles/bootstrap-select.min.css" />
 <style type="text/css">
 	.label-info {
     background-color: #5bc0de;
@@ -44,7 +45,7 @@
 						<?php } ?>
 					</div>
 				</div>
-				<div class="modal fade" id="updatePR" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+				<div class="modal fade" id="updatePR" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
 					<div class="modal-dialog" role="document">
 						<div class="modal-content">
 							<div class="modal-header">
