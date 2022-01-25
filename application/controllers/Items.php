@@ -1107,11 +1107,19 @@ class Items extends CI_Controller {
              $q=" WHERE " .$sql . " " . $query2;
              $sql_query = "SELECT i.*, ri.local_mnl FROM items i LEFT JOIN receive_items ri ON i.item_id = ri.item_id LEFT JOIN receive_head rh ON ri.receive_id = rh.receive_id LEFT JOIN restock_details rd ON rd.item_id = i.item_id LEFT JOIN restock_head r ON rd.rhead_id = r.rhead_id " .$q." GROUP BY i.item_id ORDER BY i.original_pn ASC";
 
-             $sql_begbal = "SELECT i.* FROM supplier_items si INNER JOIN items i ON i.item_id = si.item_id WHERE si.catalog_no = 'begbal' AND si.item_id NOT IN (SELECT item_id FROM receive_items) AND si.item_id NOT IN (SELECT item_id FROM restock_details) AND ".$sql1;
+               if(!empty($sql1)){
+                 $sql_begbal = "SELECT i.* FROM supplier_items si INNER JOIN items i ON i.item_id = si.item_id WHERE si.catalog_no = 'begbal' AND si.item_id NOT IN (SELECT item_id FROM receive_items) AND si.item_id NOT IN (SELECT item_id FROM restock_details) AND ".$sql1;
 
-             $sql_notransact = "SELECT * FROM items WHERE item_id NOT IN (SELECT item_id FROM receive_items) AND item_id NOT IN (SELECT item_id FROM restock_details) AND item_id NOT IN (SELECT item_id FROM supplier_items) AND ".$sql1;
+                 $sql_notransact = "SELECT * FROM items WHERE item_id NOT IN (SELECT item_id FROM receive_items) AND item_id NOT IN (SELECT item_id FROM restock_details) AND item_id NOT IN (SELECT item_id FROM supplier_items) AND ".$sql1;
 
-             $sql_notransact_wsi = "SELECT * FROM items i INNER JOIN supplier_items si ON i.item_id = si.item_id WHERE i.item_id NOT IN (SELECT item_id FROM receive_items) AND i.item_id NOT IN (SELECT item_id FROM restock_details) AND si.catalog_no !='begbal' AND ".$sql1." GROUP BY si.item_id";
+                 $sql_notransact_wsi = "SELECT * FROM items i INNER JOIN supplier_items si ON i.item_id = si.item_id WHERE i.item_id NOT IN (SELECT item_id FROM receive_items) AND i.item_id NOT IN (SELECT item_id FROM restock_details) AND si.catalog_no !='begbal' AND ".$sql1." GROUP BY si.item_id";
+            } else {
+                      $sql_begbal = "SELECT i.* FROM supplier_items si INNER JOIN items i ON i.item_id = si.item_id WHERE si.catalog_no = 'begbal' AND si.item_id NOT IN (SELECT item_id FROM receive_items) AND si.item_id NOT IN (SELECT item_id FROM restock_details)";
+
+                 $sql_notransact = "SELECT * FROM items WHERE item_id NOT IN (SELECT item_id FROM receive_items) AND item_id NOT IN (SELECT item_id FROM restock_details) AND item_id NOT IN (SELECT item_id FROM supplier_items)";
+
+                 $sql_notransact_wsi = "SELECT * FROM items i INNER JOIN supplier_items si ON i.item_id = si.item_id WHERE i.item_id NOT IN (SELECT item_id FROM receive_items) AND i.item_id NOT IN (SELECT item_id FROM restock_details) AND si.catalog_no !='begbal' GROUP BY si.item_id";
+            }
         } else {
            // $q=$sql . " " . $query2;
              $sql_query = "SELECT * from items";
