@@ -1740,25 +1740,25 @@ class Reports extends CI_Controller {
         if($id!='null'){
             $sql.= " item_id = '$id' AND";
         }else {
-            $sql.= " item_id = '0' AND";
+            $sql.= "";
         }
 
         if($sup!='null'){
             $sql.= " supplier_id = '$sup' AND";
         }else {
-            $sql.= " supplier_id = '0' AND";
+            $sql.= "";
         }
 
         if($cat!='null'){
             $sql.= " catalog_no = '$cat' AND";
         }else {
-            $sql.= " catalog_no = '' AND";
+            $sql.= "";
         }
 
         if($brand!='null'){
             $sql.= " brand_id = '$brand' AND";
         }else {
-            $sql.= " brand_id = '0' AND";
+            $sql.= "";
         }
 
         $query=substr($sql,0,-3);
