@@ -1737,55 +1737,28 @@ class Reports extends CI_Controller {
         $data['brand']=$this->uri->segment(6);
         $data['itemdesc'] = $this->super_model->select_column_where("items", "item_name", "item_id", $id);
         $sql="";
+        if($id!='null'){
+            $sql.= " item_id = '$id' AND";
+        }else {
+            $sql.= "";
+        }
 
-        if($id!='null' && $sup=='null' && $cat=='null' && $brand=='null'){
-            if($id!='null'){
-                $sql.= " item_id = '$id' AND";
-            }else {
-                $sql.= "";
-            }
+        if($sup!='null'){
+            $sql.= " supplier_id = '$sup' AND";
+        }else {
+            $sql.= "";
+        }
 
-            if($sup!='null'){
-                $sql.= " supplier_id = '$sup' AND";
-            }else {
-                $sql.= "";
-            }
+        if($cat!='null'){
+            $sql.= " catalog_no = '$cat' AND";
+        }else {
+            $sql.= "";
+        }
 
-            if($cat!='null'){
-                $sql.= " catalog_no = '$cat' AND";
-            }else {
-                $sql.= "";
-            }
-
-            if($brand!='null'){
-                $sql.= " brand_id = '$brand' AND";
-            }else {
-                $sql.= "";
-            }
-        }else{
-            if($id!='null'){
-                $sql.= " item_id = '$id' AND";
-            }else {
-                $sql.= " item_id = '0' AND";
-            }
-
-            if($sup!='null'){
-                $sql.= " supplier_id = '$sup' AND";
-            }else {
-                $sql.= " supplier_id = '0' AND";
-            }
-
-            if($cat!='null'){
-                $sql.= " catalog_no = '$cat' AND";
-            }else {
-                $sql.= " catalog_no = '' AND";
-            }
-
-            if($brand!='null'){
-                $sql.= " brand_id = '$brand' AND";
-            }else {
-                $sql.= " brand_id = '0' AND";
-            }
+        if($brand!='null'){
+            $sql.= " brand_id = '$brand' AND";
+        }else {
+            $sql.= "";
         }
 
         $query=substr($sql,0,-3);
