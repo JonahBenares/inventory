@@ -264,7 +264,7 @@ function add_item(){
     var unit =$('#unit').val();
     var expqty =parseFloat($('#exp_qty').val());
     var recqty =parseFloat($('#rec_qty').val());
-    var remarks =$('#remarks').val();
+    var remarks =encodeURIComponent($('#remarks').val());
     var shipping_fee =parseFloat($('#shipping_fee').val());
     var currency =$('#currency').val();
     //var expiration_date =$('#expiration_date').val();
