@@ -1,6 +1,6 @@
-<script src="<?php echo base_url(); ?>assets/js/jquery.js"></script>
+<!-- <script src="<?php echo base_url(); ?>assets/js/jquery.js"></script> -->
 <script src="<?php echo base_url(); ?>assets/js/item.js"></script>
-<script src="<?php echo base_url(); ?>assets/jquery.min.js"></script>
+<!-- <script src="<?php echo base_url(); ?>assets/jquery.min.js"></script> -->
 
 <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
 <div class="row">
@@ -17,12 +17,12 @@
 	</div>
 </div><!--/.row-->
 
-<div id="loader">
+<!-- <div id="loader">
   <figure class="one"></figure>
   <figure class="two">loading</figure>
-</div>
-
-<div id="itemslist" style="display: none">	
+</div> -->
+<!-- 
+<div id="itemslist" >	 -->
 
 	<div class="row">
 		<div class="col-md-12">
@@ -90,7 +90,7 @@
 								
 								foreach($items AS $itm) { ?>
 								<tr>
-									<td <?php if ($itm['damage'] == 1) { ?> style="border-left: 5px solid red;" <?php } ?> >
+									<td>
 										<?php echo $itm['original_pn'];  ?>
 										</td>
 									<td><?php echo $itm['item_name']?></td>
@@ -298,4 +298,4 @@
 				</div>
 			</div>
 		</div>
-	</div>
+<!-- 	</div> -->

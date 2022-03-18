@@ -1,5 +1,5 @@
 		<div class="col-sm-12">
-				<p class="back-link">Warehouse Inventory System || <a href="http://www.cenpripower.com">CENPRI</a></p>
+				<p class="back-link">Warehouse Inventory System || <a href="#">CENPRI</a></p>
 			</div>
 		</div><!--/.row-->
 	</div>	<!--/.main-->
@@ -16,10 +16,10 @@
 	</script>
 	<script src="<?php echo base_url(); ?>assets/js/jquery-1.11.1.min.js"></script>
 	<script src="<?php echo base_url(); ?>assets/js/bootstrap.min.js"></script>
-	<script src="<?php echo base_url(); ?>assets/js/chart.min.js"></script>
-	<script src="<?php echo base_url(); ?>assets/js/chart-data.js"></script>
-	<script src="<?php echo base_url(); ?>assets/js/easypiechart.js"></script>
-	<script src="<?php echo base_url(); ?>assets/js/easypiechart-data.js"></script>
+<!-- 	<script src="<?php echo base_url(); ?>assets/js/chart.min.js"></script>
+	<script src="<?php echo base_url(); ?>assets/js/chart-data.js"></script> -->
+	<!-- <script src="<?php echo base_url(); ?>assets/js/easypiechart.js"></script>
+	<script src="<?php echo base_url(); ?>assets/js/easypiechart-data.js"></script> -->
 	<script src="<?php echo base_url(); ?>assets/js/bootstrap-datepicker.js"></script>
 	<script src="<?php echo base_url(); ?>assets/js/custom.js"></script>
 	<script src="<?php echo base_url(); ?>assets/js/jquery.dataTables.min.js"></script>

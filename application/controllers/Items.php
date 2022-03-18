@@ -103,7 +103,7 @@ class Items extends CI_Controller {
         $row=$this->super_model->count_rows("items");
         if($row!=0){
             foreach($this->super_model->select_all('items') AS $itm){
-                $bin = $this->super_model->select_column_where('bin', 'bin_name', 'bin_id', $itm->bin_id);
+            /*    $bin = $this->super_model->select_column_where('bin', 'bin_name', 'bin_id', $itm->bin_id);*/
                 $rack = $this->super_model->select_column_where('rack', 'rack_name', 'rack_id', $itm->rack_id);
                 $warehouse = $this->super_model->select_column_where('warehouse', 'warehouse_name', 
                     'warehouse_id', $itm->warehouse_id);
@@ -117,17 +117,17 @@ class Items extends CI_Controller {
                     'item_id'=>$itm->item_id,
                     'original_pn'=>$itm->original_pn,
                     'item_name'=>$itm->item_name,
-                    'category'=>$this->super_model->select_column_where('item_categories', 'cat_name', 
+               /*     'category'=>$this->super_model->select_column_where('item_categories', 'cat_name', 
                     'cat_id', $itm->category_id),
                     'subcategory'=>$this->super_model->select_column_where('item_subcat', 'subcat_name', 
-                    'subcat_id', $itm->subcat_id),
+                    'subcat_id', $itm->subcat_id),*/
                     'quantity'=>$totalqty,
-                    'bin'=>$bin,
+                 /*   'bin'=>$bin,*/
                     'rack'=>$rack,
-                    'warehouse'=>$warehouse,
+               /*     'warehouse'=>$warehouse,*/
                     'location'=>$location,                
-                    'minimum'=>$itm->min_qty,
-                    'damage'=>$itm->damage,
+               /*     'minimum'=>$itm->min_qty,*/
+                 /*   'damage'=>$itm->damage,*/
                     'unit_price'=>$unit_price,
                     'uom'=>$unit
                 );
