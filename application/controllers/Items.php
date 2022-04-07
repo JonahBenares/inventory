@@ -1140,8 +1140,22 @@ class Items extends CI_Controller {
             $location =$this->super_model->select_column_where("location","location_name", "location_id", $items->location_id);
             $bin =$this->super_model->select_column_where("bin","bin_name", "bin_id", $items->bin_id);
             $nominal=$this->super_model->select_ave("supplier_items", "item_cost", "item_id", $items->item_id);
+
+
             $unit_price = $this->super_model->select_column_custom_where('receive_items', 'item_cost', "item_id='$items->item_id' ORDER BY receive_id DESC");
-             $local_mnl = $this->super_model->select_column_custom_where('receive_items', 'local_mnl', "item_id='$items->item_id'");
+            if($unit_price == 0){
+                $count_si = $this->super_model->count_custom_where("supplier_items", "item_id = '$items->item_id' AND item_cost != '0'");
+                if($count_si!=0){
+                    $up = $this->super_model->select_column_custom_where("supplier_items", "item_cost", "item_id = '$items->item_id' AND item_cost != '0'");
+                } else {
+                    $up=0;
+                }
+
+            } else {
+                $up = $unit_price;
+            }
+            $local_mnl = $this->super_model->select_column_custom_where('receive_items', 'local_mnl', "item_id='$items->item_id'");
+            
             if($local_mnl=='1'){
                 $sup = 'Local';
             } else if($local_mnl=='2'){
@@ -1157,7 +1171,7 @@ class Items extends CI_Controller {
                 $objPHPExcel->setActiveSheetIndex(0)->setCellValue('G'.$num, $items->item_name);
                 $objPHPExcel->setActiveSheetIndex(0)->setCellValue('L'.$num, $nominal);
                 $objPHPExcel->setActiveSheetIndex(0)->setCellValue('N'.$num, $totalqty);
-                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('P'.$num, $unit_price);
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('P'.$num, $up);
                 $objPHPExcel->setActiveSheetIndex(0)->setCellValue('R'.$num, $unit);
                 $objPHPExcel->setActiveSheetIndex(0)->setCellValue('T'.$num, $location);
                 $objPHPExcel->setActiveSheetIndex(0)->setCellValue('V'.$num, $wh);
@@ -1189,7 +1203,7 @@ class Items extends CI_Controller {
                 $objPHPExcel->setActiveSheetIndex(0)->setCellValue('G'.$num, $items->item_name);
                 $objPHPExcel->setActiveSheetIndex(0)->setCellValue('L'.$num, $nominal);
                 $objPHPExcel->setActiveSheetIndex(0)->setCellValue('N'.$num, $totalqty);
-                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('P'.$num, $unit_price);
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('P'.$num, $up);
                 $objPHPExcel->setActiveSheetIndex(0)->setCellValue('R'.$num, $unit);
                 $objPHPExcel->setActiveSheetIndex(0)->setCellValue('T'.$num, $location);
                 $objPHPExcel->setActiveSheetIndex(0)->setCellValue('V'.$num, $wh);
@@ -1244,7 +1258,7 @@ class Items extends CI_Controller {
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue('G'.$num, $begbal->item_name);
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue('L'.$num, $nominal);
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue('N'.$num, $totalqty);
-                    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('P'.$num, $unit_price);
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('P'.$num, $up);
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue('R'.$num, $unit);
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue('T'.$num, $location);
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue('V'.$num, $wh);
@@ -1276,7 +1290,7 @@ class Items extends CI_Controller {
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue('G'.$num, $begbal->item_name);
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue('L'.$num, $nominal);
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue('N'.$num, $totalqty);
-                    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('P'.$num, $unit_price);
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('P'.$num, $up);
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue('R'.$num, $unit);
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue('T'.$num, $location);
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue('V'.$num, $wh);
@@ -1332,7 +1346,7 @@ class Items extends CI_Controller {
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue('G'.$num, $not->item_name);
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue('L'.$num, $nominal);
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue('N'.$num, $totalqty);
-                    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('P'.$num, $unit_price);
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('P'.$num, $up);
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue('R'.$num, $unit);
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue('T'.$num, $location);
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue('V'.$num, $wh);
@@ -1364,7 +1378,7 @@ class Items extends CI_Controller {
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue('G'.$num, $not->item_name);
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue('L'.$num, $nominal);
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue('N'.$num, $totalqty);
-                    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('P'.$num, $unit_price);
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('P'.$num, $up);
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue('R'.$num, $unit);
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue('T'.$num, $location);
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue('V'.$num, $wh);
@@ -1420,7 +1434,7 @@ class Items extends CI_Controller {
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue('G'.$num, $si->item_name);
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue('L'.$num, $nominal);
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue('N'.$num, $totalqty);
-                    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('P'.$num, $unit_price);
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('P'.$num, $up);
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue('R'.$num, $unit);
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue('T'.$num, $location);
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue('V'.$num, $wh);
@@ -1452,7 +1466,7 @@ class Items extends CI_Controller {
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue('G'.$num, $si->item_name);
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue('L'.$num, $nominal);
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue('N'.$num, $totalqty);
-                    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('P'.$num, $unit_price);
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('P'.$num, $up);
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue('R'.$num, $unit);
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue('T'.$num, $location);
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue('V'.$num, $wh);
