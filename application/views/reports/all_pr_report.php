@@ -32,7 +32,7 @@
 								<table width="100%">
 									<tr>
 										<td width="15%"><p class="pull-right">Search PR:</p></td>
-										<td width="60%">
+										<td width="30%">
 											<!-- <input type="text" name="pr" id="pr" class="form-control" autocomplete='off'>
 											<span id="suggestion-pr"></span> -->
 											<select name="pr" id='pr' class="form-control select2" onchange="choosePRS()" style="margin:4px;width:100%">
@@ -41,8 +41,21 @@
 												<option value = "<?php echo $prs->pr_no;?>"><?php echo $prs->pr_no;?></option>
 												<?php } ?>
 											</select>
+
 											<br>
 											<input type="hidden" name="prid" id="prid">
+										</td>
+										<td width="30%">
+											<!-- <input type="text" name="pr" id="pr" class="form-control" autocomplete='off'>
+											<span id="suggestion-pr"></span> -->
+											<select name="department" id='department' class="form-control select2" style="margin:4px;width:100%">
+												<option value = "">-Choose Department-</option>
+												<?php foreach($department AS $d){ ?>
+												<option value = "<?php echo $d->department_id;?>"><?php echo $d->department_name;?></option>
+												<?php } ?>
+											</select>
+											
+											<br>
 										</td>
 										<td align="center"><div id='alrt' style="font-weight:bold"></div></td>
 										<td>
@@ -60,7 +73,8 @@
 							<div id="printableArea">
 								<p class="pname"><?php echo $pr_disp; ?><button id="printReport" class="btn btn-md btn-primary pull-right " onclick="printDiv('printableArea')">Print</button></p>
 								<p class="nomarg"><strong>End-Use: <?php echo $enduse; ?></strong></p>
-								<p ><strong>Purpose: <?php echo $purpose; ?></strong> </p>
+								<p class="nomarg"><strong>Purpose: <?php echo $purpose; ?></strong> </p>
+								<p ><strong>Department: <?php echo $department_name; ?></strong> </p>
 								<table class="table table-hover table-bordered">
 									<thead>
 										<tr>

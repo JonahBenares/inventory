@@ -160,6 +160,7 @@ function choosePRS(){
     var loc= document.getElementById("baseurl").value;
     var redirect = loc+'index.php/reports/getPRinformation';
     var prno = document.getElementById("pr").value;
+    var department_id = document.getElementById("department").value;
     document.getElementById('alrt').innerHTML='<b>Please wait, Loading data...</b>'; 
     $("#submit").hide(); 
     setTimeout(function() {
@@ -170,7 +171,7 @@ function choosePRS(){
     $.ajax({
         type: 'POST',
         url: redirect,
-        data: 'pr='+prno,
+        data: 'pr='+prno+'&department_id='+department_id,
         dataType: 'json',
         success: function(response){
         	$("#prid").val(response.receive_id);

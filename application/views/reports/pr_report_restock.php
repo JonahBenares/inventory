@@ -26,8 +26,8 @@
 					<div class="panel-body">
 						<div class="canvas-wrapper">
 							<form method="POST" action ="<?php echo base_url();?>index.php/reports/generatePrRestock">
-								<div class="col-lg-3"> <h5 class="pull-right">Enter PR:</h5> </div>
-								<div class="col-lg-5">
+								<div class="col-lg-2"> <h5 class="pull-right">Enter PR:</h5> </div>
+								<div class="col-lg-3">
 									<!-- <input type="text" name="pr" id="pr" class="form-control" autocomplete='off'>
 									<span id="suggestion-pr"></span> -->
 									<select name="pr" id='pr' class="form-control select2" onchange="choosePRS()" style="margin:4px;width:100%">
@@ -37,8 +37,18 @@
 										<?php } ?>
 									</select>
 								</div>
+								<div class="col-lg-3">
+									<!-- <input type="text" name="pr" id="pr" class="form-control" autocomplete='off'>
+									<span id="suggestion-pr"></span> -->
+									<select name="department" id='department' class="form-control select2" onchange="choosePRS()" style="margin:4px;width:100%">
+										<option value = "">-Choose Department-</option>
+										<?php foreach($department AS $d){ ?>
+										<option value = "<?php echo $d->department_id;?>"><?php echo $d->department_name;?></option>
+										<?php } ?>
+									</select>
+								</div>
 								<div id='alrt' style="font-weight:bold;"></div>
-								<div class="col-lg-4"><input type="submit" class="btn btn-warning" id="submit" name="search_pr" Value="Find"></div>
+								<div class="col-lg-3"><input type="submit" class="btn btn-warning" id="submit" name="search_pr" Value="Find"></div>
 								<input type="hidden" name="baseurl" id="baseurl" value="<?php echo base_url(); ?>">
 								<input type="hidden" name="prid" id="prid">
 							</form>

@@ -31,16 +31,26 @@
 								<table width="100%">
 									<tr>
 										<td width="15%"><p class="pull-right">Search Item:</p></td>
-										<td>
+										<td width="30%">
 											<!-- <input type="text" name="item" id="item" class="form-control" autocomplete='off'>
 											<span id="suggestion-item"></span> -->
 											<select name="item" id='item' class="form-control select2" onchange="chooseItem()">
-												<option value = ""></option>
+												<option value = "">--Select Item--</option>
 												<?php foreach($item_list AS $itm){ ?>
 												<option value = "<?php echo $itm->item_id;?>"><?php echo $itm->original_pn." - ".$itm->item_name;?></option>
 												<?php } ?>
 											</select>
 											<input type="hidden" name="item_id" id="item_id">
+										</td>
+										<td width="30%">
+											<!-- <input type="text" name="item" id="item" class="form-control" autocomplete='off'>
+											<span id="suggestion-item"></span> -->
+											<select name="department" id='department' class="form-control select2">
+												<option value = "">--Select Department--</option>
+												<?php foreach($department AS $d){ ?>
+												<option value = "<?php echo $d->department_id;?>"><?php echo $d->department_name;?></option>
+												<?php } ?>
+											</select>
 										</td>
 										<td align="center"><div id='alrt' style="font-weight:bold"></div></td>
 										<td>

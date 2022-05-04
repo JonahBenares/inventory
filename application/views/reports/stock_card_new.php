@@ -101,6 +101,21 @@ if(!empty($stockcard)){
 										</td>
 									</tr>
 									<tr>
+										<td><p>Department:</p></td>
+										<td>
+											<!-- <input type="text" class="form-control" name="supplier" id = "supplier" autocomplete="off">
+											<span id="suggestion-supplier"></span> -->
+											<select name="department" id='department' style="width:80%" class="form-control select2">
+												<option value = ""></option>
+												<?php foreach($department AS $d){ ?>
+												<option value = "<?php echo $d->department_id;?>"><?php echo $d->department_name;?></option>
+												<?php } ?>
+											</select>
+										</td>
+										<td></td>
+										<td></td>
+									</tr>
+									<tr>
 										<td colspan="5" align="center"><div id='alrt' style="font-weight:bold"></div></td>
 									</tr>
 								</table>
@@ -145,6 +160,7 @@ if(!empty($stockcard)){
 											<th style="text-align: center" width="30%">Supplier</th>
 											<th style="text-align: center" width="16%">Catalog No.</th>
 											<th style="text-align: center" width="16%">Brand</th>
+											<th style="text-align: center" width="16%">Department</th>
 											<th style="text-align: center" width="6%">Total Unit Cost</th>
 											<th style="text-align: center" width="0%">Method</th>
 											<th style="text-align: center" width="0%">Quantity</th>
@@ -174,6 +190,7 @@ if(!empty($stockcard)){
 												<td><?php echo $stockcard[$x]['supplier']; ?></td>
 												<td><?php echo $stockcard[$x]['catalog_no']; ?></td>
 												<td><?php echo $stockcard[$x]['brand']; ?></td>
+												<td><?php echo $stockcard[$x]['department']; ?></td>
 												<td><?php echo number_format($stockcard[$x]['total_cost'],2); ?></td>
 												<td><?php echo $stockcard[$x]['method']; ?></td>
 												<td><?php echo (($stockcard[$x]['method']== 'Issuance') ? "-" : "") . $stockcard[$x]['quantity']; ?></td>

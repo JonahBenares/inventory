@@ -36,16 +36,16 @@
 								<table width="100%">
 									<tr>
 										<td width="10%">Search Item:</td>
-										<td width="10%">
+										<td width="3%">
 											From:
 											<input type="date" class="form-control" name="from">
 										</td>
-										<td width="10%">
+										<td width="3%">
 											To:
 											<input type="date" class="form-control" name="to">
 										</td>
-										<td width="">
-											<br>
+										<td width="10%">
+											Category:
 											<select name="category" class="form-control" id="category" onChange="chooseCategory();">
 												<option value = "" selected="">--Select Category-</option>
 												<?php foreach($category AS $cat){ ?>
@@ -53,8 +53,8 @@
 												<?php } ?>
 											</select>
 										</td>
-										<td width="">
-											<br>
+										<td width="10%">
+											Subcatergory:
 											<select name="subcat" class="form-control" id="subcat">
 												<option value = "" selected="">--Select Sub Category-</option>
 												<?php foreach($subcat AS $sub){ ?>
@@ -62,7 +62,16 @@
 												<?php } ?>
 											</select>
 										</td>
-										<td width="5%">
+										<td width="10%">
+											Department:
+											<select name="department" class="form-control" id="department">
+												<option value = "">--Select Department-</option>
+												<?php foreach($department AS $d){ ?>
+													<option value="<?php echo $d->department_id; ?>"><?php echo $d->department_name; ?></option>
+												<?php } ?>
+											</select>
+										</td>
+										<td width="2%">
 											<br><!-- 
 											<input type="hidden" name="baseurl" id="baseurl" value="<?php echo base_url(); ?>"> -->
 											<input type="submit" name="search_inventory" value='Generate' class="btn btn-warning" >

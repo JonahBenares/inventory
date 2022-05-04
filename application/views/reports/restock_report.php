@@ -99,6 +99,18 @@
 										</td>
 										<td>
 											<br>
+											<select name="department" class="form-control select2">
+												<option value="" selected="">-Department-</option>
+													<?php foreach($department AS $d){ ?>
+													<option value="<?php echo $d->department_id; ?>"><?php echo $d->department_name; ?></option>
+												<?php } ?>
+											</select>
+										</td>
+									</tr>
+									<tr>
+										<td width='10%'></td>
+										<td colspan="5">
+											<br>
 											<input type="submit" name="search_inventory" value='Generate' class="btn btn-warning btn-block" >
 										</td>
 									</tr>		
@@ -106,8 +118,8 @@
 							</form>
 							<br>
 							<?php if(!empty($restock)){ ?>
-							<a href = "<?php echo base_url(); ?>index.php/reports/export_restock/<?php echo $from;?>/<?php echo $to;?>/<?php echo $catt1;?>/<?php echo $subcat2;?>/<?php echo $item1;?>/<?php echo $enduse1;?>/<?php echo $purpose1;?>/<?php echo $pr_no1;?>" class = "btn btn-primary pull-right">Export to Excel</a>
-							<a href="<?php echo base_url(); ?>index.php/reports/restock_report_print/<?php echo $from;?>/<?php echo $to;?>/<?php echo $catt1;?>/<?php echo $subcat2;?>/<?php echo $item1;?>/<?php echo $enduse1;?>/<?php echo $purpose1;?>/<?php echo $pr_no1;?>" class="btn btn-info pull-right "><span  class="fa fa-print"></span></a>
+							<a href = "<?php echo base_url(); ?>index.php/reports/export_restock/<?php echo $from;?>/<?php echo $to;?>/<?php echo $catt1;?>/<?php echo $subcat2;?>/<?php echo $item1;?>/<?php echo $enduse1;?>/<?php echo $purpose1;?>/<?php echo $pr_no1;?>/<?php echo $department_id;?>" class = "btn btn-primary pull-right">Export to Excel</a>
+							<a href="<?php echo base_url(); ?>index.php/reports/restock_report_print/<?php echo $from;?>/<?php echo $to;?>/<?php echo $catt1;?>/<?php echo $subcat2;?>/<?php echo $item1;?>/<?php echo $enduse1;?>/<?php echo $purpose1;?>/<?php echo $pr_no1;?>/<?php echo $department_id;?>" class="btn btn-info pull-right "><span  class="fa fa-print"></span></a>
 							<br>
 							<div id="printableArea">
 								<p class="pname"><?php echo $c; ?> - <small class="main_cat"><?php echo $s; ?></small></p>

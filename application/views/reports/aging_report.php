@@ -48,21 +48,35 @@
 				<div class="panel-body">
 					<div class="canvas-wrapper">						
 						<div class="col-lg-12">
-							<div class="col-lg-3">
+							<!-- <div class="col-lg-6"> -->
 								<form method = "POST">
-									<select class="form-control animated rubberBand" onchange="get_age()" id = "age">
-										<option value = "">--Select Range of Age--</option>
-										<option value = "60">1-60</option>
-										<option value = "120">61-120</option>
-										<option value = "180">121-180</option>
-										<option value = "360">181-360</option>
-										<option value = "361">360+</option>
-									</select>
+									<div class="col-lg-2">
+										<select class="form-control animated rubberBand" id = "age">
+											<option value = "">--Select Range of Age--</option>
+											<option value = "60">1-60</option>
+											<option value = "120">61-120</option>
+											<option value = "180">121-180</option>
+											<option value = "360">181-360</option>
+											<option value = "361">360+</option>
+										</select>
+									</div>
+									<div class="col-lg-2">
+										<select class="form-control animated rubberBand" id = "department_id">
+											<option value = "">--Select Department--</option>
+											<?php foreach($department AS $d){ ?>
+											<option value = "<?php echo $d->department_id; ?>"><?php echo $d->department_name; ?></option>
+											<?php } ?>
+										</select>
+									</div>
+									<div class="col-lg-1">
+										<input type="button" name="submit" class="btn btn-primary" id="submit" value="Filter" onclick="get_age();">
+									</div>
 								</form>
-							</div>
+							<!-- </div> -->
 							<?php if(!empty($days)){ ?>
-							<div class = "col-lg-4" style = "top:8px">	
+							<div class = "col-lg-5" style = "top:8px">	
 								<strong>Range of Age:</strong> <?php echo  $days; ?>
+								<strong>Department:</strong> <?php echo  $department_name_disp; ?>
 								<a href='<?php echo base_url(); ?>index.php/reports/aging_report' class=' label label-sm label-danger' style ="margin-left:10px">Remove Filter</a>
 							</div>
 							<?php } ?> 
@@ -290,13 +304,13 @@
 							</div>				
 							<?php } else { ?>
 								<div class="pull-right ">
-									<a href = "<?php echo base_url(); ?>index.php/reports/export_aging_range/<?php echo $days; ?>" class = "btn btn-info">Export to Excel</a>
+									<a href = "<?php echo base_url(); ?>index.php/reports/export_aging_range/<?php echo $days; ?>/<?php echo $department_id; ?>" class = "btn btn-info">Export to Excel</a>
 								</div>
 								<br>
 								<hr>
 								<button id="printReport" class="btn btn-md btn-primary pull-left " title="Change Show Entries to 'All' then click Print button" onclick="printDiv2('printableArea2')">Print</button>
 								<div id="printableArea2">
-									<button class="btn btn-warning btn-lg animated headShake pull-right">TOTAL: <b><?php echo number_format(array_sum($total2),2); ?></b></button>
+									<button class="btn btn-warning btn-lg animated headShake pull-right">TOTAL: <b><?php echo (!empty($info)) ?  number_format(array_sum($total2),2) : '0'; ?></b></button>
 									<br>
 									<table class="table table-hover table-bordered" id="aging_table2" >
 										<thead>
@@ -312,7 +326,7 @@
 											</tr>
 										</thead>
 										<tbody>
-											<?php foreach($info as $t){ 
+											<?php if(!empty($info)){ foreach($info as $t){ 
 												$diff = dateDifference($now,$t['receive_date']); 
 												$start_diff=$days-59;
 												if($days!='361'){
@@ -344,7 +358,7 @@
 													<td width="20%"><?php echo $t['unit_cost']; ?></td>
 													<td width="20%"><center><?php echo number_format($t['unit_x'],2); ?></center></td>
 												</tr>
-											<?php } } } } ?>
+											<?php } } } } } ?>
 										</tbody>
 									</table>
 								</div>
@@ -363,7 +377,13 @@
 	<script type="text/javascript">
         function get_age(){
             var age = $('#age').val();
+            var department = document.getElementById("department_id").value;
+            if(department!=''){
+            	var dept_id=department;
+            }else{
+            	var dept_id='null';
+            }
             var loc= document.getElementById("baseurl").value;
-            window.location.href = loc+"index.php/reports/aging_report/"+age;
+            window.location.href = loc+"index.php/reports/aging_report/"+age+"/"+dept_id;
         }
     </script>

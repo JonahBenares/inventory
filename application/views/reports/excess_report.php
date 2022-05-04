@@ -98,6 +98,18 @@
 										</td>
 										<td>
 											<br>
+											<select name="department" class="form-control select2">
+												<option value="" selected="">-Department-</option>
+													<?php foreach($department AS $d){ ?>
+													<option value="<?php echo $d->department_id; ?>"><?php echo $d->department_name; ?></option>
+												<?php } ?>
+											</select>
+										</td>
+									</tr>
+									<tr>
+										<td width='10%'></td>
+										<td colspan="5">
+											<br>
 											<input type="submit" name="search_inventory" value='Generate' class="btn btn-warning btn-block" >
 										</td>
 									</tr>		
