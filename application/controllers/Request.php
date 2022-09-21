@@ -508,7 +508,7 @@ class Request extends CI_Controller {
            <option value=''>-Cross Reference-</option>
             <?php 
             foreach($this->super_model->select_custom_where("supplier_items","item_id = '$item' AND quantity != '0'") AS $itm){
-                    $receive_id = $this->super_model->select_column_join_where_order_limit("receive_id", "receive_items","receive_details", "item_id='$item' AND pr_no='$prno' AND supplier_id = '$itm->supplier_id'","rd_id","DESC","1");
+                    $receive_id = $this->super_model->select_column_join_where_order_limit("receive_id", "receive_items","receive_details", "item_id='$item' AND supplier_id = '$itm->supplier_id'","rd_id","DESC","1");
                     //$receive_id = $this->super_model->select_custom_where("receive_items","item_id = '$itm->item_id' AND supplier_id = '$itm->supplier_id' AND catalog_no = '$itm->catalog_no' AND brand_id = '$itm->brand_id'");
                     $po_no = $this->super_model->select_column_where("receive_head", "po_no","receive_id", $receive_id);
                     $brand = $this->super_model->select_column_where("brand", "brand_name", "brand_id", $itm->brand_id);
