@@ -1052,6 +1052,7 @@ class Receive extends CI_Controller {
 
     public function update_prc_mrk(){
         $id=$this->uri->segment(3);
+        $data['pr_no']=$this->uri->segment(4);
         $data['id']=$id;
         $data['rem'] = $this->super_model->select_custom_where("receive_items","ri_id = '$id'");
 
@@ -1063,22 +1064,34 @@ class Receive extends CI_Controller {
 
     public function edit_prc_mrk(){
         $data = array(
-            //'item_cost'=>$this->input->post('price'),
+            'item_cost'=>$this->input->post('price'),
             'remarks'=>$this->input->post('remarks'),
         );
         $id = $this->input->post('id');
-
+        $pr_no = $this->input->post('pr_no');
         $itemid = $this->super_model->select_column_where("receive_items", "item_id", "ri_id", $id);
         $supplierid = $this->super_model->select_column_where("receive_items", "supplier_Id", "ri_id", $id);
         $brandid = $this->super_model->select_column_where("receive_items", "brand_id", "ri_id", $id);
         $catalog = $this->super_model->select_column_where("receive_items", "catalog_no", "ri_id", $id);
         $receiveid = $this->super_model->select_column_where("receive_items", "receive_id", "ri_id", $id);
 
-        /*$price = array(
+        $price = array(
             'item_cost'=>$this->input->post('price')
-        );*/
-            if($this->super_model->update_custom_where("receive_items",$data,"ri_id = '$id'")){
-                  //$this->super_model->update_custom_where("supplier_items",$price,"item_id = '$itemid' AND supplier_id = '$supplierid' AND brand_id='$brandid' AND catalog_no = '$catalog'");
+        );
+
+        if($this->super_model->update_custom_where("receive_items",$data,"ri_id = '$id'")){
+            $this->super_model->update_custom_where("supplier_items",$price,"item_id = '$itemid' AND supplier_id = '$supplierid' AND brand_id='$brandid' AND catalog_no = '$catalog'");
+            $check_exist=$this->super_model->count_custom_where("request_items","item_id = '$itemid' AND supplier_id = '$supplierid' AND brand_id='$brandid' AND catalog_no = '$catalog'");
+            if($check_exist!=0){
+                foreach($this->super_model->custom_query("SELECT * FROM request_head rh INNER JOIN request_items ri WHERE pr_no='$pr_no' AND saved='1' AND item_id = '$itemid' AND supplier_id = '$supplierid' AND brand_id='$brandid' AND catalog_no = '$catalog'") AS $req){
+                    $total_cost=$req->quantity*$this->input->post('price');
+                    $unit_cost = array(
+                        'unit_cost'=>$this->input->post('price'),
+                        'total_cost'=>$total_cost,
+                    );
+                    $this->super_model->update_custom_where("request_items",$unit_cost,"request_id='$req->request_id' AND item_id = '$itemid' AND supplier_id = '$supplierid' AND brand_id='$brandid' AND catalog_no = '$catalog'");
+                }
+            }
             ?> 
             <script>
                 alert('Successfully Updated'); 
