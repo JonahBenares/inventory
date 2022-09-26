@@ -1065,6 +1065,7 @@ class Receive extends CI_Controller {
     public function edit_prc_mrk(){
         $data = array(
             'item_cost'=>$this->input->post('price'),
+            'date_updated'=>date("Y-m-d H:i:s"),
             'remarks'=>$this->input->post('remarks'),
         );
         $id = $this->input->post('id');
@@ -1076,7 +1077,7 @@ class Receive extends CI_Controller {
         $receiveid = $this->super_model->select_column_where("receive_items", "receive_id", "ri_id", $id);
 
         $price = array(
-            'item_cost'=>$this->input->post('price')
+            'item_cost'=>$this->input->post('price'),
         );
 
         if($this->super_model->update_custom_where("receive_items",$data,"ri_id = '$id'")){
