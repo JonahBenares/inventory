@@ -1089,7 +1089,7 @@ class Receive extends CI_Controller {
                         'unit_cost'=>$this->input->post('price'),
                         'total_cost'=>$total_cost,
                     );
-                    $this->super_model->update_custom_where("request_items",$unit_cost,"request_id='$req->request_id' AND item_id = '$itemid' AND supplier_id = '$supplierid' AND brand_id='$brandid' AND catalog_no = '$catalog'");
+                    $this->super_model->update_custom_where("request_items",$unit_cost,"request_id='$req->request_id' AND item_id = '$req->item_id' AND supplier_id = '$req->supplier_id' AND brand_id='$req->brand_id' AND catalog_no = '$req->catalog_no'");
                 }
             }
             ?> 
