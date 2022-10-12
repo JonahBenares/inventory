@@ -815,15 +815,16 @@ class Receive extends CI_Controller {
                 $bid = $this->input->post('brand_id['.$a.']');
             }
 
-            if(empty($this->input->post('serial_id['.$a.']'))){
+            $serialid=0;
+            if(empty($this->input->post('serial_id['.$a.']')) && !empty($this->input->post('serial['.$a.']'))){
 
                $maxid=$this->super_model->get_max("serial_number", "serial_id");
                $serialid=$maxid+1;
 
-               $serial_data = array(
-                    'serial_id' => $serialid,
-                    'serial_no' => $this->input->post('serial['.$a.']')
-               );
+                $serial_data = array(
+                        'serial_id' => $serialid,
+                        'serial_no' => $this->input->post('serial['.$a.']')
+                );
 
                  $this->super_model->insert_into("serial_number", $serial_data);
             }  else {
