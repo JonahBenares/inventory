@@ -255,6 +255,8 @@ class Receive extends CI_Controller {
         // $data['purpose'] = $this->super_model->select_all('purpose');
         // $data['receive'] = $this->super_model->select_all('receive_head');
         // $data['details'] = $this->super_model->select_all('receive_details');
+        $rows= $this->super_model->count_rows("receive_head");
+        if($rows!=0){
         foreach($this->super_model->select_all("receive_head") AS $h){
             $data['receive'][] = array(
                 'receive_id' => $h->receive_id,
@@ -278,6 +280,9 @@ class Receive extends CI_Controller {
                     'department'=>$department
                 ); 
             }
+        }
+        } else {
+            $data['receive']=array();
         }
         $this->load->view('receive/receive_list',$data);
         $this->load->view('template/footer');
