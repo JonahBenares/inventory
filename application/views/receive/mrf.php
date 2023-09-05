@@ -144,6 +144,7 @@
         #print{
             width: 50%;
         }
+        
 </style>
 <!-- <body style="padding-top:20px">    
     <div class="container">
@@ -342,7 +343,7 @@
                 </tr>
                 <tr>
                     <td><!-- <input class="select animated headShake" type="" name="" placeholder="Type Designation Here.." > -->
-                        <select class="select animated headShake" type="text">
+                        <select class="select animated headShake" type="text" style="white-space: break-spaces;">
                             <option value = "">Select Your Designation Here..</option>
                             <?php foreach($designation AS $d){ ?>
                             <option value = ""><?php echo $d->position; ?></option>
@@ -356,9 +357,9 @@
                         </select>
                     </td>  
                     <td></td>
-                    <td><center>Supplier/Driver</center></td>
+                    <td style='vertical-align:top'><center>Supplier/Driver</center></td>
                     <td></td>
-                    <td>
+                    <td style='vertical-align:top'>
                         <center><div id='alt' style="font-weight:bold"></div></center>
                         <input id="position" class="select" style="pointer-events:none" value="<?php echo $us['positionrec'];?>">
                     </td>

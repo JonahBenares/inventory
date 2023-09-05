@@ -279,7 +279,7 @@
                 </tr>
                 <tr>
                     <td><!-- <input class="select animated headShake" type="" name="" placeholder="Type Designation Here.." > -->
-                        <select class="select" type="text" name='received'>
+                        <select class="select" type="text" name='received' style="white-space: break-spaces;">
                             <option value = "">Select Your Designation Here..</option>
                             <?php foreach($designation AS $d){ ?>
                             <option value = ""><?php echo $d->position; ?></option>
@@ -294,13 +294,13 @@
                     </td>
                     <td></td>
                     <!-- <td><center>End-User/Requester</center></td> -->
-                    <td>
+                    <td style='vertical-align:top'>
                         <center><div id='alt' style="font-weight:bold"></div></center>
                         <input id="positionreq" class="select" style="pointer-events:none" value="<?php echo $us['positionreq'];?>">
                     </td>
                     <td></td>
                     <!-- <td><center>O & M Planner</center></td> -->
-                    <td>
+                    <td style='vertical-align:top'>
                         <center><div id='alts' style="font-weight:bold"></div></center>
                         <input id="positionrev" class="select" style="pointer-events:none" value="<?php echo $us['positionrev'];?>">
                     </td>
