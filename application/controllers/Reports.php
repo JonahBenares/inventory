@@ -188,7 +188,7 @@ class Reports extends CI_Controller {
                     'catalog_no'=>$items->catalog_no
                 );
             }
-
+            $item=array();
            foreach($item AS $i){
                 $a=1;
                
@@ -298,7 +298,7 @@ class Reports extends CI_Controller {
                         );
                     }
             //  }      
-        
+            $item=array();
                     foreach($item AS $i){
                           $a=1;
 

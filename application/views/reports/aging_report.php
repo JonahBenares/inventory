@@ -24,6 +24,7 @@
 		return $interval->format('%R%a');
 	}
 	$now = date('Y-m-d');
+	$total=0;
 ?>
 <div class="col-lg-12 main">
 	<div class="row">
@@ -89,7 +90,7 @@
 							<div id="printableArea">
 								<button id="printReport" class="btn btn-md btn-primary pull-left " title="Change Show Entries to 'All' then click Print button" onclick="printDiv('printableArea')">Print</button>
 								<button class="btn btn-warning btn-lg animated headShake pull-right" style="margin-bottom: 10px">
-									TOTAL: <b><?php echo number_format(array_sum($total),2); ?></b></button>
+									TOTAL: <b><?php echo (!empty($total)) ? number_format(array_sum($total),2) : '0'; ?></b></button>
 								<br>
 								<?php if(empty($days)){ ?>
 									<table class="table table-hover table-bordered" id="aging_table" >
@@ -108,7 +109,7 @@
 											</tr>
 										</thead>
 										<tbody>
-											<?php foreach($item_info as $in){ ?>
+											<?php if(!empty($item_info)){  foreach($item_info as $in){ ?>
 											<tr>
 												<td align="center" style="padding:0px"><?php echo $in['item']; ?></td>
 												<td style="padding:0px">
@@ -284,7 +285,7 @@
 													</table>											
 												</td>
 											</tr>
-											<?php } } ?>
+											<?php } } } ?>
 										</tbody>
 										<tfoot>
 											<tr>
