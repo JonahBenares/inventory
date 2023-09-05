@@ -251,6 +251,7 @@ class Request extends CI_Controller {
         $id=$this->uri->segment(3);
         $this->load->model('super_model');
         $data['heads'] = $this->super_model->select_row_where('request_head', 'request_id', $id);
+        $data['designation'] = $this->super_model->custom_query("SELECT position FROM employees WHERE position!='' GROUP BY position ORDER BY position ASC");
         foreach($this->super_model->select_row_where('request_head', 'request_id', $id) AS $us){
             $data['username'][] = array( 
                 'user'=>$this->super_model->select_column_where('users', 'fullname', 'user_id', $us->user_id),

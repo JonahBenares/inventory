@@ -233,7 +233,13 @@
                     <td width="10%" align="center"><strong>Inv. Balance</strong></td>
                 </tr>
                 <tr>
-                    <?php  $x =1; if(!empty($issue_itm)){foreach ($issue_itm as $isu) {?>
+                    <?php  
+                        $total_cost=array();
+                        $x =1; 
+                        if(!empty($issue_itm)){
+                            foreach ($issue_itm as $isu) { 
+                            $total_cost[]=$isu['total_cost'];
+                    ?>
                     <tr>
                         <td class="main-tab" align="center"><?php echo $x;?></td>
                         <td class="main-tab" align="center"><?php echo $isu['qty']?></td>
@@ -252,6 +258,11 @@
                         <td align="center" colspan='9'><center>No Data Available.</center></td>
                     </tr>
                     <?php }?>
+                </tr>
+                <tr>
+                    <td colspan='9' align='right'><b>Total: </b></td>
+                    <td colspan='1' align='center'><b><?php echo number_format(array_sum($total_cost),2); ?></b></td>
+                    <td colspan='1' align='right'></td>
                 </tr>
                 <tr>
                     <td colspan="11"><center>***nothing follows***</center></td>
@@ -302,12 +313,15 @@
                     <td><!-- <input class="select animated headShake" type="" name="" placeholder="Type Designation Here.." > -->
                         <select class="select" type="text" name='received'>
                             <option value = "">Select Your Designation Here..</option>
-                            <option value = "">Accounting Staff</option>
+                            <?php foreach($designation AS $d){ ?>
+                            <option value = ""><?php echo $d->position; ?></option>
+                            <?php } ?>
+                            <!-- <option value = "">Accounting Staff</option>
                             <option value = "">Asset and Warehouse Manager</option>
                             <option value = "">Parts Inventory Assistant</option>
                             <option value = "">Projects and Asset Management Assistant</option>
                             <option value = "">Warehouse Assistant</option>
-                            <option value = "">Warehouse Supervisor</option>
+                            <option value = "">Warehouse Supervisor</option> -->
                         </select>
                     </td>
                     <td></td>
