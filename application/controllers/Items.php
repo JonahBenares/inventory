@@ -510,8 +510,8 @@ class Items extends CI_Controller {
             $data['total_qty']=$this->inventory_balance($id);
 
             foreach($this->super_model->select_custom_where('supplier_items',"item_id='$id' ORDER BY si_id DESC") AS $sup){
-                $count = $this->super_model->count_custom_where("supplier_items","item_id = '$id' AND supplier_id = '$sup->supplier_id' AND catalog_no = '$sup->catalog_no' AND brand_id = '$sup->brand_id'");
-               
+                $count = $this->super_model->count_custom_where("supplier_items","item_id = '$id' AND supplier_id = '$sup->supplier_id' AND (catalog_no = '$sup->catalog_no' OR catalog_no IS NULL) AND brand_id = '$sup->brand_id'");
+               echo $sup->brand_id;
                 if($count!=0){
                         $row=$this->super_model->count_rows("items");
                         unset($daterec);
