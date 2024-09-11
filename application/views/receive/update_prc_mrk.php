@@ -7,6 +7,14 @@
 				<center><h4 class="pname">Update Price & Remarks</h4></center>
 				
 				<div class="col-lg-12">
+					<p>Supplier: 
+						<select name="supplier" id='supplier' class="form-control select2">
+							<option value = ""></option>
+							<?php foreach($supplier AS $sup){ ?>
+							<option value = "<?php echo $sup->supplier_id;?>" <?php echo ($r->supplier_id==$sup->supplier_id) ? 'selected' : ''; ?> ><?php echo $sup->supplier_name;?></option>
+							<?php } ?>
+						</select>
+					</p>
 					<p>Price:
 						<input type="text" class="form-control" name="price" value = "<?php echo $r->item_cost; ?>">
 					</p>

@@ -1062,7 +1062,7 @@ class Receive extends CI_Controller {
         $data['pr_no']=$this->uri->segment(4);
         $data['id']=$id;
         $data['rem'] = $this->super_model->select_custom_where("receive_items","ri_id = '$id'");
-
+        $data['supplier'] = $this->super_model->select_all_order_by("supplier", "supplier_name", "ASC");
 
         $this->load->view('template/header');
         $this->load->view('receive/update_prc_mrk',$data);
@@ -1072,6 +1072,7 @@ class Receive extends CI_Controller {
     public function edit_prc_mrk(){
         $data = array(
             'item_cost'=>$this->input->post('price'),
+            'supplier_id'=>$this->input->post('supplier'),
             'date_updated'=>date("Y-m-d H:i:s"),
             'remarks'=>$this->input->post('remarks'),
         );
@@ -1094,10 +1095,18 @@ class Receive extends CI_Controller {
                 foreach($this->super_model->custom_query("SELECT * FROM request_head rh INNER JOIN request_items ri WHERE pr_no='$pr_no' AND saved='1' AND item_id = '$itemid' AND supplier_id = '$supplierid' AND brand_id='$brandid' AND catalog_no = '$catalog'") AS $req){
                     $total_cost=$req->quantity*$this->input->post('price');
                     $unit_cost = array(
+                        'supplier_id'=>$this->input->post('supplier'),
                         'unit_cost'=>$this->input->post('price'),
                         'total_cost'=>$total_cost,
                     );
                     $this->super_model->update_custom_where("request_items",$unit_cost,"request_id='$req->request_id' AND item_id = '$req->item_id' AND supplier_id = '$req->supplier_id' AND brand_id='$req->brand_id' AND catalog_no = '$req->catalog_no'");
+
+                    foreach($this->super_model->select_row_where("issuance_details",'rq_id',$req->rq_id) AS $is){
+                        $supplierdata = array(
+                            'supplier_id'=>$this->input->post('supplier'),
+                        );
+                        $this->super_model->update_where('issuance_details', $supplierdata, 'is_id', $is->is_id);
+                    }
                 }
             }
             ?> 
