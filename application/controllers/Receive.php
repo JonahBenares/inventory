@@ -1084,12 +1084,13 @@ class Receive extends CI_Controller {
         $catalog = $this->super_model->select_column_where("receive_items", "catalog_no", "ri_id", $id);
         $receiveid = $this->super_model->select_column_where("receive_items", "receive_id", "ri_id", $id);
 
-        // $price = array(
-        //     'item_cost'=>$this->input->post('price'),
-        // );
+        $price = array(
+            // 'item_cost'=>$this->input->post('price'),
+            'supplier_id'=>$this->input->post('supplier'),
+        );
 
         if($this->super_model->update_custom_where("receive_items",$data,"ri_id = '$id'")){
-            // $this->super_model->update_custom_where("supplier_items",$price,"item_id = '$itemid' AND supplier_id = '$supplierid' AND brand_id='$brandid' AND catalog_no = '$catalog'");
+            $this->super_model->update_custom_where("supplier_items",$price,"item_id = '$itemid' AND supplier_id = '$supplierid' AND brand_id='$brandid' AND catalog_no = '$catalog'");
             $check_exist=$this->super_model->count_custom_where("request_items","item_id = '$itemid' AND supplier_id = '$supplierid' AND brand_id='$brandid' AND catalog_no = '$catalog'");
             if($check_exist!=0){
                 foreach($this->super_model->custom_query("SELECT * FROM request_head rh INNER JOIN request_items ri WHERE pr_no='$pr_no' AND saved='1' AND item_id = '$itemid' AND supplier_id = '$supplierid' AND brand_id='$brandid' AND catalog_no = '$catalog'") AS $req){
