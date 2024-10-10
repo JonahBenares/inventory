@@ -1762,11 +1762,9 @@ class Reports extends CI_Controller {
                 }   
                 $unit_cost = $this->super_model->select_column_where("request_items","unit_cost","rq_id",$itm->rq_id);
                 $total_cost = $issqty*$unit_cost;
-<<<<<<< HEAD
-                $receive_id = $this->super_model->select_column_join_where_order_limit("receive_id", "receive_items","receive_details", "item_id='$itm->item_id' AND brand_id='$itm->brand_id' AND supplier_id='$itm->supplier_id'  AND pr_no='$itm->pr_no'","rd_id","DESC","1");
-=======
+
                 $receive_id = $this->super_model->select_column_join_where_order_limit("receive_id", "receive_items","receive_details", "item_id='$itm->item_id' AND pr_no='$itm->pr_no' AND supplier_id='$itm->supplier_id'" ,"rd_id","DESC","1");
->>>>>>> 429bc7116cba792699ce99ff50cb4d8d28d65e91
+
                 $po_no = $this->super_model->select_column_where("receive_head", "po_no","receive_id", $receive_id);
                 if($type == 'JO / PR'){
                     $pr_cost[] = $total_cost;
