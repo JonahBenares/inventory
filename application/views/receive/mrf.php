@@ -13,7 +13,7 @@
             <link href="assets/css/main-style.css" rel="stylesheet" /> -->
         </head>
 <style type="text/css">
-        @media print {
+        /* @media print {
             body { font-size: 10pt }
           }
           @media screen {
@@ -21,9 +21,9 @@
           }
           @media screen, print {
             body { line-height: 1.2 }
-          }
+          } */
         body{
-            font-family:  Montserrat, Helvetica Neue, Helvetica, Arial, sans-serif;/*(Arial, Helvetica, sans-serif;)*/
+            font-family:  Helvetica,  Montserrat,  Arial, sans-serif;
         }
         small{ 
             margin-left:5px;
@@ -31,7 +31,6 @@
         }
         h5{
             margin:0px;
-            font-weight: ;
         }
         tbody{
             padding: 20px!important;
@@ -117,10 +116,14 @@
             #print1 {
                 display: none;
             }
-            .main-tab{
-                font-size: 12px;
+            .main-tab, table.main-tab tr td{
+                font-size: 11px;
                 padding: 1px;
             }
+        }
+        .main-tab, table.main-tab tr td{
+            font-size: 11px;
+            padding: 1px;
         }
         .shadow{
             box-shadow: 0px 2px 1px 1px #dadada;
@@ -144,6 +147,7 @@
         #print{
             width: 50%;
         }
+        
 </style>
 <!-- <body style="padding-top:20px">    
     <div class="container">
@@ -162,7 +166,7 @@
                 </td>
             </tr>
         </table>
-        <div class="container">
+        <div class="container-fluid">
             <?php 
                foreach($heads AS $hd){  
                     $date=$hd->receive_date;
@@ -177,7 +181,7 @@
                     $noted= $hd->noted_by;
                }
             ?>
-            <table width="100%">
+            <table width="100%" class="main-tab">
                 <tr>
                     <td width="5%"><h6 class="nomarg">Date</h6></td>
                     <td width="15%" ><label class="nomarg">:&nbsp;<?php echo $date?></label></td>
@@ -199,7 +203,6 @@
             </table>
                 
         </div>
-        <br>
         <div class="col-lg-12">
             <?php 
 
@@ -228,22 +231,24 @@
                                 <td class="main-tab" width="2%" align="center"><strong>#</strong></td>
                                 <td class="main-tab" width="5%" align="center"><strong>Qty</strong></td>
                                 <td class="main-tab" width="2%" align="center"><strong>U/M</strong></td>
-                                <td class="main-tab" width="2%" align="center"><strong>Part No.</strong></td>
+                                <td class="main-tab" width="7%" align="center"><strong>Part No.</strong></td>
                                 <td class="main-tab" width="20%" align="center"><strong>Item Description</strong></td>
                                 <td class="main-tab" width="20%" align="center"><strong>Supplier</strong></td>
                                 <td class="main-tab" width="10%" align="center"><strong>Catalog No.</strong></td>
                                 <td class="main-tab" width="10%" align="center"><strong>Brand</strong></td>
                                 <td class="main-tab" width="8%" align="center"><strong>Cost</strong></td>
                                 <td class="main-tab" width="8%" align="center"><strong>Shipping Fee</strong></td>
-                                <td class="main-tab" width="10%" align="center"><strong>Total Cost</strong></td>
+                                <td class="main-tab" width="5%" align="center"><strong>Total Cost</strong></td>
                                 <!-- <td class="main-tab" width="15%" align="center"><strong>Inspected By</strong></td> -->
                             </tr>
                             <?php
                              $x =1; 
+                                $total_cost=array();
                                 foreach($items AS $it){ 
                                     switch($it){
                                         case($det['rdid'] == $it['rdid']):
                                             if($it['recqty']!=0){
+                                                $total_cost[]=$it['total'];
                             ?>
                             <tr>
                                 <td class="main-tab" align="center"><?php echo $x; ?></td>
@@ -266,6 +271,10 @@
                                 default: 
                                 }  }  
                             ?> 
+                            <tr>
+                                <td colspan='10' align='right'><b>Total: </b></td>
+                                <td colspan='1' align='center'><b><?php echo number_format(array_sum($total_cost),2); ?></b></td>
+                            </tr>
                         </table>
                     </td>
                 </tr>
@@ -305,9 +314,8 @@
             </table>
             <br>
             <?php } ?>
-            <br>
             <form method='POST' id='mrfsign'>
-            <table width="100%">
+            <table width="100%" class="main-tab">
                 <tr>
                     <td width="30%">Prepared By:</td>
                     <td width="5%"></td>                    
@@ -322,7 +330,7 @@
                     </td>     
                     <td></td>
                     <td style="border-bottom:1px solid #000">
-                        <textarea class="select" name="delivered" rows="2" style="word-wrap:break-word;"><?php echo $delivered; ?></textarea>
+                        <textarea class="select" name="delivered" rows="1" style="word-wrap:break-word;"><?php echo $delivered; ?></textarea>
                     </td>
                     <td></td>
                     <td style="border-bottom:1px solid #000">
@@ -336,8 +344,11 @@
                 </tr>
                 <tr>
                     <td><!-- <input class="select animated headShake" type="" name="" placeholder="Type Designation Here.." > -->
-                        <select class="select animated headShake" type="text">
+                        <select class="select animated headShake" type="text" style="white-space: break-spaces;">
                             <option value = "">Select Your Designation Here..</option>
+                            <!-- <?php foreach($designation AS $d){ ?>
+                            <option value = ""><?php echo $d->position; ?></option>
+                            <?php } ?> -->
                             <option value = "">Accounting Staff</option>
                             <option value = "">Asset and Warehouse Manager</option>
                             <option value = "">Parts Inventory Assistant</option>
@@ -347,9 +358,9 @@
                         </select>
                     </td>  
                     <td></td>
-                    <td><center>Supplier/Driver</center></td>
+                    <td style='vertical-align:top'><center>Supplier/Driver</center></td>
                     <td></td>
-                    <td>
+                    <td style='vertical-align:top'>
                         <center><div id='alt' style="font-weight:bold"></div></center>
                         <input id="position" class="select" style="pointer-events:none" value="<?php echo $us['positionrec'];?>">
                     </td>
@@ -358,9 +369,8 @@
                 </tr>
             </table>
             <br>
-            <br>
             
-            <table width="100%">
+            <table width="100%" class="main-tab">
                 <tr>
                     <td width="10%"></td>
                     <td width="35%">Acknowledged by:</td>

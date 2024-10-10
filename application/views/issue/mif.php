@@ -12,143 +12,6 @@
         <link href="assets/css/style.css" rel="stylesheet" />
         <link href="assets/css/main-style.css" rel="stylesheet" /> -->
 </head>
-<style type="text/css">
-        @media print {
-            body { font-size: 10pt }
-          }
-          @media screen {
-            body { font-size: 13px }
-          }
-          @media screen, print {
-            body { line-height: 1.2 }
-          }
-        body{
-            font-family:  Montserrat, Helvetica Neue, Helvetica, Arial, sans-serif;/*(Arial, Helvetica, sans-serif;)*/
-        }
-        small{ 
-            margin-left:5px;
-            font-size: 13px;
-        }
-        h6{
-            margin:0px;
-            font-weight: ;
-        }
-        tbody{
-            padding: 20px!important;
-        }
-        .table-bordered>tbody>tr>td, 
-        .table-bordered>tbody>tr>th, 
-        .table-bordered>tfoot>tr>td, 
-        .table-bordered>tfoot>tr>th, 
-        .table-bordered>thead>tr>td, 
-        .table-bordered>thead>tr>th {
-            border: 1px solid #000!important;
-        }
-        .table-condensed>tbody>tr>td, 
-        .table-condensed>tbody>tr>th, 
-        .table-condensed>tfoot>tr>td, 
-        .table-condensed>tfoot>tr>th, 
-        .table-condensed>thead>tr>td, 
-        .table-condensed>thead>tr>th {
-            padding: 0px!important;
-        }
-        .table-bordered1 {
-            border: 2px solid #444!important;
-        }
-        .logo-sty{
-            margin-top: 10px;
-            width:15%;
-        }
-        .company-name{
-            margin:1px 0px 1px 0px;
-            font-size:30px;
-        }
-        .name-sheet{
-            margin:5px 0px 5px 0px;
-        }
-        .table-main{
-            border:2px solid black;
-            border-bottom:0px solid black;
-        }
-        .table-secondary{
-            border:1px solid #999;
-        }
-        .paded-20{
-            padding:20px;
-        }
-        .paded-top-10{
-            padding-top:10px;
-        }
-        .paded-top-20{
-            padding-top:20px;
-        }
-        .paded-top-30{
-            padding-top:30px;
-        }
-        .undline-tab{
-            border-bottom:1px solid black;
-        }
-        .marg-under{
-            margin-bottom:10px;
-        }
-        .xs-small {
-            font-size: 60%;
-        }
-        td{
-            font-size: 1vmax
-        }
-        .borderrside{
-            border-right: 1px solid #000;
-            border-bottom: 1px solid #000;
-        }
-        .borderb{
-            border-bottom:1px solid black; 
-        }
-        @media print(){
-            #head{
-                font-size: 5px!important;
-            }
-        }
-        #head{
-                font-size: 10px;
-            }
-         .select {
-           text-align-last: center;
-           text-align: center;
-           -ms-text-align-last: center;
-           -moz-text-align-last: center;
-            padding: 5px 0px!important;
-            width:100%;
-            border:0px;
-            background:none;
-            text-align:center;
-            -webkit-appearance: none;
-        }
-         #print1{
-            position: relative;
-            margin: 4% 4% 10px 35%;            
-        }
-        #print{
-            width: 50%;
-        }
-        @media print{
-            #print1, #editbtn  {
-                display: none;
-            }
-            .nomarg{
-                font-size: 12px!important;
-            }
-            .main-tab{
-                font-size: 12px;
-                padding: 2px;
-            }
-
-        }
-        .shadow{
-            box-shadow: 0px 2px 1px 1px #dadada;
-        }
-</style>
-
 <!-- <body style="padding-top:20px">
     <div class="container">
         <table class = "table-main " style = "width:100%">
@@ -167,7 +30,7 @@
             </tr>
         </table>
         <div class="col-lg-12" style="margin:10px 0px 10px">
-            <table width="100%">
+            <table width="100%" class="main-tab">
                 <?php 
 
               foreach($heads as $h){ 
@@ -218,7 +81,7 @@
             </table>
         </div>
         <div class="col-lg-12">
-            <table width="100%" class="table-bordered">
+            <table width="100%" class="table-bordered main-tab">
                 <tr>
                     <td width="1%" align="center"><strong>#</strong></td>
                     <td width="5%" align="center"><strong>Qty</strong></td>
@@ -233,7 +96,13 @@
                     <td width="10%" align="center"><strong>Inv. Balance</strong></td>
                 </tr>
                 <tr>
-                    <?php  $x =1; if(!empty($issue_itm)){foreach ($issue_itm as $isu) {?>
+                    <?php  
+                        $total_cost=array();
+                        $x =1; 
+                        if(!empty($issue_itm)){
+                            foreach ($issue_itm as $isu) { 
+                            $total_cost[]=$isu['total_cost'];
+                    ?>
                     <tr>
                         <td class="main-tab" align="center"><?php echo $x;?></td>
                         <td class="main-tab" align="center"><?php echo $isu['qty']?></td>
@@ -254,11 +123,15 @@
                     <?php }?>
                 </tr>
                 <tr>
+                    <td colspan='9' align='right'><b>Total: </b></td>
+                    <td colspan='1' align='center'><b><?php echo number_format(array_sum($total_cost),2); ?></b></td>
+                    <td colspan='1' align='right'></td>
+                </tr>
+                <tr>
                     <td colspan="11"><center>***nothing follows***</center></td>
                 </tr>
             </table>
-            <br>
-            <table width="100%">
+            <table width="100%"  class="main-tab">
                 <tr>
                     <td width="10%">Remarks:</td>
                     <td style="border-bottom: 1px solid #999"><?php echo $det['remarks']?></td>
@@ -270,7 +143,7 @@
             <form method='POST' id='mifsign'>
             
 
-            <table width="100%">
+            <table width="100%"  class="main-tab">
                 <tr>
                     <td width="10%"></td>
                     <td width="26%">Prepared by:</td>
@@ -300,8 +173,11 @@
                 <tr>
                     <td></td>
                     <td><!-- <input class="select animated headShake" type="" name="" placeholder="Type Designation Here.." > -->
-                        <select class="select" type="text" name='received'>
+                        <select class="select" type="text" name='received' style="white-space: break-spaces;">
                             <option value = "">Select Your Designation Here..</option>
+                            <!-- <?php foreach($designation AS $d){ ?>
+                            <option value = ""><?php echo $d->position; ?></option>
+                            <?php } ?> -->
                             <option value = "">Accounting Staff</option>
                             <option value = "">Asset and Warehouse Manager</option>
                             <option value = "">Parts Inventory Assistant</option>
@@ -312,14 +188,14 @@
                     </td>
                     <td></td>
                    <!--  <td><center>Warehouse Personnel</center></td> -->
-                    <td>
+                    <td style='vertical-align:top'>
                         <center><div id='alt' style="font-weight:bold"></div></center>
                         <input id="position" class="select" style="pointer-events:none" value="<?php echo $us['positionrel'];?>">
                     </td>
                     <td></td>
                 </tr>
             </table> 
-            <table width="100%">
+            <table width="100%"  class="main-tab">
                 <tr>
                     <td width="10%"></td>
                     <td width="26%">Received by:</td>
@@ -351,20 +227,19 @@
                 <tr>
                     <td></td>
                    <!--  <td><center>End User/ Requester</center></td> -->
-                    <td>
+                    <td style='vertical-align:top'>
                         <center><div id='alts' style="font-weight:bold"></div></center>
                         <input id="positionrec" class="select" style="pointer-events:none" value="<?php echo $us['positionrec'];?>">
                     </td>
                     <td></td>
                     <!-- <td><center>Warehouse In-Charge</center></td> -->
-                    <td>
+                    <td style='vertical-align:top'>
                         <center><div id='altss' style="font-weight:bold"></div></center>
                         <input id="positionnoted" class="select" style="pointer-events:none" value="<?php echo $us['positionnote'];?>">
                     </td>
                     <td></td>
                 </tr>
             </table>
-            <br>
             <table width="100%">
                 <tr>
                     <td style="font-size:12px">Printed By: <?php echo $printed.' / '. date("Y-m-d"). ' / '. date("h:i:sa")?> </td>

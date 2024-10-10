@@ -405,7 +405,7 @@ class Issue extends CI_Controller {
         $data['access']=$this->access;
         $this->load->model('super_model');        
         $data['heads'] = $this->super_model->select_row_where('issuance_head', 'issuance_id', $id);
-
+        $data['designation'] = $this->super_model->custom_query("SELECT position FROM employees WHERE position!='' GROUP BY position ORDER BY position ASC");
         foreach($this->super_model->select_row_where('issuance_head', 'issuance_id', $id) AS $us){
             $data['username'][] = array( 
                 'user'=>$this->super_model->select_column_where('users', 'fullname', 'user_id', $us->user_id),

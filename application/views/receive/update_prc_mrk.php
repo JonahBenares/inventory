@@ -4,12 +4,20 @@
 	<div class="border-class shadow" style="background-color: #fff">
 		<div class="container">
 			<div class="row">
-				<center><h4 class="pname">Update Price & Remarks</h4></center>
+				<center><h4 class="pname">Update Supplier & Remarks</h4></center>
 				
 				<div class="col-lg-12">
-					<p>Price:
-						<input type="text" class="form-control" name="price" value = "<?php echo $r->item_cost; ?>">
+					<p>Supplier: 
+						<select name="supplier" id='supplier' class="form-control select2">
+							<option value = ""></option>
+							<?php foreach($supplier AS $sup){ ?>
+							<option value = "<?php echo $sup->supplier_id;?>" <?php echo ($r->supplier_id==$sup->supplier_id) ? 'selected' : ''; ?> ><?php echo $sup->supplier_name;?></option>
+							<?php } ?>
+						</select>
 					</p>
+					<!-- <p>Price:
+						<input type="text" class="form-control" name="price" value = "<?php echo $r->item_cost; ?>">
+					</p> -->
 					<p>Remarks:
 						<textarea rows="3" name = "remarks" class="form-control"><?php echo $r->remarks?></textarea>
 					</p>

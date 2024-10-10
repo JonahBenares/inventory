@@ -1762,7 +1762,11 @@ class Reports extends CI_Controller {
                 }   
                 $unit_cost = $this->super_model->select_column_where("request_items","unit_cost","rq_id",$itm->rq_id);
                 $total_cost = $issqty*$unit_cost;
+<<<<<<< HEAD
                 $receive_id = $this->super_model->select_column_join_where_order_limit("receive_id", "receive_items","receive_details", "item_id='$itm->item_id' AND brand_id='$itm->brand_id' AND supplier_id='$itm->supplier_id'  AND pr_no='$itm->pr_no'","rd_id","DESC","1");
+=======
+                $receive_id = $this->super_model->select_column_join_where_order_limit("receive_id", "receive_items","receive_details", "item_id='$itm->item_id' AND pr_no='$itm->pr_no' AND supplier_id='$itm->supplier_id'" ,"rd_id","DESC","1");
+>>>>>>> 429bc7116cba792699ce99ff50cb4d8d28d65e91
                 $po_no = $this->super_model->select_column_where("receive_head", "po_no","receive_id", $receive_id);
                 if($type == 'JO / PR'){
                     $pr_cost[] = $total_cost;
@@ -2005,7 +2009,7 @@ class Reports extends CI_Controller {
             $brand = $this->super_model->select_column_where("brand", "brand_name", "brand_id", $issue->brand_id);
             //$shipping_fee = $this->super_model->select_column_custom_where("receive_items", "shipping_fee", "item_id='$issue->item_id' AND supplier_id='$issue->supplier_id' AND brand_id = '$issue->brand_id' AND catalog_no = '$issue->catalog_no'");
             $shipping_fee = $this->super_model->select_column_join_where_order_limit("shipping_fee", "receive_items","receive_details", "item_id='$issue->item_id' AND pr_no='$issue->pr_no'","rd_id","DESC","1");
-            $receive_id = $this->super_model->select_column_join_where_order_limit("receive_id", "receive_items","receive_details", "item_id='$issue->item_id' AND pr_no='$issue->pr_no'","rd_id","DESC","1");
+            $receive_id = $this->super_model->select_column_join_where_order_limit("receive_id", "receive_items","receive_details", "item_id='$issue->item_id' AND pr_no='$issue->pr_no' AND supplier_id='$issue->supplier_id'","rd_id","DESC","1");
             $po_no = $this->super_model->select_column_where("receive_head", "po_no","receive_id", $receive_id);
             $department= $this->super_model->select_column_where("department", "department_name", "department_id", $issue->department_id);
             //$total_cost=$issue->quantity * $cost;
@@ -2046,7 +2050,7 @@ class Reports extends CI_Controller {
             $supplier = $this->super_model->select_column_where("supplier", "supplier_name", "supplier_id", $restock->supplier_id);
             $brand = $this->super_model->select_column_where("brand", "brand_name", "brand_id", $restock->brand_id);
             $shipping_fee = $this->super_model->select_column_join_where_order_limit("shipping_fee", "receive_items","receive_details", "item_id='$restock->item_id' AND pr_no='$restock->from_pr'","rd_id","DESC","1");
-            $receive_id = $this->super_model->select_column_join_where_order_limit("receive_id", "receive_items","receive_details", "item_id='$restock->item_id' AND pr_no='$restock->from_pr'","rd_id","DESC","1");
+            $receive_id = $this->super_model->select_column_join_where_order_limit("receive_id", "receive_items","receive_details", "item_id='$restock->item_id' AND pr_no='$restock->from_pr' AND supplier_id='$restock->supplier_id'","rd_id","DESC","1");
             $po_no = $this->super_model->select_column_where("receive_head", "po_no","receive_id", $receive_id);
             //$total_cost=$restock->quantity * $restock->item_cost;
             $total_cost= $restock->item_cost + $shipping_fee;
@@ -4900,7 +4904,7 @@ class Reports extends CI_Controller {
 
                 $total_cost = $issqty*$unit_cost;
                 $issdate = $this->super_model->select_column_where('issuance_head', 'issue_date', 'issuance_id', $itm->issuance_id);
-                $receive_id = $this->super_model->select_column_join_where_order_limit("receive_id", "receive_items","receive_details", "item_id='$itm->item_id' AND pr_no='$itm->pr_no'","rd_id","DESC","1");
+                $receive_id = $this->super_model->select_column_join_where_order_limit("receive_id", "receive_items","receive_details", "item_id='$itm->item_id' AND pr_no='$itm->pr_no' AND supplier_id='$itm->supplier_id'","rd_id","DESC","1");
                 $po_no = $this->super_model->select_column_where("receive_head", "po_no","receive_id", $receive_id);
                 if($type=='JO / PR'){
                     $pr = $itm->pr_no;
