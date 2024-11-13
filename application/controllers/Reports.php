@@ -4280,7 +4280,7 @@ class Reports extends CI_Controller {
             $sql.= " rh.from_pr = '$from_pr' AND";
         }
 
-        if($department_id!='null'){
+        if($department_id!='null' && $department_id !=''){
             $sql.= " rh.department_id = '$department_id' AND";
         }
 
