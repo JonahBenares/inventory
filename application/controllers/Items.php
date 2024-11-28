@@ -1107,6 +1107,9 @@ class Items extends CI_Controller {
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('V10', "Warehouse Location");
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('X10', "Rack");
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('Z10', "Bin");
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('AA10', "Actual Count");
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('AB10', "Date");
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('AC10', "Notes");
         $num=11;
         $x=1;
         $styleArray = array(
@@ -1195,9 +1198,18 @@ class Items extends CI_Controller {
                 $objPHPExcel->setActiveSheetIndex(0)->setCellValue('V'.$num, $wh);
                 $objPHPExcel->setActiveSheetIndex(0)->setCellValue('X'.$num, $rack);
                 $objPHPExcel->setActiveSheetIndex(0)->setCellValue('Z'.$num, $bin);
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('AA'.$num, '');
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('AB'.$num, '');
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('AC'.$num, '');
             
+                // $objPHPExcel->getActiveSheet()->getProtection()->setSheet(true);
+                // $objPHPExcel->getActiveSheet()->protectCells('A'.$num.":Z".$num,'admin');
                 $objPHPExcel->getActiveSheet()->getProtection()->setSheet(true);
-                $objPHPExcel->getActiveSheet()->protectCells('A'.$num.":Z".$num,'admin');
+                $objPHPExcel->getActiveSheet()->getProtection()->setSort(true);
+                $objPHPExcel->getActiveSheet()->getProtection()->setInsertRows(true);
+                $objPHPExcel->getActiveSheet()->getProtection()->setFormatCells(true);
+                $objPHPExcel->getActiveSheet()->getProtection()->setPassword('Inventory2024!');
+                
                 $objPHPExcel->getActiveSheet()->mergeCells('B'.$num.":D".$num);
                 $objPHPExcel->getActiveSheet()->mergeCells('E'.$num.":F".$num);
                 $objPHPExcel->getActiveSheet()->mergeCells('G'.$num.":H".$num);
@@ -1209,7 +1221,7 @@ class Items extends CI_Controller {
                 $objPHPExcel->getActiveSheet()->mergeCells('T'.$num.":U".$num);
                 $objPHPExcel->getActiveSheet()->mergeCells('V'.$num.":W".$num);
                 $objPHPExcel->getActiveSheet()->mergeCells('X'.$num.":Y".$num);
-                $objPHPExcel->getActiveSheet()->getStyle('A'.$num.":Z".$num)->applyFromArray($styleArray);
+                $objPHPExcel->getActiveSheet()->getStyle('A'.$num.":AC".$num)->applyFromArray($styleArray);
                 $objPHPExcel->getActiveSheet()->getStyle('L'.$num.":Q".$num)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
                 $objPHPExcel->getActiveSheet()->getStyle('L'.$num.":P".$num)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
                 //$objPHPExcel->getActiveSheet()->getStyle('X'.$num.":Y".$num)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
@@ -1229,9 +1241,17 @@ class Items extends CI_Controller {
                 $objPHPExcel->setActiveSheetIndex(0)->setCellValue('V'.$num, $wh);
                 $objPHPExcel->setActiveSheetIndex(0)->setCellValue('X'.$num, $rack);
                 $objPHPExcel->setActiveSheetIndex(0)->setCellValue('Z'.$num, $bin);
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('AA'.$num, '');
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('AB'.$num, '');
+                $objPHPExcel->setActiveSheetIndex(0)->setCellValue('AC'.$num, '');
             
+                // $objPHPExcel->getActiveSheet()->getProtection()->setSheet(true);
+                // $objPHPExcel->getActiveSheet()->protectCells('A'.$num.":Z".$num,'admin');
                 $objPHPExcel->getActiveSheet()->getProtection()->setSheet(true);
-                $objPHPExcel->getActiveSheet()->protectCells('A'.$num.":Z".$num,'admin');
+                $objPHPExcel->getActiveSheet()->getProtection()->setSort(true);
+                $objPHPExcel->getActiveSheet()->getProtection()->setInsertRows(true);
+                $objPHPExcel->getActiveSheet()->getProtection()->setFormatCells(true);
+                $objPHPExcel->getActiveSheet()->getProtection()->setPassword('Inventory2024!');
                 $objPHPExcel->getActiveSheet()->mergeCells('B'.$num.":D".$num);
                 $objPHPExcel->getActiveSheet()->mergeCells('E'.$num.":F".$num);
                 $objPHPExcel->getActiveSheet()->mergeCells('G'.$num.":H".$num);
@@ -1243,7 +1263,7 @@ class Items extends CI_Controller {
                 $objPHPExcel->getActiveSheet()->mergeCells('T'.$num.":U".$num);
                 $objPHPExcel->getActiveSheet()->mergeCells('V'.$num.":W".$num);
                 $objPHPExcel->getActiveSheet()->mergeCells('X'.$num.":Y".$num);
-                $objPHPExcel->getActiveSheet()->getStyle('A'.$num.":Z".$num)->applyFromArray($styleArray);
+                $objPHPExcel->getActiveSheet()->getStyle('A'.$num.":AC".$num)->applyFromArray($styleArray);
                 $objPHPExcel->getActiveSheet()->getStyle('L'.$num.":Q".$num)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
                 $objPHPExcel->getActiveSheet()->getStyle('L'.$num.":P".$num)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
                 //$objPHPExcel->getActiveSheet()->getStyle('X'.$num.":Y".$num)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
@@ -1287,9 +1307,17 @@ class Items extends CI_Controller {
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue('V'.$num, $wh);
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue('X'.$num, $rack);
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue('Z'.$num, $bin);
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('AA'.$num, '');
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('AB'.$num, '');
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('AC'.$num, '');
                 
+                    // $objPHPExcel->getActiveSheet()->getProtection()->setSheet(true);
+                    // $objPHPExcel->getActiveSheet()->protectCells('A'.$num.":Z".$num,'admin');
                     $objPHPExcel->getActiveSheet()->getProtection()->setSheet(true);
-                    $objPHPExcel->getActiveSheet()->protectCells('A'.$num.":Z".$num,'admin');
+                    $objPHPExcel->getActiveSheet()->getProtection()->setSort(true);
+                    $objPHPExcel->getActiveSheet()->getProtection()->setInsertRows(true);
+                    $objPHPExcel->getActiveSheet()->getProtection()->setFormatCells(true);
+                    $objPHPExcel->getActiveSheet()->getProtection()->setPassword('Inventory2024!');
                     $objPHPExcel->getActiveSheet()->mergeCells('B'.$num.":D".$num);
                     $objPHPExcel->getActiveSheet()->mergeCells('E'.$num.":F".$num);
                     $objPHPExcel->getActiveSheet()->mergeCells('G'.$num.":H".$num);
@@ -1301,7 +1329,7 @@ class Items extends CI_Controller {
                     $objPHPExcel->getActiveSheet()->mergeCells('T'.$num.":U".$num);
                     $objPHPExcel->getActiveSheet()->mergeCells('V'.$num.":W".$num);
                     $objPHPExcel->getActiveSheet()->mergeCells('X'.$num.":Y".$num);
-                    $objPHPExcel->getActiveSheet()->getStyle('A'.$num.":Z".$num)->applyFromArray($styleArray);
+                    $objPHPExcel->getActiveSheet()->getStyle('A'.$num.":AC".$num)->applyFromArray($styleArray);
                     $objPHPExcel->getActiveSheet()->getStyle('L'.$num.":Q".$num)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
                     $objPHPExcel->getActiveSheet()->getStyle('L'.$num.":P".$num)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
                     //$objPHPExcel->getActiveSheet()->getStyle('X'.$num.":Y".$num)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
@@ -1321,9 +1349,16 @@ class Items extends CI_Controller {
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue('V'.$num, $wh);
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue('X'.$num, $rack);
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue('Z'.$num, $bin);
-                
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('AA'.$num, '');
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('AB'.$num, '');
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('AC'.$num, '');
+                    // $objPHPExcel->getActiveSheet()->getProtection()->setSheet(true);
+                    // $objPHPExcel->getActiveSheet()->protectCells('A'.$num.":Z".$num,'admin');
                     $objPHPExcel->getActiveSheet()->getProtection()->setSheet(true);
-                    $objPHPExcel->getActiveSheet()->protectCells('A'.$num.":Z".$num,'admin');
+                    $objPHPExcel->getActiveSheet()->getProtection()->setSort(true);
+                    $objPHPExcel->getActiveSheet()->getProtection()->setInsertRows(true);
+                    $objPHPExcel->getActiveSheet()->getProtection()->setFormatCells(true);
+                    $objPHPExcel->getActiveSheet()->getProtection()->setPassword('Inventory2024!');
                     $objPHPExcel->getActiveSheet()->mergeCells('B'.$num.":D".$num);
                     $objPHPExcel->getActiveSheet()->mergeCells('E'.$num.":F".$num);
                     $objPHPExcel->getActiveSheet()->mergeCells('G'.$num.":H".$num);
@@ -1335,7 +1370,7 @@ class Items extends CI_Controller {
                     $objPHPExcel->getActiveSheet()->mergeCells('T'.$num.":U".$num);
                     $objPHPExcel->getActiveSheet()->mergeCells('V'.$num.":W".$num);
                     $objPHPExcel->getActiveSheet()->mergeCells('X'.$num.":Y".$num);
-                    $objPHPExcel->getActiveSheet()->getStyle('A'.$num.":Z".$num)->applyFromArray($styleArray);
+                    $objPHPExcel->getActiveSheet()->getStyle('A'.$num.":AC".$num)->applyFromArray($styleArray);
                     $objPHPExcel->getActiveSheet()->getStyle('L'.$num.":Q".$num)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
                     $objPHPExcel->getActiveSheet()->getStyle('L'.$num.":P".$num)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
                     //$objPHPExcel->getActiveSheet()->getStyle('X'.$num.":Y".$num)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
@@ -1380,9 +1415,17 @@ class Items extends CI_Controller {
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue('V'.$num, $wh);
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue('X'.$num, $rack);
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue('Z'.$num, $bin);
-                
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('AA'.$num, '');
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('AB'.$num, '');
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('AC'.$num, '');
                     $objPHPExcel->getActiveSheet()->getProtection()->setSheet(true);
-                    $objPHPExcel->getActiveSheet()->protectCells('A'.$num.":Z".$num,'admin');
+                    $objPHPExcel->getActiveSheet()->getProtection()->setSort(true);
+                    $objPHPExcel->getActiveSheet()->getProtection()->setInsertRows(true);
+                    $objPHPExcel->getActiveSheet()->getProtection()->setFormatCells(true);
+                    $objPHPExcel->getActiveSheet()->getProtection()->setPassword('Inventory2024!');
+                    // $objPHPExcel->getActiveSheet()->getProtection()->setSheet(true);
+                    // $objPHPExcel->getActiveSheet()->protectCells('A'.$num.":Z".$num,'admin');
+                    
                     $objPHPExcel->getActiveSheet()->mergeCells('B'.$num.":D".$num);
                     $objPHPExcel->getActiveSheet()->mergeCells('E'.$num.":F".$num);
                     $objPHPExcel->getActiveSheet()->mergeCells('G'.$num.":H".$num);
@@ -1394,7 +1437,7 @@ class Items extends CI_Controller {
                     $objPHPExcel->getActiveSheet()->mergeCells('T'.$num.":U".$num);
                     $objPHPExcel->getActiveSheet()->mergeCells('V'.$num.":W".$num);
                     $objPHPExcel->getActiveSheet()->mergeCells('X'.$num.":Y".$num);
-                    $objPHPExcel->getActiveSheet()->getStyle('A'.$num.":Z".$num)->applyFromArray($styleArray);
+                    $objPHPExcel->getActiveSheet()->getStyle('A'.$num.":AC".$num)->applyFromArray($styleArray);
                     $objPHPExcel->getActiveSheet()->getStyle('L'.$num.":Q".$num)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
                     $objPHPExcel->getActiveSheet()->getStyle('L'.$num.":P".$num)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
                     //$objPHPExcel->getActiveSheet()->getStyle('X'.$num.":Y".$num)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
@@ -1414,9 +1457,16 @@ class Items extends CI_Controller {
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue('V'.$num, $wh);
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue('X'.$num, $rack);
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue('Z'.$num, $bin);
-                
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('AA'.$num, '');
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('AB'.$num, '');
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('AC'.$num, '');
                     $objPHPExcel->getActiveSheet()->getProtection()->setSheet(true);
-                    $objPHPExcel->getActiveSheet()->protectCells('A'.$num.":Z".$num,'admin');
+                    $objPHPExcel->getActiveSheet()->getProtection()->setSort(true);
+                    $objPHPExcel->getActiveSheet()->getProtection()->setInsertRows(true);
+                    $objPHPExcel->getActiveSheet()->getProtection()->setFormatCells(true);
+                    $objPHPExcel->getActiveSheet()->getProtection()->setPassword('Inventory2024!');
+                    // $objPHPExcel->getActiveSheet()->getProtection()->setSheet(true);
+                    // $objPHPExcel->getActiveSheet()->protectCells('A'.$num.":Z".$num,'admin');
                     $objPHPExcel->getActiveSheet()->mergeCells('B'.$num.":D".$num);
                     $objPHPExcel->getActiveSheet()->mergeCells('E'.$num.":F".$num);
                     $objPHPExcel->getActiveSheet()->mergeCells('G'.$num.":H".$num);
@@ -1428,7 +1478,7 @@ class Items extends CI_Controller {
                     $objPHPExcel->getActiveSheet()->mergeCells('T'.$num.":U".$num);
                     $objPHPExcel->getActiveSheet()->mergeCells('V'.$num.":W".$num);
                     $objPHPExcel->getActiveSheet()->mergeCells('X'.$num.":Y".$num);
-                    $objPHPExcel->getActiveSheet()->getStyle('A'.$num.":Z".$num)->applyFromArray($styleArray);
+                    $objPHPExcel->getActiveSheet()->getStyle('A'.$num.":AC".$num)->applyFromArray($styleArray);
                     $objPHPExcel->getActiveSheet()->getStyle('L'.$num.":Q".$num)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
                     $objPHPExcel->getActiveSheet()->getStyle('L'.$num.":P".$num)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
                     //$objPHPExcel->getActiveSheet()->getStyle('X'.$num.":Y".$num)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
@@ -1473,9 +1523,16 @@ class Items extends CI_Controller {
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue('V'.$num, $wh);
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue('X'.$num, $rack);
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue('Z'.$num, $bin);
-                
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('AA'.$num, '');
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('AB'.$num, '');
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('AC'.$num, '');
                     $objPHPExcel->getActiveSheet()->getProtection()->setSheet(true);
-                    $objPHPExcel->getActiveSheet()->protectCells('A'.$num.":Z".$num,'admin');
+                    $objPHPExcel->getActiveSheet()->getProtection()->setSort(true);
+                    $objPHPExcel->getActiveSheet()->getProtection()->setInsertRows(true);
+                    $objPHPExcel->getActiveSheet()->getProtection()->setFormatCells(true);
+                    $objPHPExcel->getActiveSheet()->getProtection()->setPassword('Inventory2024!');
+                    // $objPHPExcel->getActiveSheet()->getProtection()->setSheet(true);
+                    // $objPHPExcel->getActiveSheet()->protectCells('A'.$num.":Z".$num,'admin');
                     $objPHPExcel->getActiveSheet()->mergeCells('B'.$num.":D".$num);
                     $objPHPExcel->getActiveSheet()->mergeCells('E'.$num.":F".$num);
                     $objPHPExcel->getActiveSheet()->mergeCells('G'.$num.":H".$num);
@@ -1487,7 +1544,7 @@ class Items extends CI_Controller {
                     $objPHPExcel->getActiveSheet()->mergeCells('T'.$num.":U".$num);
                     $objPHPExcel->getActiveSheet()->mergeCells('V'.$num.":W".$num);
                     $objPHPExcel->getActiveSheet()->mergeCells('X'.$num.":Y".$num);
-                    $objPHPExcel->getActiveSheet()->getStyle('A'.$num.":Z".$num)->applyFromArray($styleArray);
+                    $objPHPExcel->getActiveSheet()->getStyle('A'.$num.":AC".$num)->applyFromArray($styleArray);
                     $objPHPExcel->getActiveSheet()->getStyle('L'.$num.":Q".$num)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
                     $objPHPExcel->getActiveSheet()->getStyle('L'.$num.":P".$num)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
                     //$objPHPExcel->getActiveSheet()->getStyle('X'.$num.":Y".$num)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
@@ -1507,9 +1564,16 @@ class Items extends CI_Controller {
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue('V'.$num, $wh);
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue('X'.$num, $rack);
                     $objPHPExcel->setActiveSheetIndex(0)->setCellValue('Z'.$num, $bin);
-                
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('AA'.$num, '');
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('AB'.$num, '');
+                    $objPHPExcel->setActiveSheetIndex(0)->setCellValue('AC'.$num, '');
                     $objPHPExcel->getActiveSheet()->getProtection()->setSheet(true);
-                    $objPHPExcel->getActiveSheet()->protectCells('A'.$num.":Z".$num,'admin');
+                    $objPHPExcel->getActiveSheet()->getProtection()->setSort(true);
+                    $objPHPExcel->getActiveSheet()->getProtection()->setInsertRows(true);
+                    $objPHPExcel->getActiveSheet()->getProtection()->setFormatCells(true);
+                    $objPHPExcel->getActiveSheet()->getProtection()->setPassword('Inventory2024!');
+                    // $objPHPExcel->getActiveSheet()->getProtection()->setSheet(true);
+                    // $objPHPExcel->getActiveSheet()->protectCells('A'.$num.":Z".$num,'admin');
                     $objPHPExcel->getActiveSheet()->mergeCells('B'.$num.":D".$num);
                     $objPHPExcel->getActiveSheet()->mergeCells('E'.$num.":F".$num);
                     $objPHPExcel->getActiveSheet()->mergeCells('G'.$num.":H".$num);
@@ -1521,7 +1585,7 @@ class Items extends CI_Controller {
                     $objPHPExcel->getActiveSheet()->mergeCells('T'.$num.":U".$num);
                     $objPHPExcel->getActiveSheet()->mergeCells('V'.$num.":W".$num);
                     $objPHPExcel->getActiveSheet()->mergeCells('X'.$num.":Y".$num);
-                    $objPHPExcel->getActiveSheet()->getStyle('A'.$num.":Z".$num)->applyFromArray($styleArray);
+                    $objPHPExcel->getActiveSheet()->getStyle('A'.$num.":AC".$num)->applyFromArray($styleArray);
                     $objPHPExcel->getActiveSheet()->getStyle('L'.$num.":Q".$num)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
                     $objPHPExcel->getActiveSheet()->getStyle('L'.$num.":P".$num)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
                     //$objPHPExcel->getActiveSheet()->getStyle('X'.$num.":Y".$num)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
@@ -1552,20 +1616,20 @@ class Items extends CI_Controller {
         $objPHPExcel->getActiveSheet()->mergeCells('T10:U10');
         $objPHPExcel->getActiveSheet()->mergeCells('V10:W10');
         $objPHPExcel->getActiveSheet()->mergeCells('X10:Y10');
-        $objPHPExcel->getActiveSheet()->getStyle('A10:Z10')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-        $objPHPExcel->getActiveSheet()->getStyle('A10:Z10')->applyFromArray($styleArray);
-        $objPHPExcel->getActiveSheet()->getStyle('A1:Z1')->getBorders()->getTop()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
-        $objPHPExcel->getActiveSheet()->getStyle('A1:Z1')->getBorders()->getLeft()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
-        $objPHPExcel->getActiveSheet()->getStyle('A2:Z2')->getBorders()->getLeft()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
-        $objPHPExcel->getActiveSheet()->getStyle('A3:Z3')->getBorders()->getLeft()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
-        $objPHPExcel->getActiveSheet()->getStyle('A4:Z4')->getBorders()->getLeft()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+        $objPHPExcel->getActiveSheet()->getStyle('A10:AC10')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+        $objPHPExcel->getActiveSheet()->getStyle('A10:AC10')->applyFromArray($styleArray);
+        $objPHPExcel->getActiveSheet()->getStyle('A1:AC1')->getBorders()->getTop()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+        $objPHPExcel->getActiveSheet()->getStyle('A1:AC1')->getBorders()->getLeft()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+        $objPHPExcel->getActiveSheet()->getStyle('A2:AC2')->getBorders()->getLeft()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+        $objPHPExcel->getActiveSheet()->getStyle('A3:AC3')->getBorders()->getLeft()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+        $objPHPExcel->getActiveSheet()->getStyle('A4:AC4')->getBorders()->getLeft()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
 
-        $objPHPExcel->getActiveSheet()->getStyle('A1:Z1')->getBorders()->getRight()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
-        $objPHPExcel->getActiveSheet()->getStyle('A2:Z2')->getBorders()->getRight()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
-        $objPHPExcel->getActiveSheet()->getStyle('A3:Z3')->getBorders()->getRight()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
-        $objPHPExcel->getActiveSheet()->getStyle('A4:Z4')->getBorders()->getRight()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+        $objPHPExcel->getActiveSheet()->getStyle('A1:AC1')->getBorders()->getRight()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+        $objPHPExcel->getActiveSheet()->getStyle('A2:AC2')->getBorders()->getRight()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+        $objPHPExcel->getActiveSheet()->getStyle('A3:AC3')->getBorders()->getRight()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+        $objPHPExcel->getActiveSheet()->getStyle('A4:AC4')->getBorders()->getRight()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
 
-        $objPHPExcel->getActiveSheet()->getStyle('A4:Z4')->getBorders()->getBottom()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+        $objPHPExcel->getActiveSheet()->getStyle('A4:AC4')->getBorders()->getBottom()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
         $objPHPExcel->getActiveSheet()->getStyle('B6:D6')->getBorders()->getBottom()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
         $objPHPExcel->getActiveSheet()->getStyle('C8:E8')->getBorders()->getBottom()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
         $objPHPExcel->getActiveSheet()->getStyle('I8:K8')->getBorders()->getBottom()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
@@ -1578,10 +1642,10 @@ class Items extends CI_Controller {
         $objPHPExcel->getActiveSheet()->getStyle('H2')->getBorders()->getLeft()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
         $objPHPExcel->getActiveSheet()->getStyle('H3')->getBorders()->getLeft()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
         $objPHPExcel->getActiveSheet()->getStyle('H4')->getBorders()->getLeft()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
-        $objPHPExcel->getActiveSheet()->getStyle('Z1')->getBorders()->getRight()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
-        $objPHPExcel->getActiveSheet()->getStyle('Z2')->getBorders()->getRight()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
-        $objPHPExcel->getActiveSheet()->getStyle('Z3')->getBorders()->getRight()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
-        $objPHPExcel->getActiveSheet()->getStyle('Z4')->getBorders()->getRight()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+        $objPHPExcel->getActiveSheet()->getStyle('AC1')->getBorders()->getRight()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+        $objPHPExcel->getActiveSheet()->getStyle('AC2')->getBorders()->getRight()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+        $objPHPExcel->getActiveSheet()->getStyle('AC3')->getBorders()->getRight()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
+        $objPHPExcel->getActiveSheet()->getStyle('AC4')->getBorders()->getRight()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
         $objPHPExcel->getActiveSheet()->getStyle('A1:N1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
         $objPHPExcel->getActiveSheet()->getStyle('A1:N1')->getFont()->setBold(true);
         $objPHPExcel->getActiveSheet()->getStyle("N2")->getFont()->setBold(true)->setName('Arial Black');
