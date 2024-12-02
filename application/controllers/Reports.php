@@ -5154,9 +5154,9 @@ class Reports extends CI_Controller {
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('V1', "121-180");
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('X1', "181-360");
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('Z1', "360+");
-        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('AB10', "Actual Count");
-        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('AC10', "Date");
-        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('AD10', "Notes");
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('AB1', "Actual Count");
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('AC1', "Date");
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('AD1', "Notes");
         $num=2;
         
         /*foreach($this->super_model->select_all('receive_head') as $head){
@@ -5312,7 +5312,7 @@ class Reports extends CI_Controller {
         $objPHPExcel->getActiveSheet()->mergeCells('T1:U1');
         $objPHPExcel->getActiveSheet()->mergeCells('V1:W1');
         $objPHPExcel->getActiveSheet()->mergeCells('X1:Y1');
-        $objPHPExcel->getActiveSheet()->mergeCells('Z1:AD1');
+        $objPHPExcel->getActiveSheet()->mergeCells('Z1:AA1');
         $objPHPExcel->getActiveSheet()->getStyle('N1:AD1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
         $objPHPExcel->getActiveSheet()->getStyle('A1:AD1')->getFont()->setBold(true);
         $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
@@ -5344,6 +5344,9 @@ class Reports extends CI_Controller {
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('F1', "Quantity");
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('G1', "Unit Cost");
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('H1', $days . " Days");
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('I1', "Actual Count");
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('J1', "Date");
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('K1', "Notes");
         $num=2;
         $query='';
         if($department_id!='null'){
@@ -5410,6 +5413,9 @@ class Reports extends CI_Controller {
                             $objPHPExcel->setActiveSheetIndex(0)->setCellValue('F'.$num, $qty);
                             $objPHPExcel->setActiveSheetIndex(0)->setCellValue('G'.$num, $unit_cost);
                             $objPHPExcel->setActiveSheetIndex(0)->setCellValue('H'.$num, $unit_x);
+                            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('I'.$num, '');
+                            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('J'.$num, '');
+                            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('K'.$num, '');
 
                             $objPHPExcel->getActiveSheet()->getStyle('E'.$num)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
                             $objPHPExcel->getActiveSheet()->getStyle('F'.$num)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
@@ -5435,6 +5441,9 @@ class Reports extends CI_Controller {
                             $objPHPExcel->setActiveSheetIndex(0)->setCellValue('F'.$num, $qty);
                             $objPHPExcel->setActiveSheetIndex(0)->setCellValue('G'.$num, $unit_cost);
                             $objPHPExcel->setActiveSheetIndex(0)->setCellValue('H'.$num, $unit_x);
+                            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('I'.$num, '');
+                            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('J'.$num, '');
+                            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('K'.$num, '');
                             $objPHPExcel->getActiveSheet()->getStyle('E'.$num)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
                             $objPHPExcel->getActiveSheet()->getStyle('F'.$num)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
                             // $objPHPExcel->getActiveSheet()->getProtection()->setSheet(true);
