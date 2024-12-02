@@ -5158,6 +5158,7 @@ class Reports extends CI_Controller {
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('AC10', "Date");
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('AD10', "Notes");
         $num=2;
+        
         /*foreach($this->super_model->select_all('receive_head') as $head){
             foreach ($this->super_model->custom_query("SELECT DISTINCT item_id,supplier_id,brand_id,catalog_no,received_qty,receive_id FROM receive_items WHERE receive_id = '$head->receive_id' ORDER BY receive_id DESC") as $age) {
                 $item = $this->super_model->select_column_where('items', 'item_name', 'item_id', $age->item_id);
