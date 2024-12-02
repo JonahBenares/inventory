@@ -165,7 +165,8 @@ class Reports extends CI_Controller {
         if($department_id!='null'){
             $query .=" WHERE rd.department_id='$department_id'";
         }
-        if(empty($days)){
+        $data['info']=array();
+        if((empty($days) || $days=='null') && (empty($department_id) || $department_id=='null')){
             
 
             foreach($this->super_model->custom_query("SELECT DISTINCT item_id, supplier_id, brand_id, catalog_no FROM receive_items") as $items){
@@ -179,7 +180,7 @@ class Reports extends CI_Controller {
                     'brand_name'=>$this->super_model->select_column_where("brand", "brand_name", "brand_id", $items->brand_id),
                 );
             }
-
+            $item=array();
             foreach($this->super_model->custom_query("SELECT DISTINCT item_id, supplier_id, brand_id, catalog_no FROM receive_items") as $items){
                 $item[] = array(
                     'item'=>$items->item_id,
@@ -188,7 +189,7 @@ class Reports extends CI_Controller {
                     'catalog_no'=>$items->catalog_no
                 );
             }
-            $item=array();
+           
            foreach($item AS $i){
                 $a=1;
                
@@ -287,7 +288,7 @@ class Reports extends CI_Controller {
             $now=date('Y-m-d');
             //echo $startdate . " " . $now."<br>";
            // foreach($this->super_model->custom_query("SELECT receive_id,receive_date FROM receive_head WHERE receive_date BETWEEN '$startdate' AND '$now'") as $head){
-
+            $item=array();
                     foreach($this->super_model->custom_query("SELECT DISTINCT ri.item_id, ri.supplier_id, ri.brand_id, ri.catalog_no FROM receive_items ri INNER JOIN receive_details rd ON ri.rd_id=rd.rd_id $query") as $items){
                         $item[] = array(
                             'item'=>$items->item_id,
@@ -298,7 +299,7 @@ class Reports extends CI_Controller {
                         );
                     }
             //  }      
-            $item=array();
+           
                     foreach($item AS $i){
                           $a=1;
 

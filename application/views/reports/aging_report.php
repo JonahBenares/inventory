@@ -384,7 +384,12 @@
             }else{
             	var dept_id='null';
             }
+			if(age!=''){
+				var ages = age;
+			}else{
+				var ages = 'null'
+			}
             var loc= document.getElementById("baseurl").value;
-            window.location.href = loc+"index.php/reports/aging_report/"+age+"/"+dept_id;
+            window.location.href = loc+"index.php/reports/aging_report/"+ages+"/"+dept_id;
         }
     </script>
