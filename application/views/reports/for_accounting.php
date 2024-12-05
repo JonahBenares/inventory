@@ -242,7 +242,11 @@
 
 		function generateAccounting(){
 			 var from= document.getElementById("from_date").value;
-
+			if(from!=''){
+				from=from
+			}else{
+				from='null'
+			}
 			 var cat= document.getElementById("category").value;
 			 if(cat!=''){
 			 	cat=cat;

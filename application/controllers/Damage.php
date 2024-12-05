@@ -886,7 +886,38 @@ class Damage extends CI_Controller {
                 $objPHPExcel->setActiveSheetIndex(0)->setCellValue('AD'.$num, '');
                 $objPHPExcel->setActiveSheetIndex(0)->setCellValue('AE'.$num, '');
                 $objPHPExcel->setActiveSheetIndex(0)->setCellValue('AF'.$num, '');
-            
+
+                $objPHPExcel->getActiveSheet()->getStyle('G'.$num.':AA'.$num)->getAlignment()->setWrapText(true);
+                $objPHPExcel->getActiveSheet()->getStyle('AC'.$num)->getAlignment()->setWrapText(true);
+                $count_letters=strlen($items->item_description);
+                $count_letters_supplier=strlen($supplier);
+                if($count_letters<=40){
+                    $objPHPExcel->getActiveSheet()->getRowDimension($num)->setRowHeight(15);
+                }else if($count_letters<=50){
+                    $objPHPExcel->getActiveSheet()->getRowDimension($num)->setRowHeight(30);
+                }else if($count_letters<=100){
+                    $objPHPExcel->getActiveSheet()->getRowDimension($num)->setRowHeight(50);
+                }else if($count_letters<=140){
+                    $objPHPExcel->getActiveSheet()->getRowDimension($num)->setRowHeight(60);
+                }else if($count_letters<=260){
+                    $objPHPExcel->getActiveSheet()->getRowDimension($num)->setRowHeight(105);
+                }
+                if($count_letters<=40 && $count_letters_supplier<=30){
+                    $objPHPExcel->getActiveSheet()->getRowDimension($num)->setRowHeight(15);
+                }else if($count_letters<=40 && $count_letters_supplier<=50){
+                    $objPHPExcel->getActiveSheet()->getRowDimension($num)->setRowHeight(30);
+                }else if($count_letters<=40 && $count_letters_supplier<=100){
+                    $objPHPExcel->getActiveSheet()->getRowDimension($num)->setRowHeight(50);
+                }else if($count_letters<=40 && $count_letters_supplier<=140){
+                    $objPHPExcel->getActiveSheet()->getRowDimension($num)->setRowHeight(50);
+                }else if($count_letters<=40 && $count_letters_supplier<=260){
+                    $objPHPExcel->getActiveSheet()->getRowDimension($num)->setRowHeight(105);
+                }
+                $objPHPExcel->getActiveSheet()->getColumnDimension('AA')->setWidth(30);
+                $objPHPExcel->getActiveSheet()->getColumnDimension('AC')->setWidth(30);
+                $objPHPExcel->getActiveSheet()->getColumnDimension('AB')->setAutoSize(true);
+                $objPHPExcel->getActiveSheet()->calculateColumnWidths();
+                $objPHPExcel->getActiveSheet()->getColumnDimension('AB')->setAutoSize(false);
                 $objPHPExcel->getActiveSheet()->getProtection()->setSheet(true);
                 $objPHPExcel->getActiveSheet()->getProtection()->setSort(true);
                 $objPHPExcel->getActiveSheet()->getProtection()->setInsertRows(true);
