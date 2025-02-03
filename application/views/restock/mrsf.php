@@ -66,6 +66,8 @@
                     <td width="5%" align="center"><strong>Item Part No</strong></td>
                     <td width="30%" align="center"><strong>Item Description</strong></td>
                     <td width="5%" align="center"><strong>S/N</strong></td>
+                    <td width="5%" align="center"><strong>Item Cost</strong></td>
+                    <td width="5%" align="center"><strong>Total Price</strong></td>
                     <!-- <td width="20%" align="center"><strong>Supplier</strong></td> -->
                     <td width="10%" align="center"><strong>Brand</strong></td>
                     <td width="10%" align="center"><strong>Catalog No.</strong></td>
@@ -79,6 +81,8 @@
                     <td align="center"><?php echo $det['pno'];?></td>
                     <td align="center"><?php echo $det['item'];?></td>
                     <td align="center"><?php echo $det['serial'];?></td>
+                    <td align="center"><?php echo number_format($det['item_cost'],2);?></td>
+                    <td align="center"><?php echo number_format($det['total_price'],2);?></td>
                     <!-- <td align="center"><?php echo $det['supplier'];?></td> -->
                     <td align="center"><?php echo $det['brand'];?></td>
                     <td align="center"><?php echo $det['catno'];?></td>

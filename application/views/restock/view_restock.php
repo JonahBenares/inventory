@@ -77,6 +77,8 @@
 											<th class="tr-bottom" width="5%"><center>Brand</center></th>
 											<th class="tr-bottom" width="10%"><center>Catalog No.</center></th>
 											<th class="tr-bottom" width="10%"><center>Serial No.</center></th>
+											<th class="tr-bottom" width="10%"><center>Unit Cost</center></th>
+											<th class="tr-bottom" width="10%"><center>Total Price</center></th>
 											<th class="tr-bottom" width="5%"><center>Reason</center></th>
 											<th class="tr-bottom" width="20%"><center>Remarks</center></th>
 										</tr>
@@ -93,6 +95,8 @@
 											<td><center><?php echo $det['brand'];?></center></td>
 											<td><center><?php echo $det['catalog_no'];?></center></td>
 											<td><center><?php echo $det['serial'];?></center></td>
+											<td><?php echo number_format($det['item_cost'],2);?></td>
+											<td><?php echo number_format($det['total_price'],2);?></td>
 											<td><?php echo $det['reason'];?></td>
 											<td><?php echo $det['remarks'];?></td>
 										</tr>
