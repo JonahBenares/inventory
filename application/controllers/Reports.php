@@ -1296,7 +1296,7 @@ class Reports extends CI_Controller {
         $item=$this->uri->segment(7);
         $enduser=$this->uri->segment(8);
         $purpose=$this->uri->segment(9);
-        $from_pr=$this->uri->segment(10);
+        $from_pr=str_replace("~~","/",$this->uri->segment(10));
         $department_id=$this->uri->segment(11);
         $data['from']=$this->uri->segment(3);
         $data['to']=$this->uri->segment(4);
@@ -1305,7 +1305,7 @@ class Reports extends CI_Controller {
         $data['item1']=$this->uri->segment(7);
         $data['enduse1']=$this->uri->segment(8);
         $data['purpose1']=$this->uri->segment(9);
-        $data['from_pr1']=$this->uri->segment(10);
+        $data['from_pr1']=str_replace("~~","/",$this->uri->segment(10));
         $data['department_id']=$this->uri->segment(11);
         $data['item'] = $this->super_model->select_all_order_by('items', 'item_name', 'ASC');
         $data['subcat'] = $this->super_model->select_all_order_by('item_subcat', 'subcat_name', 'ASC');
@@ -1396,7 +1396,7 @@ class Reports extends CI_Controller {
         $item=$this->uri->segment(7);
         $enduser=$this->uri->segment(8);
         $purpose=$this->uri->segment(9);
-        $pr_no=$this->uri->segment(10);
+        $pr_no=str_replace("~~","/",$this->uri->segment(10));
         $department_id=$this->uri->segment(11);
         $data['from']=$this->uri->segment(3);
         $data['to']=$this->uri->segment(4);
@@ -1405,7 +1405,7 @@ class Reports extends CI_Controller {
         $data['item1']=$this->uri->segment(7);
         $data['enduse1']=$this->uri->segment(8);
         $data['purpose1']=$this->uri->segment(9);
-        $data['pr_no1']=$this->uri->segment(10);
+        $data['pr_no1']=str_replace("~~","/",$this->uri->segment(10));
         $data['department_id']=$this->uri->segment(11);
         $data['item'] = $this->super_model->select_all_order_by('items', 'item_name', 'ASC');
         $data['subcat'] = $this->super_model->select_all_order_by('item_subcat', 'subcat_name', 'ASC');
@@ -1599,7 +1599,7 @@ class Reports extends CI_Controller {
         $item=$this->uri->segment(7);
         $enduser=$this->uri->segment(8);
         $purpose=$this->uri->segment(9);
-        $pr_no=$this->uri->segment(10);
+        $pr_no=str_replace("~~","/",$this->uri->segment(10));
         $department_id=$this->uri->segment(11);
         $data['from']=$this->uri->segment(3);
         $data['to']=$this->uri->segment(4);
@@ -1608,7 +1608,7 @@ class Reports extends CI_Controller {
         $data['item1']=$this->uri->segment(7);
         $data['enduse1']=$this->uri->segment(8);
         $data['purpose1']=$this->uri->segment(9);
-        $data['pr_no1']=$this->uri->segment(10);
+        $data['pr_no1']=str_replace("~~","/",$this->uri->segment(10));
         $data['department_id']=$this->uri->segment(11);
         $data['item'] = $this->super_model->select_all_order_by('items', 'item_name', 'ASC');
         $data['department'] = $this->super_model->select_all_order_by('department', 'department_name', 'ASC');
@@ -2607,10 +2607,10 @@ class Reports extends CI_Controller {
                 $purpose = "null";
            }
            if(!empty($this->input->post('pr_no'))){
-                $pr_no = $this->input->post('pr_no');
+                $pr_no = str_replace("/","~~",$this->input->post('pr_no'));
            } else {
                 $pr_no = "null";
-           }
+           } 
            if(!empty($this->input->post('department'))){
                 $department = $this->input->post('department');
            } else {
@@ -2663,9 +2663,8 @@ class Reports extends CI_Controller {
            } else {
                 $purpose = "null";
            }
-                      
            if(!empty($this->input->post('from_pr'))){
-                $from_pr = $this->input->post('from_pr');
+                $from_pr = str_replace("/","~~",$this->input->post('from_pr'));
            } else {
                 $from_pr = "null";
            }
@@ -2721,10 +2720,10 @@ class Reports extends CI_Controller {
                 $purpose = "null";
            }
            if(!empty($this->input->post('pr_no'))){
-                $pr_no = $this->input->post('pr_no');
+                $pr_no = str_replace("/","~~",$this->input->post('pr_no'));
            } else {
                 $pr_no = "null";
-           }
+           } 
            if(!empty($this->input->post('department'))){
                 $department = $this->input->post('department');
            } else {
