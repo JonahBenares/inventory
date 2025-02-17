@@ -188,7 +188,8 @@ class Issue extends CI_Controller {
         $id=$this->uri->segment(3);
         $data['id']=$id;
     
-        $year=date('Y-m');
+        // $year=date('Y-m');
+        $year=date('mY');
         $year_series=date('Y');
        
         $data['mreqf_list']=$this->super_model->select_custom_where("request_head","saved = '1'");
@@ -199,7 +200,8 @@ class Issue extends CI_Controller {
             $maxrecno=$this->super_model->get_max_where("issuance_head", "mif_no","create_date LIKE '$year_series%'");
             $recno = explode('-',$maxrecno);
            
-            $series = $recno[3]+1;
+            // $series = $recno[3]+1;
+            $series = $recno[2]+1;
             if(strlen($series)==1){
                 $mifno = "MIF-".$year."-000".$series;
             } else if(strlen($series)==2){
@@ -622,7 +624,8 @@ class Issue extends CI_Controller {
        $count = count($quantity);
        
        //echo $count;
-       $year=date('Y-m');
+       // $year=date('Y-m');
+       $year=date('mY');
        $year_series=date('Y');
        
 
@@ -633,7 +636,8 @@ class Issue extends CI_Controller {
             $maxrecno=$this->super_model->get_max_where("issuance_head", "mif_no","create_date LIKE '$year_series%'");
             $recno = explode('-',$maxrecno);
            
-            $series = $recno[3]+1;
+            // $series = $recno[3]+1;
+            $series = $recno[2]+1;
             if(strlen($series)==1){
                 $mifno = "MIF-".$year."-000".$series;
             } else if(strlen($series)==2){
