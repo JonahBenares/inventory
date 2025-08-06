@@ -168,6 +168,7 @@
 												<td align="center"><strong>Department</strong></td>
 												<td align="center"><strong>Purpose</strong></td>
 												<td align="center"><strong>End Use</strong></td>
+												<td align="center"><strong>Remarks</strong></td>
 												<td style="width:2%" align="center"><strong>Freq</strong></td>
 											</tr>
 										</thead>
@@ -190,6 +191,7 @@
 												<td align="center"><?php echo $is['department'];?></td>
 												<td align="center"><?php echo $is['purpose'];?></td>
 												<td align="center"><?php echo $is['enduse'];?></td>
+												<td align="center"><?php echo $is['remarks'];?></td>
 												<td align="center"><?php ?></td>
 											</tr>
 											<?php } ?>

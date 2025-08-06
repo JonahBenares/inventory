@@ -1766,7 +1766,7 @@ class Reports extends CI_Controller {
 
            $wh_wo_cost=0;
            $pr_wo_cost=0;
-            foreach($this->super_model->custom_query("SELECT ih.*,i.item_id, id.supplier_id, dt.department_id,pr.purpose_id,e.enduse_id, id.is_id, id.rq_id, id.brand_id, id.supplier_id, ih.pr_no FROM issuance_head ih INNER JOIN issuance_details id ON ih.issuance_id = id.issuance_id INNER JOIN items i ON id.item_id = i.item_id INNER JOIN department dt ON dt.department_id = ih.department_id INNER JOIN purpose pr ON pr.purpose_id = ih.purpose_id INNER JOIN enduse e ON e.enduse_id = ih.enduse_id WHERE ih.saved='1' AND ih.issuance_id = id.issuance_id AND ".$query. " ORDER BY ih.issue_date DESC") AS $itm){
+            foreach($this->super_model->custom_query("SELECT ih.*,i.item_id, id.supplier_id, dt.department_id,pr.purpose_id,e.enduse_id, id.is_id, id.rq_id, id.brand_id, id.supplier_id, ih.pr_no, id.remarks FROM issuance_head ih INNER JOIN issuance_details id ON ih.issuance_id = id.issuance_id INNER JOIN items i ON id.item_id = i.item_id INNER JOIN department dt ON dt.department_id = ih.department_id INNER JOIN purpose pr ON pr.purpose_id = ih.purpose_id INNER JOIN enduse e ON e.enduse_id = ih.enduse_id WHERE ih.saved='1' AND ih.issuance_id = id.issuance_id AND ".$query. " ORDER BY ih.issue_date DESC") AS $itm){
 
                 $supplier = $this->super_model->select_column_where('supplier', 'supplier_name', 'supplier_id', $itm->supplier_id);
                 $issqty = $this->super_model->select_column_where('issuance_details', 'quantity', 'is_id', $itm->is_id); 
@@ -1813,6 +1813,7 @@ class Reports extends CI_Controller {
                     'department'=>$department,
                     'purpose'=>$purpose,
                     'enduse'=>$enduse,
+                    'remarks'=>$itm->remarks,
                     'pn'=>$pn,
                     'unit_cost'=>$unit_cost,
                     'issqty'=>$issqty,
@@ -5062,7 +5063,9 @@ class Reports extends CI_Controller {
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('AD10', "Department");
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('AH10', "Purpose");
         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('AL10', "End Use");
-        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('AQ10', "Frequency");
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('AO10', "Remarks");
+        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('AP10', "Frequency");
+        
             $pr_cost= array();
             $wh_cost=array();
             $wh_wo_cost=0;
@@ -5076,6 +5079,7 @@ class Reports extends CI_Controller {
                 $purpose = $this->super_model->select_column_where('purpose', 'purpose_desc', 'purpose_id', $itm->purpose_id);
                 $enduse = $this->super_model->select_column_where('enduse', 'enduse_name', 'enduse_id', $itm->enduse_id);
                 $type=  $this->super_model->select_column_where("request_head", "type", "mreqf_no", $itm->mreqf_no);
+                $remarks = $this->super_model->select_column_where('issuance_details', 'remarks', 'is_id', $itm->issuance_id);
 
                 foreach($this->super_model->select_custom_where("items", "item_id = '$itm->item_id'") AS $itema){
                     $unit = $this->super_model->select_column_where('uom', 'unit_name', 'unit_id', $itema->unit_id);
@@ -5136,7 +5140,8 @@ class Reports extends CI_Controller {
                         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('AC'.$num, $department); 
                         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('AG'.$num, $purpose);
                         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('AK'.$num, $enduse);
-                        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('AO'.$num, '');
+                        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('AO'.$num, $remarks);
+                        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('AP'.$num, '');
                         $objPHPExcel->getActiveSheet()->getProtection()->setSheet(true);    
                         $objPHPExcel->getActiveSheet()->getStyle('A'.$num.":AO".$num)->applyFromArray($styleArray);
                         $objPHPExcel->getActiveSheet()->protectCells('A'.$num.":AO".$num,'admin');
