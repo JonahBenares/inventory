@@ -24,6 +24,15 @@
     <?php } else { ?>
         <input type = "hidden" name = "local_mnl[]" style = "text-align:center;width:100%;border:1px transparent;pointer-events: none" value = "0" ><input type = "text" style = "text-align:center;width:100%;border:0px transparent;pointer-events: none" value = "0" >
     <?php } ?></td>
+
+<td><?php if($list['vat_status'] == 'vat'){ ?>
+    <input type = "hidden" name = "vat_status[]" style = "text-align:center;width:100%;border:1px transparent;pointer-events: none" value = "vat" ><input type = "text" style = "text-align:center;width:100%;border:0px transparent;pointer-events: none" value = "VAT" >
+    <?php } else if($list['vat_status'] == 'non-vat') { ?>
+    <input type = "hidden" name = "vat_status[]" style = "text-align:center;width:100%;border:1px transparent;pointer-events: none" value = "non-vat" ><input type = "text" style = "text-align:center;width:100%;border:0px transparent;pointer-events: none" value = "Non-VAT" >
+    <?php } else { ?>
+        <input type = "hidden" name = "vat_status[]" style = "text-align:center;width:100%;border:1px transparent;pointer-events: none" value = "" ><input type = "text" style = "text-align:center;width:100%;border:0px transparent;pointer-events: none" value = "0" >
+    <?php } ?></td>
+   
     <!--<td style="padding: 0px "><input type = "text" name = "expiration_date[]" style = "text-align:center;width:100%;border:1px transparent;pointer-events: none" value="<?php echo $list['expiration_date']; ?>"></td>-->
 
     <td ><center>
