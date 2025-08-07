@@ -338,6 +338,7 @@ class Receive extends CI_Controller {
                     'total'=>$total,
                     'total_net_cost'=>$total_net_cost,
                     'local_mnl'=>$items->local_mnl,
+                    'vat_status'=>$items->vat_status,
                     'shipping_fee'=>$items->shipping_fee,
                     'currency'=>$items->currency,
                     //'expiration_date'=>$items->expiration_date,
@@ -416,6 +417,7 @@ class Receive extends CI_Controller {
                     'total_net_cost'=>$total_net_cost,
                     'serial'=>$serial,
                     'local_mnl'=>$rit->local_mnl,
+                    'vat_status'=>$rit->vat_status,
                     'shipping_fee'=>$rit->shipping_fee,
                     'currency'=>$rit->currency,
                     //'expiration_date'=>$rit->expiration_date,
@@ -734,6 +736,7 @@ class Receive extends CI_Controller {
             'currency'=>$this->input->post('currency'),
             'item'=>$this->input->post('itemname'),
             'local_mnl'=>$this->input->post('local_mnl'),
+            'vat_status'=>$this->input->post('vat_status'),
             //'expiration_date'=>$this->input->post('expiration_date'),
             'count'=>$this->input->post('count'),
             'total'=>$total,
@@ -856,6 +859,7 @@ class Receive extends CI_Controller {
                 'shipping_fee'=> $this->input->post('shipping_fee['.$a.']'),
                 'currency'=> $this->input->post('currency['.$a.']'),
                 'local_mnl'=> $this->input->post('local_mnl['.$a.']'),
+                'vat_status'=> $this->input->post('vat_status['.$a.']'),
                 //'expiration_date'=> $this->input->post('expiration_date['.$a.']')
                 /*'inspected_by'=> $this->input->post('inspected_name['.$a.']')*/
             );

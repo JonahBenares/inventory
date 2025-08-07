@@ -276,11 +276,11 @@ function add_item(){
     }
 
    
-    if ($("input:radio[name=local_mnl]:checked").val() == '1') {
-        var local_mnl = '1';
+    if ($("input:radio[name=vat_status]:checked").val() == 'vat') {
+        var vat_status = 'vat';
     } 
-    else if($("input:radio[name=local_mnl]:checked").val() == '2'){
-        var local_mnl = '2';
+    else if($("input:radio[name=vat_status]:checked").val() == 'non-vat'){
+        var vat_status = 'non-vat';
     }
 
     var item =$('#item').val();
@@ -301,7 +301,7 @@ function add_item(){
     	  $.ajax({
     	 		type: "POST",
     	 		url:redirect,
-    	 		data: "supplier="+supplier+"&supplierid="+supplierid+"&suppliername="+suppliername+"&itemname="+itemname+"&itemid="+itemid+"&brand="+brand+"&brandid="+brandid+"&brandname="+brandname+"&serial="+serial+"&serialid="+serialid+"&unitcost="+unitcost+"&catno="+catno+"&unit="+unit+"&expqty="+expqty+"&recqty="+recqty+"&remarks="+remarks+"&item="+item+"&count="+count+"&local_mnl="+local_mnl+"&shipping_fee="+shipping_fee+"&currency="+currency,
+    	 		data: "supplier="+supplier+"&supplierid="+supplierid+"&suppliername="+suppliername+"&itemname="+itemname+"&itemid="+itemid+"&brand="+brand+"&brandid="+brandid+"&brandname="+brandname+"&serial="+serial+"&serialid="+serialid+"&unitcost="+unitcost+"&catno="+catno+"&unit="+unit+"&expqty="+expqty+"&recqty="+recqty+"&remarks="+remarks+"&item="+item+"&count="+count+"&local_mnl="+local_mnl+"&vat_status="+vat_status+"&shipping_fee="+shipping_fee+"&currency="+currency,
               /*  beforeSend: function(){
                     document.getElementById('alerto').innerHTML='<b>Please wait, Loading Data...</b>'; 
                     $("#additem").hide(); 

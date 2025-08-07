@@ -162,11 +162,13 @@
 												<td align="center"><strong>UoM</strong></td>
 												<td align="center"><strong>Unit Cost</strong></td>
 												<td align="center"><strong>Total Cost</strong></td>
-												<td align="center"><strong>Net of Vat</strong></td>
+												<td align="center"><strong>VAT</strong></td>
+												<td align="center"><strong>Non-VAT</strong></td>
 												<td align="center"><strong>Supplier</strong></td>
 												<td align="center"><strong>Department</strong></td>
 												<td align="center"><strong>Purpose</strong></td>
 												<td align="center"><strong>End Use</strong></td>
+												<td align="center"><strong>Remarks</strong></td>
 												<td style="width:2%" align="center"><strong>Freq</strong></td>
 											</tr>
 										</thead>
@@ -184,10 +186,12 @@
 												<td align="center"><?php echo $is['unit_cost'];?></td>
 												<td align="center"><?php echo number_format($is['total_cost'],2);?></td>
 												<td align="center"><?php echo number_format($is['net_of_vat'],2);?></td>
+												<td align="center"><?php echo number_format($is['total_cost'],2);?></td>
 												<td align="center"><?php echo $is['supplier'];?></td>
 												<td align="center"><?php echo $is['department'];?></td>
 												<td align="center"><?php echo $is['purpose'];?></td>
 												<td align="center"><?php echo $is['enduse'];?></td>
+												<td align="center"><?php echo $is['remarks'];?></td>
 												<td align="center"><?php ?></td>
 											</tr>
 											<?php } ?>

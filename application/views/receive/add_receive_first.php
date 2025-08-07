@@ -118,6 +118,7 @@
 											<th class="tr-bottom" width="5%"><center>UOM</center></th>
 											<th class="tr-bottom" width="20%"><center>Local/Manila</center></th>
 											<th class="tr-bottom" width="5%"><center>Total Net Cost</th>
+											<th class="tr-bottom" width="5%"><center>Vat Status</th>
 											<!--<th class="tr-bottom" width="5%"><center>Expiry</th>-->
 											<th class="tr-bottom" width="20%"><center>Remarks</center></th>
 										</tr>
@@ -178,6 +179,8 @@
 											<td><center><?php echo $it['unit']; ?></center></td>
 											<td><center><?php if($it['local_mnl'] == '1'){ echo 'Local';} else if($it['local_mnl'] == '2'){ echo 'Manila';} else { echo ''; } ?></center></td>
 											<td><center><?php echo number_format($it['total_net_cost'],2); ?></center></td>
+											<td><center><?php if($it['vat_status'] == 'vat'){ echo 'VAT';} else if($it['vat_status'] == 'non-vat'){ echo 'Non-VAT';} else { echo ''; } ?></center></td>
+											</center></td>
 											<!--<td><?php echo $it['expiration_date']; ?></td>-->
 											<td><?php echo $it['remarks']; ?></td>
 										</tr>

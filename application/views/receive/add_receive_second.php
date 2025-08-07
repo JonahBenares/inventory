@@ -300,6 +300,11 @@
 									<input type="radio" name="local_mnl" id = 'local' value="1"> Local<br>
   									<input type="radio" name="local_mnl" id = 'manila' value="2"> Manila<br>
 								</div>
+								<div class="col-lg-1">
+									<br>
+									<input type="radio" name="vat_status" value="vat" id = 'vat' > VAT<br>
+  									<input type="radio" name="vat_status" value="non-vat" id = 'non-vat' checked> Non-VAT<br>
+								</div>
 								
 								<!-- <div class="col-lg-2">
 									<p style="margin:0px" for="">Inspected By:</p>
@@ -340,6 +345,7 @@
 												<th class="tr-bottom" style="width: 40px;"><center>Total Net Cost</center></th>
 												<th class="tr-bottom" style="width: 40px;"><center>Remarks</center></th>
 												<th class="tr-bottom" style="width: 40px;"><center>Local/Manila</center></th>
+												<th class="tr-bottom" style="width: 40px;"><center>Vat Status</center></th>
 												<!--<th class="tr-bottom" style="width: 40px;"><center>Expiry</center></th>-->
 												<th class="tr-bottom" style="width: 5px;"><center>Action</center></th>
 											</tr>
@@ -369,8 +375,9 @@
 														<td><center><?php echo $ri['total_net_cost']; ?></center></td>
 														<td><center><?php echo $ri['remarks']; ?></center></td>
 														<td><center><?php echo $ri['local_mnl']; ?></center></td>
+														<td><center><?php echo $ri['vat_status']; ?></center></td>
 														<!--<td><center><?php echo $ri['expiration_date']; ?></center></td>-->
-														<td><center>Expiry</center></td>
+														<!-- <td><center>Expiry</center></td> -->
 														<td><center> <a class="btn btn-danger table-remove btn-xs" onclick="removerecitem('<?php echo $ri['riid']; ?>','<?php echo base_url(); ?>')"><span class=" fa fa-times"></span></a></center></td>
 													</tr>
 												<?php $x++; } 
