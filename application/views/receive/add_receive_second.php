@@ -277,7 +277,7 @@
 									<p  style="margin:0px" for=""><br>Remarks:</p>
 									<textarea class="form-control" rows="1" name='remarks' id='remarks'></textarea>
 								</div>
-								<div class="col-lg-2">
+								<div class="col-lg-2"><BR>
 									<p style="margin:0px"  for="">Shipping/U & Other Related Cost:</p>
 									<input class="form-control" name='shipping_fee' id='shipping_fee' onkeypress="return isNumberKey(this, event)" >
 								</div>
