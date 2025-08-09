@@ -137,8 +137,8 @@
 											<td width="" align="center"><strong>Total Cost</strong></td>
 											<td width="" align="center"><strong>Supplier</strong></td>
 											<td width="" align="center"><strong>Department</strong></td>
-											<td width="30%" align="center"><strong>End-Use</strong></td>
-											<td width="" align="center"><strong>Purpose</strong></td>
+											<td width="15%" align="center"><strong>End-Use</strong></td>
+											<td width="15%" align="center"><strong>Purpose</strong></td>
 											<td  align="center"><strong>Reason</strong></td>
 											<td  align="center"><strong>Remarks</strong></td>
 										</tr>
