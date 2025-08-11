@@ -888,6 +888,7 @@ class Receive extends CI_Controller {
         $receiveID = $this->input->post('receiveID');
 
         foreach($this->super_model->select_row_where("receive_items", "receive_id", $receiveID) AS $itm){
+            $pr_no = $this->super_model->select_column_where('receive_details', 'pr_no', 'rd_id', $itm->rd_id);
             $count_exist = $this->super_model->count_custom_where("supplier_items","item_id = '$itm->item_id' AND supplier_id = '$itm->supplier_id' AND catalog_no = '$itm->catalog_no' AND brand_id = '$itm->brand_id'");
 
             $sumcost = $this->super_model->select_sum_where("receive_items", "item_cost", "item_id = '$itm->item_id'  AND supplier_id = '$itm->supplier_id' AND catalog_no = '$itm->catalog_no' AND brand_id = '$itm->brand_id'");
@@ -932,6 +933,15 @@ class Receive extends CI_Controller {
 
                 $this->super_model->update_where("serial_number", $data3, "serial_id", $itm->serial_id);
 
+                $vat_data = array(
+                    'receive_id'=>$receiveID,
+                    'pr_no'=>$pr_no,
+                    'si_id'=>$suppid,
+                    'vat_status'=>$itm->vat_status,
+                    'po_no'=>$itm->po_no,
+                );
+                 $this->super_model->insert_into("vat_logs", $vat_data);
+
             } else {
                $qty = $this->super_model->select_column_custom_where("supplier_items","quantity","item_id = '$itm->item_id' AND supplier_id = '$itm->supplier_id' AND catalog_no = '$itm->catalog_no' AND brand_id = '$itm->brand_id'");
                
@@ -951,6 +961,15 @@ class Receive extends CI_Controller {
                 );
 
                 $this->super_model->update_where("serial_number", $data3, "serial_id", $itm->serial_id);
+
+                $vat_data = array(
+                    'receive_id'=>$receiveID,
+                    'pr_no'=>$pr_no,
+                    'si_id'=>$siid,
+                    'vat_status'=>$itm->vat_status,
+                    'po_no'=>$itm->po_no,
+                );
+                 $this->super_model->insert_into("vat_logs", $vat_data);
 
             }
 

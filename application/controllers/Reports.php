@@ -1790,6 +1790,8 @@ class Reports extends CI_Controller {
                 $receive_id = $this->super_model->select_column_join_where_order_limit("receive_id", "receive_items","receive_details", "item_id='$itm->item_id' AND pr_no='$itm->pr_no' AND supplier_id='$itm->supplier_id'" ,"rd_id","DESC","1");
                 $po_no = $this->super_model->select_column_where("receive_head", "po_no","receive_id", $receive_id);
 
+                $si_id = $this->super_model->select_column_where("request_items", "si_id","rq_id", $itm->rq_id);
+                $vat_status = $this->super_model->select_column_custom_where("vat_logs", "vat_status", "si_id= '$si_id' AND pr_no= '$itm->pr_no'");
 
                 if($type == 'JO / PR'){
                     $pr_cost[] = $total_cost;
@@ -1821,6 +1823,7 @@ class Reports extends CI_Controller {
                     'unit_cost'=>$unit_cost,
                     'issqty'=>$issqty,
                     'total_cost'=>$total_cost,
+                    'vat_status'=>$vat_status,
                     'net_of_vat'=>$total_cost / 1.12,
                     'issuance_id'=>$itm->issuance_id
                 );
@@ -5096,6 +5099,9 @@ class Reports extends CI_Controller {
                 $receive_id = $this->super_model->select_column_join_where_order_limit("receive_id", "receive_items","receive_details", "item_id='$itm->item_id' AND pr_no='$itm->pr_no' AND supplier_id='$itm->supplier_id'","rd_id","DESC","1");
                 $po_no = $this->super_model->select_column_where("receive_head", "po_no","receive_id", $receive_id);
 
+                $si_id = $this->super_model->select_column_where("request_items", "si_id","rq_id", $itm->rq_id);
+                $vat_status = $this->super_model->select_column_custom_where("vat_logs", "vat_status", "si_id= '$si_id' AND pr_no= '$itm->pr_no'");
+
                 if($type=='JO / PR'){
                     $pr = $itm->pr_no;
                     $pr_cost[] = $total_cost;
@@ -5137,9 +5143,17 @@ class Reports extends CI_Controller {
                         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('P'.$num, $issqty); 
                         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('S'.$num, $unit); 
                         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('T'.$num, $unit_cost); 
-                        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('U'.$num, $total_cost); 
-                        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('V'.$num, $net_of_vat);
-                        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('W'.$num, $total_cost); 
+                        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('U'.$num, $total_cost);
+                        if($vat_status=='vat'){
+                            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('V'.$num, $net_of_vat);
+                        }else{
+                            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('V'.$num, '');
+                        }
+                         if($vat_status=='non-vat' || $vat_status==''){
+                            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('W'.$num, $total_cost);
+                        }else{
+                            $objPHPExcel->setActiveSheetIndex(0)->setCellValue('W'.$num, '');
+                        }
                         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('X'.$num, $supplier); 
                         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('AD'.$num, $department); 
                         $objPHPExcel->setActiveSheetIndex(0)->setCellValue('AG'.$num, $purpose);

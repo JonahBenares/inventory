@@ -185,8 +185,16 @@
 												<td align="center"><?php echo $is['unit'];?></td>
 												<td align="center"><?php echo $is['unit_cost'];?></td>
 												<td align="center"><?php echo number_format($is['total_cost'],2);?></td>
+												<?php if($is['vat_status'] == 'vat'){ ?>
 												<td align="center"><?php echo number_format($is['net_of_vat'],2);?></td>
+												<?php }else{ ?>
+												<td align="center"></td>
+												<?php } ?>
+												<?php if($is['vat_status'] == 'non-vat' || $is['vat_status'] == ''){ ?>
 												<td align="center"><?php echo number_format($is['total_cost'],2);?></td>
+												<?php }else{ ?>
+												<td align="center"></td>
+												<?php } ?>
 												<td align="center"><?php echo $is['supplier'];?></td>
 												<td align="center"><?php echo $is['department'];?></td>
 												<td align="center"><?php echo $is['purpose'];?></td>
