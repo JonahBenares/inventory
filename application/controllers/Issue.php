@@ -188,8 +188,8 @@ class Issue extends CI_Controller {
         $id=$this->uri->segment(3);
         $data['id']=$id;
     
-        // $year=date('Y-m');
-        $year=date('mY');
+        $year=date('Y-m');
+        // $year=date('mY');
         $year_series=date('Y');
        
         $data['mreqf_list']=$this->super_model->select_custom_where("request_head","saved = '1'");
@@ -621,11 +621,11 @@ class Issue extends CI_Controller {
         $remarks = $this->input->post('remarks');
        
 
-       $count = count($quantity);
+       $count = is_array($quantity) ? count($quantity) : 0;
        
        //echo $count;
-       // $year=date('Y-m');
-       $year=date('mY');
+       $year=date('Y-m');
+       // $year=date('mY');
        $year_series=date('Y');
        
 
