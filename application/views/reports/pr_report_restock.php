@@ -102,7 +102,7 @@
 										<td > <h5 class="nomarg"><?php echo $h['purpose']; ?></h5></td>
 									</tr>
 								</table>
-								<div class="row">
+								<div class="row">-$_COOKIE
 									<div class="col-lg-12">
 										<table width="100%" class="table table-bordered " >
 												<table width="100%" class="table table-bordered " >
