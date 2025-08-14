@@ -138,6 +138,8 @@
 												<th align="center"><strong>UoM</strong></th>
 												<th align="center"><strong>Unit Cost</strong></th>
 												<th align="center"><strong>Total Cost</strong></th>
+												<th align="center"><strong>Vat</strong></th>
+												<th align="center"><strong>Non-VAT</strong></th>
 												<th align="center"><strong>Supplier</strong></th>
 												<th align="center"><strong>Department</strong></th>
 												<th align="center"><strong>Purpose</strong></th>
@@ -158,6 +160,16 @@
 												<td align="center"><?php echo $rec['unit']?></td>
 												<td align="center"><?php echo number_format($rec['unit_cost'],2)?></td>
 												<td align="center"><?php echo number_format($rec['total_cost'],2)?></td>
+												<?php if($rec['vat_status'] == 'vat'){ ?>
+												<td align="center"><?php echo number_format($rec['net_of_vat'],2);?></td>
+												<?php }else{ ?>
+												<td align="center"></td>
+												<?php } ?>
+												<?php if($rec['vat_status'] == 'non-vat' || $rec['vat_status'] == ''){ ?>
+												<td align="center"><?php echo number_format($rec['total_cost'],2);?></td>
+												<?php }else{ ?>
+												<td align="center"></td>
+												<?php } ?>
 												<td align="center"><?php echo $rec['supplier']?></td>
 												<td align="center"><?php echo $rec['department']?></td>
 												<td align="center"><?php echo $rec['purpose']?></td>
