@@ -1855,7 +1855,10 @@ class Reports extends CI_Controller {
         $data['brand']=$this->uri->segment(6);
         $department_id=$this->uri->segment(7);
         $data['department_id']=$this->uri->segment(7);
-        $data['itemdesc'] = $this->super_model->select_column_where("items", "item_name", "item_id", $id);
+        // $data['itemdesc'] = $this->super_model->select_column_where("items", "item_name", "item_id", $id);
+        $pn_no=$this->super_model->select_column_where("items", "original_pn", "item_id", $id);
+        $item_name  = $this->super_model->select_column_where("items", "item_name", "item_id", $id);
+        $data['itemdesc'] = $pn_no . " - " . $item_name;
         /*$sql="";
         if($id!='null'){
             $sql.= " item_id = '$id' AND";
